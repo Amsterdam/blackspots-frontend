@@ -106,6 +106,7 @@ const GlobalStyle = createGlobalStyle`
     &:hover {
       color: ${props => props.theme.colors.red};
       text-decoration-line: underline;
+      cursor: pointer;
     }
 
     &:hover h1, &:hover h2, &:hover h3, &:hover h4, &:hover h5, &:hover h6 {
