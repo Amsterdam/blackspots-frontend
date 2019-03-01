@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import { HeaderStyled, Logo, Title, ButtonBar } from "./Header.styled";
 import logo from "assets/media/amsterdam-logo.svg";
 
@@ -6,10 +8,12 @@ export default () => {
   return (
     <HeaderStyled>
       <Logo src={logo} />
-      <Title>Blackspots</Title>
+      <Link to="/">
+        <Title>Blackspots</Title>
+      </Link>
       <ButtonBar>
-        <a>Begrippenlijst</a>
-        <a>Contact</a>
+        <Link to="concepts">Begrippenlijst</Link>
+        <Link to="contact">Contact</Link>
       </ButtonBar>
     </HeaderStyled>
   );
