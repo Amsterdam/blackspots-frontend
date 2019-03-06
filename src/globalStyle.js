@@ -86,17 +86,17 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h6 {
-    height: 24px;
     font-family: ${props => {
-      return props.theme.fontFamily.avenirRoman;
+      return props.theme.fontFamily.avenirHeavy;
     }};
-    font-size: 16px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-    color: ${props => props.theme.colors.black};
+    height: 20px;
+    width: 620px;
+    color: #EC0000;
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 20px;
+    padding-top: 20px;
+    margin-bottom: 16px;
   }
 
   a {
@@ -112,6 +112,28 @@ const GlobalStyle = createGlobalStyle`
     &:hover h1, &:hover h2, &:hover h3, &:hover h4, &:hover h5, &:hover h6 {
       color: ${props => props.theme.colors.red};
     }
+  }
+
+  p {
+    height: 72px;
+    width: 620px;
+    color: ${props => props.theme.colors.black};
+    font-family: ${props => {
+      return props.theme.fontFamily.avenirRoman;
+    }};
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  table tr td:nth-child(1) {
+    font-family: ${props => {
+      return props.theme.fontFamily.avenirRoman;
+    }};
+    color: #787878;
+    width: 220px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
   }
 
   @font-face {
