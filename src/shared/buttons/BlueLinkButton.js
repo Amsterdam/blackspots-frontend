@@ -13,10 +13,8 @@ const LinkStyled = styled.span`
 
 export default props => {
   return (
-    <Link to="/">
-      <LinkStyled>{`${props.chevDirection === "left" ? "<" : ">"} ${
-        props.text
-      }`}</LinkStyled>
-    </Link>
+    <LinkStyled>{`${props.chevDirection === "left" ? "<" : ">"} ${
+      props.text
+    }`}</LinkStyled>
   );
 };

@@ -1,13 +1,17 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 import BlueLinkButton from "shared/buttons/BlueLinkButton";
 import ContentBox from "../../shared/contentBox/ContentBox";
 import Accordion from "../../shared/accordion/Accordion";
+import { appRoutes } from "constants.js";
 
 export default () => {
   return (
     <ContentBox>
-      <BlueLinkButton chevDirection="left" text="Terug naar kaart" />
+      <NavLink to={appRoutes.HOME}>
+        <BlueLinkButton chevDirection="left" text="Terug naar kaart" />
+      </NavLink>
       <h2>Begrippenlijst</h2>
 
       <p>
