@@ -25,46 +25,48 @@ export default () => {
       <h6>Details</h6>
 
       <table>
-        <tr>
-          <td>Publicatiedatum</td>
-          <td>01-06-2019</td>
-        </tr>
-        <tr>
-          <td>Wijzigingsdatum</td>
-          <td>01-06-2019</td>
-        </tr>
-        <tr>
-          <td>Wijzigingsfrequentie</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <td>Gebiedseenheid</td>
-          <td>Specifieke punten/lijnen</td>
-        </tr>
-        <tr>
-          <td>Taal</td>
-          <td>Nederlands</td>
-        </tr>
-        <tr>
-          <td>Eigenaar</td>
-          <td>Gemeente Amsterdam, Werkgroep Blackspots Amsterdam</td>
-        </tr>
-        <tr>
-          <td>Inhoudelijk contactpersoon</td>
-          <td>
-            <a href="mailto:e.van.den.bout@amsterdam.nl">
-              <b>> Elsbeth van den Bout (e.van.den.bout@amsterdam.nl)</b>
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td>Technisch contactpersoon</td>
-          <td>
-            <a href="mailto:j.jansen@amsterdam.nl">
-              <b>> Jan Jansen (j.jansen@amsterdam.nl)</b>
-            </a>
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>Publicatiedatum</td>
+            <td>01-06-2019</td>
+          </tr>
+          <tr>
+            <td>Wijzigingsdatum</td>
+            <td>01-06-2019</td>
+          </tr>
+          <tr>
+            <td>Wijzigingsfrequentie</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>Gebiedseenheid</td>
+            <td>Specifieke punten/lijnen</td>
+          </tr>
+          <tr>
+            <td>Taal</td>
+            <td>Nederlands</td>
+          </tr>
+          <tr>
+            <td>Eigenaar</td>
+            <td>Gemeente Amsterdam, Werkgroep Blackspots Amsterdam</td>
+          </tr>
+          <tr>
+            <td>Inhoudelijk contactpersoon</td>
+            <td>
+              <a href="mailto:e.van.den.bout@amsterdam.nl">
+                <b>> Elsbeth van den Bout (e.van.den.bout@amsterdam.nl)</b>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>Technisch contactpersoon</td>
+            <td>
+              <a href="mailto:j.jansen@amsterdam.nl">
+                <b>> Jan Jansen (j.jansen@amsterdam.nl)</b>
+              </a>
+            </td>
+          </tr>
+        </tbody>
       </table>
 
       <h6>Werkgroep Blackspots Amsterdam</h6>
