@@ -1,19 +1,26 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-import { HeaderStyled, Logo, Title, ButtonBar } from "./Header.styled";
+import {
+  NavLinkStyled,
+  HeaderStyled,
+  Logo,
+  Title,
+  ButtonBar
+} from "./Header.styled";
 import logo from "assets/media/amsterdam-logo.svg";
+import { appRoutes } from "constants.js";
 
 export default () => {
   return (
     <HeaderStyled>
       <Logo src={logo} />
-      <Link to="/">
+      <NavLink exact to={appRoutes.HOME}>
         <Title>Blackspots</Title>
-      </Link>
+      </NavLink>
       <ButtonBar>
-        <Link to="concepts">Begrippenlijst</Link>
-        <Link to="contact">Contact</Link>
+        <NavLinkStyled to={appRoutes.CONCEPTS}>Begrippenlijst</NavLinkStyled>
+        <NavLinkStyled to={appRoutes.CONTACT}>Contact</NavLinkStyled>
       </ButtonBar>
     </HeaderStyled>
   );

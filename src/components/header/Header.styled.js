@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const HeaderStyled = styled.div`
   height: 50px;
@@ -38,5 +39,12 @@ export const ButtonBar = styled.div`
 
   a {
     margin-right: 10px;
+  }
+`;
+
+export const NavLinkStyled = styled(NavLink)`
+  &.active {
+    text-decoration-line: underline;
+    text-decoration-color: red;
   }
 `;

@@ -6,6 +6,7 @@ import Header from "./header/Header";
 import DashboardPage from "views/dashboard/dashboardPage";
 import ConceptPage from "views/concepts/conceptPage";
 import ContactPage from "views/contact/contactPage";
+import { appRoutes } from "constants.js";
 
 class App extends React.Component {
   render() {
@@ -13,9 +14,9 @@ class App extends React.Component {
       <AppStyled>
         <Header />
         <Switch>
-          <Route exact path="/concepts" component={ConceptPage} />
-          <Route exact path="/contact" component={ContactPage} />
-          <Route path="/" component={DashboardPage} />
+          <Route exact path={appRoutes.CONCEPTS} component={ConceptPage} />
+          <Route exact path={appRoutes.CONTACT} component={ContactPage} />
+          <Route path={appRoutes.HOME} component={DashboardPage} />
         </Switch>
       </AppStyled>
     );

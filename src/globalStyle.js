@@ -112,11 +112,6 @@ const GlobalStyle = createGlobalStyle`
     &:hover h1, &:hover h2, &:hover h3, &:hover h4, &:hover h5, &:hover h6 {
       color: ${props => props.theme.colors.red};
     }
-
-    &.active {
-    text-decoration-line: underline !important;
-    text-decoration-color: red !important;
-  }
   }
 
   @font-face {
