@@ -8,7 +8,7 @@ export const AccordionStyled = styled.div`
 
 export const AccordionText = styled.div`
   height: ${props => (props.open ? "100px" : "0px")};
-  transition: height 0.3s ease-in;
+  transition: height 0.3s ease-out;
   overflow: hidden;
 `;
 
@@ -51,7 +51,7 @@ export const Expander = styled.button`
     border-right: 2px solid black;
     border-bottom: 2px solid black;
     transform: rotate(${props => (props.open ? "-135deg" : "-315deg")});
-    transition: transform 0.3s ease-in;
+    transition: transform 0.3s ease-out;
     top: 3px;
     display: inline-block;
   }

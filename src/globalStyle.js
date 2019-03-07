@@ -114,17 +114,6 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  p {
-    height: 72px;
-    width: 620px;
-    color: ${props => props.theme.colors.black};
-    font-family: ${props => {
-      return props.theme.fontFamily.avenirRoman;
-    }};
-    font-size: 16px;
-    line-height: 24px;
-  }
-
   table tr td:nth-child(1) {
     font-family: ${props => {
       return props.theme.fontFamily.avenirRoman;

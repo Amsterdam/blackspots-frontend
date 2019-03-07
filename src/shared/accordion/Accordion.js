@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+
 import {
   AccordionStyled,
   AccordionText,
@@ -8,18 +9,25 @@ import {
   Expander,
   AccordionHeader
 } from "./Accordion.styled";
+import Typography from "../typography/Typography";
 
 const Accordion = ({ title, text }) => {
   const [open, setOpen] = useState(false);
 
+  function toggle() {
+    setOpen(!open);
+  }
+
   return (
     <AccordionStyled>
-      <AccordionHeader>
+      <AccordionHeader onClick={toggle}>
         <AccordionTitle>{title}</AccordionTitle>
-        <Expander onClick={() => setOpen(!open)} open={open} />
+        <Expander onClick={toggle} open={open} />
       </AccordionHeader>
       <AccordionText open={open}>
-        <AccordionTextInner>{text}</AccordionTextInner>
+        <AccordionTextInner>
+          <Typography>{text}</Typography>
+        </AccordionTextInner>
       </AccordionText>
     </AccordionStyled>
   );

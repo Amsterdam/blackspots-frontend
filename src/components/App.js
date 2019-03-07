@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { AppStyled } from "./App.styled";
+import { AppStyled, Content } from "./App.styled";
 import Header from "./header/Header";
 import DashboardPage from "views/dashboard/dashboardPage";
 import ConceptPage from "views/concepts/conceptPage";
@@ -13,11 +13,13 @@ class App extends React.Component {
     return (
       <AppStyled>
         <Header />
-        <Switch>
-          <Route exact path={appRoutes.CONCEPTS} component={ConceptPage} />
-          <Route exact path={appRoutes.CONTACT} component={ContactPage} />
-          <Route path={appRoutes.HOME} component={DashboardPage} />
-        </Switch>
+        <Content>
+          <Switch>
+            <Route exact path={appRoutes.CONCEPTS} component={ConceptPage} />
+            <Route exact path={appRoutes.CONTACT} component={ContactPage} />
+            <Route path={appRoutes.HOME} component={DashboardPage} />
+          </Switch>
+        </Content>
       </AppStyled>
     );
   }

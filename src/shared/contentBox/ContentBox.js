@@ -3,8 +3,7 @@ import styled from "styled-components";
 
 const ContentBoxStyled = styled.div`
   width: 940px;
-  margin: 0 0 0 100px;
-  padding: 20px 0 0 0;
+  padding: 20px 100px 20px 100px;
 `;
 
 export default props => {

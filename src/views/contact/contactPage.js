@@ -2,10 +2,9 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 import BlueLinkButton from "shared/buttons/BlueLinkButton";
-import ContentBox from "../../shared/contentBox/ContentBox";
-import Accordion from "../../shared/accordion/Accordion";
+import ContentBox from "shared/contentBox/ContentBox";
+import Typography from "shared/typography/Typography";
 import { appRoutes } from "constants.js";
-import HeaderText from "../../shared/headerText/HeaderText";
 
 export default () => {
   return (
@@ -15,12 +14,12 @@ export default () => {
       </NavLink>
       <h2>Contact</h2>
 
-      <HeaderText>
+      <Typography size="L">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
         commodo consequat.
-      </HeaderText>
+      </Typography>
 
       <h6>Details</h6>
 
@@ -70,12 +69,12 @@ export default () => {
       </table>
 
       <h6>Werkgroep Blackspots Amsterdam</h6>
-      <p>
+      <Typography>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
         commodo consequat.
-      </p>
+      </Typography>
     </ContentBox>
   );
 };
