@@ -7,9 +7,7 @@ import App from "./components/App";
 import theme from "theme";
 import GlobalStyle from "globalStyle";
 
-import auth from './shared/auth/auth';
-
-auth.login();
+import './shared/auth/auth';  // Setup keycloak
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>

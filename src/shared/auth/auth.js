@@ -1,12 +1,14 @@
-const setupKeycloack = () => {
-  const keycloak = window.Keycloak();
+// See: https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter
+const keycloak = window.Keycloak();
 
-  const login = () => {
-    keycloak.init({ onLoad: 'login-required' });
-  };
+const setupKeycloack = () => {
+
+  keycloak.init({
+    onLoad: 'login-required',
+    checkLoginIframe: false
+  });
 
   return {
-    login,
     keycloak
   }
 };
