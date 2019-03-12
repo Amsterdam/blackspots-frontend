@@ -1,0 +1,8 @@
+{
+  "realm": "datapunt-acc",
+  "auth-server-url": "https://iam.amsterdam.nl/auth",
+  "ssl-required": "external",
+  "resource": "blackspots",
+  "public-client": true,
+  "confidential-port": 0
+}

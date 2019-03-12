@@ -7,6 +7,10 @@ import App from "./components/App";
 import theme from "theme";
 import GlobalStyle from "globalStyle";
 
+import auth from './shared/auth/auth';
+
+auth.login();
+
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <BrowserRouter>
