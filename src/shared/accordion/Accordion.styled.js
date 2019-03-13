@@ -33,6 +33,7 @@ export const AccordionHeader = styled.div`
   justify-content: space-between;
 `;
 
+// The Chevron Button
 export const Expander = styled.button`
   width: 30px;
   height: 30px;
