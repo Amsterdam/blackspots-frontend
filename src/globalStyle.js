@@ -86,17 +86,17 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h6 {
-    height: 24px;
     font-family: ${props => {
-      return props.theme.fontFamily.avenirRoman;
+      return props.theme.fontFamily.avenirHeavy;
     }};
-    font-size: 16px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.5;
-    letter-spacing: normal;
-    color: ${props => props.theme.colors.black};
+    height: 20px;
+    width: 620px;
+    color: #EC0000;
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 20px;
+    padding-top: 20px;
+    margin-bottom: 16px;
   }
 
   a {
