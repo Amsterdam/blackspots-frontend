@@ -1,5 +1,12 @@
 import React from "react";
+import Map from "components/map/Map";
+
+import { DashboardStyled } from "./DashboardPage.styled";
 
 export default () => {
-  return <div>Dashboard</div>;
+  return (
+    <DashboardStyled>
+      <Map />
+    </DashboardStyled>
+  );
 };

@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "amsterdam-amaps": "^2.0.0",
+    "amsterdam-stijl": "^3.0.4",
     "axios": "^0.18.0",
+    "leaflet": "^1.4.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-router-dom": "^4.3.1",
