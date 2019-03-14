@@ -26,15 +26,27 @@ class Map extends React.Component {
       zoom: 14
     });
 
+    // Add the stadsdelen WMS
+    L.tileLayer
+      .wms("https://map.data.amsterdam.nl/maps/gebieden?", {
+        layers: ["stadsdeel"],
+        transparent: true,
+        format: "image/png"
+      })
+      .addTo(map);
+
     getAllBlackspots()
-      .then(data => {
-        L.geoJSON(data, {
+      .then(geoData => {
+        // Add the geo data to the map as markers
+        L.geoJSON(geoData, {
+          // Add custom markers
           pointToLayer: function(feature, latlng) {
             return L.marker(latlng, {
               icon: MarkerTypes[feature.properties.spot_type]
             });
           }
         }).addTo(map);
+
         this.setState({ loading: false });
       })
       .catch(() => {
