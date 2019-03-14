@@ -10,20 +10,23 @@ import amaps from "amsterdam-amaps/dist/amaps";
 import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from "./Map.styled";
 import { getAllBlackspots } from "../../services/geo-api";
 import { MarkerTypes } from "./customMarkers";
+import "./customMarkers.css";
 
 class Map extends React.Component {
   state = { error: false, loading: true };
 
   componentDidMount() {
+    // Create map
     const map = amaps.createMap({
       center: {
         latitude: 52.36988741057662,
         longitude: 4.8966407775878915
       },
+      style: "zwartwit",
       layer: "standaard",
       target: "mapdiv",
       search: true,
-      zoom: 14
+      zoom: 13
     });
 
     // Add the stadsdelen WMS
@@ -35,12 +38,19 @@ class Map extends React.Component {
       })
       .addTo(map);
 
+    // Set zoom config manually after adding WMS
+    // For some reason this doesn't work when set during the creation of the map
+    map.options.minZoom = 12;
+    map.options.maxZoom = 21;
+
+    // Get geo data
     getAllBlackspots()
       .then(geoData => {
         // Add the geo data to the map as markers
         L.geoJSON(geoData, {
           // Add custom markers
           pointToLayer: function(feature, latlng) {
+            console.log(feature.properties.status);
             return L.marker(latlng, {
               icon: MarkerTypes[feature.properties.spot_type]
             });
@@ -56,7 +66,7 @@ class Map extends React.Component {
 
   render() {
     const { loading, error } = this.state;
-
+    // debugger;
     return (
       <MapContainer>
         <div id="mapdiv" style={{ height: "100%" }}>
