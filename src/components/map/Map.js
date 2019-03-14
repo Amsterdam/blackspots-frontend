@@ -10,7 +10,6 @@ import amaps from "amsterdam-amaps/dist/amaps";
 import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from "./Map.styled";
 import { getAllBlackspots } from "../../services/geo-api";
 import { MarkerTypes } from "./customMarkers";
-import "./customMarkers.css";
 
 class Map extends React.Component {
   state = { error: false, loading: true };
