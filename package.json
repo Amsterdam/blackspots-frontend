@@ -6,6 +6,9 @@
     "amsterdam-amaps": "^2.0.0",
     "amsterdam-stijl": "^3.0.4",
     "axios": "^0.18.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.11.2",
+    "enzyme-to-json": "^3.3.5",
     "leaflet": "^1.4.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
@@ -30,5 +33,10 @@
   ],
   "devDependencies": {
     "eslint-plugin-react": "^7.12.4"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   }
 }
