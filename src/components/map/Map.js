@@ -1,15 +1,16 @@
 import React from "react";
-
+import ReactDOM from "react-dom";
 import L from "leaflet";
 import "leaflet/dist/leaflet";
 import "leaflet/dist/leaflet.css";
 import "amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css";
 import "amsterdam-stijl/dist/css/ams-stijl.css";
 import amaps from "amsterdam-amaps/dist/amaps";
-
+import { renderToString } from "react-dom/server";
 import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from "./Map.styled";
 import { getAllBlackspots } from "../../services/geo-api";
-import { MarkerTypes } from "./customMarkers";
+import Marker, { MarkerTypes } from "./customMarkers";
+import "./markerStyle.css";
 
 class Map extends React.Component {
   state = { error: false, loading: true };
@@ -49,9 +50,15 @@ class Map extends React.Component {
         L.geoJSON(geoData, {
           // Add custom markers
           pointToLayer: function(feature, latlng) {
-            console.log(feature.properties.status);
+            const { status, spot_type } = feature.properties;
+            console.log(status);
             return L.marker(latlng, {
-              icon: MarkerTypes[feature.properties.spot_type]
+              icon: L.divIcon({
+                className: "divIconClass",
+                html: renderToString(
+                  <Marker type={spot_type} status={status} />
+                )
+              })
             });
           }
         }).addTo(map);

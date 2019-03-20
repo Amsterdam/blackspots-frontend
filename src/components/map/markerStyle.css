@@ -1,0 +1,10 @@
+/* We need a littlebit of pure CSS to pass to leaflet */
+.divIconClass {
+  background-color: transparent;
+}
+
+.divIconClass svg {
+  margin-left: -12px;
+  margin-top: -12px;
+  box-sizing: border-box;
+}
