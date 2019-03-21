@@ -1,10 +1,10 @@
-import React from "react";
-import { shallow } from "enzyme";
+import React from 'react';
+import { shallow } from 'enzyme';
 
-import DashboardPage from "./DashboardPage";
+import DashboardPage from './DashboardPage';
 
-describe("DashboardPage", () => {
-  it("should render without errors", () => {
+describe('DashboardPage', () => {
+  it('should render without errors', () => {
     shallow(<DashboardPage />);
   });
 });

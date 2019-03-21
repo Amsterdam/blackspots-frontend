@@ -1,10 +1,10 @@
-import React from "react";
-import { shallow } from "enzyme";
+import React from 'react';
+import { shallow } from 'enzyme';
 
-import ContactPage from "./ContactPage";
+import ContactPage from './ContactPage';
 
-describe("ContentPage", () => {
-  it("should render without errors", () => {
+describe('ContentPage', () => {
+  it('should render without errors', () => {
     shallow(<ContactPage />);
   });
 });
