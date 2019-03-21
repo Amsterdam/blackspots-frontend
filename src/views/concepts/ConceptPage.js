@@ -1,11 +1,11 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-import BlueLinkButton from "shared/buttons/BlueLinkButton";
-import ContentBox from "../../shared/contentBox/ContentBox";
-import Accordion from "../../shared/accordion/Accordion";
-import { appRoutes } from "constants.js";
-import Typography from "shared/typography/Typography";
+import BlueLinkButton from 'shared/buttons/BlueLinkButton';
+import ContentBox from '../../shared/contentBox/ContentBox';
+import Accordion from '../../shared/accordion/Accordion';
+import { appRoutes } from 'constants.js';
+import Typography from 'shared/typography/Typography';
 
 export default () => {
   return (

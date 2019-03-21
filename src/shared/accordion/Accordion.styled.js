@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const AccordionStyled = styled.div`
   width: 100%;
@@ -7,7 +7,7 @@ export const AccordionStyled = styled.div`
 `;
 
 export const AccordionText = styled.div`
-  height: ${props => (props.open ? "100px" : "0px")};
+  height: ${props => (props.open ? '100px' : '0px')};
   transition: height 0.3s ease-out;
   overflow: hidden;
 `;
@@ -44,14 +44,14 @@ export const Expander = styled.button`
   position: relative;
 
   &:before {
-    content: "";
+    content: '';
     position: absolute;
     width: 10px;
     height: 10px;
     margin: 5px 4px 3px -5px;
     border-right: 2px solid black;
     border-bottom: 2px solid black;
-    transform: rotate(${props => (props.open ? "-135deg" : "-315deg")});
+    transform: rotate(${props => (props.open ? '-135deg' : '-315deg')});
     transition: transform 0.3s ease-out;
     top: 3px;
     display: inline-block;
