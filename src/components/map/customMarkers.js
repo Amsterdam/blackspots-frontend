@@ -15,22 +15,22 @@ export const BlackspotMarker = L.icon({
 
 export const ProtocolMarker = L.icon({
   iconUrl: ProtocolIcon,
-  iconSize: [20, 20]
+  iconSize: [20, 20],
 });
 
 export const ProtocolErnstigMarker = L.icon({
   iconUrl: ProtocolErnstigIcon,
-  iconSize: [20, 20]
+  iconSize: [20, 20],
 });
 
 export const RisicoMarker = L.icon({
   iconUrl: RisicoIcon,
-  iconSize: [20, 20]
+  iconSize: [20, 20],
 });
 
 export const WegvakMarker = L.icon({
   iconUrl: WegvakIcon,
-  iconSize: [20, 20]
+  iconSize: [20, 20],
 });
 
 export const MarkerTypes = {

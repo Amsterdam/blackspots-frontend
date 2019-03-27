@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ContactPage from './ContactPage';
+import DetailPanel from './DetailPanel';
 
-describe('ContentPage', () => {
+describe('Header', () => {
   it('should render without errors', () => {
-    shallow(<ContactPage />);
+    shallow(<DetailPanel />);
   });
 });

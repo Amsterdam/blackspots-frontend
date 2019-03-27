@@ -11,30 +11,42 @@ import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from "./Map.styled";
 import { getAllBlackspots } from "../../services/geo-api";
 import Marker, { MarkerTypes } from "./customMarkers";
 import "./markerStyle.css";
+import DetailPanel from '../detailPanel/DetailPanel';
 
 class Map extends React.Component {
-  state = { error: false, loading: true };
+  constructor() {
+    super();
+    this.state = {
+      error: false,
+      loading: true,
+      showPanel: false,
+      feature: null,
+    };
+
+    this.onMarkerClick = this.onMarkerClick.bind(this);
+    this.togglePanel = this.togglePanel.bind(this);
+  }
 
   componentDidMount() {
     // Create map
     const map = amaps.createMap({
       center: {
         latitude: 52.36988741057662,
-        longitude: 4.8966407775878915
+        longitude: 4.8966407775878915,
       },
-      style: "zwartwit",
-      layer: "standaard",
-      target: "mapdiv",
+      style: 'zwartwit',
+      layer: 'standaard',
+      target: 'mapdiv',
       search: true,
-      zoom: 13
+      zoom: 13,
     });
 
     // Add the stadsdelen WMS
     L.tileLayer
-      .wms("https://map.data.amsterdam.nl/maps/gebieden?", {
-        layers: ["stadsdeel"],
+      .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
+        layers: ['stadsdeel'],
         transparent: true,
-        format: "image/png"
+        format: 'image/png',
       })
       .addTo(map);
 
@@ -42,6 +54,10 @@ class Map extends React.Component {
     // For some reason this doesn't work when set during the creation of the map
     map.options.minZoom = 12;
     map.options.maxZoom = 21;
+
+    // Declare the onMarkerfunction so it is locally known and useable in the
+    // then of the getAllBlackspots call
+    const onMarkerClick = this.onMarkerClick;
 
     // Get geo data
     getAllBlackspots()
@@ -62,7 +78,6 @@ class Map extends React.Component {
             });
           }
         }).addTo(map);
-
         this.setState({ loading: false });
       })
       .catch(() => {
@@ -70,12 +85,22 @@ class Map extends React.Component {
       });
   }
 
+  onMarkerClick(feature, latlng, map) {
+    map.flyTo([latlng.lat, latlng.lng], 14);
+    this.setState({ feature, showPanel: true });
+  }
+
+  // Toggle the detail panel
+  togglePanel() {
+    this.setState(prevState => ({ showPanel: !prevState.showPanel }));
+  }
+
   render() {
-    const { loading, error } = this.state;
-    // debugger;
+    const { loading, error, showPanel, feature } = this.state;
+    console.log(feature && feature.properties.description);
     return (
       <MapContainer>
-        <div id="mapdiv" style={{ height: "100%" }}>
+        <div id="mapdiv" style={{ height: '100%' }}>
           {loading && (
             <LoadingDiv>
               <Spinner />
@@ -90,6 +115,11 @@ class Map extends React.Component {
               </p>
             </ErrorDiv>
           )}
+          <DetailPanel
+            feature={feature}
+            open={showPanel}
+            togglePanel={this.togglePanel.bind(this)}
+          />
         </div>
       </MapContainer>
     );

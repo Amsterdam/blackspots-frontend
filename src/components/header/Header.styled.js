@@ -1,15 +1,12 @@
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 export const HeaderStyled = styled.div`
-  height: 50px;
-
   display: flex;
-  width: 100%;
   align-items: center;
-
-  background-color: #ffffff;
-  box-shadow: 0 2px 0 0 #999999;
+  height: 50px;
+  width: 100%;
+  border-bottom: 2px solid ${props => props.theme.colors.neutralGrey4};
 `;
 
 export const Logo = styled.img`

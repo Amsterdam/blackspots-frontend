@@ -1,11 +1,11 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-import BlueLinkButton from "shared/buttons/BlueLinkButton";
-import ContentBox from "shared/contentBox/ContentBox";
-import Typography from "shared/typography/Typography";
-import { ContactStyled } from "./ContactPage.styled";
-import { appRoutes } from "constants.js";
+import BlueLinkButton from 'shared/buttons/BlueLinkButton';
+import ContentBox from 'shared/contentBox/ContentBox';
+import Typography from 'shared/typography/Typography';
+import { ContactStyled } from './ContactPage.styled';
+import { appRoutes } from 'constants.js';
 
 export default () => {
   return (

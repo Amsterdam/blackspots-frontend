@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ContactStyled = styled.div`
   table tr td:nth-child(1) {

@@ -1,7 +1,7 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
-import AvenirLTStdHeavy from "assets/fonts/AvenirLTStd-Heavy.otf";
-import AvenirLTStdRoman from "assets/fonts/AvenirLTStd-Roman.otf";
+import AvenirLTStdHeavy from 'assets/fonts/AvenirLTStd-Heavy.otf';
+import AvenirLTStdRoman from 'assets/fonts/AvenirLTStd-Roman.otf';
 
 const GlobalStyle = createGlobalStyle`
   html, body, #root {
