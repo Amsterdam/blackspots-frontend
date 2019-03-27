@@ -4,7 +4,15 @@
 }
 
 .divIconClass svg {
-  margin-left: -12px;
-  margin-top: -12px;
-  box-sizing: border-box;
+  margin-left: -14px;
+  margin-top: -14px;
+}
+
+.divIconClass.large svg {
+  margin-left: -18px;
+  margin-top: -18px;
+}
+
+.divIconClass svg #status {
+  opacity: 0.7;
 }

@@ -1,17 +1,21 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import L from "leaflet";
-import "leaflet/dist/leaflet";
-import "leaflet/dist/leaflet.css";
-import "amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css";
-import "amsterdam-stijl/dist/css/ams-stijl.css";
-import amaps from "amsterdam-amaps/dist/amaps";
-import { renderToString } from "react-dom/server";
-import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from "./Map.styled";
-import { getAllBlackspots } from "../../services/geo-api";
-import Marker, { MarkerTypes } from "./customMarkers";
-import "./markerStyle.css";
+import React from 'react';
+import L from 'leaflet';
+import { renderToString } from 'react-dom/server';
+
+// Imports needed for amaps
+import 'leaflet/dist/leaflet';
+import 'leaflet/dist/leaflet.css';
+import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
+import 'amsterdam-stijl/dist/css/ams-stijl.css';
+import amaps from 'amsterdam-amaps/dist/amaps';
+
+import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from './Map.styled';
+import { getAllBlackspots } from '../../services/geo-api';
+import Marker from './Markers';
 import DetailPanel from '../detailPanel/DetailPanel';
+
+// CSS needed for custom leaflet markers
+import './markerStyle.css';
 
 class Map extends React.Component {
   constructor() {
@@ -66,17 +70,21 @@ class Map extends React.Component {
         L.geoJSON(geoData, {
           // Add custom markers
           pointToLayer: function(feature, latlng) {
+            // Create a marker with the correct icon and onClick method
             const { status, spot_type } = feature.properties;
-            console.log(status);
             return L.marker(latlng, {
               icon: L.divIcon({
-                className: "divIconClass",
+                // Add the correct classname based on type
+                // Risici types have a bigger icon therefore need more margin
+                className: `divIconClass ${
+                  spot_type === 'risico' ? 'large' : ''
+                }`,
                 html: renderToString(
                   <Marker type={spot_type} status={status} />
-                )
-              })
-            });
-          }
+                ),
+              }),
+            }).on('click', () => onMarkerClick(feature, latlng, map));
+          },
         }).addTo(map);
         this.setState({ loading: false });
       })
@@ -97,7 +105,7 @@ class Map extends React.Component {
 
   render() {
     const { loading, error, showPanel, feature } = this.state;
-    console.log(feature && feature.properties.description);
+
     return (
       <MapContainer>
         <div id="mapdiv" style={{ height: '100%' }}>
