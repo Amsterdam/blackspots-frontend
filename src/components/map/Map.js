@@ -11,7 +11,7 @@ import amaps from 'amsterdam-amaps/dist/amaps';
 
 import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from './Map.styled';
 import { getAllBlackspots } from '../../services/geo-api';
-import Marker from './Markers';
+import SVGIcon from './SVGIcon';
 import DetailPanel from '../detailPanel/DetailPanel';
 
 // CSS needed for custom leaflet markers
@@ -80,7 +80,7 @@ class Map extends React.Component {
                   spot_type === 'risico' ? 'large' : ''
                 }`,
                 html: renderToString(
-                  <Marker type={spot_type} status={status} />
+                  <SVGIcon type={spot_type} status={status} />
                 ),
               }),
             }).on('click', () => onMarkerClick(feature, latlng, map));

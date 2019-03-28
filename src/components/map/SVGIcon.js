@@ -3,7 +3,7 @@ import React from 'react';
 import { StatusColor, MarkerIcons } from './Map.constants';
 
 export default ({ type, status }) => {
-  const Marker = MarkerIcons[type];
+  const SVGIcon = MarkerIcons[type];
 
-  return <Marker fill={StatusColor[status]} />;
+  return <SVGIcon fill={StatusColor[status]} />;
 };
