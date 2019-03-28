@@ -1,18 +1,18 @@
 /* We need a littlebit of pure CSS to pass to leaflet */
-.divIconClass {
+.marker-div-icon {
   background-color: transparent;
 }
 
-.divIconClass svg {
+.marker-div-icon svg {
   margin-left: -14px;
   margin-top: -14px;
 }
 
-.divIconClass.large svg {
+.marker-div-icon.large svg {
   margin-left: -18px;
   margin-top: -18px;
 }
 
-.divIconClass svg .icon-status {
+.marker-div-icon svg .icon-status {
   opacity: 0.7;
 }

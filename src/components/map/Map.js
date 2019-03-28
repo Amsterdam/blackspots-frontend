@@ -76,7 +76,7 @@ class Map extends React.Component {
               icon: L.divIcon({
                 // Add the correct classname based on type
                 // Risici types have a bigger icon therefore need more margin
-                className: `divIconClass ${
+                className: `marker-div-icon ${
                   spot_type === 'risico' ? 'large' : ''
                 }`,
                 html: renderToString(
