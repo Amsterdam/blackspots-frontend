@@ -1,6 +1,8 @@
 import React from 'react';
-
 import L from 'leaflet';
+import { renderToString } from 'react-dom/server';
+
+// Imports needed for amaps
 import 'leaflet/dist/leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
@@ -9,10 +11,25 @@ import amaps from 'amsterdam-amaps/dist/amaps';
 
 import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from './Map.styled';
 import { getAllBlackspots } from '../../services/geo-api';
-import { MarkerTypes } from './customMarkers';
+import SVGIcon from './SVGIcon';
+import DetailPanel from '../detailPanel/DetailPanel';
+
+// CSS needed for custom leaflet markers
+import './markerStyle.css';
 
 class Map extends React.Component {
-  state = { error: false, loading: true };
+  constructor() {
+    super();
+    this.state = {
+      error: false,
+      loading: true,
+      showPanel: false,
+      feature: null,
+    };
+
+    this.onMarkerClick = this.onMarkerClick.bind(this);
+    this.togglePanel = this.togglePanel.bind(this);
+  }
 
   componentDidMount() {
     // Create map
@@ -42,6 +59,10 @@ class Map extends React.Component {
     map.options.minZoom = 12;
     map.options.maxZoom = 21;
 
+    // Declare the onMarkerfunction so it is locally known and useable in the
+    // then of the getAllBlackspots call
+    const onMarkerClick = this.onMarkerClick;
+
     // Get geo data
     getAllBlackspots()
       .then(geoData => {
@@ -49,13 +70,22 @@ class Map extends React.Component {
         L.geoJSON(geoData, {
           // Add custom markers
           pointToLayer: function(feature, latlng) {
-            console.log(feature.properties.status);
+            // Create a marker with the correct icon and onClick method
+            const { status, spot_type } = feature.properties;
             return L.marker(latlng, {
-              icon: MarkerTypes[feature.properties.spot_type],
-            });
+              icon: L.divIcon({
+                // Add the correct classname based on type
+                // Risici types have a bigger icon therefore need more margin
+                className: `marker-div-icon ${
+                  spot_type === 'risico' ? 'large' : ''
+                }`,
+                html: renderToString(
+                  <SVGIcon type={spot_type} status={status} />
+                ),
+              }),
+            }).on('click', () => onMarkerClick(feature, latlng, map));
           },
         }).addTo(map);
-
         this.setState({ loading: false });
       })
       .catch(() => {
@@ -63,9 +93,19 @@ class Map extends React.Component {
       });
   }
 
+  onMarkerClick(feature, latlng, map) {
+    map.flyTo([latlng.lat, latlng.lng], 14);
+    this.setState({ feature, showPanel: true });
+  }
+
+  // Toggle the detail panel
+  togglePanel() {
+    this.setState(prevState => ({ showPanel: !prevState.showPanel }));
+  }
+
   render() {
-    const { loading, error } = this.state;
-    // debugger;
+    const { loading, error, showPanel, feature } = this.state;
+
     return (
       <MapContainer>
         <div id="mapdiv" style={{ height: '100%' }}>
@@ -83,6 +123,11 @@ class Map extends React.Component {
               </p>
             </ErrorDiv>
           )}
+          <DetailPanel
+            feature={feature}
+            open={showPanel}
+            togglePanel={this.togglePanel.bind(this)}
+          />
         </div>
       </MapContainer>
     );
