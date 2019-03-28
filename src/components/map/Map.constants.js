@@ -4,7 +4,7 @@ import { ReactComponent as ProtocolErnstigIcon } from 'assets/markers/icon-proto
 import { ReactComponent as RisicoIcon } from 'assets/markers/icon-risico.svg';
 import { ReactComponent as WegvakIcon } from 'assets/markers/icon-wegvak.svg';
 
-export const MarkerTypes = {
+export const MarkerIcons = {
   blackspot: BlackSpotIcon,
   'protocol dodelijk': ProtocolIcon,
   'protocol ernstig': ProtocolErnstigIcon,
