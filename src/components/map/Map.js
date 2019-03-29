@@ -125,7 +125,7 @@ class Map extends React.Component {
           )}
           <DetailPanel
             feature={feature}
-            open={showPanel}
+            isOpen={showPanel}
             togglePanel={this.togglePanel.bind(this)}
           />
         </div>

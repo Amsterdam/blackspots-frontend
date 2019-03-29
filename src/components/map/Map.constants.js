@@ -5,18 +5,18 @@ import { ReactComponent as RisicoIcon } from 'assets/markers/icon-risico.svg';
 import { ReactComponent as WegvakIcon } from 'assets/markers/icon-wegvak.svg';
 
 export const MarkerIcons = {
-  blackspot: BlackSpotIcon,
-  'protocol dodelijk': ProtocolIcon,
-  'protocol ernstig': ProtocolErnstigIcon,
-  risico: RisicoIcon,
-  wegvak: WegvakIcon,
+  Blackspot: BlackSpotIcon,
+  Protocol_dodelijk: ProtocolIcon,
+  Protocol_ernstig: ProtocolErnstigIcon,
+  Risico: RisicoIcon,
+  Wegvak: WegvakIcon,
 };
 
 export const StatusColor = {
-  'onderzoek ontwerp': '#FF9100',
-  voorbereiding: '#FFE600',
-  gereed: '#00A03C',
-  'geen maatregel': '#009DE6',
-  uitvoering: 'tomato',
-  onbekend: 'rgba(236,0,0)',
+  'Onderzoek/ ontwerp': '#FF9100',
+  Voorbereiding: '#FFE600',
+  Gereed: '#00A03C',
+  'Geen maatregel': '#009DE6',
+  Uitvoering: 'tomato',
+  Onbekend: 'rgba(236,0,0)',
 };
