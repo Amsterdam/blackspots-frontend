@@ -6,9 +6,12 @@ import {
   CloseBtn,
   PanelHeader,
   PanelContent,
+  StatusColor,
 } from './DetailPanel.styled';
+import { MarkerIcons } from 'constants.js';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import DataTable from '../../shared/dataTable/DataTable';
+import SVGIcon from '../SVGIcon/SVGIcon';
 
 const DetailPanel = ({ isOpen, togglePanel, feature }) => {
   if (!feature) {
@@ -37,11 +40,16 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             <tbody>
               <tr>
                 <td>Locatie type</td>
-                <td>{spot_type}</td>
+                <td>
+                  <SVGIcon small type={spot_type} />
+                  {spot_type}
+                </td>
               </tr>
               <tr>
                 <td>Status</td>
-                <td>{status}</td>
+                <td>
+                  <StatusColor status={status}>{status}</StatusColor>
+                </td>
               </tr>
               <tr>
                 <td>Stadsdeel</td>

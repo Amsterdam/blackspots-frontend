@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BlackspotStatusColor } from 'constants.js';
 
 export const DetailPanelStyled = styled.div`
   width: ${props => (props.isOpen ? '480px' : '0px')};
@@ -24,6 +25,7 @@ export const DetailPanelStyled = styled.div`
     line-height: 28px;
     margin-top: 0;
     margin-bottom: 0;
+    height: auto;
   }
 `;
 
@@ -34,6 +36,8 @@ export const PanelHeader = styled.div`
 `;
 
 export const PanelContent = styled.div`
+  display: flex;
+  flex-direction: column;
   margin: 0 15px 15px 15px;
 `;
 
@@ -46,4 +50,28 @@ export const CloseBtn = styled.button`
   border: lightgray solid 2px;
   cursor: pointer;
   float: right;
+`;
+
+export const StatusColor = styled.span`
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background-color: ${props => BlackspotStatusColor[props.status]};
+    margin-right: 10px;
+    margin-bottom: -2px;
+  }
+`;
+
+export const BlackspotIcon = styled.div`
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background-color: ${props => BlackspotStatusColor[props.status]};
+    margin-right: 10px;
+    margin-bottom: -2px;
+  }
 `;

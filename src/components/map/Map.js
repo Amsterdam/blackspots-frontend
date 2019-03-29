@@ -11,7 +11,7 @@ import amaps from 'amsterdam-amaps/dist/amaps';
 
 import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from './Map.styled';
 import { getAllBlackspots } from '../../services/geo-api';
-import SVGIcon from './SVGIcon';
+import SVGIcon from '../SVGIcon/SVGIcon';
 import DetailPanel from '../detailPanel/DetailPanel';
 
 // CSS needed for custom leaflet markers
