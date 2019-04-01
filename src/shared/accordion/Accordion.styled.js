@@ -7,14 +7,14 @@ export const AccordionStyled = styled.div`
 `;
 
 export const AccordionText = styled.div`
-  height: ${props => (props.open ? '100px' : '0px')};
+  height: ${props => (props.open ? '120px' : '0px')};
   transition: height 0.3s ease-out;
   overflow: hidden;
 `;
 
 export const AccordionTextInner = styled.div`
   background-color: white;
-  padding: 12px 17px 12px 17px;
+  padding: 5px 17px 0px 17px;
   height: 100%;
 `;
 
@@ -22,7 +22,7 @@ export const AccordionTitle = styled.div`
   height: 21px;
   color: #000000;
   font-family: ${props => props.theme.fontFamily.avenirHeavy};
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 900;
   line-height: 21px;
   padding: 17px;

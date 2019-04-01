@@ -29,7 +29,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
     return (
       <DetailPanelStyled isOpen={isOpen}>
         <PanelHeader>
-          <h1>{spot_id}</h1>
+          <h3>{spot_id}</h3>
           <CloseBtn onClick={togglePanel}>
             <CrossIcon />
           </CloseBtn>
@@ -58,7 +58,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
               <tr>
                 <td>Breedte- en lengtegraad</td>
                 <td>
-                  {lng} {lat}
+                  {lat} {lng}
                 </td>
               </tr>
               <tr>
@@ -67,7 +67,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
               </tr>
             </tbody>
           </DataTable>
-          <h1>Maatregelen</h1>
+          <h3>Maatregelen</h3>
           <DataTable>
             <tbody>
               <tr>

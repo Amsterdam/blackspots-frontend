@@ -11,12 +11,12 @@ export const DetailPanelStyled = styled.div`
   background-color: ${props => props.theme.colors.primaryWhite};
   z-index: 1010;
 
-  h1 {
+  h3 {
     color: ${props => props.theme.colors.primaryRed};
     font-size: 18px;
     font-weight: 900;
     line-height: 20px;
-    margin-bottom: 0;
+    margin-bottom: 10px;
   }
 
   h2 {

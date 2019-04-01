@@ -23,6 +23,6 @@ export const BlackspotStatusColor = {
   Voorbereiding: '#FFE600',
   Gereed: '#00A03C',
   'Geen maatregel': '#009DE6',
-  Uitvoering: 'tomato',
+  Uitvoering: 'black',
   Onbekend: 'rgba(236,0,0)',
 };

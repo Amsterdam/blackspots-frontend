@@ -13,7 +13,7 @@ export default () => {
       <NavLink to={appRoutes.HOME}>
         <BlueLinkButton chevDirection="left" text="Terug naar kaart" />
       </NavLink>
-      <h2>Begrippenlijst</h2>
+      <h1>Begrippenlijst</h1>
 
       <Typography size="L">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

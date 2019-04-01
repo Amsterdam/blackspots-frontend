@@ -26,7 +26,6 @@ const Typography = styled.p`
         return null;
     }
   }};
-  margin-bottom: 40px;
 `;
 
 Typography.propTypes = {
