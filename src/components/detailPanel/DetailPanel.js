@@ -8,7 +8,6 @@ import {
   PanelContent,
   StatusColor,
 } from './DetailPanel.styled';
-import { MarkerIcons } from 'constants.js';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';

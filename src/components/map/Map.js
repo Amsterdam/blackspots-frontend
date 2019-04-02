@@ -75,7 +75,7 @@ class Map extends React.Component {
             return L.marker(latlng, {
               icon: L.divIcon({
                 // Add the correct classname based on type
-                // Risici types have a bigger icon therefore need more margin
+                // Risico types have a bigger icon therefore need more margin
                 className: `marker-div-icon ${
                   spot_type === 'risico' ? 'large' : ''
                 }`,
@@ -94,7 +94,7 @@ class Map extends React.Component {
   }
 
   onMarkerClick(feature, latlng, map) {
-    map.flyTo([latlng.lat, latlng.lng], 14);
+    map.flyTo(latlng, 14);
     this.setState({ feature, showPanel: true });
   }
 
