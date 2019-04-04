@@ -88,8 +88,9 @@ class Map extends React.Component {
         }).addTo(map);
         this.setState({ loading: false });
       })
-      .catch(() => {
+      .catch(err => {
         this.setState({ error: true, loading: false });
+        console.error(err);
       });
   }
 

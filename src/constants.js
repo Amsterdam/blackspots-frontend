@@ -11,18 +11,18 @@ export const appRoutes = {
 };
 
 export const MarkerIcons = {
-  Blackspot: BlackSpotIcon,
-  Protocol_dodelijk: ProtocolIcon,
-  Protocol_ernstig: ProtocolErnstigIcon,
-  Risico: RisicoIcon,
-  Wegvak: WegvakIcon,
+  blackspot: BlackSpotIcon,
+  'protocol dodelijk': ProtocolIcon,
+  'protocol ernstig': ProtocolErnstigIcon,
+  risico: RisicoIcon,
+  wegvak: WegvakIcon,
 };
 
 export const BlackspotStatusColor = {
-  'Onderzoek/ ontwerp': '#FF9100',
-  Voorbereiding: '#FFE600',
-  Gereed: '#00A03C',
-  'Geen maatregel': '#009DE6',
-  Uitvoering: 'black',
-  Onbekend: 'rgba(236,0,0)',
+  'onderzoek ontwerp': '#FF9100',
+  voorbereiding: '#FFE600',
+  gereed: '#00A03C',
+  'geen maatregel': '#009DE6',
+  uitvoering: 'black',
+  onbekend: 'rgba(236,0,0)',
 };
