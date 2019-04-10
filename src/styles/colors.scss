@@ -1,0 +1,25 @@
+$neutralGrey1: #f5f5f5;
+$neutralGrey2: #e6e6e6;
+$neutralGrey3: #b4b4b4;
+$neutralGrey4: #767676;
+$neutralGrey5: #323232;
+$primaryWhite: #ffffff;
+$primaryBlack: #000000;
+$primaryRed: #ec0000;
+$primaryBlue: #004699;
+
+$onderzoek: #ff9100;
+$voorbereiding: #ffe600;
+$gereed: #00a03c;
+$geen-maatregel: #009de6;
+$uitvoering: black;
+$onbekend: #ec0000;
+
+:export {
+  ONDERZOEK: $onderzoek;
+  VOORBEREIDING: $voorbereiding;
+  GEREED: $gereed;
+  GEEN_MAATREGEL: $geen-maatregel;
+  UITVOERING: $uitvoering;
+  ONBEKEND: $onbekend;
+}
