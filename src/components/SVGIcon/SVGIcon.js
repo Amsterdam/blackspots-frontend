@@ -9,11 +9,11 @@ const SVGIcon = ({ type, status, small }) => {
   const markerStatus = SpotStatusColor[status];
 
   if (!SVGIcon) {
-    console.error('Unable to resolve spot type: ', type);
+    console.error('Unable to resolve spot type:', type);
   }
 
-  if (markerStatus) {
-    console.error('Unable to resolve spot type: ', type);
+  if (!small && !markerStatus) {
+    console.error('Unable to resolve spot status:', status);
   }
 
   if (small) {
