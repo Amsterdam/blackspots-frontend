@@ -11,7 +11,7 @@ import amaps from 'amsterdam-amaps/dist/amaps';
 
 import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from './Map.styled';
 import { getAllBlackspots } from '../../services/geo-api';
-import SVGIcon from './SVGIcon';
+import SVGIcon from '../SVGIcon/SVGIcon';
 import DetailPanel from '../detailPanel/DetailPanel';
 
 // CSS needed for custom leaflet markers
@@ -75,7 +75,7 @@ class Map extends React.Component {
             return L.marker(latlng, {
               icon: L.divIcon({
                 // Add the correct classname based on type
-                // Risici types have a bigger icon therefore need more margin
+                // Risico types have a bigger icon therefore need more margin
                 className: `marker-div-icon ${
                   spot_type === 'risico' ? 'large' : ''
                 }`,
@@ -88,13 +88,14 @@ class Map extends React.Component {
         }).addTo(map);
         this.setState({ loading: false });
       })
-      .catch(() => {
+      .catch(err => {
         this.setState({ error: true, loading: false });
+        console.error(err);
       });
   }
 
   onMarkerClick(feature, latlng, map) {
-    map.flyTo([latlng.lat, latlng.lng], 14);
+    map.flyTo(latlng, 14);
     this.setState({ feature, showPanel: true });
   }
 
@@ -125,7 +126,7 @@ class Map extends React.Component {
           )}
           <DetailPanel
             feature={feature}
-            open={showPanel}
+            isOpen={showPanel}
             togglePanel={this.togglePanel.bind(this)}
           />
         </div>

@@ -6,6 +6,7 @@ import ContentBox from 'shared/contentBox/ContentBox';
 import Typography from 'shared/typography/Typography';
 import { ContactStyled } from './ContactPage.styled';
 import { appRoutes } from 'constants.js';
+import DataTable from '../../shared/dataTable/DataTable';
 
 export default () => {
   return (
@@ -14,7 +15,7 @@ export default () => {
         <NavLink to={appRoutes.HOME}>
           <BlueLinkButton chevDirection="left" text="Terug naar kaart" />
         </NavLink>
-        <h2>Contact</h2>
+        <h1>Contact</h1>
 
         <Typography size="L">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -23,9 +24,9 @@ export default () => {
           aliquip ex ea commodo consequat.
         </Typography>
 
-        <h6>Details</h6>
+        <h3>Details</h3>
 
-        <table>
+        <DataTable>
           <tbody>
             <tr>
               <td>Publicatiedatum</td>
@@ -68,9 +69,9 @@ export default () => {
               </td>
             </tr>
           </tbody>
-        </table>
+        </DataTable>
 
-        <h6>Werkgroep Blackspots Amsterdam</h6>
+        <h3>Werkgroep Blackspots Amsterdam</h3>
         <Typography>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad

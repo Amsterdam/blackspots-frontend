@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="36px" height="36px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <polygon class="icon-status" points="18,0 36,36 0,36"></polygon>
-  <polygon fill="#FFFFFF" points="18,13 26,30 10,30"></polygon>
-  <polygon fill="#000000" points="18,16 24,29 12,29"></polygon>
+<svg width="40px" height="40px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <polygon class="icon-status" points="20,0 40,34 0,34"></polygon>
+  <polygon fill="#FFFFFF" points="20,11 31,29 9,29"></polygon>
+  <polygon fill="#000000" points="20,13 29,28 11,28"></polygon>
 </svg>

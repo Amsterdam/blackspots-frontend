@@ -14,10 +14,4 @@ export default {
     avenirRoman: `AvenirLTStd-Roman, verdana, sans-serif`,
     avenirHeavy: `'AvenirLTStd-Heavy', arial, sans-serif;`,
   },
-  paddings: {
-    top: '32px',
-    right: '40px',
-    bottom: '32px',
-    left: '40px',
-  },
 };
