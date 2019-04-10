@@ -5,6 +5,6 @@ import DetailPanel from './DetailPanel';
 
 describe('Header', () => {
   it('should render without errors', () => {
-    shallow(<DetailPanel />);
+    shallow(<DetailPanel isOpen={true} togglePanel={() => {}} />);
   });
 });

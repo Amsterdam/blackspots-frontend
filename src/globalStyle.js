@@ -14,104 +14,23 @@ const GlobalStyle = createGlobalStyle`
     }};
   }
 
-  h1 {
-    width: 232px;
-    height: 33px;
-    font-family: ${props => {
-      return props.theme.fontFamily.avenirHeavy;
-    }};
-    font-size: 30px;
-    font-weight: 900;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.1;
-    letter-spacing: normal;
-    color: ${props => props.theme.colors.black};
-  }
-
-  h2 {
-    height: 37px;
-    font-family: ${props => {
-      return props.theme.fontFamily.avenirHeavy;
-    }};
-    font-size: 28px;
-    font-weight: 900;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.32;
-    letter-spacing: normal;
-    color: ${props => props.theme.colors.black};
-  }
-
-  h3 {
-    height: 30px;
-    font-family: ${props => {
-      return props.theme.fontFamily.avenirHeavy;
-    }};
-    font-size: 25px;
-    font-weight: 900;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.2;
-    letter-spacing: normal;
-    color: ${props => props.theme.colors.black};
-  }
-
-  h4 {
-    height: 25px;
-    font-family: ${props => {
-      return props.theme.fontFamily.avenirHeavy;
-    }};
-    font-size: 20px;
-    font-weight: 900;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.25;
-    letter-spacing: normal;
-    color: ${props => props.theme.colors.black};
-  }
-
-  h5 {
-    height: 23px;
-    font-family: ${props => {
-      return props.theme.fontFamily.avenirHeavy;
-    }};
-    font-size: 18px;
-    font-weight: 900;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.28;
-    letter-spacing: normal;
-    color: ${props => props.theme.colors.black};
-  }
-
-  h6 {
-    font-family: ${props => {
-      return props.theme.fontFamily.avenirHeavy;
-    }};
-    height: 20px;
-    width: 620px;
-    color: #EC0000;
-    font-size: 20px;
-    font-weight: 900;
-    line-height: 20px;
-    padding-top: 20px;
-    margin-bottom: 16px;
-  }
-
   a {
-    color: ${props => props.theme.colors.black};
+    color: ${props => props.theme.colors.primaryBlack};
     text-decoration-line: none;
 
     &:hover {
-      color: ${props => props.theme.colors.red};
+      color: ${props => props.theme.colors.primaryRed};
       text-decoration-line: underline;
       cursor: pointer;
     }
 
     &:hover h1, &:hover h2, &:hover h3, &:hover h4, &:hover h5, &:hover h6 {
-      color: ${props => props.theme.colors.red};
+      color: ${props => props.theme.colors.primaryRed};
     }
+  }
+
+  b {
+    font-weight: 400;
   }
 
   @font-face {
