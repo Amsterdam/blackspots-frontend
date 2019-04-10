@@ -6,7 +6,7 @@ import { renderToString } from 'react-dom/server';
 import 'leaflet/dist/leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
-import 'amsterdam-stijl/dist/css/ams-stijl.css';
+import 'amsterdam-stijl/dist/css/ams-map.css';
 import amaps from 'amsterdam-amaps/dist/amaps';
 
 import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from './Map.styled';
@@ -16,6 +16,7 @@ import DetailPanel from '../detailPanel/DetailPanel';
 
 // CSS needed for custom leaflet markers
 import './markerStyle.css';
+import FilterPanel from '../filterPanel/FilterPanel';
 
 class Map extends React.Component {
   constructor() {
@@ -124,6 +125,7 @@ class Map extends React.Component {
               </p>
             </ErrorDiv>
           )}
+          <FilterPanel />
           <DetailPanel
             feature={feature}
             isOpen={showPanel}

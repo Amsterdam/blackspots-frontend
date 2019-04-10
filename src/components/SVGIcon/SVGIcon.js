@@ -1,33 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { BlackspotStatusColor, MarkerIcons } from 'constants.js';
-
-import './SVGIcon.css';
+import { SpotStatusColor, SpotIcons } from 'constants.js';
+import styles from './SVGIcon.module.scss';
 
 const SVGIcon = ({ type, status, small }) => {
-  const SVGIcon = MarkerIcons[type];
+  const SVGIcon = SpotIcons[type];
+  const markerStatus = SpotStatusColor[status];
 
-  if (!SVGIcon || !BlackspotStatusColor[status]) {
-    console.error('Unable to resolve a spot type or status');
-    return '';
+  if (!SVGIcon) {
+    console.error('Unable to resolve spot type: ', type);
+  }
+
+  if (markerStatus) {
+    console.error('Unable to resolve spot type: ', type);
   }
 
   if (small) {
-    return <SVGIcon className="small-icon" />;
+    return <SVGIcon className={styles.SmallIcon} />;
   } else {
-    return <SVGIcon fill={BlackspotStatusColor[status]} />;
+    return <SVGIcon fill={markerStatus} />;
   }
 };
 
 SVGIcon.defaultProps = {
   small: false,
+  status: null,
 };
 
 SVGIcon.propTypes = {
   small: PropTypes.bool,
-  type: PropTypes.oneOf(Object.keys(MarkerIcons)).isRequired,
-  status: PropTypes.oneOf(Object.keys(BlackspotStatusColor)).isRequired,
+  type: PropTypes.oneOf(Object.keys(SpotIcons)).isRequired,
+  status: PropTypes.oneOf(Object.keys(SpotStatusColor)),
 };
 
 export default SVGIcon;

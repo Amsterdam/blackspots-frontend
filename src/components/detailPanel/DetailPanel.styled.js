@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BlackspotStatusColor } from 'constants.js';
+import { SpotStatusColor } from 'constants.js';
 
 export const DetailPanelStyled = styled.div`
   width: ${props => (props.isOpen ? '480px' : '0px')};
@@ -58,7 +58,7 @@ export const StatusColor = styled.span`
     display: inline-block;
     height: 16px;
     width: 16px;
-    background-color: ${props => BlackspotStatusColor[props.status]};
+    background-color: ${props => SpotStatusColor[props.status]};
     margin-right: 10px;
     margin-bottom: -2px;
   }
@@ -70,7 +70,7 @@ export const BlackspotIcon = styled.div`
     display: inline-block;
     height: 16px;
     width: 16px;
-    background-color: ${props => BlackspotStatusColor[props.status]};
+    background-color: ${props => SpotStatusColor[props.status]};
     margin-right: 10px;
     margin-bottom: -2px;
   }

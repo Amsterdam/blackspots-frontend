@@ -1,0 +1,61 @@
+@import 'styles/styles.scss';
+
+.FilterPanel {
+  height: 540px;
+  width: 285px;
+  margin: 0 0 0 10px;
+  position: absolute;
+  bottom: 10px;
+  z-index: 1010;
+  background-color: $primaryWhite;
+  box-shadow: 2px 2px 0 0 $neutralGrey4;
+
+  h5 {
+    font-size: 16px;
+    font-weight: 900;
+    margin: 4px 0 4px 0;
+  }
+}
+
+.FilterContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+
+  label {
+    display: flex;
+    align-items: center;
+    margin: 4px 0px 4px 0;
+
+    input[type='checkbox'] {
+      height: 24px;
+      width: 24px;
+      margin-right: 10px;
+    }
+  }
+}
+
+.StatusDiv {
+  height: 18px;
+  width: 18px;
+  margin-right: 8px;
+}
+
+.Onderzoek {
+  background-color: $onderzoek;
+}
+.Voorbereiding {
+  background-color: $voorbereiding;
+}
+.Gereed {
+  background-color: $gereed;
+}
+.GeenMaatregel {
+  background-color: $geen-maatregel;
+}
+.Uitvoering {
+  background-color: $uitvoering;
+}
+.Onbekend {
+  background-color: $onbekend;
+}

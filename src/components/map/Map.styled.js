@@ -10,7 +10,7 @@ export const ErrorDiv = styled.div`
   position: absolute;
   left: calc(50% - 150px);
   bottom: 50%;
-  z-index: 1010;
+  z-index: 1011;
   background-color: white;
   padding: 0 15px 0 15px;
   border-radius: 5px;
@@ -29,7 +29,7 @@ export const LoadingDiv = styled.div`
   position: absolute;
   left: calc(50% - 32px);
   bottom: 50%;
-  z-index: 1010;
+  z-index: 1011;
   background-color: white;
   padding: 5px;
   border-radius: 5px;
