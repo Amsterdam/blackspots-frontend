@@ -19,7 +19,6 @@ RUN git config --global url."https://github.com/".insteadOf git@github.com:
 
 COPY package.json package-lock.json /app/
 
-RUN npm cache clean --force
 RUN npm config set registry https://repo.datapunt.amsterdam.nl/repository/npm-group/ && \
     npm --production=false \
         --unsafe-perm \
