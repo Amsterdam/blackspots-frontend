@@ -31,7 +31,7 @@ node {
 
     stage("Build develop image") {
         tryStep "build", {
-            def image = docker.build("build.app.amsterdam.nl:5000:${env.BUILD_NUMBER}")
+            def image = docker.build("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}")
             image.push()
         }
     }
@@ -43,7 +43,7 @@ if (BRANCH == "master") {
     node {
         stage('Push acceptance image') {
             tryStep "image tagging", {
-                def image = docker.image("build.app.amsterdam.nl:5000:${env.BUILD_NUMBER}")
+                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}")
                 image.pull()
                 image.push("acceptance")
             }
@@ -70,7 +70,7 @@ if (BRANCH == "master") {
     node {
         stage('Push production image') {
             tryStep "image tagging", {
-                def image = docker.image("build.app.amsterdam.nl:5000:${env.BUILD_NUMBER}")
+                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}")
                 image.pull()
                 image.push("production")
                 image.push("latest")
