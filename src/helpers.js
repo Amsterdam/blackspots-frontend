@@ -12,3 +12,8 @@ export function getSpotTypeFromMarker(marker) {
 export function getStatusTypeFromMarker(marker) {
   return marker.feature.properties.status;
 }
+
+// Get the year of a marker
+export function getYearFromMarker(marker) {
+  return marker.feature.properties.jaar_blackspotlijst;
+}

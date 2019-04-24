@@ -1,16 +1,18 @@
 import { getSpotTypeFromMarker } from 'helpers';
-import { getStatusTypeFromMarker } from '../../helpers';
+import { getStatusTypeFromMarker, getYearFromMarker } from '../../helpers';
 
 // Loop through markers and set the visibilty based on type, status or year
 export function evaluateMarkerVisibility(
   markers,
   spotTypeFilter,
-  spotStatusTypeFilter
+  spotStatusTypeFilter,
+  spotYearFilter
 ) {
   markers.forEach(marker => {
     if (
       isVisibleSpotType(spotTypeFilter, marker) &&
-      isVisibleStatusType(spotStatusTypeFilter, marker)
+      isVisibleStatusType(spotStatusTypeFilter, marker) &&
+      isVisibleYear(spotYearFilter, marker)
     ) {
       marker._icon.style.display = 'initial';
     } else {
@@ -31,6 +33,12 @@ function isVisibleStatusType(spotStatusTypeFilter, marker) {
   return allValuesAreFalse(spotStatusTypeFilter)
     ? true
     : spotStatusTypeFilter[statusType];
+}
+
+// Check if a marker should be visible based on the year filter
+function isVisibleYear(spotYearFilter, marker) {
+  const year = getYearFromMarker(marker);
+  return allValuesAreFalse(spotYearFilter) ? true : spotYearFilter[year];
 }
 
 // Check if all values of an object are falsy

@@ -25,7 +25,7 @@ class Map extends React.Component {
       loading: true,
       showDetailPanel: false,
       feature: null,
-      yearFilter: [],
+      spotYearFilter: [],
       spotStatusTypeFilter: {
         [SpotStatusTypes.ONDERZOEK]: false,
         [SpotStatusTypes.VOORBEREIDING]: false,
@@ -54,6 +54,7 @@ class Map extends React.Component {
     );
     this.setSpotTypeFilter = this.setSpotTypeFilter.bind(this);
     this.setSpotStatusTypeFilter = this.setSpotStatusTypeFilter.bind(this);
+    this.setSpotYearFilter = this.setSpotYearFilter.bind(this);
   }
 
   componentDidMount() {
@@ -87,13 +88,30 @@ class Map extends React.Component {
     // Get geo data
     getAllBlackspots()
       .then(geoData => {
-        this.setState({ geoData, loading: false });
+        const spotYearFilter = this.getYearsFilterFromMarkers(geoData);
+        this.setState({ geoData, loading: false, spotYearFilter });
         this.renderMarkers();
       })
       .catch(err => {
         this.setState({ error: true, loading: false });
         console.error(err);
       });
+  }
+
+  // Get all the years on which to enable filters
+  getYearsFilterFromMarkers(geoData) {
+    const years = [
+      ...new Set(geoData.features.map(f => f.properties.jaar_blackspotlijst)),
+    ].sort();
+    const spotYearsFilter = {};
+    years.forEach(y => {
+      // Check if year is actual a truthy value, some spots have no year
+      // Will be fixed in time I suppose
+      if (y) {
+        spotYearsFilter[y] = false;
+      }
+    });
+    return spotYearsFilter;
   }
 
   setSpotTypeFilter(spotTypeFilter) {
@@ -107,12 +125,17 @@ class Map extends React.Component {
     );
   }
 
+  setSpotYearFilter(spotYearFilter) {
+    this.setState(() => ({ spotYearFilter }), this.triggerVisibiltyEvaluation);
+  }
+
   triggerVisibiltyEvaluation() {
-    const { spotTypeFilter, spotStatusTypeFilter } = this.state;
+    const { spotTypeFilter, spotStatusTypeFilter, spotYearFilter } = this.state;
     evaluateMarkerVisibility(
       this.geoLayer.getLayers(),
       spotTypeFilter,
-      spotStatusTypeFilter
+      spotStatusTypeFilter,
+      spotYearFilter
     );
   }
 
@@ -164,6 +187,7 @@ class Map extends React.Component {
       feature,
       spotTypeFilter,
       spotStatusTypeFilter,
+      spotYearFilter,
     } = this.state;
 
     return (
@@ -190,6 +214,8 @@ class Map extends React.Component {
             setSpotTypeFilter={this.setSpotTypeFilter}
             spotStatusTypeFilter={spotStatusTypeFilter}
             setSpotStatusTypeFilter={this.setSpotStatusTypeFilter}
+            spotYearFilter={spotYearFilter}
+            setSpotYearFilter={this.setSpotYearFilter}
           />
           <DetailPanel
             feature={feature}
