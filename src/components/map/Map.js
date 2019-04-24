@@ -169,7 +169,7 @@ class Map extends React.Component {
 
   onMarkerClick(feature, latlng) {
     this.map.flyTo(latlng, 14);
-    this.setState({ feature, showPanel: true });
+    this.setState({ feature, showDetailPanel: true });
   }
 
   // Toggle the detail panel
@@ -220,7 +220,7 @@ class Map extends React.Component {
           <DetailPanel
             feature={feature}
             isOpen={showDetailPanel}
-            togglePanel={this.toggleDetailPanel.bind(this)}
+            togglePanel={this.toggleDetailPanel}
           />
         </div>
       </MapContainer>
