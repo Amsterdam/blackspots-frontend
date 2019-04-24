@@ -3,7 +3,6 @@ import L from 'leaflet';
 import { renderToString } from 'react-dom/server';
 
 // Imports needed for amaps
-import 'leaflet/dist/leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
 import 'amsterdam-stijl/dist/css/ams-map.css';
@@ -13,10 +12,10 @@ import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from './Map.styled';
 import { getAllBlackspots } from '../../services/geo-api';
 import SVGIcon from '../SVGIcon/SVGIcon';
 import DetailPanel from '../detailPanel/DetailPanel';
-
-// CSS needed for custom leaflet markers
-import './markerStyle.css';
 import FilterPanel from '../filterPanel/FilterPanel';
+import { evaluateMarkerVisibility } from './helpers';
+import { SpotTypes, SpotStatusTypes } from 'constants.js';
+import './markerStyle.css';
 
 class Map extends React.Component {
   constructor() {
@@ -24,17 +23,42 @@ class Map extends React.Component {
     this.state = {
       error: false,
       loading: true,
-      showPanel: false,
+      showDetailPanel: false,
       feature: null,
+      yearFilter: [],
+      spotStatusTypeFilter: {
+        [SpotStatusTypes.ONDERZOEK]: false,
+        [SpotStatusTypes.VOORBEREIDING]: false,
+        [SpotStatusTypes.GEREED]: false,
+        [SpotStatusTypes.GEEN_MAATREGEL]: false,
+        [SpotStatusTypes.UITVOERING]: false,
+        [SpotStatusTypes.ONBEKEND]: false,
+      },
+      spotTypeFilter: {
+        [SpotTypes.BLACKSPOT]: false,
+        [SpotTypes.PROTOCOL_DODELIJK]: false,
+        [SpotTypes.PROTOCOL_ERNSTIG]: false,
+        [SpotTypes.RISICO]: false,
+        [SpotTypes.WEGVAK]: false,
+      },
+      geoData: null,
     };
 
+    this.map = null;
+    this.geoLayer = null;
+
     this.onMarkerClick = this.onMarkerClick.bind(this);
-    this.togglePanel = this.togglePanel.bind(this);
+    this.toggleDetailPanel = this.toggleDetailPanel.bind(this);
+    this.triggerVisibiltyEvaluation = this.triggerVisibiltyEvaluation.bind(
+      this
+    );
+    this.setSpotTypeFilter = this.setSpotTypeFilter.bind(this);
+    this.setSpotStatusTypeFilter = this.setSpotStatusTypeFilter.bind(this);
   }
 
   componentDidMount() {
     // Create map
-    const map = amaps.createMap({
+    this.map = amaps.createMap({
       center: {
         latitude: 52.36988741057662,
         longitude: 4.8966407775878915,
@@ -53,41 +77,18 @@ class Map extends React.Component {
         transparent: true,
         format: 'image/png',
       })
-      .addTo(map);
+      .addTo(this.map);
 
     // Set zoom config manually after adding WMS
     // For some reason this doesn't work when set during the creation of the map
-    map.options.minZoom = 12;
-    map.options.maxZoom = 21;
-
-    // Declare the onMarkerfunction so it is locally known and useable in the
-    // then of the getAllBlackspots call
-    const onMarkerClick = this.onMarkerClick;
+    this.map.options.minZoom = 12;
+    this.map.options.maxZoom = 21;
 
     // Get geo data
     getAllBlackspots()
       .then(geoData => {
-        // Add the geo data to the map as markers
-        L.geoJSON(geoData, {
-          // Add custom markers
-          pointToLayer: function(feature, latlng) {
-            // Create a marker with the correct icon and onClick method
-            const { status, spot_type } = feature.properties;
-            return L.marker(latlng, {
-              icon: L.divIcon({
-                // Add the correct classname based on type
-                // Risico types have a bigger icon therefore need more margin
-                className: `marker-div-icon ${
-                  spot_type === 'risico' ? 'large' : ''
-                }`,
-                html: renderToString(
-                  <SVGIcon type={spot_type} status={status} />
-                ),
-              }),
-            }).on('click', () => onMarkerClick(feature, latlng, map));
-          },
-        }).addTo(map);
-        this.setState({ loading: false });
+        this.setState({ geoData, loading: false });
+        this.renderMarkers();
       })
       .catch(err => {
         this.setState({ error: true, loading: false });
@@ -95,21 +96,80 @@ class Map extends React.Component {
       });
   }
 
-  onMarkerClick(feature, latlng, map) {
-    map.flyTo(latlng, 14);
+  setSpotTypeFilter(spotTypeFilter) {
+    this.setState(() => ({ spotTypeFilter }), this.triggerVisibiltyEvaluation);
+  }
+
+  setSpotStatusTypeFilter(spotStatusTypeFilter) {
+    this.setState(
+      () => ({ spotStatusTypeFilter }),
+      this.triggerVisibiltyEvaluation
+    );
+  }
+
+  triggerVisibiltyEvaluation() {
+    const { spotTypeFilter, spotStatusTypeFilter } = this.state;
+    evaluateMarkerVisibility(
+      this.geoLayer.getLayers(),
+      spotTypeFilter,
+      spotStatusTypeFilter
+    );
+  }
+
+  renderMarkers() {
+    // Declare funtions so they are locally available
+    const onMarkerClick = this.onMarkerClick;
+
+    this.geoLayer = L.geoJSON(this.state.geoData, {
+      // Add custom markers
+      onEachFeature: function(feature, layer) {
+        layer.on('click', ({ latlng }) => {
+          onMarkerClick(feature, latlng);
+        });
+      },
+      pointToLayer: function(feature, latlng) {
+        // Create a marker with the correct icon and onClick method
+        const { status, spot_type } = feature.properties;
+        return L.marker(latlng, {
+          icon: L.divIcon({
+            // Add the correct classname based on type
+            // Risico types have a bigger icon therefore need more margin
+            className: `marker-div-icon ${
+              spot_type === 'risico' ? 'large' : ''
+            }`,
+            html: renderToString(<SVGIcon type={spot_type} status={status} />),
+          }),
+        });
+      },
+    }).addTo(this.map);
+  }
+
+  onMarkerClick(feature, latlng) {
+    this.map.flyTo(latlng, 14);
     this.setState({ feature, showPanel: true });
   }
 
   // Toggle the detail panel
-  togglePanel() {
-    this.setState(prevState => ({ showPanel: !prevState.showPanel }));
+  toggleDetailPanel() {
+    this.setState(prevState => ({
+      showDetailPanel: !prevState.showDetailPanel,
+    }));
   }
 
   render() {
-    const { loading, error, showPanel, feature } = this.state;
+    const {
+      loading,
+      error,
+      showDetailPanel,
+      feature,
+      spotTypeFilter,
+      spotStatusTypeFilter,
+    } = this.state;
 
     return (
       <MapContainer>
+        {/* {this.state.spotTypeFilter[0]} */}
+        {/* <button onClick={() => this.removeLayer()}>Clear</button> */}
         <div id="mapdiv" style={{ height: '100%' }}>
           {loading && (
             <LoadingDiv>
@@ -125,11 +185,16 @@ class Map extends React.Component {
               </p>
             </ErrorDiv>
           )}
-          <FilterPanel />
+          <FilterPanel
+            spotTypeFilter={spotTypeFilter}
+            setSpotTypeFilter={this.setSpotTypeFilter}
+            spotStatusTypeFilter={spotStatusTypeFilter}
+            setSpotStatusTypeFilter={this.setSpotStatusTypeFilter}
+          />
           <DetailPanel
             feature={feature}
-            isOpen={showPanel}
-            togglePanel={this.togglePanel.bind(this)}
+            isOpen={showDetailPanel}
+            togglePanel={this.toggleDetailPanel.bind(this)}
           />
         </div>
       </MapContainer>
