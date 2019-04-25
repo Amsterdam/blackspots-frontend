@@ -34,11 +34,14 @@ export const ButtonBar = styled.div`
     color: ${props => props.theme.colors.primaryBlack};
     border: none;
     background-color: transparent;
-    margin: -4px 6px 0 0;
+    margin: -1px 5px 0 0;
 
     span {
-      font-size: 15px;
+      font-size: 16px;
       margin-bottom: 2px;
+      font-family: ${props => {
+        return props.theme.fontFamily.avenirRoman;
+      }};
 
       :hover {
         color: ${props => props.theme.colors.primaryRed};
