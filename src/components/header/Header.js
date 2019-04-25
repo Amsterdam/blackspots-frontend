@@ -1,5 +1,5 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import {
   NavLinkStyled,
@@ -55,7 +55,7 @@ export default () => {
     <HeaderStyled>
       <Logo src={logo} />
       <NavLink exact to={appRoutes.HOME}>
-        <Title>Blackspots</Title>
+        <h2>Werkgroepblackspots</h2>
       </NavLink>
       <ButtonBar>
         <button onClick={onClickInfo}>Log auth info</button>

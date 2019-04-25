@@ -1,35 +1,23 @@
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 export const HeaderStyled = styled.div`
-  height: 50px;
-
   display: flex;
-  width: 100%;
   align-items: center;
+  height: 50px;
+  width: 100%;
+  border-bottom: 2px solid ${props => props.theme.colors.neutralGrey4};
 
-  background-color: #ffffff;
-  box-shadow: 0 2px 0 0 #999999;
+  h2 {
+    font-size: 16px;
+    color: ${props => props.theme.colors.primaryBlack};
+  }
 `;
 
 export const Logo = styled.img`
   height: 40px;
   width: 70px;
   margin: 0 20px 0 10px;
-`;
-
-export const Title = styled.span`
-  height: 25px;
-  font-family: ${props => {
-    return props.theme.fontFamily.avenirHeavy;
-  }};
-  font-size: 20px;
-  font-weight: 900;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.25;
-  letter-spacing: normal;
-  color: ${props => props.theme.colors.black};
 `;
 
 export const ButtonBar = styled.div`
@@ -39,6 +27,7 @@ export const ButtonBar = styled.div`
 
   a {
     margin-right: 10px;
+    color: ${props => props.theme.colors.primaryBlack};
   }
 `;
 

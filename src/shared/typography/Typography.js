@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 const Typography = styled.p`
   color: ${props => props.theme.colors.black};
@@ -8,33 +8,32 @@ const Typography = styled.p`
   }};
   font-size: ${props => {
     switch (props.size) {
-      case "L":
-        return "18px";
-      case "M":
-        return "16px;";
+      case 'L':
+        return '18px';
+      case 'M':
+        return '16px;';
       default:
         return null;
     }
   }};
   line-height: ${props => {
     switch (props.size) {
-      case "L":
-        return "26px";
-      case "M":
-        return "24px;";
+      case 'L':
+        return '26px';
+      case 'M':
+        return '24px;';
       default:
         return null;
     }
   }};
-  margin-bottom: 40px;
 `;
 
 Typography.propTypes = {
-  size: PropTypes.oneOf(["L", "M"])
+  size: PropTypes.oneOf(['L', 'M']),
 };
 
 Typography.defaultProps = {
-  size: "M"
+  size: 'M',
 };
 
 export default Typography;

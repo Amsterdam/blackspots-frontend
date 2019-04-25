@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const LinkStyled = styled.span`
   height: 20px;
@@ -13,19 +13,19 @@ const LinkStyled = styled.span`
 
 const BlueLinkButton = props => {
   return (
-    <LinkStyled>{`${props.chevDirection === "left" ? "<" : ">"} ${
+    <LinkStyled>{`${props.chevDirection === 'left' ? '<' : '>'} ${
       props.text
     }`}</LinkStyled>
   );
 };
 
 BlueLinkButton.propTypes = {
-  chevDirection: PropTypes.oneOf(["left", "right"]),
-  text: PropTypes.string.isRequired
+  chevDirection: PropTypes.oneOf(['left', 'right']),
+  text: PropTypes.string.isRequired,
 };
 
 BlueLinkButton.defaultProps = {
-  chevDirection: "left"
+  chevDirection: 'left',
 };
 
 export default BlueLinkButton;

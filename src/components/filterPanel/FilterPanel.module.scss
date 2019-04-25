@@ -1,0 +1,95 @@
+@import 'styles/styles.scss';
+
+.FilterPanel {
+  height: 540px;
+  width: 285px;
+  margin: 0 0 0 10px;
+  position: absolute;
+  bottom: 10px;
+  z-index: 1010;
+  background-color: $primaryWhite;
+  box-shadow: 2px 2px 0 0 $neutralGrey4;
+  overflow: auto;
+
+  h5 {
+    font-size: 16px;
+    font-weight: 900;
+    margin: 4px 0 4px 0;
+  }
+}
+
+.FilterContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.CheckboxWrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: fit-content;
+  height: 22px;
+  margin: 5px 0;
+
+  :before {
+    content: '';
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border: 1px solid black;
+    margin-right: 8px;
+    margin-top: 4px;
+  }
+
+  input[type='checkbox'] {
+    display: none;
+
+    &:checked + span {
+      width: 22px;
+      height: 22px;
+      border: 1px solid black;
+      margin: 0 8px 6px 0;
+    }
+
+    &:checked + span:before {
+      content: '';
+      width: 13px;
+      height: 5px;
+      margin-left: 3px;
+      transform: rotate(-45deg);
+      border: none;
+      border-left: 3px solid black;
+      border-bottom: 3px solid black;
+    }
+  }
+}
+
+.IconDiv {
+}
+
+.StatusDiv {
+  height: 18px;
+  width: 18px;
+  margin-top: -6px;
+  margin-right: 8px;
+}
+
+.Onderzoek {
+  background-color: $onderzoek;
+}
+.Voorbereiding {
+  background-color: $voorbereiding;
+}
+.Gereed {
+  background-color: $gereed;
+}
+.GeenMaatregel {
+  background-color: $geen-maatregel;
+}
+.Uitvoering {
+  background-color: $uitvoering;
+}
+.Onbekend {
+  background-color: $onbekend;
+}

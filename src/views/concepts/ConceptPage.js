@@ -1,11 +1,11 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-import BlueLinkButton from "shared/buttons/BlueLinkButton";
-import ContentBox from "../../shared/contentBox/ContentBox";
-import Accordion from "../../shared/accordion/Accordion";
-import { appRoutes } from "constants.js";
-import Typography from "shared/typography/Typography";
+import BlueLinkButton from 'shared/buttons/BlueLinkButton';
+import ContentBox from '../../shared/contentBox/ContentBox';
+import Accordion from '../../shared/accordion/Accordion';
+import { appRoutes } from 'constants.js';
+import Typography from 'shared/typography/Typography';
 
 export default () => {
   return (
@@ -13,7 +13,7 @@ export default () => {
       <NavLink to={appRoutes.HOME}>
         <BlueLinkButton chevDirection="left" text="Terug naar kaart" />
       </NavLink>
-      <h2>Begrippenlijst</h2>
+      <h1>Begrippenlijst</h1>
 
       <Typography size="L">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
