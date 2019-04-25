@@ -29,6 +29,24 @@ export const ButtonBar = styled.div`
     margin-right: 10px;
     color: ${props => props.theme.colors.primaryBlack};
   }
+
+  button {
+    color: ${props => props.theme.colors.primaryBlack};
+    border: none;
+    background-color: transparent;
+    margin: -4px 6px 0 0;
+
+    span {
+      font-size: 15px;
+      margin-bottom: 2px;
+
+      :hover {
+        color: ${props => props.theme.colors.primaryRed};
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
 `;
 
 export const NavLinkStyled = styled(NavLink)`

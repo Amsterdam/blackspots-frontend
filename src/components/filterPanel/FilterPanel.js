@@ -1,22 +1,22 @@
 import React from 'react';
-import SVGIcon from 'components/SVGIcon/SVGIcon';
+// import SVGIcon from 'components/SVGIcon/SVGIcon';
 import { SpotStatusTypes, SpotTypes } from 'constants.js';
 import { capitalizeString } from 'helpers';
 import styles from './FilterPanel.module.scss';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 
-function getStatusClassName(status) {
-  const statusClassMapper = {
-    [SpotStatusTypes.ONDERZOEK]: styles.Onderzoek,
-    [SpotStatusTypes.VOORBEREIDING]: styles.Voorbereiding,
-    [SpotStatusTypes.GEREED]: styles.Gereed,
-    [SpotStatusTypes.GEEN_MAATREGEL]: styles.GeenMaatregel,
-    [SpotStatusTypes.UITVOERING]: styles.Uitvoering,
-    [SpotStatusTypes.ONBEKEND]: styles.Onbekend,
-  };
+// function getStatusClassName(status) {
+//   const statusClassMapper = {
+//     [SpotStatusTypes.ONDERZOEK]: styles.Onderzoek,
+//     [SpotStatusTypes.VOORBEREIDING]: styles.Voorbereiding,
+//     [SpotStatusTypes.GEREED]: styles.Gereed,
+//     [SpotStatusTypes.GEEN_MAATREGEL]: styles.GeenMaatregel,
+//     [SpotStatusTypes.UITVOERING]: styles.Uitvoering,
+//     [SpotStatusTypes.ONBEKEND]: styles.Onbekend,
+//   };
 
-  return statusClassMapper[status];
-}
+//   return statusClassMapper[status];
+// }
 
 function renderTypeCheckboxes(spotTypeFilter, setSpotTypeFilter) {
   return Object.keys(SpotTypes).map(key => {

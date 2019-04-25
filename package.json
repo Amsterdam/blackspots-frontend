@@ -5,7 +5,6 @@
   "dependencies": {
     "amsterdam-amaps": "^2.0.0",
     "amsterdam-stijl": "^3.0.4",
-    "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",

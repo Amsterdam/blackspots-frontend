@@ -2,14 +2,13 @@
 const keycloak = window.Keycloak();
 
 const setupKeycloack = () => {
-
   keycloak.init({
-    onLoad: 'login-required'
+    onLoad: 'login-required',
   });
 
   return {
-    keycloak
-  }
+    keycloak,
+  };
 };
 
 export default setupKeycloack();
