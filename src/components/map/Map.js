@@ -143,12 +143,20 @@ class Map extends React.Component {
     // Declare funtions so they are locally available
     const onMarkerClick = this.onMarkerClick;
 
+    const wegvakken = []
+
     this.geoLayer = L.geoJSON(this.state.geoData, {
       // Add custom markers
       onEachFeature: function(feature, layer) {
         layer.on('click', ({ latlng }) => {
           onMarkerClick(feature, latlng);
         });
+
+        const { wegvak } = feature.properties;
+        if (wegvak) {
+          wegvakken.push(wegvak);
+        }
+
       },
       pointToLayer: function(feature, latlng) {
         // Create a marker with the correct icon and onClick method
@@ -165,6 +173,10 @@ class Map extends React.Component {
         });
       },
     }).addTo(this.map);
+    var myLayer = L.geoJSON().addTo(this.map);
+    for (const wegvak of wegvakken) {
+      myLayer.addData(wegvak);
+    }
   }
 
   onMarkerClick(feature, latlng) {
