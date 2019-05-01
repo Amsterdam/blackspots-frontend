@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import SVGIcon from 'components/SVGIcon/SVGIcon';
+import SVGIcon from 'components/SVGIcon/SVGIcon';
 import { SpotStatusTypes, SpotTypes } from 'constants.js';
 import { capitalizeString } from 'helpers';
 import { resetFilter } from 'components/map/helpers';
@@ -225,9 +225,14 @@ const FilterPanel = ({
             }}
           />
           <span />
-          {/* <div className={styles.IconDiv}>
-                  <SVGIcon small type={type} />
-                </div> */}
+          <div
+            className={classNames(
+              styles.IconDiv,
+              type === SpotTypes.RISICO ? styles.RiscoIconMargin : ''
+            )}
+          >
+            <SVGIcon small type={type} />
+          </div>
           {capitalizeString(type)}
         </label>
       );
