@@ -22,10 +22,17 @@ export const SpotTypes = {
 export const SpotStatusTypes = {
   ONDERZOEK: 'onderzoek ontwerp',
   VOORBEREIDING: 'voorbereiding',
+  UITVOERING: 'uitvoering',
   GEREED: 'gereed',
   GEEN_MAATREGEL: 'geen maatregel',
-  UITVOERING: 'uitvoering',
-  ONBEKEND: 'onbekend',
+};
+
+export const StatusDisplayNames = {
+  [SpotStatusTypes.ONDERZOEK]: 'In onderzoek',
+  [SpotStatusTypes.VOORBEREIDING]: 'In voorbereiding',
+  [SpotStatusTypes.UITVOERING]: 'In uitvoering',
+  [SpotStatusTypes.GEREED]: 'Gereed',
+  [SpotStatusTypes.GEEN_MAATREGEL]: 'Geen maatregel',
 };
 
 export const SpotIcons = {
@@ -39,8 +46,7 @@ export const SpotIcons = {
 export const SpotStatusColor = {
   [SpotStatusTypes.ONDERZOEK]: StatusColors.ONDERZOEK,
   [SpotStatusTypes.VOORBEREIDING]: StatusColors.VOORBEREIDING,
+  [SpotStatusTypes.UITVOERING]: StatusColors.UITVOERING,
   [SpotStatusTypes.GEREED]: StatusColors.GEREED,
   [SpotStatusTypes.GEEN_MAATREGEL]: StatusColors.GEEN_MAATREGEL,
-  [SpotStatusTypes.UITVOERING]: StatusColors.UITVOERING,
-  [SpotStatusTypes.ONBEKEND]: StatusColors.ONBEKEND,
 };

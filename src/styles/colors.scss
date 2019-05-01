@@ -8,18 +8,16 @@ $primaryBlack: #000000;
 $primaryRed: #ec0000;
 $primaryBlue: #004699;
 
-$onderzoek: #ff9100;
-$voorbereiding: #ffe600;
+$onderzoek: #ec0000;
+$voorbereiding: #ff9100;
+$uitvoering: #ffe600;
 $gereed: #00a03c;
-$geen-maatregel: #009de6;
-$uitvoering: black;
-$onbekend: #ec0000;
+$geen-maatregel: #b4b4b4;
 
 :export {
   ONDERZOEK: $onderzoek;
   VOORBEREIDING: $voorbereiding;
+  UITVOERING: $uitvoering;
   GEREED: $gereed;
   GEEN_MAATREGEL: $geen-maatregel;
-  UITVOERING: $uitvoering;
-  ONBEKEND: $onbekend;
 }

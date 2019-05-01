@@ -6,6 +6,7 @@ import { resetFilter } from 'components/map/helpers';
 import styles from './FilterPanel.module.scss';
 import { ContextMenuOptions } from './FilterPanel.constants';
 import classNames from 'classnames';
+import { StatusDisplayNames } from '../../constants';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -191,7 +192,7 @@ const FilterPanel = ({
           <div
             className={classNames(styles.StatusDiv, getStatusClassName(type))}
           />
-          {capitalizeString(type)}
+          {StatusDisplayNames[type]}
         </label>
       );
     });
