@@ -5,20 +5,20 @@ import { capitalizeString } from 'helpers';
 import { resetFilter } from 'components/map/helpers';
 import styles from './FilterPanel.module.scss';
 import { ContextMenuOptions } from './FilterPanel.constants';
-// import classNames from 'classnames';
+import classNames from 'classnames';
 
-// function getStatusClassName(status) {
-//   const statusClassMapper = {
-//     [SpotStatusTypes.ONDERZOEK]: styles.Onderzoek,
-//     [SpotStatusTypes.VOORBEREIDING]: styles.Voorbereiding,
-//     [SpotStatusTypes.GEREED]: styles.Gereed,
-//     [SpotStatusTypes.GEEN_MAATREGEL]: styles.GeenMaatregel,
-//     [SpotStatusTypes.UITVOERING]: styles.Uitvoering,
-//     [SpotStatusTypes.ONBEKEND]: styles.Onbekend,
-//   };
+function getStatusClassName(status) {
+  const statusClassMapper = {
+    [SpotStatusTypes.ONDERZOEK]: styles.Onderzoek,
+    [SpotStatusTypes.VOORBEREIDING]: styles.Voorbereiding,
+    [SpotStatusTypes.GEREED]: styles.Gereed,
+    [SpotStatusTypes.GEEN_MAATREGEL]: styles.GeenMaatregel,
+    [SpotStatusTypes.UITVOERING]: styles.Uitvoering,
+    [SpotStatusTypes.ONBEKEND]: styles.Onbekend,
+  };
 
-//   return statusClassMapper[status];
-// }
+  return statusClassMapper[status];
+}
 
 const FilterPanel = ({
   spotTypeFilter,
@@ -179,7 +179,7 @@ const FilterPanel = ({
           <input
             type="checkbox"
             checked={value}
-            onChange={e => {
+            onChange={() => {
               const updatedFilter = {
                 ...spotStatusTypeFilter,
                 [type]: !value,
@@ -188,9 +188,9 @@ const FilterPanel = ({
             }}
           />
           <span />
-          {/* <div
-                className={classNames(styles.StatusDiv, getStatusClassName(type))}
-              /> */}
+          <div
+            className={classNames(styles.StatusDiv, getStatusClassName(type))}
+          />
           {capitalizeString(type)}
         </label>
       );
