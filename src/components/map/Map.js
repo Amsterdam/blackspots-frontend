@@ -8,7 +8,8 @@ import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
 import 'amsterdam-stijl/dist/css/ams-map.css';
 import amaps from 'amsterdam-amaps/dist/amaps';
 
-import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from './Map.styled';
+import { MapContainer, ErrorDiv } from './Map.styled';
+import Loader from 'shared/loader/Loader';
 import { getAllBlackspots } from '../../services/geo-api';
 import SVGIcon from '../SVGIcon/SVGIcon';
 import DetailPanel from '../detailPanel/DetailPanel';
@@ -276,11 +277,7 @@ class Map extends React.Component {
     return (
       <MapContainer>
         <div id="mapdiv" style={{ height: '100%' }}>
-          {loading && (
-            <LoadingDiv>
-              <Spinner />
-            </LoadingDiv>
-          )}
+          {loading && <Loader />}
           {error && (
             <ErrorDiv>
               <h3>Oops</h3>
@@ -290,16 +287,16 @@ class Map extends React.Component {
               </p>
             </ErrorDiv>
           )}
-          <FilterPanel
-            spotTypeFilter={spotTypeFilter}
-            // setSpotTypeFilter={this.setSpotTypeFilter}
-            spotStatusTypeFilter={spotStatusTypeFilter}
-            // setSpotStatusTypeFilter={this.setSpotStatusTypeFilter}
-            blackspotYearFilter={blackspotYearFilter}
-            deliveredYearFilter={deliveredYearFilter}
-            quickscanYearFilter={quickscanYearFilter}
-            setFilters={this.setFilters}
-          />
+          {!loading && (
+            <FilterPanel
+              spotTypeFilter={spotTypeFilter}
+              spotStatusTypeFilter={spotStatusTypeFilter}
+              blackspotYearFilter={blackspotYearFilter}
+              deliveredYearFilter={deliveredYearFilter}
+              quickscanYearFilter={quickscanYearFilter}
+              setFilters={this.setFilters}
+            />
+          )}
           <DetailPanel
             feature={feature}
             isOpen={showDetailPanel}
