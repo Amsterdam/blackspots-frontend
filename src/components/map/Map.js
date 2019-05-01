@@ -25,7 +25,13 @@ class Map extends React.Component {
       loading: true,
       showDetailPanel: false,
       feature: null,
-      spotYearFilter: [],
+      // Year filters will be set with default data once the blackspot data is
+      // received and the relevant years are known
+      blackspotYearFilter: {},
+      deliveredYearFilter: {},
+      quickscanYearFilter: {},
+      // Type and status type filters start with all values as false, meaning
+      // the filter is off effectively showing everything
       spotStatusTypeFilter: {
         [SpotStatusTypes.ONDERZOEK]: false,
         [SpotStatusTypes.VOORBEREIDING]: false,
@@ -52,9 +58,7 @@ class Map extends React.Component {
     this.triggerVisibiltyEvaluation = this.triggerVisibiltyEvaluation.bind(
       this
     );
-    this.setSpotTypeFilter = this.setSpotTypeFilter.bind(this);
-    this.setSpotStatusTypeFilter = this.setSpotStatusTypeFilter.bind(this);
-    this.setSpotYearFilter = this.setSpotYearFilter.bind(this);
+    this.setFilters = this.setFilters.bind(this);
   }
 
   componentDidMount() {
@@ -88,57 +92,129 @@ class Map extends React.Component {
     // Get geo data
     getAllBlackspots()
       .then(geoData => {
-        const spotYearFilter = this.getYearsFilterFromMarkers(geoData);
-        this.setState({ geoData, loading: false, spotYearFilter });
+        const [
+          blackspotYearFilter,
+          deliveredYearFilter,
+          quickscanYearFilter,
+        ] = this.getYearFiltersFromMarkers(geoData);
+        this.setState({
+          geoData,
+          loading: false,
+          blackspotYearFilter,
+          quickscanYearFilter,
+          deliveredYearFilter,
+        });
         this.renderMarkers();
       })
       .catch(err => {
         this.setState({ error: true, loading: false });
-        console.error(err);
+        console.error('An error occured fetching/processing data.', err);
       });
   }
 
-  // Get all the years on which to enable filters
-  getYearsFilterFromMarkers(geoData) {
-    const years = [
-      ...new Set(geoData.features.map(f => f.properties.jaar_blackspotlijst)),
-    ].sort();
-    const spotYearsFilter = {};
-    years.forEach(y => {
-      // Check if year is actual a truthy value, some spots have no year
-      // Will be fixed in time I suppose
-      if (y) {
-        spotYearsFilter[y] = false;
+  /**
+   * Elvaluate data and store relevant years in the year filters
+   */
+  getYearFiltersFromMarkers(geoData) {
+    // Init all year filters
+    const blackspotYearFilter = {};
+    const quickscanYearFilter = {};
+    const deliveredYearFilter = {};
+
+    // Get all the relevant year values for the filters
+    const blackspotYears = [];
+    const deliveredYears = [];
+    const quickscanYears = [];
+    geoData.features.forEach(f => {
+      // Get the year values
+      const {
+        jaar_blackspotlijst,
+        jaar_oplevering,
+        jaar_ongeval_quickscan,
+      } = f.properties;
+
+      // Add the values to the year arrays if they are not in yet
+      if (
+        jaar_blackspotlijst &&
+        blackspotYears.indexOf(jaar_blackspotlijst) < 0
+      ) {
+        blackspotYears.push(jaar_blackspotlijst);
+      }
+      if (jaar_oplevering && deliveredYears.indexOf(jaar_oplevering) < 0) {
+        deliveredYears.push(jaar_oplevering);
+      }
+      if (
+        jaar_ongeval_quickscan &&
+        quickscanYears.indexOf(jaar_ongeval_quickscan) < 0
+      ) {
+        quickscanYears.push(jaar_ongeval_quickscan);
       }
     });
-    return spotYearsFilter;
+
+    // Add the year values to the filter as false (default filter value)
+    blackspotYears.forEach(y => {
+      blackspotYearFilter[y] = false;
+    });
+    deliveredYears.forEach(y => {
+      deliveredYearFilter[y] = false;
+    });
+    quickscanYears.forEach(y => {
+      quickscanYearFilter[y] = false;
+    });
+
+    return [blackspotYearFilter, deliveredYearFilter, quickscanYearFilter];
   }
 
-  setSpotTypeFilter(spotTypeFilter) {
-    this.setState(() => ({ spotTypeFilter }), this.triggerVisibiltyEvaluation);
-  }
-
-  setSpotStatusTypeFilter(spotStatusTypeFilter) {
+  /**
+   * Update the filters. NOTE: For now all filters must be provided on every
+   * update. This is not ideal achitectural wise, but a working solution we had
+   * time for now. It provides a flexible way handling filters, but lacks
+   * scalability.
+   */
+  setFilters(
+    spotTypeFilter,
+    spotStatusTypeFilter,
+    blackspotYearFilter,
+    deliveredYearFilter,
+    quickscanYearFilter
+  ) {
     this.setState(
-      () => ({ spotStatusTypeFilter }),
+      () => ({
+        spotTypeFilter,
+        spotStatusTypeFilter,
+        blackspotYearFilter,
+        deliveredYearFilter,
+        quickscanYearFilter,
+      }),
       this.triggerVisibiltyEvaluation
     );
   }
 
-  setSpotYearFilter(spotYearFilter) {
-    this.setState(() => ({ spotYearFilter }), this.triggerVisibiltyEvaluation);
-  }
-
+  /**
+   * Trigger the evaluation of which spots should be visible on the map. This
+   * should be done after every filter update.
+   */
   triggerVisibiltyEvaluation() {
-    const { spotTypeFilter, spotStatusTypeFilter, spotYearFilter } = this.state;
+    const {
+      spotTypeFilter,
+      spotStatusTypeFilter,
+      blackspotYearFilter,
+      deliveredYearFilter,
+      quickscanYearFilter,
+    } = this.state;
     evaluateMarkerVisibility(
       this.geoLayer.getLayers(),
       spotTypeFilter,
       spotStatusTypeFilter,
-      spotYearFilter
+      blackspotYearFilter,
+      deliveredYearFilter,
+      quickscanYearFilter
     );
   }
 
+  /**
+   * Render markers on the map for every spot
+   */
   renderMarkers() {
     // Declare funtions so they are locally available
     const onMarkerClick = this.onMarkerClick;
@@ -167,12 +243,17 @@ class Map extends React.Component {
     }).addTo(this.map);
   }
 
+  /**
+   * OnClick function for rendered markers
+   */
   onMarkerClick(feature, latlng) {
     this.map.flyTo(latlng, 14);
     this.setState({ feature, showDetailPanel: true });
   }
 
-  // Toggle the detail panel
+  /**
+   * Toggle the detail panel visibility
+   */
   toggleDetailPanel() {
     this.setState(prevState => ({
       showDetailPanel: !prevState.showDetailPanel,
@@ -187,13 +268,13 @@ class Map extends React.Component {
       feature,
       spotTypeFilter,
       spotStatusTypeFilter,
-      spotYearFilter,
+      blackspotYearFilter,
+      quickscanYearFilter,
+      deliveredYearFilter,
     } = this.state;
 
     return (
       <MapContainer>
-        {/* {this.state.spotTypeFilter[0]} */}
-        {/* <button onClick={() => this.removeLayer()}>Clear</button> */}
         <div id="mapdiv" style={{ height: '100%' }}>
           {loading && (
             <LoadingDiv>
@@ -211,11 +292,13 @@ class Map extends React.Component {
           )}
           <FilterPanel
             spotTypeFilter={spotTypeFilter}
-            setSpotTypeFilter={this.setSpotTypeFilter}
+            // setSpotTypeFilter={this.setSpotTypeFilter}
             spotStatusTypeFilter={spotStatusTypeFilter}
-            setSpotStatusTypeFilter={this.setSpotStatusTypeFilter}
-            spotYearFilter={spotYearFilter}
-            setSpotYearFilter={this.setSpotYearFilter}
+            // setSpotStatusTypeFilter={this.setSpotStatusTypeFilter}
+            blackspotYearFilter={blackspotYearFilter}
+            deliveredYearFilter={deliveredYearFilter}
+            quickscanYearFilter={quickscanYearFilter}
+            setFilters={this.setFilters}
           />
           <DetailPanel
             feature={feature}
