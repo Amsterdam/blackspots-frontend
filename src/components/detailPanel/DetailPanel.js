@@ -22,7 +22,13 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       spot_type,
       status,
       stadsdeel,
+      start_uitvoering,
+      eind_uitvoering,
+      tasks,
+      notes,
       jaar_blackspot_lijst,
+      jaar_oplevering,
+      actiehouders
     } = feature.properties;
     const [lng, lat] = feature.geometry.coordinates;
     return (
@@ -71,27 +77,27 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             <tbody>
               <tr>
                 <td>Actiehouder</td>
-                <td>WBA</td>
+                <td>{actiehouders}</td>
               </tr>
               <tr>
                 <td>Taken</td>
-                <td>-</td>
+                <td>{tasks}</td>
               </tr>
               <tr>
                 <td>Start uitvoering</td>
-                <td>-</td>
+                <td>{start_uitvoering}</td>
               </tr>
               <tr>
                 <td>Eind uitvoering</td>
-                <td>-</td>
+                <td>{eind_uitvoering}</td>
               </tr>
               <tr>
                 <td>Oplevering</td>
-                <td>Onbekend</td>
+                <td>{jaar_oplevering}</td>
               </tr>
               <tr>
                 <td>Opmerking</td>
-                <td>Planning onbekend</td>
+                <td>{notes}</td>
               </tr>
             </tbody>
           </DataTable>
