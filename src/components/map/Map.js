@@ -8,7 +8,7 @@ import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
 import 'amsterdam-stijl/dist/css/ams-map.css';
 import amaps from 'amsterdam-amaps/dist/amaps';
 
-import { MapContainer, ErrorDiv } from './Map.styled';
+import { MapContainer } from './Map.styled';
 import Loader from 'shared/loader/Loader';
 import { getAllBlackspots } from '../../services/geo-api';
 import SVGIcon from '../SVGIcon/SVGIcon';
@@ -109,6 +109,7 @@ class Map extends React.Component {
       })
       .catch(err => {
         this.setState({ error: true, loading: false });
+        this.props.setShowError(true);
         console.error('An error occured fetching/processing data.', err);
       });
   }
@@ -263,8 +264,8 @@ class Map extends React.Component {
 
   render() {
     const {
-      loading,
       error,
+      loading,
       showDetailPanel,
       feature,
       spotTypeFilter,
@@ -278,16 +279,7 @@ class Map extends React.Component {
       <MapContainer>
         <div id="mapdiv" style={{ height: '100%' }}>
           {loading && <Loader />}
-          {error && (
-            <ErrorDiv>
-              <h3>Oops</h3>
-              <p>
-                De server is momenteel niet bereikbaar. Probeer het later nog
-                eens.
-              </p>
-            </ErrorDiv>
-          )}
-          {!loading && (
+          {!error && !loading && (
             <FilterPanel
               spotTypeFilter={spotTypeFilter}
               spotStatusTypeFilter={spotStatusTypeFilter}
