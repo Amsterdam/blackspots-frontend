@@ -1,13 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  DetailPanelStyled,
-  CloseBtn,
-  PanelHeader,
-  PanelContent,
-  StatusColor,
-} from './DetailPanel.styled';
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';
