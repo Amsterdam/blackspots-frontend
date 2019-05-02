@@ -8,7 +8,8 @@ import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
 import 'amsterdam-stijl/dist/css/ams-map.css';
 import amaps from 'amsterdam-amaps/dist/amaps';
 
-import { MapContainer, LoadingDiv, Spinner } from './Map.styled';
+import { MapContainer } from './Map.styled';
+import Loader from 'shared/loader/Loader';
 import { getAllBlackspots } from '../../services/geo-api';
 import SVGIcon from '../SVGIcon/SVGIcon';
 import DetailPanel from '../detailPanel/DetailPanel';
@@ -277,17 +278,11 @@ class Map extends React.Component {
     return (
       <MapContainer>
         <div id="mapdiv" style={{ height: '100%' }}>
-          {loading && (
-            <LoadingDiv>
-              <Spinner />
-            </LoadingDiv>
-          )}
+          {loading && <Loader />}
           {!error && !loading && (
             <FilterPanel
               spotTypeFilter={spotTypeFilter}
-              // setSpotTypeFilter={this.setSpotTypeFilter}
               spotStatusTypeFilter={spotStatusTypeFilter}
-              // setSpotStatusTypeFilter={this.setSpotStatusTypeFilter}
               blackspotYearFilter={blackspotYearFilter}
               deliveredYearFilter={deliveredYearFilter}
               quickscanYearFilter={quickscanYearFilter}
