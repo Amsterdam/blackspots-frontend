@@ -8,7 +8,7 @@ import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
 import 'amsterdam-stijl/dist/css/ams-map.css';
 import amaps from 'amsterdam-amaps/dist/amaps';
 
-import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from './Map.styled';
+import { MapContainer, LoadingDiv, Spinner } from './Map.styled';
 import { getAllBlackspots } from '../../services/geo-api';
 import SVGIcon from '../SVGIcon/SVGIcon';
 import DetailPanel from '../detailPanel/DetailPanel';
@@ -108,6 +108,7 @@ class Map extends React.Component {
       })
       .catch(err => {
         this.setState({ error: true, loading: false });
+        this.props.setShowError(true);
         console.error('An error occured fetching/processing data.', err);
       });
   }
@@ -262,8 +263,8 @@ class Map extends React.Component {
 
   render() {
     const {
-      loading,
       error,
+      loading,
       showDetailPanel,
       feature,
       spotTypeFilter,
@@ -281,25 +282,18 @@ class Map extends React.Component {
               <Spinner />
             </LoadingDiv>
           )}
-          {error && (
-            <ErrorDiv>
-              <h3>Oops</h3>
-              <p>
-                De server is momenteel niet bereikbaar. Probeer het later nog
-                eens.
-              </p>
-            </ErrorDiv>
+          {!error && !loading && (
+            <FilterPanel
+              spotTypeFilter={spotTypeFilter}
+              // setSpotTypeFilter={this.setSpotTypeFilter}
+              spotStatusTypeFilter={spotStatusTypeFilter}
+              // setSpotStatusTypeFilter={this.setSpotStatusTypeFilter}
+              blackspotYearFilter={blackspotYearFilter}
+              deliveredYearFilter={deliveredYearFilter}
+              quickscanYearFilter={quickscanYearFilter}
+              setFilters={this.setFilters}
+            />
           )}
-          <FilterPanel
-            spotTypeFilter={spotTypeFilter}
-            // setSpotTypeFilter={this.setSpotTypeFilter}
-            spotStatusTypeFilter={spotStatusTypeFilter}
-            // setSpotStatusTypeFilter={this.setSpotStatusTypeFilter}
-            blackspotYearFilter={blackspotYearFilter}
-            deliveredYearFilter={deliveredYearFilter}
-            quickscanYearFilter={quickscanYearFilter}
-            setFilters={this.setFilters}
-          />
           <DetailPanel
             feature={feature}
             isOpen={showDetailPanel}
