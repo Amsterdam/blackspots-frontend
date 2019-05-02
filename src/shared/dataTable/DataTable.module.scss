@@ -1,14 +1,15 @@
-import styled from 'styled-components';
+@import 'styles/styles.scss';
 
-export const DataTable = styled.table`
+.Container {
   /* Remove borders */
   td {
     border: 0;
+    height: 33px;
   }
 
   /* Remove hover */
   tr:hover {
-    background-color: ${props => props.theme.colors.primaryWhite};
+    background-color: $primaryWhite;
 
     td {
       box-shadow: none;
@@ -17,13 +18,11 @@ export const DataTable = styled.table`
 
   /* Grey text in first column */
   tr td:nth-child(1) {
-    font-family: ${props => {
-      return props.theme.fontFamily.avenirRoman;
-    }};
+    font-family: 'AvenirLTStd-Roman';
     color: #787878;
     width: 220px;
     font-size: 16px;
     font-weight: 500;
     line-height: 20px;
   }
-`;
+}

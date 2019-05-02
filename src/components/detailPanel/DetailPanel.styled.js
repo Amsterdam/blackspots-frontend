@@ -72,6 +72,6 @@ export const BlackspotIcon = styled.div`
     width: 16px;
     background-color: ${props => SpotStatusColor[props.status]};
     margin-right: 10px;
-    margin-bottom: -2px;
+    margin-bottom: -8px;
   }
 `;

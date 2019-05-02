@@ -11,13 +11,31 @@ import {
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';
+import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'constants.js';
+import { capitalizeString } from 'helpers.js';
+import styles from './DetailPanel.module.scss';
+import classNames from 'classnames';
+
+function getStatusClassName(status) {
+  const statusClassMapper = {
+    [SpotStatusTypes.ONDERZOEK]: styles.Onderzoek,
+    [SpotStatusTypes.VOORBEREIDING]: styles.Voorbereiding,
+    [SpotStatusTypes.GEREED]: styles.Gereed,
+    [SpotStatusTypes.GEEN_MAATREGEL]: styles.GeenMaatregel,
+    [SpotStatusTypes.UITVOERING]: styles.Uitvoering,
+    [SpotStatusTypes.ONBEKEND]: styles.Onbekend,
+  };
+
+  return statusClassMapper[status];
+}
 
 const DetailPanel = ({ isOpen, togglePanel, feature }) => {
+  console.log(feature);
   if (!feature) {
-    return <DetailPanelStyled isOpen={isOpen} />;
+    return <div className={classNames(styles.Container)} />;
   } else {
     const {
-      spot_id,
+      locatie_id,
       description,
       spot_type,
       status,
@@ -27,33 +45,54 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       tasks,
       notes,
       jaar_blackspot_lijst,
+      jaar_ongeval_quickscan,
       jaar_oplevering,
-      actiehouders
+      actiehouders,
     } = feature.properties;
     const [lng, lat] = feature.geometry.coordinates;
     return (
-      <DetailPanelStyled isOpen={isOpen}>
-        <PanelHeader>
-          <h3>{spot_id}</h3>
-          <CloseBtn onClick={togglePanel}>
+      <div
+        className={classNames(
+          styles.Container,
+          isOpen ? styles.ContainerOpen : ''
+        )}
+      >
+        <div className={styles.Header}>
+          <h3>{locatie_id}</h3>
+          <div className={styles.CloseBtn} onClick={togglePanel}>
             <CrossIcon />
-          </CloseBtn>
-        </PanelHeader>
-        <PanelContent>
+          </div>
+        </div>
+        <div className={styles.Content}>
           <h2>{description}</h2>
           <DataTable>
             <tbody>
               <tr>
                 <td>Locatie type</td>
-                <td>
+                {/** TODO: Use same component for icons as is used in the filter panel */}
+                <td
+                  className={classNames(
+                    styles.IconCell,
+                    spot_type === SpotTypes.RISICO
+                      ? styles.IconCellExtraMargin
+                      : ''
+                  )}
+                >
                   <SVGIcon small type={spot_type} />
-                  {spot_type}
+                  {capitalizeString(spot_type)}
                 </td>
               </tr>
               <tr>
                 <td>Status</td>
-                <td>
-                  <StatusColor status={status}>{status}</StatusColor>
+                {/** TODO: Use same component for status boxes as is used in the filter panel */}
+                <td className={styles.StatusCell}>
+                  <div
+                    className={classNames(
+                      styles.StatusBox,
+                      getStatusClassName(status)
+                    )}
+                  />
+                  {StatusDisplayNames[status]}
                 </td>
               </tr>
               <tr>
@@ -63,13 +102,21 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
               <tr>
                 <td>Breedte- en lengtegraad</td>
                 <td>
-                  {lat} {lng}
+                  {lat}, {lng}
                 </td>
               </tr>
-              <tr>
-                <td>Op blackspotlijst</td>
-                <td>{jaar_blackspot_lijst}</td>
-              </tr>
+              {jaar_blackspot_lijst && (
+                <tr>
+                  <td>Op blackspotlijst</td>
+                  <td>{jaar_blackspot_lijst}</td>
+                </tr>
+              )}
+              {jaar_ongeval_quickscan && (
+                <tr>
+                  <td>Op protocollijst</td>
+                  <td>{jaar_ongeval_quickscan}</td>
+                </tr>
+              )}
             </tbody>
           </DataTable>
           <h3>Maatregelen</h3>
@@ -77,32 +124,32 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             <tbody>
               <tr>
                 <td>Actiehouder</td>
-                <td>{actiehouders}</td>
+                <td>{actiehouders || '-'}</td>
               </tr>
               <tr>
                 <td>Taken</td>
-                <td>{tasks}</td>
+                <td>{tasks || '-'}</td>
               </tr>
               <tr>
                 <td>Start uitvoering</td>
-                <td>{start_uitvoering}</td>
+                <td>{start_uitvoering || 'Onbekend'}</td>
               </tr>
               <tr>
                 <td>Eind uitvoering</td>
-                <td>{eind_uitvoering}</td>
+                <td>{eind_uitvoering || 'Onbekend'}</td>
               </tr>
               <tr>
                 <td>Oplevering</td>
-                <td>{jaar_oplevering}</td>
+                <td>{jaar_oplevering || '-'}</td>
               </tr>
               <tr>
                 <td>Opmerking</td>
-                <td>{notes}</td>
+                <td>{notes || '-'}</td>
               </tr>
             </tbody>
           </DataTable>
-        </PanelContent>
-      </DetailPanelStyled>
+        </div>
+      </div>
     );
   }
 };
