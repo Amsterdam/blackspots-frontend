@@ -106,26 +106,23 @@
   background-color: $uitvoering;
 }
 
-// export const StatusColor = styled.span`
-//   &:before {
-//     content: '';
-//     display: inline-block;
-//     height: 16px;
-//     width: 16px;
-//     background-color: ${props => SpotStatusColor[props.status]};
-//     margin-right: 10px;
-//     margin-bottom: -2px;
-//   }
-// `;
+.DocumentsContainer {
+  svg {
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
+  }
 
-// export const BlackspotIcon = styled.div`
-//   &:before {
-//     content: '';
-//     display: inline-block;
-//     height: 16px;
-//     width: 16px;
-//     background-color: ${props => SpotStatusColor[props.status]};
-//     margin-right: 10px;
-//     margin-bottom: -8px;
-//   }
-// `;
+  tr {
+    margin-bottom: 14px;
+  }
+
+  a {
+    color: $primaryBlue;
+    text-decoration: underline;
+
+    &:hover {
+      color: $primaryRed;
+    }
+  }
+}

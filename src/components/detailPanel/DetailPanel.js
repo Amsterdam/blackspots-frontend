@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
+import { ReactComponent as DocumentIcon } from 'assets/icons/document.svg';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';
 import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'constants.js';
@@ -23,7 +24,6 @@ function getStatusClassName(status) {
 }
 
 const DetailPanel = ({ isOpen, togglePanel, feature }) => {
-  console.log(feature);
   if (!feature) {
     return <div className={classNames(styles.Container)} />;
   } else {
@@ -41,6 +41,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       jaar_ongeval_quickscan,
       jaar_oplevering,
       actiehouders,
+      documents,
     } = feature.properties;
     const [lng, lat] = feature.geometry.coordinates;
     return (
@@ -141,6 +142,31 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
               </tr>
             </tbody>
           </DataTable>
+          {documents.length > 0 && <h3>Documenten</h3>}
+          {documents.map(d => {
+            return (
+              <div className={styles.DocumentsContainer}>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <DocumentIcon />
+                      </td>
+                      <td>
+                        <a
+                          key={d.id}
+                          href={`${d._links.self.href.split('?')[0]}file`}
+                          download
+                        >
+                          {d.filename}
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            );
+          })}
         </div>
       </div>
     );
