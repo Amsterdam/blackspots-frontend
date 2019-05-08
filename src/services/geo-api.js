@@ -1,7 +1,9 @@
 import auth from 'shared/auth/auth';
+import { shouldUseAccEnv } from 'helpers.js';
 
-const URL =
-  'https://acc.api.data.amsterdam.nl/blackspots/spots/?format=geojson';
+const URL = `https://${
+  shouldUseAccEnv() ? 'acc.' : ''
+}api.data.amsterdam.nl/blackspots/spots/?format=geojson`;
 
 export function getAllBlackspots() {
   // TODO: Refresh Keycloak token
@@ -9,8 +11,7 @@ export function getAllBlackspots() {
   return fetch(URL, {
     headers: new Headers({
       Accept: 'application/json',
-      Authorization: 'Bearer ' + token
-    })
-  })
-    .then(response => response.json());
+      Authorization: 'Bearer ' + token,
+    }),
+  }).then(response => response.json());
 }
