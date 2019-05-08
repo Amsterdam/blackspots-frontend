@@ -1,9 +1,11 @@
+import { shouldUseAccEnv } from 'helpers.js';
+
 // See: https://www.keycloak.org/docs/latest/securing_apps/index.html#_javascript_adapter
 
 const config = {
-  realm: "datapunt-acc",
-  url: "https://iam.amsterdam.nl/auth",
-  clientId: "blackspots",
+  realm: shouldUseAccEnv() ? 'datapunt-acc' : 'datapunt',
+  url: 'https://iam.amsterdam.nl/auth',
+  clientId: 'blackspots',
 };
 
 const keycloak = window.Keycloak(config);
