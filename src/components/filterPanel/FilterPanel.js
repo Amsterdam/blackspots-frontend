@@ -7,6 +7,9 @@ import styles from './FilterPanel.module.scss';
 import { ContextMenuOptions } from './FilterPanel.constants';
 import classNames from 'classnames';
 import { StatusDisplayNames } from '../../constants';
+import SelectMenu from '../../shared/selectMenu/SelectMenu';
+import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
+import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -30,6 +33,7 @@ const FilterPanel = ({
   setFilters,
 }) => {
   const [optionValue, setOptionValue] = useState(ContextMenuOptions.ALL);
+  const [showPanel, setShowPanel] = useState(true);
 
   /**
    * Update the filters of the actual map
@@ -63,30 +67,37 @@ const FilterPanel = ({
     );
   }
 
+  function processOptionChange(value) {
+    updateFilters(spotTypeFilter);
+    setOptionValue(value);
+  }
+
   /**
    * Render the context menu providing options to show different combinations
    * of filters
    */
   function renderOptions() {
     return (
-      <div className={styles.ContextMenuWrapper}>
-        <select
-          className={styles.ContextMenu}
-          onChange={e => {
-            updateFilters(spotTypeFilter);
-            setOptionValue(e.target.value);
-          }}
-        >
-          <option value={ContextMenuOptions.ALL}>Alles</option>
-          <option value={ContextMenuOptions.DELIVERED}>Opgeleverd in</option>
-          <option value={ContextMenuOptions.BLACKSPOTS}>
-            Opgenomen als blackspot in
-          </option>
-          <option value={ContextMenuOptions.QUICKSCANS}>
-            Opgenomen als protocol in
-          </option>
-        </select>
-      </div>
+      <SelectMenu
+        items={[
+          {
+            label: 'Alles',
+            onClick: () => processOptionChange(ContextMenuOptions.ALL),
+          },
+          {
+            label: 'Opgeleverd in',
+            onClick: () => processOptionChange(ContextMenuOptions.DELIVERED),
+          },
+          {
+            label: 'Opgenomen als blackspot in',
+            onClick: () => processOptionChange(ContextMenuOptions.BLACKSPOTS),
+          },
+          {
+            label: 'Opgenomen als protocol in',
+            onClick: () => processOptionChange(ContextMenuOptions.QUICKSCANS),
+          },
+        ]}
+      />
     );
   }
 
@@ -240,7 +251,21 @@ const FilterPanel = ({
   }
 
   return (
-    <div className={styles.FilterPanel}>
+    <div
+      className={classNames(styles.FilterPanel, {
+        [styles.FilterPanelCollapsed]: !showPanel,
+      })}
+    >
+      <div className={styles.TopBar} onClick={() => setShowPanel(!showPanel)}>
+        <FilterIcon className={styles.FilterIcon} />
+        Filters
+        <ChevronIcon
+          className={classNames(
+            styles.ChevronIcon,
+            showPanel ? '' : styles.ChevronIconRotated
+          )}
+        />
+      </div>
       <div className={styles.FilterContainer}>
         <h5>Toon</h5>
         {renderOptions()}

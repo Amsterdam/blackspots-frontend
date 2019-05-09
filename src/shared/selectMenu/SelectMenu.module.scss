@@ -1,0 +1,55 @@
+@import 'styles/styles.scss';
+
+.Container {
+  position: relative;
+
+  button {
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    padding-left: 10px;
+    font-family: 'AvenirLTStd-Roman';
+  }
+}
+
+.Select {
+  width: 100%;
+  background-color: white;
+  border: 1px solid $neutralGrey4;
+  font-weight: bold;
+  line-height: 28px;
+}
+
+.MenuChevron {
+  position: absolute;
+  right: 5px;
+  top: 11px;
+  height: 12px;
+  transform: rotate(180deg);
+
+  &Rotated {
+    transform: initial;
+  }
+}
+
+.Menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-right: 1px solid $neutralGrey4;
+  border-left: 1px solid $neutralGrey4;
+  border-bottom: 1px solid $neutralGrey4;
+  margin-left: -1px;
+  z-index: 10;
+
+  &Hide {
+    display: none;
+  }
+}
+
+.Option {
+  background-color: white;
+  border: 0;
+  line-height: 30px;
+}
