@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styles from './SelectMenu.module.scss';
 import classNames from 'classnames';
-import { ReactComponent as Chevron } from 'assets/icons/Chevron-Top.svg';
+import { ReactComponent as Chevron } from 'assets/icons/chevron-top.svg';
 
-export default ({ items }) => {
+function SelectMenu({ items }) {
   const [selected, setSelected] = useState(items[0].label);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -43,4 +44,15 @@ export default ({ items }) => {
       {getMenu()}
     </div>
   );
+}
+
+SelectMenu.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      onClick: PropTypes.func.isRequired,
+    })
+  ),
 };
+
+export default SelectMenu;

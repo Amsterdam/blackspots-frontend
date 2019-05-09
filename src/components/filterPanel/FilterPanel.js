@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import { StatusDisplayNames } from '../../constants';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
-import { ReactComponent as ChevronIcon } from 'assets/icons/Chevron-Top.svg';
+import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -252,10 +252,9 @@ const FilterPanel = ({
 
   return (
     <div
-      className={classNames(
-        styles.FilterPanel,
-        showPanel ? '' : styles.FilterPanelCollapsed
-      )}
+      className={classNames(styles.FilterPanel, {
+        [styles.FilterPanelCollapsed]: !showPanel,
+      })}
     >
       <div className={styles.TopBar} onClick={() => setShowPanel(!showPanel)}>
         <FilterIcon className={styles.FilterIcon} />
