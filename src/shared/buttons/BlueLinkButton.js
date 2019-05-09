@@ -1,31 +1,34 @@
 import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styles from './BlueLinkButton.module.scss';
+import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-left.svg';
+import classNames from 'classnames';
 
-const LinkStyled = styled.span`
-  height: 20px;
-  width: 118px;
-  color: #004699;
-  font-size: 16px;
-  font-weight: 900;
-  line-height: 20px;
-`;
-
-const BlueLinkButton = props => {
+function BlueLinkButton({ to, text, external, chevronDirection }) {
+  console.log(chevronDirection);
+  console.log(chevronDirection === 'right');
   return (
-    <LinkStyled>{`${props.chevDirection === 'left' ? '<' : '>'} ${
-      props.text
-    }`}</LinkStyled>
+    <a className={styles.Container} href={to} target={external ? '_blank' : ''}>
+      <ChevronIcon
+        className={classNames(styles.ChevronIcon, {
+          [styles.ChevronIconRotated]: chevronDirection === 'right',
+        })}
+      />
+      {text}
+    </a>
   );
-};
+}
 
 BlueLinkButton.propTypes = {
-  chevDirection: PropTypes.oneOf(['left', 'right']),
+  chevronDirection: PropTypes.oneOf(['left', 'right']),
   text: PropTypes.string.isRequired,
+  external: PropTypes.bool,
+  to: PropTypes.string.isRequired,
 };
 
 BlueLinkButton.defaultProps = {
-  chevDirection: 'left',
+  chevronDirection: 'right',
+  external: false,
 };
 
 export default BlueLinkButton;

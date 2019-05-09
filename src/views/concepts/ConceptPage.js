@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
 import ContentBox from '../../shared/contentBox/ContentBox';
@@ -10,9 +9,11 @@ import Typography from 'shared/typography/Typography';
 export default () => {
   return (
     <ContentBox>
-      <NavLink to={appRoutes.HOME}>
-        <BlueLinkButton chevDirection="left" text="Terug naar kaart" />
-      </NavLink>
+      <BlueLinkButton
+        to={appRoutes.HOME}
+        text="Terug naar kaart"
+        chevronDirection="left"
+      />
       <h1>Begrippenlijst</h1>
 
       <Typography size="L">

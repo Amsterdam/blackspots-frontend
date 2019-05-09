@@ -12,9 +12,11 @@ export default () => {
   return (
     <ContentBox>
       <ContactStyled>
-        <NavLink to={appRoutes.HOME}>
-          <BlueLinkButton chevDirection="left" text="Terug naar kaart" />
-        </NavLink>
+        <BlueLinkButton
+          to={appRoutes.HOME}
+          text="Terug naar kaart"
+          chevronDirection="left"
+        />
         <h1>Contact</h1>
 
         <Typography size="L">
