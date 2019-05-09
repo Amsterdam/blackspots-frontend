@@ -44,9 +44,8 @@
   background-color: white;
   position: relative;
 
-  p:first-of-type {
-    font-size: 19px;
-    line-height: 26px;
+  .Intro {
+    @extend %intro-text;
   }
 
   p {
@@ -72,4 +71,5 @@
   width: 180px;
   font-size: 16px;
   font-weight: bold;
+  cursor: pointer;
 }

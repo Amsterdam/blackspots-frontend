@@ -19,7 +19,7 @@ export default () => {
       </div>
       <div className={styles.Content}>
         <h1> Welkom bij Werkgroepblackspots</h1>
-        <p>
+        <p className={styles.Intro}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
