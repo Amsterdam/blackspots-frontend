@@ -1,0 +1,75 @@
+@import 'styles/styles.scss';
+
+.Container {
+  @extend %page;
+
+  h1 {
+    font-size: 30px;
+  }
+}
+
+.Header {
+  width: $content-width;
+  margin: auto;
+  display: flex;
+  padding-top: 20px;
+  margin-bottom: 20px;
+  h1 {
+    margin-top: -6px;
+  }
+}
+
+.Logo {
+  height: 70px;
+  margin-right: 40px;
+}
+
+.HeroContainer {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  padding-top: 40px;
+  background-color: $neutralGrey1;
+}
+
+.Hero {
+  max-height: 300px;
+}
+
+.Content {
+  width: $content-width;
+  box-sizing: border-box;
+  margin: -80px auto 0 auto;
+  padding: 20px 180px 0 180px;
+  background-color: white;
+  position: relative;
+
+  .Intro {
+    @extend %intro-text;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  a {
+    text-decoration: underline;
+    color: $primaryBlue;
+
+    &:hover {
+      color: $primaryRed;
+    }
+  }
+}
+
+.LoginBtn {
+  background-color: $primaryBlue;
+  color: white;
+  border: 0px;
+  height: 45px;
+  width: 180px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}

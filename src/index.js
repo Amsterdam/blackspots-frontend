@@ -26,24 +26,18 @@ class KeycloakWrapper extends React.Component {
   }
 
   render() {
-    if (this.state.authenticated) {
-      return this.props.children;
-    } else {
-      return '';
-    }
+    return <App authenticated={this.state.authenticated} />;
   }
 }
 
 ReactDOM.render(
-  <KeycloakWrapper keycloak={auth.keycloak}>
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <React.Fragment>
-          <GlobalStyle />
-          <App />
-        </React.Fragment>
-      </BrowserRouter>
-    </ThemeProvider>
-  </KeycloakWrapper>,
+  <ThemeProvider theme={theme}>
+    <BrowserRouter>
+      <React.Fragment>
+        <GlobalStyle />
+        <KeycloakWrapper keycloak={auth.keycloak} />>
+      </React.Fragment>
+    </BrowserRouter>
+  </ThemeProvider>,
   document.getElementById('root')
 );
