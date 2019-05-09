@@ -8,6 +8,8 @@ import { ContextMenuOptions } from './FilterPanel.constants';
 import classNames from 'classnames';
 import { StatusDisplayNames } from '../../constants';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
+import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
+import { ReactComponent as ChevronIcon } from 'assets/icons/Chevron-Top.svg';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -31,6 +33,7 @@ const FilterPanel = ({
   setFilters,
 }) => {
   const [optionValue, setOptionValue] = useState(ContextMenuOptions.ALL);
+  const [showPanel, setShowPanel] = useState(true);
 
   /**
    * Update the filters of the actual map
@@ -248,7 +251,22 @@ const FilterPanel = ({
   }
 
   return (
-    <div className={styles.FilterPanel}>
+    <div
+      className={classNames(
+        styles.FilterPanel,
+        showPanel ? '' : styles.FilterPanelCollapsed
+      )}
+    >
+      <div className={styles.TopBar} onClick={() => setShowPanel(!showPanel)}>
+        <FilterIcon className={styles.FilterIcon} />
+        Filters
+        <ChevronIcon
+          className={classNames(
+            styles.ChevronIcon,
+            showPanel ? '' : styles.ChevronIconRotated
+          )}
+        />
+      </div>
       <div className={styles.FilterContainer}>
         <h5>Toon</h5>
         {renderOptions()}
