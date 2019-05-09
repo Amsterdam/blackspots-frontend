@@ -7,6 +7,7 @@ import styles from './FilterPanel.module.scss';
 import { ContextMenuOptions } from './FilterPanel.constants';
 import classNames from 'classnames';
 import { StatusDisplayNames } from '../../constants';
+import SelectMenu from '../../shared/selectMenu/SelectMenu';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -63,31 +64,62 @@ const FilterPanel = ({
     );
   }
 
+  function processOptionChange(value) {
+    updateFilters(spotTypeFilter);
+    setOptionValue(value);
+  }
+
   /**
    * Render the context menu providing options to show different combinations
    * of filters
    */
   function renderOptions() {
     return (
-      <div className={styles.ContextMenuWrapper}>
-        <select
-          className={styles.ContextMenu}
-          onChange={e => {
-            updateFilters(spotTypeFilter);
-            setOptionValue(e.target.value);
-          }}
-        >
-          <option value={ContextMenuOptions.ALL}>Alles</option>
-          <option value={ContextMenuOptions.DELIVERED}>Opgeleverd in</option>
-          <option value={ContextMenuOptions.BLACKSPOTS}>
-            Opgenomen als blackspot in
-          </option>
-          <option value={ContextMenuOptions.QUICKSCANS}>
-            Opgenomen als protocol in
-          </option>
-        </select>
-      </div>
+      <SelectMenu
+        items={[
+          {
+            value: ContextMenuOptions.ALL,
+            label: 'Alles',
+            onClick: () => processOptionChange(ContextMenuOptions.ALL),
+          },
+          {
+            value: ContextMenuOptions.DELIVERED,
+            label: 'Opgeleverd in',
+            onClick: () => processOptionChange(ContextMenuOptions.DELIVERED),
+          },
+          {
+            value: ContextMenuOptions.BLACKSPOTS,
+            label: 'Opgenomen als blackspot in',
+            onClick: () => processOptionChange(ContextMenuOptions.BLACKSPOTS),
+          },
+          {
+            value: ContextMenuOptions.QUICKSCANS,
+            label: 'Opgenomen als protocol in',
+            onClick: () => processOptionChange(ContextMenuOptions.QUICKSCANS),
+          },
+        ]}
+      />
     );
+    // return (
+    //   <div className={styles.ContextMenuWrapper}>
+    //     <select
+    //       className={styles.ContextMenu}
+    //       onChange={e => {
+    //         updateFilters(spotTypeFilter);
+    //         setOptionValue(e.target.value);
+    //       }}
+    //     >
+    //       <option value={ContextMenuOptions.ALL}>Alles</option>
+    //       <option value={ContextMenuOptions.DELIVERED}>Opgeleverd in</option>
+    //       <option value={ContextMenuOptions.BLACKSPOTS}>
+    //         Opgenomen als blackspot in
+    //       </option>
+    //       <option value={ContextMenuOptions.QUICKSCANS}>
+    //         Opgenomen als protocol in
+    //       </option>
+    //     </select>
+    //   </div>
+    // );
   }
 
   /**
