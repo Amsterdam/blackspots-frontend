@@ -9,6 +9,7 @@ import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'constants.js';
 import { capitalizeString } from 'helpers.js';
 import styles from './DetailPanel.module.scss';
 import classNames from 'classnames';
+import BlueLinkButton from 'shared/buttons/BlueLinkButton';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -113,6 +114,13 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
               )}
             </tbody>
           </DataTable>
+          <div className={styles.LinkContainer}>
+            <BlueLinkButton
+              text="Panoramabeeld"
+              external={true}
+              to={`http://maps.google.com/maps?q=&layer=c&cbll=${lat},${lng}`}
+            />
+          </div>
           <h3>Maatregelen</h3>
           <DataTable>
             <tbody>
