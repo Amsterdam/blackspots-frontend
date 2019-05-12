@@ -4,6 +4,7 @@ export const AccordionStyled = styled.div`
   width: 100%;
   background-color: #e5e5e5;
   border: solid 2px #e5e5e5;
+  margin-bottom: 2px;
 `;
 
 export const AccordionText = styled.div`
