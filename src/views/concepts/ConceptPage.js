@@ -1,20 +1,20 @@
 import React from 'react';
 
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
-import ContentBox from '../../shared/contentBox/ContentBox';
 import Accordion from '../../shared/accordion/Accordion';
+import styles from './ConceptPage.module.scss';
 import { appRoutes } from 'constants.js';
 
 export default () => {
   return (
-    <ContentBox>
+    <div className={styles.Container}>
       <BlueLinkButton
         to={appRoutes.HOME}
         text="Terug naar kaart"
         chevronDirection="left"
       />
       <h1>Begrippenlijst</h1>
-      <p>
+      <p className={styles.Intro}>
         Op de WBA kaart staan alle locaties die Werkgroep Blackspots in
         onderzoek en/of uitvoering heeft. Naar aanleiding van onderzoek wordt
         besloten of maatregelen nodig zijn om de verkeersveiligheid te
@@ -105,6 +105,6 @@ export default () => {
       De oorzaak van het ongeval heeft dan een andere oorzaak, zoals gedrag in
       het verkeer."
       />
-    </ContentBox>
+    </div>
   );
 };
