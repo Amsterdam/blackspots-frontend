@@ -15,7 +15,7 @@
   h5 {
     font-size: 16px;
     font-weight: 900;
-    margin: 4px 0 4px 0;
+    margin: 10px 0 4px 0;
   }
 
   &Collapsed {
@@ -26,7 +26,7 @@
 .FilterContainer {
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: 4px 16px;
 }
 
 .TopBar {
@@ -47,8 +47,13 @@
   .ChevronIcon {
     position: absolute;
     right: 10px;
-    height: 12px;
+    height: 14px;
     transform: rotate(180deg);
+    margin-top: -2px;
+
+    polygon {
+      fill: $neutralGrey4;
+    }
 
     &Rotated {
       transform: initial;
