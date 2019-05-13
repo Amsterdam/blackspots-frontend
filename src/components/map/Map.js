@@ -250,7 +250,6 @@ class Map extends React.Component {
    */
   onMarkerClick(feature, latlng) {
     const currentZoom = this.map.getZoom();
-    console.log(currentZoom);
     this.map.flyTo(latlng, currentZoom < 14 ? 14 : currentZoom);
     this.setState({ feature, showDetailPanel: true });
   }
