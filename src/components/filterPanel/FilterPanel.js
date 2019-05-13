@@ -67,9 +67,28 @@ const FilterPanel = ({
     );
   }
 
-  function processOptionChange(value) {
-    updateFilters(spotTypeFilter);
+  function processOptionChange(value, updatedSpotTypeFilter) {
+    updateFilters(
+      updatedSpotTypeFilter ? updatedSpotTypeFilter : spotTypeFilter
+    );
     setOptionValue(value);
+  }
+
+  function resetSpotTypeFilterToBlackspotOnly() {
+    Object.keys(spotTypeFilter).forEach(t => {
+      spotTypeFilter[t] = t === SpotTypes.BLACKSPOT ? true : false;
+    });
+    return spotTypeFilter;
+  }
+
+  function resetSpotTypeFilterToProtocolOnly() {
+    Object.keys(spotTypeFilter).forEach(t => {
+      spotTypeFilter[t] =
+        t === SpotTypes.PROTOCOL_DODELIJK || t === SpotTypes.PROTOCOL_ERNSTIG
+          ? true
+          : false;
+    });
+    return spotTypeFilter;
   }
 
   /**
@@ -90,11 +109,19 @@ const FilterPanel = ({
           },
           {
             label: 'Opgenomen als blackspot in',
-            onClick: () => processOptionChange(ContextMenuOptions.BLACKSPOTS),
+            onClick: () =>
+              processOptionChange(
+                ContextMenuOptions.BLACKSPOTS,
+                resetSpotTypeFilterToBlackspotOnly()
+              ),
           },
           {
             label: 'Opgenomen als protocol in',
-            onClick: () => processOptionChange(ContextMenuOptions.QUICKSCANS),
+            onClick: () =>
+              processOptionChange(
+                ContextMenuOptions.QUICKSCANS,
+                resetSpotTypeFilterToProtocolOnly()
+              ),
           },
         ]}
       />
