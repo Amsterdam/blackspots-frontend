@@ -68,7 +68,6 @@ const FilterPanel = ({
   }
 
   function processOptionChange(value, updatedSpotTypeFilter) {
-    console.log(updatedSpotTypeFilter);
     updateFilters(
       updatedSpotTypeFilter ? updatedSpotTypeFilter : spotTypeFilter
     );
