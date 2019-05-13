@@ -153,7 +153,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
           {documents.length > 0 && <h3>Documenten</h3>}
           {documents.map(d => {
             return (
-              <div className={styles.DocumentsContainer}>
+              <div key={d.id} className={styles.DocumentsContainer}>
                 <table>
                   <tbody>
                     <tr>
@@ -162,7 +162,6 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
                       </td>
                       <td>
                         <a
-                          key={d.id}
                           href={`${d._links.self.href.split('?')[0]}file`}
                           download
                         >
