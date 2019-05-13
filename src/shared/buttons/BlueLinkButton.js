@@ -1,19 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './BlueLinkButton.module.scss';
+import { Link } from 'react-router-dom';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-left.svg';
 import classNames from 'classnames';
 
 function BlueLinkButton({ to, text, external, chevronDirection }) {
-  return (
-    <a className={styles.Container} href={to} target={external ? '_blank' : ''}>
-      <ChevronIcon
-        className={classNames(styles.ChevronIcon, {
-          [styles.ChevronIconRotated]: chevronDirection === 'right',
-        })}
-      />
-      {text}
+  function getContent() {
+    return (
+      <>
+        <ChevronIcon
+          className={classNames(styles.ChevronIcon, {
+            [styles.ChevronIconRotated]: chevronDirection === 'right',
+          })}
+        />
+        {text}
+      </>
+    );
+  }
+
+  return external ? (
+    <a
+      className={styles.Container}
+      href={to}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {getContent()}
     </a>
+  ) : (
+    <Link className={styles.Container} to={to}>
+      {getContent()}
+    </Link>
   );
 }
 
