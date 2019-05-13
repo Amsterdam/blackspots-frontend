@@ -5,8 +5,6 @@ import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-left.svg';
 import classNames from 'classnames';
 
 function BlueLinkButton({ to, text, external, chevronDirection }) {
-  console.log(chevronDirection);
-  console.log(chevronDirection === 'right');
   return (
     <a className={styles.Container} href={to} target={external ? '_blank' : ''}>
       <ChevronIcon
