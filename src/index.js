@@ -35,7 +35,7 @@ ReactDOM.render(
     <BrowserRouter>
       <React.Fragment>
         <GlobalStyle />
-        <KeycloakWrapper keycloak={auth.keycloak} />>
+        <KeycloakWrapper keycloak={auth.keycloak} />
       </React.Fragment>
     </BrowserRouter>
   </ThemeProvider>,
