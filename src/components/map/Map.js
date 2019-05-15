@@ -251,7 +251,9 @@ class Map extends React.Component {
             // Add the correct classname based on type
             // Risico types have a bigger icon therefore need more margin
             className: `marker-div-icon ${
-              spot_type === 'risico' ? 'large' : ''
+              spot_type === SpotTypes.RISICO ? 'large' : ''
+            } ${
+              status === SpotStatusTypes.GEEN_MAATREGEL ? 'extra-opacity' : ''
             }`,
             html: renderToString(<SVGIcon type={spot_type} status={status} />),
           }),

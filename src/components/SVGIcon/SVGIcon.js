@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { SpotStatusColor, SpotIcons } from 'constants.js';
 import styles from './SVGIcon.module.scss';
+import { SpotStatusTypes } from '../../constants';
 
 const SVGIcon = ({ type, status, small }) => {
   const SVGIcon = SpotIcons[type];
@@ -19,7 +20,13 @@ const SVGIcon = ({ type, status, small }) => {
   if (small) {
     return <SVGIcon className={styles.SmallIcon} />;
   } else {
-    return <SVGIcon fill={markerStatus} />;
+    return (
+      <SVGIcon
+        fill={
+          status === SpotStatusTypes.GEEN_MAATREGEL ? '#000000' : markerStatus
+        }
+      />
+    );
   }
 };
 
