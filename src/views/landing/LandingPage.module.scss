@@ -34,6 +34,7 @@
 
 .Hero {
   max-height: 300px;
+  margin: auto;
 }
 
 .Content {
@@ -41,7 +42,7 @@
   box-sizing: border-box;
   margin: -80px auto 0 auto;
   padding: 20px 180px 0 180px;
-  background-color: white;
+  background-color: $primaryWhite;
   position: relative;
 
   .Intro {
@@ -65,11 +66,11 @@
 
 .LoginBtn {
   background-color: $primaryBlue;
-  color: white;
+  color: $primaryWhite;
   border: 0px;
   height: 45px;
   width: 180px;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
 }

@@ -56,18 +56,6 @@ export default () => {
               </a>
             </td>
           </tr>
-          <tr>
-            <td>Technisch contactpersoon</td>
-            <td>
-              <a
-                className={styles.EmailLink}
-                href="mailto:j.jansen@amsterdam.nl"
-              >
-                <Chevron />
-                Jan Jansen (j.jansen@amsterdam.nl)
-              </a>
-            </td>
-          </tr>
         </tbody>
       </DataTable>
 

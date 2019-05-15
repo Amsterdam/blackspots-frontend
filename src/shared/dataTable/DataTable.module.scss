@@ -1,10 +1,13 @@
 @import 'styles/styles.scss';
 
 .Container {
+  tr {
+    height: 32px;
+  }
+
   /* Remove borders */
   td {
     border: 0;
-    height: 33px;
   }
 
   /* Remove hover */
@@ -18,11 +21,9 @@
 
   /* Grey text in first column */
   tr td:nth-child(1) {
-    font-family: 'AvenirLTStd-Roman';
-    color: #787878;
-    width: 220px;
+    color: $neutralGrey4;
+    width: 200px;
     font-size: 16px;
-    font-weight: 500;
-    line-height: 20px;
+    font-weight: 400;
   }
 }
