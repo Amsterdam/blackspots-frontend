@@ -19,6 +19,9 @@ import { SpotTypes, SpotStatusTypes } from 'constants.js';
 import './markerStyle.css';
 
 class Map extends React.Component {
+  // TODO: Filters should be refactored a bit too make them more explicit and
+  // less complex
+
   constructor() {
     super();
     this.state = {
@@ -26,6 +29,15 @@ class Map extends React.Component {
       loading: true,
       showDetailPanel: false,
       feature: null,
+      // A filter to only show items on the 'blackspot list', which are all
+      // spots with type BLACKSPOT or WEGVAk
+      blackspotListFilter: false,
+      // A filter to only show items on the 'protocol list', which are all spots
+      // with type PROTOCOL_ERNSTIG or PROTOCOL_DODELIJK
+      // Note: quickscan === protocol
+      quickscanListFilter: false,
+      // A filter that only shows spots that have the status DELIVERED
+      deliveredListFilter: false,
       // Year filters will be set with default data once the blackspot data is
       // received and the relevant years are known
       blackspotYearFilter: {},
@@ -210,7 +222,10 @@ class Map extends React.Component {
       spotStatusTypeFilter,
       blackspotYearFilter,
       deliveredYearFilter,
-      quickscanYearFilter
+      quickscanYearFilter,
+      this.state.blackspotListFilter,
+      this.state.quickscanListFilter,
+      this.state.deliveredListFilter
     );
   }
 
@@ -288,6 +303,15 @@ class Map extends React.Component {
               deliveredYearFilter={deliveredYearFilter}
               quickscanYearFilter={quickscanYearFilter}
               setFilters={this.setFilters}
+              setBlackspotListFilter={value =>
+                this.setState({ blackspotListFilter: value })
+              }
+              setQuickscanListFilter={value =>
+                this.setState({ quickscanListFilter: value })
+              }
+              setDeliveredListFilter={value =>
+                this.setState({ deliveredListFilter: value })
+              }
             />
           )}
           <DetailPanel
