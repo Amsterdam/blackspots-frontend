@@ -24,18 +24,10 @@ export default () => {
           <Logout />
           Uitloggen
         </button>
-        <NavLink
-          className={styles.Link}
-          activeClassName={styles.LinkActive}
-          to={appRoutes.CONCEPTS}
-        >
+        <NavLink className={styles.Link} to={appRoutes.CONCEPTS}>
           Begrippenlijst
         </NavLink>
-        <NavLink
-          className={styles.Link}
-          activeClassName={styles.LinkActive}
-          to={appRoutes.CONTACT}
-        >
+        <NavLink className={styles.Link} to={appRoutes.CONTACT}>
           Contact
         </NavLink>
       </div>

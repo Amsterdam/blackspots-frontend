@@ -3,9 +3,6 @@ import styled from 'styled-components';
 
 const Typography = styled.p`
   color: ${props => props.theme.colors.black};
-  font-family: ${props => {
-    return props.theme.fontFamily.avenirRoman;
-  }};
   font-size: ${props => {
     switch (props.size) {
       case 'L':

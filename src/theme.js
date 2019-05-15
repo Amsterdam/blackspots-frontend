@@ -10,8 +10,4 @@ export default {
     primaryRed: '#EC0000',
     primaryBlue: '#004699',
   },
-  fontFamily: {
-    avenirRoman: `AvenirLTStd-Roman, verdana, sans-serif`,
-    avenirHeavy: `'AvenirLTStd-Heavy', arial, sans-serif;`,
-  },
 };
