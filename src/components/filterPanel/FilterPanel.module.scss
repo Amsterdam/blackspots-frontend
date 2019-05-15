@@ -1,7 +1,7 @@
 @import 'styles/styles.scss';
 
 .FilterPanel {
-  height: 600px;
+  height: 504px;
   width: 285px;
   margin: 0 0 0 10px;
   position: absolute;
@@ -27,6 +27,13 @@
   display: flex;
   flex-direction: column;
   padding: 4px 16px;
+}
+
+.YearFilter {
+  display: flex;
+  flex-direction: column;
+  height: 160px;
+  flex-wrap: wrap;
 }
 
 .TopBar {

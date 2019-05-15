@@ -122,93 +122,111 @@ const FilterPanel = ({
    * Render the checkboxes for the blackspot year filter
    */
   function renderBlackspotYearCheckboxes() {
-    return Object.keys(blackspotYearFilter).map(year => {
-      const value = blackspotYearFilter[year];
-      return (
-        <label key={year} className={styles.CheckboxWrapper}>
-          <input
-            type="checkbox"
-            checked={value}
-            onChange={e => {
-              const updatedFilter = {
-                ...blackspotYearFilter,
-                [year]: !value,
-              };
-              updateFilters(
-                spotTypeFilter,
-                spotStatusTypeFilter,
-                updatedFilter
-              );
-            }}
-          />
-          <span />
-          {year}
-        </label>
-      );
-    });
+    return (
+      <div className={styles.YearFilter}>
+        {Object.keys(blackspotYearFilter)
+          .reverse()
+          .map(year => {
+            const value = blackspotYearFilter[year];
+            return (
+              <label key={year} className={styles.CheckboxWrapper}>
+                <input
+                  type="checkbox"
+                  checked={value}
+                  onChange={e => {
+                    const updatedFilter = {
+                      ...blackspotYearFilter,
+                      [year]: !value,
+                    };
+                    updateFilters(
+                      spotTypeFilter,
+                      spotStatusTypeFilter,
+                      updatedFilter
+                    );
+                  }}
+                />
+                <span />
+                {year}
+              </label>
+            );
+          })}
+      </div>
+    );
   }
 
   /**
    * Render the checkboxes for the delivered year filter
    */
   function renderDeliveredYearCheckboxes() {
-    return Object.keys(deliveredYearFilter).map(year => {
-      const value = deliveredYearFilter[year];
-      return (
-        <label key={year} className={styles.CheckboxWrapper}>
-          <input
-            type="checkbox"
-            checked={value}
-            onChange={e => {
-              const updatedFilter = {
-                ...deliveredYearFilter,
-                [year]: !value,
-              };
-              updateFilters(
-                spotTypeFilter,
-                spotStatusTypeFilter,
-                false,
-                updatedFilter
-              );
-            }}
-          />
-          <span />
-          {year}
-        </label>
-      );
-    });
+    return (
+      <div className={styles.YearFilter}>
+        {Object.keys(deliveredYearFilter)
+          .reverse()
+          .map(year => {
+            const value = deliveredYearFilter[year];
+            return (
+              <label key={year} className={styles.CheckboxWrapper}>
+                <input
+                  type="checkbox"
+                  checked={value}
+                  onChange={e => {
+                    const updatedFilter = {
+                      ...deliveredYearFilter,
+                      [year]: !value,
+                    };
+                    updateFilters(
+                      spotTypeFilter,
+                      spotStatusTypeFilter,
+                      false,
+                      updatedFilter
+                    );
+                  }}
+                />
+                <span />
+                {year}
+              </label>
+            );
+          })}
+      </div>
+    );
   }
 
   /**
    * Render the checkboxes for the quickscan year filter
    */
   function renderQuickscanYearCheckboxes() {
-    return Object.keys(quickscanYearFilter).map(year => {
-      const value = quickscanYearFilter[year];
-      return (
-        <label key={year} className={styles.CheckboxWrapper}>
-          <input
-            type="checkbox"
-            checked={value}
-            onChange={e => {
-              const updatedFilter = {
-                ...quickscanYearFilter,
-                [year]: !value,
-              };
-              updateFilters(
-                spotTypeFilter,
-                spotStatusTypeFilter,
-                false,
-                false,
-                updatedFilter
-              );
-            }}
-          />
-          <span />
-          {year}
-        </label>
-      );
-    });
+    return (
+      <div className={styles.YearFilter}>
+        {Object.keys(quickscanYearFilter)
+          .reverse()
+          .map(year => {
+            const value = quickscanYearFilter[year];
+            return (
+              <label key={year} className={styles.CheckboxWrapper}>
+                <input
+                  type="checkbox"
+                  checked={value}
+                  onChange={e => {
+                    const updatedFilter = {
+                      ...quickscanYearFilter,
+                      [year]: !value,
+                    };
+                    updateFilters(
+                      spotTypeFilter,
+                      spotStatusTypeFilter,
+                      false,
+                      false,
+                      updatedFilter
+                    );
+                  }}
+                />
+                <span />
+                {year}
+              </label>
+            );
+          })}
+      </div>
+    );
   }
 
   /**
