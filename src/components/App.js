@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { AppStyled, Content } from './App.styled';
+import styles from './App.module.scss';
 import Header from './header/Header';
 import DashboardPage from 'views/dashboard/DashboardPage';
 import ConceptPage from 'views/concepts/ConceptPage';
@@ -13,11 +13,11 @@ class App extends React.Component {
   render() {
     const { authenticated } = this.props;
     return (
-      <AppStyled>
+      <div className={styles.App}>
         {authenticated ? (
           <>
             <Header />
-            <Content>
+            <div className={styles.Content}>
               <Switch>
                 <Route
                   exact
@@ -27,12 +27,12 @@ class App extends React.Component {
                 <Route exact path={appRoutes.CONTACT} component={ContactPage} />
                 <Route path={appRoutes.HOME} component={DashboardPage} />
               </Switch>
-            </Content>
+            </div>
           </>
         ) : (
           <LandingPage />
         )}
-      </AppStyled>
+      </div>
     );
   }
 }
