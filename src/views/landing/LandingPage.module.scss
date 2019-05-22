@@ -6,41 +6,57 @@
   h1 {
     font-size: 30px;
   }
+
+  background-color: $neutralGrey2;
+  display: flex;
+  justify-content: center;
+}
+
+.Content {
+  width: 100%;
+  max-width: 1400px;
+  background-color: $primaryWhite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .Header {
-  width: $content-width;
-  margin: auto;
+  width: 940px;
   display: flex;
   padding-top: 20px;
   margin-bottom: 20px;
   h1 {
     margin-top: -6px;
   }
+  background-color: $primaryWhite;
 }
 
 .Logo {
   height: 70px;
   margin-right: 40px;
+  margin-left: -20px;
 }
 
-.HeroContainer {
-  display: flex;
+.Menu {
   width: 100%;
-  overflow: hidden;
-  padding-top: 40px;
+  height: 44px;
   background-color: $neutralGrey1;
 }
 
-.Hero {
-  max-height: 300px;
+.HeroContainer {
+  width: 100%;
 }
 
-.Content {
-  width: $content-width;
+.Hero {
+  width: 100%;
+}
+
+.Section {
+  width: 940px;
   box-sizing: border-box;
   margin: -80px auto 0 auto;
-  padding: 20px 180px 0 180px;
+  padding: 20px 90px 0 90px;
   background-color: white;
   position: relative;
 
