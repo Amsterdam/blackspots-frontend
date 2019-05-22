@@ -1,17 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 
-import AvenirLTStdHeavy from 'assets/fonts/AvenirLTStd-Heavy.otf';
-import AvenirLTStdRoman from 'assets/fonts/AvenirLTStd-Roman.otf';
-
 const GlobalStyle = createGlobalStyle`
   html, body, #root {
     width: 100%;
     height: 100%;
     padding: 0;
     margin: 0;
-    font-family: ${props => {
-      return props.theme.fontFamily.avenirRoman;
-    }};
   }
 
   a {
@@ -31,15 +25,6 @@ const GlobalStyle = createGlobalStyle`
 
   b {
     font-weight: 400;
-  }
-
-  @font-face {
-    font-family: 'AvenirLTStd-Roman';
-    src: url(${AvenirLTStdRoman})
-  }
-  @font-face {
-    font-family: 'AvenirLTStd-Heavy';
-    src: url(${AvenirLTStdHeavy})
   }
 `;
 

@@ -31,14 +31,13 @@
   color: $primaryBlack;
   border: none;
   background-color: transparent;
-  font-family: $avenir;
   font-size: 16px;
   cursor: pointer;
-  margin-right: 2px;
+  margin-right: 12px;
 
   svg {
     height: 14px;
-    margin: 0 -2px -1px 0;
+    margin: 1px -2px -1px 0;
   }
 
   &:hover {
@@ -52,39 +51,6 @@
 }
 
 .Link {
-  margin-right: 10px;
+  margin-right: 20px;
   color: $primaryBlack;
-
-  &Active {
-    text-decoration-line: underline;
-    text-decoration-color: red;
-  }
 }
-
-// a {
-//   margin-right: 10px;
-//   color: $primaryBlack;
-// }
-
-// button {
-
-//   span {
-//     font-size: 16px;
-//     margin-bottom: 2px;
-//     font-family: 'AvenirLTStd-Roman';
-
-//     :hover {
-//       color: $primaryRed;
-//       text-decoration: underline;
-//       cursor: pointer;
-//     }
-//   }
-// }
-// }
-
-// export const NavLinkStyled = styled(NavLink)`
-//   &.active {
-//     text-decoration-line: underline;
-//     text-decoration-color: red;
-//   }
-// `;

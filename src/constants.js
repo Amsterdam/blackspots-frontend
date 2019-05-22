@@ -13,10 +13,10 @@ export const appRoutes = {
 
 export const SpotTypes = {
   BLACKSPOT: 'blackspot',
+  WEGVAK: 'wegvak',
   PROTOCOL_DODELIJK: 'protocol dodelijk',
   PROTOCOL_ERNSTIG: 'protocol ernstig',
   RISICO: 'risico',
-  WEGVAK: 'wegvak',
 };
 
 export const SpotStatusTypes = {

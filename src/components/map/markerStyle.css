@@ -16,3 +16,7 @@
 .marker-div-icon svg .icon-status {
   opacity: 0.6;
 }
+
+.extra-opacity svg .icon-status {
+  opacity: 0.4;
+}

@@ -13,14 +13,14 @@
   h3 {
     color: $primaryRed;
     font-size: 18px;
-    font-weight: 900;
+    font-weight: 600;
     line-height: 20px;
     margin-bottom: 10px;
   }
 
   h2 {
     font-size: 20px;
-    font-weight: 900;
+    font-weight: 600;
     line-height: 28px;
     margin-top: 0;
     margin-bottom: 10px;
@@ -64,30 +64,34 @@
 
 .IconCell {
   display: flex;
+  height: 30px;
   align-items: center;
   padding-left: 30px;
   svg {
     position: absolute;
-    margin: -2px 0px -10px -36px;
+    margin-left: -36px;
+    margin-top: -2px;
   }
 
   &ExtraMargin {
     svg {
-      margin-left: -41px;
+      // margin-left: -41px;
     }
   }
 }
 
 .StatusCell {
   display: flex;
+  height: 30px;
+  align-items: center;
 }
 
 .StatusBox {
   height: 15px;
   width: 15px;
   margin-right: 14px;
-  margin-bottom: -2px;
-  background-color: red;
+  margin-bottom: 4px;
+  background-color: $primaryRed;
 }
 
 .Onderzoek {
