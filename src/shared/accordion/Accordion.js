@@ -23,9 +23,7 @@ const Accordion = ({ title, text }) => {
         />
       </div>
       <div className={classNames(styles.Text, { [styles.TextOpen]: open })}>
-        <div className={styles.TextInner}>
-          <Typography>{text}</Typography>
-        </div>
+        <div className={styles.TextInner}>{text}</div>
       </div>
     </div>
   );
