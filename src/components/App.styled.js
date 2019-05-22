@@ -5,6 +5,6 @@ export const AppStyled = styled.div`
 `;
 
 export const Content = styled.div`
-  height: calc(100% - 50px);
+  height: calc(100% - 52px);
   overflow: auto;
 `;

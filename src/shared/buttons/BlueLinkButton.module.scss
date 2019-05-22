@@ -1,0 +1,32 @@
+@import 'styles/styles.scss';
+
+.Container {
+  height: 20px;
+  color: $primaryBlue;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    polygon {
+      fill: $primaryRed;
+    }
+  }
+}
+
+.ChevronIcon {
+  height: 12px;
+  width: 12px;
+  margin-top: -4px;
+  margin-right: 4px;
+
+  polygon {
+    fill: $primaryBlue;
+  }
+
+  &Rotated {
+    transform: rotate(180deg);
+  }
+}

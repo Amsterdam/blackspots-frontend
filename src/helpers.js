@@ -39,3 +39,13 @@ export function getDeliveredYearFromMarker(marker) {
 export function getQuickscanYearFromMarker(marker) {
   return marker.feature.properties.jaar_ongeval_quickscan;
 }
+
+/**
+ * Check if the acc or prod env should be used
+ */
+export function shouldUseAccEnv() {
+  return (
+    window.location.hostname.includes('acc') ||
+    window.location.hostname.includes('localhost')
+  );
+}

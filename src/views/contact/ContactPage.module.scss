@@ -1,0 +1,31 @@
+@import 'styles/styles.scss';
+
+.Container {
+  @extend %content-box;
+
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 20px;
+    color: $primaryRed;
+  }
+}
+
+.EmailLink {
+  color: $primaryBlack;
+  font-weight: 600;
+
+  svg {
+    height: 12px;
+    transform: rotate(180deg);
+    margin-right: -5px;
+  }
+
+  &:hover {
+    color: $primaryRed;
+
+    svg {
+      fill: $primaryRed;
+    }
+  }
+}

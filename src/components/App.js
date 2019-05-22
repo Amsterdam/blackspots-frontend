@@ -7,19 +7,31 @@ import DashboardPage from 'views/dashboard/DashboardPage';
 import ConceptPage from 'views/concepts/ConceptPage';
 import ContactPage from 'views/contact/ContactPage';
 import { appRoutes } from 'constants.js';
+import LandingPage from '../views/landing/LandingPage';
 
 class App extends React.Component {
   render() {
+    const { authenticated } = this.props;
     return (
       <AppStyled>
-        <Header />
-        <Content>
-          <Switch>
-            <Route exact path={appRoutes.CONCEPTS} component={ConceptPage} />
-            <Route exact path={appRoutes.CONTACT} component={ContactPage} />
-            <Route path={appRoutes.HOME} component={DashboardPage} />
-          </Switch>
-        </Content>
+        {authenticated ? (
+          <>
+            <Header />
+            <Content>
+              <Switch>
+                <Route
+                  exact
+                  path={appRoutes.CONCEPTS}
+                  component={ConceptPage}
+                />
+                <Route exact path={appRoutes.CONTACT} component={ContactPage} />
+                <Route path={appRoutes.HOME} component={DashboardPage} />
+              </Switch>
+            </Content>
+          </>
+        ) : (
+          <LandingPage />
+        )}
       </AppStyled>
     );
   }
