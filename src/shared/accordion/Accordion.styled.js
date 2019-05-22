@@ -4,6 +4,7 @@ export const AccordionStyled = styled.div`
   width: 100%;
   background-color: #e5e5e5;
   border: solid 2px #e5e5e5;
+  margin-bottom: 2px;
 `;
 
 export const AccordionText = styled.div`
@@ -21,9 +22,8 @@ export const AccordionTextInner = styled.div`
 export const AccordionTitle = styled.div`
   height: 21px;
   color: #000000;
-  font-family: ${props => props.theme.fontFamily.avenirHeavy};
   font-size: 16px;
-  font-weight: 900;
+  font-weight: 600;
   line-height: 21px;
   padding: 17px;
 `;
@@ -31,6 +31,7 @@ export const AccordionTitle = styled.div`
 export const AccordionHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 `;
 
 // The Chevron Button
@@ -42,6 +43,7 @@ export const Expander = styled.button`
   text-align: center;
   border: none;
   position: relative;
+  cursor: pointer;
 
   &:before {
     content: '';
@@ -52,7 +54,6 @@ export const Expander = styled.button`
     border-right: 2px solid black;
     border-bottom: 2px solid black;
     transform: rotate(${props => (props.open ? '-135deg' : '-315deg')});
-    transition: transform 0.3s ease-out;
     top: 3px;
     display: inline-block;
   }

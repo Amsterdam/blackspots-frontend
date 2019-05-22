@@ -1,7 +1,6 @@
 import React from 'react';
-
-import { DataTable } from './DataTable.styled';
+import styles from './DataTable.module.scss';
 
 export default ({ children }) => {
-  return <DataTable>{children}</DataTable>;
+  return <table className={styles.Container}>{children}</table>;
 };

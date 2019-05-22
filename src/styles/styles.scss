@@ -1,1 +1,12 @@
-@import 'colors';
+@import '_colors';
+@import '_extensions';
+@import '_variables';
+@import '_fonts';
+
+p {
+  line-height: 26px;
+}
+
+button {
+  font-family: 'AvenirNext';
+}

@@ -1,10 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { NavLinkStyled, HeaderStyled, Logo, ButtonBar } from './Header.styled';
-import logo from 'assets/media/amsterdam-logo.svg';
+import { ReactComponent as Logo } from 'assets/media/amsterdam-logo-small.svg';
+import { ReactComponent as Logout } from 'assets/icons/logout.svg';
 import { appRoutes } from 'constants.js';
 import auth from 'shared/auth/auth';
+import styles from './Header.module.scss';
 
 const logout = () => {
   const keycloak = auth.keycloak;
@@ -13,18 +14,23 @@ const logout = () => {
 
 export default () => {
   return (
-    <HeaderStyled>
-      <Logo src={logo} />
-      <NavLink exact to={appRoutes.HOME}>
+    <div className={styles.Container}>
+      <Logo className={styles.Logo} />
+      <NavLink className={styles.Title} exact to={appRoutes.HOME}>
         <h2>Werkgroepblackspots</h2>
       </NavLink>
-      <ButtonBar>
-        <button onClick={logout}>
-          <span>Uitloggen</span>
+      <div className={styles.ButtonBar}>
+        <button className={styles.ButtonLink} onClick={logout}>
+          <Logout />
+          Uitloggen
         </button>
-        <NavLinkStyled to={appRoutes.CONCEPTS}>Begrippenlijst</NavLinkStyled>
-        <NavLinkStyled to={appRoutes.CONTACT}>Contact</NavLinkStyled>
-      </ButtonBar>
-    </HeaderStyled>
+        <NavLink className={styles.Link} to={appRoutes.CONCEPTS}>
+          Begrippenlijst
+        </NavLink>
+        <NavLink className={styles.Link} to={appRoutes.CONTACT}>
+          Contact
+        </NavLink>
+      </div>
+    </div>
   );
 };

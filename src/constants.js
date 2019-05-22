@@ -3,7 +3,7 @@ import { ReactComponent as ProtocolIcon } from 'assets/markers/icon-protocol.svg
 import { ReactComponent as ProtocolErnstigIcon } from 'assets/markers/icon-protocolErnstig.svg';
 import { ReactComponent as RisicoIcon } from 'assets/markers/icon-risico.svg';
 import { ReactComponent as WegvakIcon } from 'assets/markers/icon-wegvak.svg';
-import StatusColors from 'styles/colors.scss';
+import StatusColors from 'styles/_colors.scss';
 
 export const appRoutes = {
   HOME: '/',
@@ -13,10 +13,10 @@ export const appRoutes = {
 
 export const SpotTypes = {
   BLACKSPOT: 'blackspot',
+  WEGVAK: 'wegvak',
   PROTOCOL_DODELIJK: 'protocol dodelijk',
   PROTOCOL_ERNSTIG: 'protocol ernstig',
   RISICO: 'risico',
-  WEGVAK: 'wegvak',
 };
 
 export const SpotStatusTypes = {

@@ -1,0 +1,9 @@
+@import 'styles/styles.scss';
+
+.Container {
+  @extend %content-box;
+}
+
+.Intro {
+  @extend %intro-text;
+}

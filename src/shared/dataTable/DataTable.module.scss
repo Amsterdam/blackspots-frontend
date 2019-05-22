@@ -1,0 +1,29 @@
+@import 'styles/styles.scss';
+
+.Container {
+  tr {
+    height: 32px;
+  }
+
+  /* Remove borders */
+  td {
+    border: 0;
+  }
+
+  /* Remove hover */
+  tr:hover {
+    background-color: $primaryWhite;
+
+    td {
+      box-shadow: none;
+    }
+  }
+
+  /* Grey text in first column */
+  tr td:nth-child(1) {
+    color: $neutralGrey4;
+    width: 200px;
+    font-size: 16px;
+    font-weight: 400;
+  }
+}

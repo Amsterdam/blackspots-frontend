@@ -1,12 +1,16 @@
-import React from 'react';
-import Map from 'components/map/Map';
+import React, { useState } from 'react';
 
-import { DashboardStyled } from './DashboardPage.styled';
+import Map from 'components/map/Map';
+import ErrorMsg from '../../shared/errorMsg/ErrorMsg';
+import styles from './Dashboard.module.scss';
 
 export default () => {
+  const [showError, setShowError] = useState(false);
+
   return (
-    <DashboardStyled>
-      <Map />
-    </DashboardStyled>
+    <div className={styles.Container}>
+      <ErrorMsg isOpen={showError} />
+      <Map setShowError={setShowError} />
+    </div>
   );
 };

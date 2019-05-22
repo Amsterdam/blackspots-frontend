@@ -1,0 +1,56 @@
+@import 'styles/styles.scss';
+
+.Container {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  border-bottom: 2px solid $neutralGrey4;
+
+  h2 {
+    font-size: 16px;
+    color: $primaryBlack;
+  }
+}
+
+.Logo {
+  height: 40px;
+  width: 70px;
+  margin: 0 20px 0 10px;
+}
+
+.ButtonBar {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.ButtonLink {
+  display: flex;
+  color: $primaryBlack;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 12px;
+
+  svg {
+    height: 14px;
+    margin: 1px -2px -1px 0;
+  }
+
+  &:hover {
+    color: $primaryRed;
+    text-decoration: underline;
+
+    svg path {
+      fill: $primaryRed;
+    }
+  }
+}
+
+.Link {
+  margin-right: 20px;
+  color: $primaryBlack;
+}

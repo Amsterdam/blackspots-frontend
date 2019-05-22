@@ -1,0 +1,136 @@
+@import 'styles/styles.scss';
+
+.Container {
+  width: 0px;
+  transition: width 300ms ease-in-out;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  overflow: hidden;
+  background-color: $primaryWhite;
+  z-index: 1010;
+
+  h3 {
+    color: $primaryRed;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 20px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    height: auto;
+  }
+
+  &Open {
+    width: 480px;
+  }
+}
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 15px 0 15px;
+}
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  margin: 0 15px 15px 15px;
+}
+
+.CloseBtn {
+  height: 24px;
+  width: 22px;
+  background-color: transparent;
+  padding: 3px 3px 1px 3px;
+  margin: 0;
+  border: lightgray solid 2px;
+  cursor: pointer;
+  float: right;
+
+  svg {
+    height: 20px;
+    width: 20px;
+    margin-left: 1px;
+    margin-top: 1px;
+  }
+}
+
+.IconCell {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  padding-left: 30px;
+  svg {
+    position: absolute;
+    margin-left: -36px;
+    margin-top: -2px;
+  }
+
+  &ExtraMargin {
+    svg {
+      // margin-left: -41px;
+    }
+  }
+}
+
+.StatusCell {
+  display: flex;
+  height: 30px;
+  align-items: center;
+}
+
+.StatusBox {
+  height: 15px;
+  width: 15px;
+  margin-right: 14px;
+  margin-bottom: 4px;
+  background-color: $primaryRed;
+}
+
+.Onderzoek {
+  background-color: $onderzoek;
+}
+.Voorbereiding {
+  background-color: $voorbereiding;
+}
+.Gereed {
+  background-color: $gereed;
+}
+.GeenMaatregel {
+  background-color: $geen-maatregel;
+}
+.Uitvoering {
+  background-color: $uitvoering;
+}
+
+.LinkContainer {
+  margin: 20px 0 10px 0;
+}
+
+.DocumentsContainer {
+  svg {
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
+  }
+
+  tr {
+    margin-bottom: 14px;
+  }
+
+  a {
+    color: $primaryBlue;
+    text-decoration: underline;
+
+    &:hover {
+      color: $primaryRed;
+    }
+  }
+}

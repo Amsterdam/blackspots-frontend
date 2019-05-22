@@ -8,7 +8,8 @@ import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
 import 'amsterdam-stijl/dist/css/ams-map.css';
 import amaps from 'amsterdam-amaps/dist/amaps';
 
-import { MapContainer, ErrorDiv, LoadingDiv, Spinner } from './Map.styled';
+import { MapContainer } from './Map.styled';
+import Loader from 'shared/loader/Loader';
 import { getAllBlackspots } from '../../services/geo-api';
 import SVGIcon from '../SVGIcon/SVGIcon';
 import DetailPanel from '../detailPanel/DetailPanel';
@@ -18,6 +19,9 @@ import { SpotTypes, SpotStatusTypes } from 'constants.js';
 import './markerStyle.css';
 
 class Map extends React.Component {
+  // TODO: Filters should be refactored a bit too make them more explicit and
+  // less complex
+
   constructor() {
     super();
     this.state = {
@@ -25,6 +29,15 @@ class Map extends React.Component {
       loading: true,
       showDetailPanel: false,
       feature: null,
+      // A filter to only show items on the 'blackspot list', which are all
+      // spots with type BLACKSPOT or WEGVAk
+      blackspotListFilter: false,
+      // A filter to only show items on the 'protocol list', which are all spots
+      // with type PROTOCOL_ERNSTIG or PROTOCOL_DODELIJK
+      // Note: quickscan === protocol
+      quickscanListFilter: false,
+      // A filter that only shows spots that have the status DELIVERED
+      deliveredListFilter: false,
       // Year filters will be set with default data once the blackspot data is
       // received and the relevant years are known
       blackspotYearFilter: {},
@@ -108,6 +121,7 @@ class Map extends React.Component {
       })
       .catch(err => {
         this.setState({ error: true, loading: false });
+        this.props.setShowError(true);
         console.error('An error occured fetching/processing data.', err);
       });
   }
@@ -208,7 +222,10 @@ class Map extends React.Component {
       spotStatusTypeFilter,
       blackspotYearFilter,
       deliveredYearFilter,
-      quickscanYearFilter
+      quickscanYearFilter,
+      this.state.blackspotListFilter,
+      this.state.quickscanListFilter,
+      this.state.deliveredListFilter
     );
   }
 
@@ -234,7 +251,9 @@ class Map extends React.Component {
             // Add the correct classname based on type
             // Risico types have a bigger icon therefore need more margin
             className: `marker-div-icon ${
-              spot_type === 'risico' ? 'large' : ''
+              spot_type === SpotTypes.RISICO ? 'large' : ''
+            } ${
+              status === SpotStatusTypes.GEEN_MAATREGEL ? 'extra-opacity' : ''
             }`,
             html: renderToString(<SVGIcon type={spot_type} status={status} />),
           }),
@@ -247,7 +266,8 @@ class Map extends React.Component {
    * OnClick function for rendered markers
    */
   onMarkerClick(feature, latlng) {
-    this.map.flyTo(latlng, 14);
+    const currentZoom = this.map.getZoom();
+    this.map.flyTo(latlng, currentZoom < 14 ? 14 : currentZoom);
     this.setState({ feature, showDetailPanel: true });
   }
 
@@ -262,8 +282,8 @@ class Map extends React.Component {
 
   render() {
     const {
-      loading,
       error,
+      loading,
       showDetailPanel,
       feature,
       spotTypeFilter,
@@ -276,30 +296,26 @@ class Map extends React.Component {
     return (
       <MapContainer>
         <div id="mapdiv" style={{ height: '100%' }}>
-          {loading && (
-            <LoadingDiv>
-              <Spinner />
-            </LoadingDiv>
+          {loading && <Loader />}
+          {!error && !loading && (
+            <FilterPanel
+              spotTypeFilter={spotTypeFilter}
+              spotStatusTypeFilter={spotStatusTypeFilter}
+              blackspotYearFilter={blackspotYearFilter}
+              deliveredYearFilter={deliveredYearFilter}
+              quickscanYearFilter={quickscanYearFilter}
+              setFilters={this.setFilters}
+              setBlackspotListFilter={value =>
+                this.setState({ blackspotListFilter: value })
+              }
+              setQuickscanListFilter={value =>
+                this.setState({ quickscanListFilter: value })
+              }
+              setDeliveredListFilter={value =>
+                this.setState({ deliveredListFilter: value })
+              }
+            />
           )}
-          {error && (
-            <ErrorDiv>
-              <h3>Oops</h3>
-              <p>
-                De server is momenteel niet bereikbaar. Probeer het later nog
-                eens.
-              </p>
-            </ErrorDiv>
-          )}
-          <FilterPanel
-            spotTypeFilter={spotTypeFilter}
-            // setSpotTypeFilter={this.setSpotTypeFilter}
-            spotStatusTypeFilter={spotStatusTypeFilter}
-            // setSpotStatusTypeFilter={this.setSpotStatusTypeFilter}
-            blackspotYearFilter={blackspotYearFilter}
-            deliveredYearFilter={deliveredYearFilter}
-            quickscanYearFilter={quickscanYearFilter}
-            setFilters={this.setFilters}
-          />
           <DetailPanel
             feature={feature}
             isOpen={showDetailPanel}

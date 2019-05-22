@@ -39,9 +39,6 @@ export const ButtonBar = styled.div`
     span {
       font-size: 16px;
       margin-bottom: 2px;
-      font-family: ${props => {
-        return props.theme.fontFamily.avenirRoman;
-      }};
 
       :hover {
         color: ${props => props.theme.colors.primaryRed};
@@ -55,6 +52,6 @@ export const ButtonBar = styled.div`
 export const NavLinkStyled = styled(NavLink)`
   &.active {
     text-decoration-line: underline;
-    text-decoration-color: red;
+    text-decoration-color: $primaryRed;
   }
 `;
