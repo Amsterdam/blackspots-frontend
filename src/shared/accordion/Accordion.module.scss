@@ -1,41 +1,43 @@
-import styled from 'styled-components';
-
-export const AccordionStyled = styled.div`
+.Container {
   width: 100%;
   background-color: #e5e5e5;
   border: solid 2px #e5e5e5;
   margin-bottom: 2px;
-`;
+}
 
-export const AccordionText = styled.div`
-  height: ${props => (props.open ? '120px' : '0px')};
+.Text {
+  height: 0px;
   transition: height 0.3s ease-out;
   overflow: hidden;
-`;
 
-export const AccordionTextInner = styled.div`
+  &Open {
+    height: 120px;
+  }
+}
+
+.TextInner {
   background-color: white;
   padding: 5px 17px 0px 17px;
   height: 100%;
-`;
+}
 
-export const AccordionTitle = styled.div`
+.Title {
   height: 21px;
   color: #000000;
   font-size: 16px;
   font-weight: 600;
   line-height: 21px;
   padding: 17px;
-`;
+}
 
-export const AccordionHeader = styled.div`
+.Header {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-`;
+}
 
 // The Chevron Button
-export const Expander = styled.button`
+.Expander {
   width: 30px;
   height: 30px;
   background-color: #e5e5e5;
@@ -53,8 +55,14 @@ export const Expander = styled.button`
     margin: 5px 4px 3px -5px;
     border-right: 2px solid black;
     border-bottom: 2px solid black;
-    transform: rotate(${props => (props.open ? '-135deg' : '-315deg')});
+    transform: rotate(-315deg);
     top: 3px;
     display: inline-block;
   }
-`;
+
+  &Open {
+    &:before {
+      transform: rotate(-135deg);
+    }
+  }
+}

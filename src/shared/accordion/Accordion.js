@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  AccordionStyled,
-  AccordionText,
-  AccordionTitle,
-  AccordionTextInner,
-  Expander,
-  AccordionHeader,
-} from './Accordion.styled';
 import Typography from '../typography/Typography';
+import styles from './Accordion.module.scss';
+import classNames from 'classnames';
 
 const Accordion = ({ title, text }) => {
   const [open, setOpen] = useState(false);
@@ -19,17 +13,21 @@ const Accordion = ({ title, text }) => {
   }
 
   return (
-    <AccordionStyled>
-      <AccordionHeader onClick={toggle}>
-        <AccordionTitle>{title}</AccordionTitle>
-        <Expander onClick={toggle} open={open} />
-      </AccordionHeader>
-      <AccordionText open={open}>
-        <AccordionTextInner>
+    <div className={styles.Container}>
+      <div className={styles.Header} onClick={toggle}>
+        <div className={styles.Title}>{title}</div>
+        <div
+          className={classNames(styles.Expander, {
+            [styles.ExpanderOpen]: open,
+          })}
+        />
+      </div>
+      <div className={classNames(styles.Text, { [styles.TextOpen]: open })}>
+        <div className={styles.TextInner}>
           <Typography>{text}</Typography>
-        </AccordionTextInner>
-      </AccordionText>
-    </AccordionStyled>
+        </div>
+      </div>
+    </div>
   );
 };
 
