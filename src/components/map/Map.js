@@ -7,8 +7,7 @@ import 'leaflet/dist/leaflet.css';
 import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
 import 'amsterdam-stijl/dist/css/ams-map.css';
 import amaps from 'amsterdam-amaps/dist/amaps';
-
-import { MapContainer } from './Map.styled';
+import styles from './Map.module.scss';
 import Loader from 'shared/loader/Loader';
 import { getAllBlackspots } from '../../services/geo-api';
 import SVGIcon from '../SVGIcon/SVGIcon';
@@ -294,7 +293,7 @@ class Map extends React.Component {
     } = this.state;
 
     return (
-      <MapContainer>
+      <div className={styles.Map}>
         <div id="mapdiv" style={{ height: '100%' }}>
           {loading && <Loader />}
           {!error && !loading && (
@@ -322,7 +321,7 @@ class Map extends React.Component {
             togglePanel={this.toggleDetailPanel}
           />
         </div>
-      </MapContainer>
+      </div>
     );
   }
 }
