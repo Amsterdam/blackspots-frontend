@@ -1,0 +1,72 @@
+@import 'styles/styles.scss';
+
+.Container {
+  width: 100%;
+  background-color: $neutralGrey2;
+  border: solid 2px $neutralGrey2;
+  margin-bottom: 2px;
+}
+
+.Text {
+  height: 0px;
+  transition: height 0.3s ease-out;
+  overflow: hidden;
+
+  &Open {
+    height: 120px;
+  }
+}
+
+.TextInner {
+  background-color: $primaryWhite;
+  padding: 5px 17px 0px 17px;
+  height: 100%;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.Title {
+  height: 21px;
+  color: $primaryBlack;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 21px;
+  padding: 17px;
+}
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+// The Chevron Button
+.Expander {
+  width: 30px;
+  height: 30px;
+  background-color: $neutralGrey2;
+  margin: 12px;
+  text-align: center;
+  border: none;
+  position: relative;
+  cursor: pointer;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    margin: 5px 4px 3px -5px;
+    border-right: 2px solid $primaryBlack;
+    border-bottom: 2px solid $primaryBlack;
+    transform: rotate(-315deg);
+    top: 3px;
+    display: inline-block;
+  }
+
+  &Open {
+    &:before {
+      transform: rotate(-135deg);
+    }
+  }
+}
