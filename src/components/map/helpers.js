@@ -5,6 +5,7 @@ import {
   getDeliveredYearFromMarker,
   getQuickscanYearFromMarker,
 } from '../../helpers';
+import { SpotTypes, SpotStatusTypes } from '../../constants';
 
 /**
  * Loop through markers and set its visibility based on the filters
@@ -15,11 +16,20 @@ export function evaluateMarkerVisibility(
   spotStatusTypeFilter,
   blackspotYearFilter,
   deliveredYearFilter,
-  quickscanYearFilter
+  quickscanYearFilter,
+  blackspotListFilter,
+  quickscanListFilter,
+  deliveredListFilter
 ) {
   markers.forEach(marker => {
     if (
-      isVisibleSpotType(spotTypeFilter, marker) &&
+      isVisibleSpotType(
+        spotTypeFilter,
+        blackspotListFilter,
+        quickscanListFilter,
+        deliveredListFilter,
+        marker
+      ) &&
       isVisibleStatusType(spotStatusTypeFilter, marker) &&
       isVisibleBlackspotYear(blackspotYearFilter, marker) &&
       isVisibleDeliveredYear(deliveredYearFilter, marker) &&
@@ -35,9 +45,38 @@ export function evaluateMarkerVisibility(
 /**
  * Check if a marker should be visible based on the type filter
  * */
-function isVisibleSpotType(spotTypeFilter, marker) {
+function isVisibleSpotType(
+  spotTypeFilter,
+  blackspotListFilter,
+  quickscanListFilter,
+  deliveredListFilter,
+  marker
+) {
   const spotType = getSpotTypeFromMarker(marker);
-  return allValuesAreFalse(spotTypeFilter) ? true : spotTypeFilter[spotType];
+  const spotStatus = getStatusTypeFromMarker(marker);
+
+  // Check if the spot should be visible based on the spotTypeFilter
+  const showBasedOnTypeFilter = allValuesAreFalse(spotTypeFilter)
+    ? true
+    : spotTypeFilter[spotType];
+
+  // Check if the spot should be visible based on the list filters
+  const showBasedOnListFilter = (function() {
+    if (blackspotListFilter) {
+      return spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
+    } else if (quickscanListFilter) {
+      return (
+        spotType === SpotTypes.PROTOCOL_DODELIJK ||
+        spotType === SpotTypes.PROTOCOL_ERNSTIG
+      );
+    } else if (deliveredListFilter) {
+      return spotStatus === SpotStatusTypes.GEREED;
+    } else {
+      return true;
+    }
+  })();
+
+  return showBasedOnTypeFilter && showBasedOnListFilter;
 }
 
 /**

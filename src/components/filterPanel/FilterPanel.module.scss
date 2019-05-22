@@ -1,7 +1,7 @@
 @import 'styles/styles.scss';
 
 .FilterPanel {
-  height: 600px;
+  height: 504px;
   width: 285px;
   margin: 0 0 0 10px;
   position: absolute;
@@ -14,7 +14,7 @@
 
   h5 {
     font-size: 16px;
-    font-weight: 900;
+    font-weight: 600;
     margin: 10px 0 4px 0;
   }
 
@@ -29,13 +29,20 @@
   padding: 4px 16px;
 }
 
+.YearFilter {
+  display: flex;
+  flex-direction: column;
+  height: 160px;
+  flex-wrap: wrap;
+}
+
 .TopBar {
   height: 30px;
   border-bottom: 1px solid $neutralGrey4;
   display: flex;
   align-items: center;
   color: $neutralGrey4;
-  font-weight: bold;
+  font-weight: 600;
   padding-top: 4px;
   cursor: pointer;
 
@@ -80,9 +87,13 @@
     }
 
     &:checked + span {
+      background-color: $primaryBlack;
+    }
+
+    &:checked + span {
       width: 22px;
       height: 22px;
-      border: 1px solid black;
+      border: 1px solid $primaryBlack;
       margin: 4px 8px 6px 0;
     }
 
@@ -95,8 +106,8 @@
       margin-top: 5px;
       transform: rotate(-45deg);
       border: none;
-      border-left: 3px solid black;
-      border-bottom: 3px solid black;
+      border-left: 3px solid $primaryWhite;
+      border-bottom: 3px solid $primaryWhite;
     }
   }
 }
