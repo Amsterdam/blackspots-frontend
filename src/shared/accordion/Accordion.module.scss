@@ -1,7 +1,9 @@
+@import 'styles/styles.scss';
+
 .Container {
   width: 100%;
-  background-color: #e5e5e5;
-  border: solid 2px #e5e5e5;
+  background-color: $neutralGrey2;
+  border: solid 2px $neutralGrey2;
   margin-bottom: 2px;
 }
 
@@ -16,7 +18,7 @@
 }
 
 .TextInner {
-  background-color: white;
+  background-color: $primaryWhite;
   padding: 5px 17px 0px 17px;
   height: 100%;
   font-size: 16px;
@@ -25,7 +27,7 @@
 
 .Title {
   height: 21px;
-  color: #000000;
+  color: $primaryBlack;
   font-size: 16px;
   font-weight: 600;
   line-height: 21px;
@@ -42,7 +44,7 @@
 .Expander {
   width: 30px;
   height: 30px;
-  background-color: #e5e5e5;
+  background-color: $neutralGrey2;
   margin: 12px;
   text-align: center;
   border: none;
@@ -55,8 +57,8 @@
     width: 10px;
     height: 10px;
     margin: 5px 4px 3px -5px;
-    border-right: 2px solid black;
-    border-bottom: 2px solid black;
+    border-right: 2px solid $primaryBlack;
+    border-bottom: 2px solid $primaryBlack;
     transform: rotate(-315deg);
     top: 3px;
     display: inline-block;
