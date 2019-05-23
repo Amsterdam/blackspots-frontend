@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'react-app-polyfill/ie11';
+import '@babel/polyfill';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
 import auth from './shared/auth/auth';
