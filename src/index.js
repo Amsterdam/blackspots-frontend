@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
-
 import App from './components/App';
-import theme from 'theme';
-import GlobalStyle from 'globalStyle';
-
 import auth from './shared/auth/auth';
+import './styles/styles.scss';
+import './styles/fonts.scss';
 
 class KeycloakWrapper extends React.Component {
   state = { authenticated: false };
@@ -31,13 +28,8 @@ class KeycloakWrapper extends React.Component {
 }
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <BrowserRouter>
-      <React.Fragment>
-        <GlobalStyle />
-        <KeycloakWrapper keycloak={auth.keycloak} />
-      </React.Fragment>
-    </BrowserRouter>
-  </ThemeProvider>,
+  <BrowserRouter>
+    <KeycloakWrapper keycloak={auth.keycloak} />
+  </BrowserRouter>,
   document.getElementById('root')
 );
