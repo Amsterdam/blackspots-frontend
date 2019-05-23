@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
 import 'amsterdam-stijl/dist/css/ams-map.css';
 import amaps from 'amsterdam-amaps/dist/amaps';
+
 import styles from './Map.module.scss';
 import Loader from 'shared/loader/Loader';
 import { getAllBlackspots } from '../../services/geo-api';
