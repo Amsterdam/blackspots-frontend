@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import SVGIcon from 'components/SVGIcon/SVGIcon';
 import { SpotStatusTypes, SpotTypes } from 'constants.js';
 import { capitalizeString } from 'helpers';
@@ -362,6 +363,18 @@ const FilterPanel = ({
       </div>
     </div>
   );
+};
+
+FilterPanel.propTypes = {
+  spotTypeFilter: PropTypes.object.isRequired,
+  spotStatusTypeFilter: PropTypes.object.isRequired,
+  blackspotYearFilter: PropTypes.object.isRequired,
+  deliveredYearFilter: PropTypes.object.isRequired,
+  quickscanYearFilter: PropTypes.object.isRequired,
+  setFilters: PropTypes.func.isRequired,
+  setBlackspotListFilter: PropTypes.func.isRequired,
+  setQuickscanListFilter: PropTypes.func.isRequired,
+  setDeliveredListFilter: PropTypes.func.isRequired,
 };
 
 export default FilterPanel;
