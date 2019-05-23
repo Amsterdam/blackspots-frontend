@@ -62,10 +62,6 @@
 
   .Intro {
     @extend %intro-text;
-
-    span {
-      font-weight: 600;
-    }
   }
 
   p {

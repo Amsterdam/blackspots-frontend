@@ -22,9 +22,6 @@ export default () => {
         <div className={styles.Section}>
           <h1> Welkom bij Werkgroepblackspots</h1>
           <p className={styles.Intro}>
-            <span>Welkom bij de Werkgroep Blackspots Amsterdam</span>
-            <br />
-            <br />
             Via deze pagina kun je inloggen op de kaart van de Werkgroep
             Blackspots Amsterdam (WBA).
           </p>
@@ -35,7 +32,6 @@ export default () => {
           <p>
             Je hebt hiervoor een account nodig. Heb je die niet? Heb je vragen
             en/of suggesties?
-            <br />
             <br /> Stuur dan een email naar{' '}
             <a href="mailto:WBAkaart.V&OR@amsterdam.nl">
               WBAkaart.V&OR@amsterdam.nl
