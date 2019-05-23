@@ -45,7 +45,7 @@ export function getQuickscanYearFromMarker(marker) {
  */
 export function shouldUseAccEnv() {
   return (
-    window.location.hostname.includes('acc') ||
-    window.location.hostname.includes('localhost')
+    window.location.hostname.indexOf('acc') >= 0 ||
+    window.location.hostname.indexOf('localhost') >= 0
   );
 }
