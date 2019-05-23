@@ -8,6 +8,10 @@
   align-items: center;
   padding: 0;
   transition: height 300 ease-in-out;
+  box-sizing: border-box;
+  // position: absolute;
+  // top: 50px;
+  // z-index: 1000;
 
   &Open {
     height: 40px;

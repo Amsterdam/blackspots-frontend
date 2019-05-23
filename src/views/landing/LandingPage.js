@@ -22,7 +22,7 @@ export default () => {
         <div className={styles.Section}>
           <h1> Welkom bij Werkgroepblackspots</h1>
           <p className={styles.Intro}>
-            <b>Welkom bij de Werkgroep Blackspots Amsterdam</b>
+            <span>Welkom bij de Werkgroep Blackspots Amsterdam</span>
             <br />
             <br />
             Via deze pagina kun je inloggen op de kaart van de Werkgroep
