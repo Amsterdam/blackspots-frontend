@@ -8,13 +8,13 @@
   bottom: 10px;
   z-index: 1010;
   background-color: $primaryWhite;
-  box-shadow: 2px 2px 0 0 $neutralGrey4;
+  box-shadow: 2px 2px 0 0 $neutralGrey3;
   overflow: hidden;
   transition: height 300ms ease-in-out;
 
   h5 {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 400;
     margin: 10px 0 4px 0;
   }
 
