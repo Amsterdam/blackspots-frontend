@@ -9,18 +9,20 @@
   overflow: hidden;
   background-color: $primaryWhite;
   z-index: 1010;
+  box-sizing: border-box;
+  border-left: 0;
 
   h3 {
     color: $primaryRed;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 400;
     line-height: 20px;
     margin-bottom: 10px;
   }
 
   h2 {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 400;
     line-height: 28px;
     margin-top: 0;
     margin-bottom: 10px;
@@ -29,6 +31,7 @@
 
   &Open {
     width: 480px;
+    border-left: 2px solid $neutralGrey3;
   }
 }
 
