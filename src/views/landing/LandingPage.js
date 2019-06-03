@@ -2,7 +2,7 @@ import React from 'react';
 import auth from 'shared/auth/auth';
 import styles from './LandingPage.module.scss';
 import logo from 'assets/media/amsterdam-logo.svg';
-import hero from 'assets/media/main-header-hero-default.jpg';
+import headerImage from 'assets/media/main-header-blur.jpg';
 
 export default () => {
   function login() {
@@ -17,7 +17,7 @@ export default () => {
         </div>
         <div className={styles.Menu} />
         <div className={styles.HeroContainer}>
-          <img alt="Hero" src={hero} className={styles.Hero} />
+          <img alt="Hero" src={headerImage} className={styles.Hero} />
         </div>
         <div className={styles.Section}>
           <h1> Welkom bij Werkgroepblackspots</h1>
