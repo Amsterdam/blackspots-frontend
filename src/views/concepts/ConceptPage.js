@@ -33,7 +33,7 @@ export default () => {
         advies kunnen maatregelen worden genomen.
       </p>
       <Accordion
-        title="BlackSpot"
+        title="Blackspot"
         text="Het programma Verkeersveiligheid laat jaarlijks een overzicht
         opstellen van de blackspots in de stad. De Werkgroep Blackspots
         Amsterdam (WBA) heeft hierin een onderzoeks-, advies- en toetsingsrol
@@ -42,7 +42,7 @@ export default () => {
         letstelongevallen in 3 jaar tijd."
       />
       <Accordion
-        title="Wegvak"
+        title="Red route"
         text="In Amsterdam wordt, in navolging van Londen, de term
         ‘Red Routes’ gebruikt voor wegvakken waar veel verkeersongevallen
         plaatsvinden. Een gangbare definitie van een Red Route is een wegvak

@@ -19,6 +19,14 @@ export const SpotTypes = {
   RISICO: 'risico',
 };
 
+export const spotTypeDisplayNames = {
+  [SpotTypes.BLACKSPOT]: 'Blackspot',
+  [SpotTypes.WEGVAK]: 'Red route',
+  [SpotTypes.PROTOCOL_DODELIJK]: 'Protocol dodelijk',
+  [SpotTypes.PROTOCOL_ERNSTIG]: 'Protocol ernstig',
+  [SpotTypes.RISICO]: 'Risico',
+};
+
 export const SpotStatusTypes = {
   ONDERZOEK: 'onderzoek ontwerp',
   VOORBEREIDING: 'voorbereiding',

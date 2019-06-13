@@ -6,10 +6,10 @@ import { ReactComponent as DocumentIcon } from 'assets/icons/document.svg';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';
 import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'constants.js';
-import { capitalizeString } from 'helpers.js';
 import styles from './DetailPanel.module.scss';
 import classNames from 'classnames';
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
+import { spotTypeDisplayNames } from '../../constants';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -74,7 +74,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
                   )}
                 >
                   <SVGIcon small type={spot_type} />
-                  {capitalizeString(spot_type)}
+                  {spotTypeDisplayNames[spot_type]}
                 </td>
               </tr>
               <tr>
