@@ -2,6 +2,11 @@
 @import '_extensions';
 @import '_variables';
 
+// Fonts are set by amsterdam-stijl package and we want different fonts
+* {
+  font-family: 'AvenirNext' !important;
+}
+
 html,
 body,
 #root {
@@ -13,8 +18,4 @@ body,
 
 p {
   line-height: 26px;
-}
-
-button {
-  font-family: 'AvenirNext';
 }
