@@ -3,8 +3,14 @@
 @import '_variables';
 
 // Fonts are set by amsterdam-stijl package and we want different fonts
-* {
-  font-family: 'AvenirNext' !important;
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'AvenirNext';
 }
 
 html,
@@ -14,8 +20,10 @@ body,
   height: 100%;
   padding: 0;
   margin: 0;
+  font-family: 'AvenirNext';
 }
 
 p {
   line-height: 26px;
+  font-family: 'AvenirNext';
 }
