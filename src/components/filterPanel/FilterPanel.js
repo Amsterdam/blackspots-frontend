@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import SVGIcon from 'components/SVGIcon/SVGIcon';
 import { SpotStatusTypes, SpotTypes } from 'constants.js';
-import { capitalizeString } from 'helpers';
 import { resetFilter } from 'components/map/helpers';
 import styles from './FilterPanel.module.scss';
 import { ContextMenuOptions } from './FilterPanel.constants';
 import classNames from 'classnames';
-import { StatusDisplayNames } from '../../constants';
+import { StatusDisplayNames, spotTypeDisplayNames } from '../../constants';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
@@ -312,7 +311,7 @@ const FilterPanel = ({
               >
                 <SVGIcon small type={type} />
               </div>
-              {capitalizeString(type)}
+              {spotTypeDisplayNames[type]}
             </label>
           );
         })}

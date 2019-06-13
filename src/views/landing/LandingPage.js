@@ -25,7 +25,7 @@ export default () => {
             Via deze pagina kun je inloggen op de kaart van de Werkgroep
             Blackspots Amsterdam (WBA).
             <br />
-            <br /> De kaart bevat een overzicht van de Blackspots, Redroutes
+            <br /> De kaart bevat een overzicht van de Blackspots, Red routes
             (wegvakken), Protocol locaties (ernstig en dodelijk) en
             Risicolocaties vanaf 2014 tot heden. Elke locatie op de kaart is
             voorzien van een status vanaf onderzoek t/m uitvoering gereed of

@@ -1,11 +1,4 @@
 /**
- * Capatilize a string
- */
-export function capitalizeString(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-/**
  * Get the spot type of a marker
  */
 export function getSpotTypeFromMarker(marker) {
