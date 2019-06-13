@@ -21,17 +21,16 @@ export default () => {
         verbeteren. In deze lijst worden alle begrippen die op de kaart worden
         gebruikt uitgelegd.
       </p>
-
-      <h2>Werkgroep Blackspots Amsterdam</h2>
-      <p>
-        De Werkgroep Blackspots Amsterdam (WBA) is het expertteam van de
+      <Accordion
+        title="Werkgroep Blackspots Amsterdam (WBA)"
+        text="De Werkgroep Blackspots Amsterdam (WBA) is het expertteam van de
         gemeente Amsterdam op het gebied van het verkeersveilig maken van
         verkeersonveilige locaties. De werkgroep onderzoekt en geeft advies over
         locaties waar ernstige of dodelijke ongevallen zijn gebeurd. Ook
         locaties waar het vermoeden van verkeersonveiligheid bestaat kunnen op
         verzoek door de werkgroep worden beoordeeld. Op basis van onderzoek en
-        advies kunnen maatregelen worden genomen.
-      </p>
+        advies kunnen maatregelen worden genomen."
+      />
       <Accordion
         title="Blackspot"
         text="Het programma Verkeersveiligheid laat jaarlijks een overzicht
