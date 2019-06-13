@@ -22,8 +22,8 @@ export const SpotTypes = {
 export const spotTypeDisplayNames = {
   [SpotTypes.BLACKSPOT]: 'Blackspot',
   [SpotTypes.WEGVAK]: 'Red route',
-  [SpotTypes.PROTOCOL_DODELIJK]: 'Protocol dodelijk',
-  [SpotTypes.PROTOCOL_ERNSTIG]: 'Protocol ernstig',
+  [SpotTypes.PROTOCOL_DODELIJK]: 'Protocol dodelijk ongeval',
+  [SpotTypes.PROTOCOL_ERNSTIG]: 'Protocol ernstig ongeval',
   [SpotTypes.RISICO]: 'Risico',
 };
 
