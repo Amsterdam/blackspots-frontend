@@ -6,11 +6,11 @@
   height: 100%;
   position: absolute;
   right: 0;
-  overflow: hidden;
   background-color: $primaryWhite;
   z-index: 1010;
   box-sizing: border-box;
   border-left: 0;
+  overflow: hidden;
 
   h3 {
     color: $primaryRed;
@@ -35,14 +35,20 @@
 
 .Header {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   margin: 15px 15px 0 15px;
+  position: relative;
+  height: 50px;
 }
 
 .Content {
   display: flex;
   flex-direction: column;
   margin: 0 15px 15px 15px;
+  overflow: auto;
+  max-height: calc(100% - 80px);
+  position: relative;
 }
 
 .CloseBtn {
@@ -53,7 +59,8 @@
   margin: 0;
   border: lightgray solid 2px;
   cursor: pointer;
-  float: right;
+  position: absolute;
+  right: 0;
 
   svg {
     height: 20px;
