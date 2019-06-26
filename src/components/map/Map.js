@@ -1,6 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import L from 'leaflet';
-import { renderToString } from 'react-dom/server';
 
 // Imports needed for amaps
 import 'leaflet/dist/leaflet.css';
@@ -244,8 +244,13 @@ class Map extends React.Component {
         });
       },
       pointToLayer: function(feature, latlng) {
-        // Create a marker with the correct icon and onClick method
+        // Leaflet only accepts HTML elements for custom markers so we need to
+        // create one from the SVGIcon
         const { status, spot_type } = feature.properties;
+        const iconDiv = document.createElement('div');
+        ReactDOM.render(<SVGIcon type={spot_type} status={status} />, iconDiv);
+
+        // Create a marker with the correct icon and onClick method
         return L.marker(latlng, {
           icon: L.divIcon({
             // Add the correct classname based on type
@@ -255,7 +260,7 @@ class Map extends React.Component {
             } ${
               status === SpotStatusTypes.GEEN_MAATREGEL ? 'extra-opacity' : ''
             }`,
-            html: renderToString(<SVGIcon type={spot_type} status={status} />),
+            html: iconDiv.innerHTML,
           }),
         });
       },
