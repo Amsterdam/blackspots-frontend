@@ -11,7 +11,7 @@ const config = {
 const keycloak = window.Keycloak(config);
 
 const setupKeycloack = () => {
-  keycloak.init();
+  keycloak.init({ onLoad: 'check-sso' });
 
   return {
     keycloak,
