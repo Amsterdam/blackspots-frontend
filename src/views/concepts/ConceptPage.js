@@ -20,6 +20,12 @@ export default () => {
         besloten of maatregelen nodig zijn om de verkeersveiligheid te
         verbeteren. In deze lijst worden alle begrippen die op de kaart worden
         gebruikt uitgelegd.
+        <br />
+        <br />
+        Voor meer informatie zie:{' '}
+        <a href="http://amsterdam.nl/verkeersveiligheid">
+          http://amsterdam.nl/verkeersveiligheid
+        </a>
       </p>
       <Accordion
         title="Werkgroep Blackspots Amsterdam (WBA)"
@@ -37,11 +43,11 @@ export default () => {
         opstellen van de blackspots in de stad. De Werkgroep Blackspots
         Amsterdam (WBA) heeft hierin een onderzoeks-, advies- en toetsingsrol
         en werkt samen met de juridisch wegbeheerder bij de aanpak van
-        blackspots.In Amsterdam is een blackspot een locatie met 3 of meer
-        letstelongevallen in 3 jaar tijd."
+        blackspots. In Amsterdam is een blackspot een locatie met 3 of meer
+        letstelongevallen in 3 jaar tijd. "
       />
       <Accordion
-        title="Red route"
+        title="RED ROUTE"
         text="In Amsterdam wordt, in navolging van Londen, de term
         ‘Red Routes’ gebruikt voor wegvakken waar veel verkeersongevallen
         plaatsvinden. Een gangbare definitie van een Red Route is een wegvak
@@ -103,6 +109,29 @@ export default () => {
       wordt vastgesteld dat er geen inframaatregelen mogelijk en/of nodig zijn.
       De oorzaak van het ongeval heeft dan een andere oorzaak, zoals gedrag in
       het verkeer."
+      />
+      <Accordion
+        title="Longlist"
+        text="Alle blackspots in de stad komen op de longlist terecht. Deze
+      wordt elk jaar opgesteld en omvat het totaaloverzicht van alle
+      blackspots in de stad. De WBA beoordeelt deze longlist en bepaald welke
+      locaties worden opgenomen in de werklijst. Er kunnen legitieme redenen
+      zijn om een blackspot van de longlist niet in het werkprogramma op te
+      nemen. Sommige blackspots zijn bijvoorbeeld recentelijk al in de WBA
+      behandeld, waarbij het niet mogelijk bleek om de verkeersveiligheid nog
+      verder te verbeteren. Andere blackspots zijn onlangs aangepakt, staan nog
+      op de planning van de WBA of worden op korte termijn meegenomen door een
+      ander project of partij. De longlist is niet opgenomen in deze WBA kaart."
+      />
+      <Accordion
+        title="Werklijst"
+        text="Blackspots en protocollen die door de WBA worden onderzocht komen
+        op de werklijst te staan. Deze wordt jaarlijks opgesteld. Nieuwe
+        locaties worden in behandeling genomen door de WBA wat betekend dat er
+        onderzoek wordt gedaan naar de verkeerssituatie in relatie tot de aard
+        van de ongevallen. Hier vloeien adviezen ter verbetering van de
+        verkeersveiligheid uit voort. De werklijst is de bron  van deze WBA
+        kaart."
       />
     </div>
   );

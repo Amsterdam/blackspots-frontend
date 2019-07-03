@@ -2,6 +2,10 @@
 
 .Container {
   @extend %content-box;
+
+  a {
+    color: $primaryRed;
+  }
 }
 
 .Intro {

@@ -15,9 +15,7 @@ export default () => {
         chevronDirection="left"
       />
       <h1>Contact</h1>
-
       <h3>Details</h3>
-
       <DataTable>
         <tbody>
           <tr>
@@ -58,7 +56,6 @@ export default () => {
           </tr>
         </tbody>
       </DataTable>
-
       <h3>Werkgroep Blackspots Amsterdam</h3>
       <p>
         De Werkgroep Blackspots Amsterdam (WBA) is een expertteam van de
@@ -73,6 +70,23 @@ export default () => {
         Bij dodelijke ongevallen wordt een speciaal protocol gevolgd dat onder
         andere voorziet in het nemen van maatregelen op korte termijn. De
         werkgroep heeft hierbij nauw contact met de politie.
+      </p>
+      Pixel Terror - Ultima
+      <h3>Disclaimer</h3>
+      <p>
+        De Gemeente Amsterdam doet haar best de informatie op deze kaart
+        actueel, correct en toegankelijk te houden, maar kan dit niet
+        garanderen. De kaart wordt elke twee weken geactualiseerd. Indien u
+        toevoegingen of veranderingen heeft kunt u deze doorgeven aan de
+        inhoudelijk contactpersoon die genoemd wordt onder de knop Contact.
+        <br />
+        <br />
+        De Gemeente Amsterdam behoudt zich het auteursrecht voor op de
+        informatie op de kaart, inclusief beeldmerken, beeldmateriaal en
+        documenten die via de kaart zijn te downloaden. <br />
+        <br />
+        Citeren of het publiceren van een screenshot van kaart mag uitsluitend
+        na goedkeuring van de inhoudelijk contactpersoon.
       </p>
     </div>
   );
