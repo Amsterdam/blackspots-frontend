@@ -54,11 +54,14 @@ function pushToPiwik(payload) {
 }
 
 export function trackPageView() {
-  pushToPiwik(['setCustomUrl', 'TEST']);
+  pushToPiwik(['setCustomUrl', document.location.href]);
   pushToPiwik(['trackPageView']);
 }
 
 export function trackFilter(name) {
-  console.log('tracking filter', name);
-  pushToPiwik(['trackEvent', 'Filters', name]);
+  pushToPiwik(['trackEvent', 'Map filters', name]);
+}
+
+export function trackDownload() {
+  pushToPiwik(['trackEvent', 'PDF download']);
 }

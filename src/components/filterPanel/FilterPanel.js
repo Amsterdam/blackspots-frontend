@@ -144,6 +144,9 @@ const FilterPanel = ({
                       spotStatusTypeFilter,
                       updatedFilter
                     );
+                    if (!value) {
+                      trackFilter('On blackspot list: ' + year);
+                    }
                   }}
                 />
                 <span />
