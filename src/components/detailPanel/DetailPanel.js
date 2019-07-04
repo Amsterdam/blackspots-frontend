@@ -10,6 +10,7 @@ import styles from './DetailPanel.module.scss';
 import classNames from 'classnames';
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
 import { spotTypeDisplayNames } from '../../constants';
+import { trackDownload } from 'helpers';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -162,6 +163,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
                       </td>
                       <td>
                         <a
+                          onClick={() => trackDownload()}
                           href={`${d._links.self.href.split('?')[0]}file`}
                           download
                         >
