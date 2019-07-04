@@ -42,3 +42,26 @@ export function shouldUseAccEnv() {
     window.location.hostname.indexOf('localhost') >= 0
   );
 }
+
+// =====
+// PIWIK
+// Temporarily simple setup, wating for hook library which is on the way
+// =====
+
+function pushToPiwik(payload) {
+  const piwik = window._paq || [];
+  piwik.push(payload);
+}
+
+export function trackPageView() {
+  pushToPiwik(['setCustomUrl', document.location.href]);
+  pushToPiwik(['trackPageView']);
+}
+
+export function trackFilter(name) {
+  pushToPiwik(['trackEvent', 'Map filters', name]);
+}
+
+export function trackDownload() {
+  pushToPiwik(['trackEvent', 'PDF download']);
+}
