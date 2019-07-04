@@ -1,6 +1,10 @@
 @import 'styles/styles.scss';
 
 .Container {
+  width: 100%;
+}
+
+.Content {
   @extend %content-box;
 
   a {

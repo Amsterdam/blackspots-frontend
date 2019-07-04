@@ -1,6 +1,14 @@
 @import 'styles/styles.scss';
 
 .Container {
+  width: 100%;
+
+  p > a {
+    color: $primaryRed;
+  }
+}
+
+.Content {
   @extend %content-box;
 
   h3 {
@@ -8,6 +16,10 @@
     line-height: 20px;
     color: $primaryRed;
   }
+}
+
+.Intro {
+  @extend %intro-text;
 }
 
 .EmailLink {
