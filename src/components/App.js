@@ -8,10 +8,14 @@ import ConceptPage from 'views/concepts/ConceptPage';
 import ContactPage from 'views/contact/ContactPage';
 import { appRoutes } from 'constants.js';
 import LandingPage from '../views/landing/LandingPage';
+import { trackPageView } from '../helpers';
 
 class App extends React.Component {
   render() {
     const { authenticated } = this.props;
+
+    trackPageView();
+
     return (
       <div className={styles.App}>
         {authenticated ? (
