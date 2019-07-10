@@ -3,6 +3,7 @@ import auth from 'shared/auth/auth';
 import styles from './LandingPage.module.scss';
 import logo from 'assets/media/amsterdam-logo.svg';
 import headerImage from 'assets/media/main-header-blur.jpg';
+import Footer from '../../components/footer/Footer';
 
 export default () => {
   function login() {
@@ -22,19 +23,22 @@ export default () => {
         <div className={styles.Section}>
           <h1> Welkom bij Werkgroepblackspots</h1>
           <p className={styles.Intro}>
-            Via deze pagina kun je inloggen op de kaart van de Werkgroep
-            Blackspots Amsterdam (WBA).
-            <br />
-            <br /> De kaart bevat een overzicht van de Blackspots, Red routes
+            De kaart bevat een overzicht van de Blackspots, Red Routes
             (wegvakken), Protocol locaties (ernstig en dodelijk) en
             Risicolocaties vanaf 2014 tot heden. Elke locatie op de kaart is
             voorzien van een status vanaf onderzoek t/m uitvoering gereed of
-            geen maatregel.
+            geen maatregel. Deze kaart is een weergave van locaties die door de
+            WBA zijn of worden onderzocht. Het is nadrukkelijk geen
+            ongevallenkaart.
             <br />
-            <br /> De locaties zijn te filteren op startjaar behandeling WBA.
-            Indien van een locatie een definitieve rapportage en/of ontwerp
-            beschikbaar is, dan kun je die via de kaart downloaden. Elke locatie
-            kun je via de kaart op google maps bekijken.
+            <br /> Voor meer informatie over de Werkgroep Blackspots ga naar:{' '}
+            <a
+              href="http://amsterdam.nl/verkeersveiligheid"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              http://amsterdam.nl/verkeersveiligheid
+            </a>
           </p>
           <h2>Inloggen</h2>
           <button onClick={login} className={styles.LoginBtn}>
@@ -49,6 +53,7 @@ export default () => {
             </a>
           </p>
         </div>
+        <Footer />
       </div>
     </div>
   );

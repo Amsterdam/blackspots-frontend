@@ -8,18 +8,17 @@
 }
 
 .Text {
-  height: 0px;
-  transition: height 0.3s ease-out;
+  max-height: 0px;
   overflow: hidden;
 
   &Open {
-    height: 130px;
+    max-height: 1000px;
   }
 }
 
 .TextInner {
   background-color: $primaryWhite;
-  padding: 5px 17px 0px 17px;
+  padding: 10px 17px 10px 17px;
   height: 100%;
   font-size: 16px;
   line-height: 24px;
