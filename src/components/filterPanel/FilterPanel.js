@@ -10,6 +10,7 @@ import { StatusDisplayNames, spotTypeDisplayNames } from '../../constants';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
+import { trackFilter } from '../../helpers';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -143,6 +144,9 @@ const FilterPanel = ({
                       spotStatusTypeFilter,
                       updatedFilter
                     );
+                    if (!value) {
+                      trackFilter('On blackspot list: ' + year);
+                    }
                   }}
                 />
                 <span />
@@ -180,6 +184,9 @@ const FilterPanel = ({
                       false,
                       updatedFilter
                     );
+                    if (!value) {
+                      trackFilter('Delivered on: ' + year);
+                    }
                   }}
                 />
                 <span />
@@ -218,6 +225,9 @@ const FilterPanel = ({
                       false,
                       updatedFilter
                     );
+                    if (!value) {
+                      trackFilter('On quickscan list: ' + year);
+                    }
                   }}
                 />
                 <span />
@@ -256,6 +266,9 @@ const FilterPanel = ({
                     deliveredYearFilter,
                     quickscanYearFilter
                   );
+                  if (!value) {
+                    trackFilter(type);
+                  }
                 }}
               />
               <span />
@@ -293,6 +306,9 @@ const FilterPanel = ({
                     ...spotTypeFilter,
                     [type]: !value,
                   };
+                  if (!value) {
+                    trackFilter(type);
+                  }
                   updateFilters(
                     updatedFilter,
                     spotStatusTypeFilter,
