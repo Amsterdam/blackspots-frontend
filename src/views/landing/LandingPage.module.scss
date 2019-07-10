@@ -2,7 +2,6 @@
 
 .Container {
   background-color: $neutralGrey2;
-  display: flex;
   justify-content: center;
   overflow: auto;
   height: 100%;
@@ -15,10 +14,9 @@
   width: 100%;
   max-width: 1400px;
   background-color: $primaryWhite;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   height: fit-content;
+  margin: auto;
 }
 
 .Header {
@@ -34,8 +32,9 @@
 
 .Logo {
   height: 70px;
+  width: 100px;
   margin-right: 40px;
-  margin-left: -20px;
+  margin-left: 100px;
 }
 
 .Menu {

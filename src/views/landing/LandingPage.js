@@ -32,7 +32,11 @@ export default () => {
             ongevallenkaart.
             <br />
             <br /> Voor meer informatie over de Werkgroep Blackspots ga naar:{' '}
-            <a href="http://amsterdam.nl/verkeersveiligheid" target="_blank">
+            <a
+              href="http://amsterdam.nl/verkeersveiligheid"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               http://amsterdam.nl/verkeersveiligheid
             </a>
           </p>
