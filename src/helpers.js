@@ -44,24 +44,24 @@ export function shouldUseAccEnv() {
 }
 
 // =====
-// PIWIK
+// MATOMO
 // Temporarily simple setup, wating for hook library which is on the way
 // =====
 
-function pushToPiwik(payload) {
-  const piwik = window._paq || [];
-  piwik.push(payload);
+function pushToMatomo(payload) {
+  const matomo = window._paq || [];
+  matomo.push(payload);
 }
 
 export function trackPageView() {
-  pushToPiwik(['setCustomUrl', document.location.href]);
-  pushToPiwik(['trackPageView']);
+  pushToMatomo(['setCustomUrl', document.location.href]);
+  pushToMatomo(['trackPageView']);
 }
 
 export function trackFilter(name) {
-  pushToPiwik(['trackEvent', 'Map filters', name]);
+  pushToMatomo(['trackEvent', 'Map filters', name]);
 }
 
 export function trackDownload() {
-  pushToPiwik(['trackEvent', 'PDF download']);
+  pushToMatomo(['trackEvent', 'PDF download']);
 }
