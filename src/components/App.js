@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 
 import styles from './App.module.scss';
@@ -10,35 +11,31 @@ import { appRoutes } from 'constants.js';
 import LandingPage from '../views/landing/LandingPage';
 import { trackPageView } from '../helpers';
 
-class App extends React.Component {
-  render() {
-    const { authenticated } = this.props;
+const App = ({ authenticated }) => {
+  trackPageView();
 
-    trackPageView();
+  return (
+    <div className={styles.App}>
+      {authenticated ? (
+        <>
+          <Header />
+          <div className={styles.Content}>
+            <Switch>
+              <Route exact path={appRoutes.CONCEPTS} component={ConceptPage} />
+              <Route exact path={appRoutes.CONTACT} component={ContactPage} />
+              <Route path={appRoutes.HOME} component={DashboardPage} />
+            </Switch>
+          </div>
+        </>
+      ) : (
+        <LandingPage />
+      )}
+    </div>
+  );
+};
 
-    return (
-      <div className={styles.App}>
-        {authenticated ? (
-          <>
-            <Header />
-            <div className={styles.Content}>
-              <Switch>
-                <Route
-                  exact
-                  path={appRoutes.CONCEPTS}
-                  component={ConceptPage}
-                />
-                <Route exact path={appRoutes.CONTACT} component={ContactPage} />
-                <Route path={appRoutes.HOME} component={DashboardPage} />
-              </Switch>
-            </div>
-          </>
-        ) : (
-          <LandingPage />
-        )}
-      </div>
-    );
-  }
-}
+App.propTypes = {
+  authenticated: PropTypes.bool,
+};
 
 export default App;

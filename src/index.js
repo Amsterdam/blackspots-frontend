@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import 'react-app-polyfill/ie11';
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import * as Sentry from '@sentry/browser';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
@@ -17,27 +17,24 @@ Sentry.init({
   dsn: 'https://45be21450b804b1e85ad7462a529b0f8@sentry.data.amsterdam.nl/24',
 });
 
+const KeycloakWrapper = ({ keycloak }) => {
+  const [authenticated, setAuthenticatied] = useState(false);
 
-class KeycloakWrapper extends React.Component {
-  state = { authenticated: false };
-
-  componentDidMount() {
-    const keycloak = this.props.keycloak;
+  useEffect(() => {
+    console.log('useEffect')
     keycloak.onAuthSuccess = () => {
-      this.setState({ authenticated: true });
+      setAuthenticatied(true);
     };
     keycloak.onAuthError = () => {
-      this.setState({ authenticated: false });
+      setAuthenticatied(false);
     };
     keycloak.onAuthRefreshError = () => {
-      this.setState({ authenticated: false });
+      setAuthenticatied(false);
     };
-  }
+  }, [keycloak.onAuthError, keycloak.onAuthRefreshError, keycloak.onAuthSuccess]);
 
-  render() {
-    return <App authenticated={this.state.authenticated} />;
-  }
-}
+  return <App authenticated={authenticated} />;
+};
 
 ReactDOM.render(
   <BrowserRouter>

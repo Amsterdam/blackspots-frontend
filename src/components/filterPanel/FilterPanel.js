@@ -98,18 +98,22 @@ const FilterPanel = ({
         <SelectMenu
           items={[
             {
+              id: 1,
               label: 'Alles',
               onClick: () => processOptionChange(ContextMenuOptions.ALL),
             },
             {
+              id: 2,
               label: 'Opgeleverd in',
               onClick: () => processOptionChange(ContextMenuOptions.DELIVERED),
             },
             {
+              id: 3,
               label: 'Opgenomen als blackspot in',
               onClick: () => processOptionChange(ContextMenuOptions.BLACKSPOTS),
             },
             {
+              id: 4,
               label: 'Opgenomen als protocol in',
               onClick: () => processOptionChange(ContextMenuOptions.QUICKSCANS),
             },
