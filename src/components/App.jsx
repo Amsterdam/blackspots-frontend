@@ -10,6 +10,7 @@ import ContactPage from 'views/contact/ContactPage';
 import { appRoutes } from 'constants.js';
 import LandingPage from '../views/landing/LandingPage';
 import { trackPageView } from '../helpers';
+import withKeycloak from '../hoc/withKeyCloak';
 
 const App = ({ authenticated }) => {
   trackPageView();
@@ -38,4 +39,4 @@ App.propTypes = {
   authenticated: PropTypes.bool,
 };
 
-export default App;
+export default withKeycloak(App);
