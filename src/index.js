@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'react-app-polyfill/ie11';
-import '@babel/polyfill';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import * as Sentry from '@sentry/browser';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
