@@ -4,7 +4,7 @@ import Map from 'components/map/Map';
 import ErrorMsg from '../../shared/errorMsg/ErrorMsg';
 import styles from './Dashboard.module.scss';
 
-export default () => {
+const DashboardPage = () => {
   const [showError, setShowError] = useState(false);
 
   return (
@@ -14,3 +14,5 @@ export default () => {
     </div>
   );
 };
+
+export default DashboardPage;

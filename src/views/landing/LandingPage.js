@@ -5,10 +5,9 @@ import logo from 'assets/media/amsterdam-logo.svg';
 import headerImage from 'assets/media/main-header-blur.jpg';
 import Footer from '../../components/footer/Footer';
 
-export default () => {
-  function login() {
-    auth.keycloak.login();
-  }
+const LandingPage = () => {
+  const login = () => auth.keycloak.login();
+
   return (
     <div className={styles.Container}>
       <div className={styles.Content}>
@@ -58,3 +57,5 @@ export default () => {
     </div>
   );
 };
+
+export default LandingPage;

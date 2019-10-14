@@ -1,1 +1,3 @@
-export default () => {};
+const auth = () => {};
+
+export default auth;

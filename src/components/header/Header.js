@@ -12,7 +12,7 @@ const logout = () => {
   keycloak.logout();
 };
 
-export default () => {
+const Header = () => {
   return (
     <div className={styles.Container}>
       <Logo className={styles.Logo} />
@@ -34,3 +34,5 @@ export default () => {
     </div>
   );
 };
+
+export default Header;

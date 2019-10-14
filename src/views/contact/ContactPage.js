@@ -7,7 +7,8 @@ import styles from './ContactPage.module.scss';
 import { ReactComponent as Chevron } from 'assets/icons/chevron-left.svg';
 import Footer from '../../components/footer/Footer';
 
-export default () => {
+
+const ContactPage = () => {
   return (
     <div className={styles.Container}>
       <div className={styles.Content}>
@@ -106,3 +107,5 @@ export default () => {
     </div>
   );
 };
+
+export default ContactPage;
