@@ -3,3 +3,10 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+
+# Define which paths this specific [[headers]] block will cover.
+[[headers]]
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
