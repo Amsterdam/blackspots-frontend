@@ -17,13 +17,20 @@
 
 ## Installation
 
-- npm install
+```bash
+  npm install
+```
 
 ## Development
 
-- npm start
+```bash
+  npm start
+```
+
 - Open http://localhost:3000
 
 ## Testing
 
-- TBD
+```bash
+  npm run test
+```
