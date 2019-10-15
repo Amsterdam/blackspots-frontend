@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAllBlackspots } from '../../services/geo-api';
+import { getByUrl } from '../../../shared/api/api';
 
 function useDataFetching() {
   const [results, setResults] = React.useState(null);
@@ -9,7 +9,7 @@ function useDataFetching() {
   async function fetchData(endpoint) {
     setLoading(true);
     try {
-      const data = await getAllBlackspots(endpoint);
+      const data = await getByUrl(endpoint);
       console.log(data);
       setResults(data);
     } catch (e) {

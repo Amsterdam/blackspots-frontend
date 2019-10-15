@@ -4,13 +4,8 @@ import { NavLink } from 'react-router-dom';
 import { ReactComponent as Logo } from 'assets/media/amsterdam-logo-small.svg';
 import { ReactComponent as Logout } from 'assets/icons/logout.svg';
 import { appRoutes } from 'constants.js';
-import auth from 'shared/auth/auth';
+import { logout } from 'shared/auth/auth';
 import styles from './Header.module.scss';
-
-const logout = () => {
-  const keycloak = auth.keycloak;
-  keycloak.logout();
-};
 
 const Header = () => {
   return (
