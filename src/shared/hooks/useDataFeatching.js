@@ -1,5 +1,5 @@
 import React from 'react';
-import { getByUrl } from '../../../shared/api/api';
+import { getByUrl } from '../api/api';
 
 function useDataFetching() {
   const [results, setResults] = React.useState(null);

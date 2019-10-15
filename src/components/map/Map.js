@@ -12,7 +12,7 @@ import FilterPanel from '../filterPanel/FilterPanel';
 import { evaluateMarkerVisibility } from './helpers';
 import { SpotTypes, SpotStatusTypes } from 'constants.js';
 import './markerStyle.css';
-import useDataFetching from './hooks/useDataFeatching';
+import useDataFetching from '../../shared/hooks/useDataFeatching';
 import useYearFilters from './hooks/useYearFilters';
 import useBlackspotsLayer from './hooks/useBlackspotsLayer';
 import useMap from './hooks/useMap';
