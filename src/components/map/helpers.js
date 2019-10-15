@@ -36,11 +36,9 @@ export function evaluateMarkerVisibility(
         isVisibleDeliveredYear(deliveredYearFilter, marker) &&
         isVisibleQuickscanYear(quickscanYearFilter, marker)
       ) {
-        console.log('visible', marker);
-        // marker._icon.style.visibility = 'visible';
+        marker._icon.style.visibility = 'visible';
       } else {
-        console.log('hidden', marker);
-        // marker._icon.style.visibility = 'hidden';
+        marker._icon.style.visibility = 'hidden';
       }
     });
 }

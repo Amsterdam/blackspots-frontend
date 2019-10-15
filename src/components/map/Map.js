@@ -158,41 +158,29 @@ const Map = () => {
     geoLayerRef.current = L.geoJSON(results, {
       // Add custom markers
       onEachFeature: function(feature, layer) {
-        console.log('onEachFeature');
         layer.on('click', ({ latlng }) => {
           onMarkerClick(feature, latlng);
         });
       },
       pointToLayer: function(feature, latlng) {
-        console.log('pointToLayer', latlng, feature.properties);
         // Leaflet only accepts HTML elements for custom markers so we need to
         // create one from the SVGIcon
-        // const { status, spot_type } = feature.properties;
-        // const iconDiv = document.createElement('div');
-        // ReactDOM.render(<SVGIcon type={spot_type} status={status} />, iconDiv);
-        // console.log(iconDiv);
+        const { status, spot_type } = feature.properties;
+        const iconDiv = document.createElement('div');
+        ReactDOM.render(<SVGIcon type={spot_type} status={status} />, iconDiv);
 
-        // // Create a marker with the correct icon and onClick method
-        // return L.marker(latlng, {
-        //   icon: L.divIcon({
-        //     // Add the correct classname based on type
-        //     // Risico types have a bigger icon therefore need more margin
-        //     className: `marker-div-icon ${
-        //       spot_type === SpotTypes.RISICO ? 'large' : ''
-        //     } ${
-        //       status === SpotStatusTypes.GEEN_MAATREGEL ? 'extra-opacity' : ''
-        //     }`,
-        //     html: iconDiv.innerHTML,
-        //   }),
-        // });
-        // TODO draw the icons
-        return L.circleMarker(latlng, {
-          radius: 8,
-          fillColor: '#ff7800',
-          color: '#000',
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0.8,
+        // Create a marker with the correct icon and onClick method
+        return L.marker(latlng, {
+          icon: L.divIcon({
+            // Add the correct classname based on type
+            // Risico types have a bigger icon therefore need more margin
+            className: `marker-div-icon ${
+              spot_type === SpotTypes.RISICO ? 'large' : ''
+            } ${
+              status === SpotStatusTypes.GEEN_MAATREGEL ? 'extra-opacity' : ''
+            }`,
+            html: iconDiv,
+          }),
         });
       },
     }).addTo(mapRef.current);
@@ -290,210 +278,4 @@ const Map = () => {
     </div>
   );
 };
-
-// class OldMap extends React.Component {
-//   // TODO: Filters should be refactored a bit too make them more explicit and
-//   // less complex
-
-//   constructor() {
-//     super();
-//     this.state = {
-//       error: false,
-//       loading: true,
-//       showDetailPanel: false,
-//       feature: null,
-//       // A filter to only show items on the 'blackspot list', which are all
-//       // spots with type BLACKSPOT or WEGVAk
-//       blackspotListFilter: false,
-//       // A filter to only show items on the 'protocol list', which are all spots
-//       // with type PROTOCOL_ERNSTIG or PROTOCOL_DODELIJK
-//       // Note: quickscan === protocol
-//       quickscanListFilter: false,
-//       // A filter that only shows spots that have the status DELIVERED
-//       deliveredListFilter: false,
-//       // Year filters will be set with default data once the blackspot data is
-//       // received and the relevant years are known
-//       blackspotYearFilter: {},
-//       deliveredYearFilter: {},
-//       quickscanYearFilter: {},
-//       // Type and status type filters start with all values as false, meaning
-//       // the filter is off effectively showing everything
-//       spotStatusTypeFilter: {
-//         [SpotStatusTypes.ONDERZOEK]: false,
-//         [SpotStatusTypes.VOORBEREIDING]: false,
-//         [SpotStatusTypes.GEREED]: false,
-//         [SpotStatusTypes.GEEN_MAATREGEL]: false,
-//         [SpotStatusTypes.UITVOERING]: false,
-//         [SpotStatusTypes.ONBEKEND]: false,
-//       },
-//       spotTypeFilter: {
-//         [SpotTypes.BLACKSPOT]: false,
-//         [SpotTypes.PROTOCOL_DODELIJK]: false,
-//         [SpotTypes.PROTOCOL_ERNSTIG]: false,
-//         [SpotTypes.RISICO]: false,
-//         [SpotTypes.WEGVAK]: false,
-//       },
-//       geoData: null,
-//     };
-
-//     this.map = null;
-//     this.geoLayer = null;
-
-//     this.onMarkerClick = this.onMarkerClick.bind(this);
-//     this.toggleDetailPanel = this.toggleDetailPanel.bind(this);
-//     this.triggerVisibiltyEvaluation = this.triggerVisibiltyEvaluation.bind(
-//       this
-//     );
-//     this.setFilters = this.setFilters.bind(this);
-//   }
-
-//   componentDidMount() {
-//     // Create map
-//     this.map = amaps.createMap({
-//       center: {
-//         latitude: 52.36988741057662,
-//         longitude: 4.8966407775878915,
-//       },
-//       style: 'zwartwit',
-//       layer: 'standaard',
-//       target: 'mapdiv',
-//       search: true,
-//       zoom: 13,
-//     });
-
-//     // Add the stadsdelen WMS
-//     L.tileLayer
-//       .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
-//         layers: ['stadsdeel'],
-//         transparent: true,
-//         format: 'image/png',
-//       })
-//       .addTo(this.map);
-
-//     // Set zoom config manually after adding WMS
-//     // For some reason this doesn't work when set during the creation of the map
-//     this.map.options.minZoom = 12;
-//     this.map.options.maxZoom = 21;
-
-//     // Get geo data
-//     getAllBlackspots()
-//       .then(geoData => {
-//         const [
-//           blackspotYearFilter,
-//           deliveredYearFilter,
-//           quickscanYearFilter,
-//         ] = this.getYearFiltersFromMarkers(geoData);
-//         this.setState({
-//           geoData,
-//           loading: false,
-//           blackspotYearFilter,
-//           quickscanYearFilter,
-//           deliveredYearFilter,
-//         });
-//         this.renderMarkers();
-//       })
-//       .catch(err => {
-//         this.setState({ error: true, loading: false });
-//         this.props.setShowError(true);
-//         console.error('An error occured fetching/processing data.', err);
-//       });
-//   }
-
-//   /**
-//    * Update the filters. NOTE: For now all filters must be provided on every
-//    * update. This is not ideal achitectural wise, but a working solution we had
-//    * time for now. It provides a flexible way handling filters, but lacks
-//    * scalability.
-//    */
-//   setFilters(
-//     spotTypeFilter,
-//     spotStatusTypeFilter,
-//     blackspotYearFilter,
-//     deliveredYearFilter,
-//     quickscanYearFilter
-//   ) {
-//     this.setState(
-//       () => ({
-//         spotTypeFilter,
-//         spotStatusTypeFilter,
-//         blackspotYearFilter,
-//         deliveredYearFilter,
-//         quickscanYearFilter,
-//       }),
-//       this.triggerVisibiltyEvaluation
-//     );
-//   }
-
-//   /**
-//    * Trigger the evaluation of which spots should be visible on the map. This
-//    * should be done after every filter update.
-//    */
-//   triggerVisibiltyEvaluation() {
-//     const {
-//       spotTypeFilter,
-//       spotStatusTypeFilter,
-//       blackspotYearFilter,
-//       deliveredYearFilter,
-//       quickscanYearFilter,
-//     } = this.state;
-//     evaluateMarkerVisibility(
-//       this.geoLayer.getLayers(),
-//       spotTypeFilter,
-//       spotStatusTypeFilter,
-//       blackspotYearFilter,
-//       deliveredYearFilter,
-//       quickscanYearFilter,
-//       this.state.blackspotListFilter,
-//       this.state.quickscanListFilter,
-//       this.state.deliveredListFilter
-//     );
-//   }
-
-//   render() {
-//     const {
-//       error,
-//       loading,
-//       showDetailPanel,
-//       feature,
-//       spotTypeFilter,
-//       spotStatusTypeFilter,
-//       blackspotYearFilter,
-//       quickscanYearFilter,
-//       deliveredYearFilter,
-//     } = this.state;
-
-//     return (
-//       <div className={styles.Map}>
-//         <div id="mapdiv" style={{ height: '100%' }}>
-//           {loading && <Loader />}
-//           {!error && !loading && (
-//             <FilterPanel
-//               spotTypeFilter={spotTypeFilter}
-//               spotStatusTypeFilter={spotStatusTypeFilter}
-//               blackspotYearFilter={blackspotYearFilter}
-//               deliveredYearFilter={deliveredYearFilter}
-//               quickscanYearFilter={quickscanYearFilter}
-//               setFilters={this.setFilters}
-//               setBlackspotListFilter={value =>
-//                 this.setState({ blackspotListFilter: value })
-//               }
-//               setQuickscanListFilter={value =>
-//                 this.setState({ quickscanListFilter: value })
-//               }
-//               setDeliveredListFilter={value =>
-//                 this.setState({ deliveredListFilter: value })
-//               }
-//             />
-//           )}
-//           <DetailPanel
-//             feature={feature}
-//             isOpen={showDetailPanel}
-//             togglePanel={this.toggleDetailPanel}
-//           />
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
 export default Map;
