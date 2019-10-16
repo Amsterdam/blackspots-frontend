@@ -4,6 +4,7 @@ import styles from './LandingPage.module.scss';
 import logo from 'assets/media/amsterdam-logo.svg';
 import headerImage from 'assets/media/main-header-blur.jpg';
 import Footer from '../../components/footer/Footer';
+import { IntroTextStyle } from '../../styles/SharedStyles';
 
 const LandingPage = () => {
   const login = () => auth.keycloak.login();
@@ -13,15 +14,15 @@ const LandingPage = () => {
       <div className={styles.Content}>
         <div className={styles.Header}>
           <img src={logo} className={styles.Logo} alt="Amsterdam logo" />
-          <h1>Werkgroepblackspots</h1>
+          <h1>Werkgroep Blackspots</h1>
         </div>
         <div className={styles.Menu} />
         <div className={styles.HeroContainer}>
           <img alt="Hero" src={headerImage} className={styles.Hero} />
         </div>
         <div className={styles.Section}>
-          <h1> Welkom bij Werkgroepblackspots</h1>
-          <p className={styles.Intro}>
+          <h1> Welkom bij Werkgroep Blackspots</h1>
+          <IntroTextStyle>
             De kaart bevat een overzicht van de Blackspots, Red Routes
             (wegvakken), Protocol locaties (ernstig en dodelijk) en
             Risicolocaties vanaf 2014 tot heden. Elke locatie op de kaart is
@@ -38,7 +39,7 @@ const LandingPage = () => {
             >
               http://amsterdam.nl/verkeersveiligheid
             </a>
-          </p>
+          </IntroTextStyle>
           <h2>Inloggen</h2>
           <button onClick={login} className={styles.LoginBtn}>
             Datapunt account

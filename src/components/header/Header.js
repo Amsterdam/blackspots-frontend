@@ -12,7 +12,7 @@ const Header = () => {
     <div className={styles.Container}>
       <Logo className={styles.Logo} />
       <NavLink className={styles.Title} exact to={appRoutes.HOME}>
-        <h2>Werkgroepblackspots</h2>
+        <h2>Werkgroep Blackspots</h2>
       </NavLink>
       <div className={styles.ButtonBar}>
         <button className={styles.ButtonLink} onClick={logout}>

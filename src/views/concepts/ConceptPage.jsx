@@ -2,21 +2,22 @@ import React from 'react';
 
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
 import Accordion from '../../shared/accordion/Accordion';
-import styles from './ConceptPage.module.scss';
 import { appRoutes } from 'constants.js';
 import Footer from '../../components/footer/Footer';
+import ConceptPageStyle, { ContentStyle } from './ConceptPageStyle';
+import { IntroTextStyle } from '../../styles/SharedStyles';
 
 const ConceptPage = () => {
   return (
-    <div className={styles.Container}>
-      <div className={styles.Content}>
+    <ConceptPageStyle className="ConceptPageStyle">
+      <ContentStyle className={'ContentStyle'}>
         <BlueLinkButton
           to={appRoutes.HOME}
           text="Terug naar kaart"
           chevronDirection="left"
         />
         <h1>Begrippenlijst</h1>
-        <p className={styles.Intro}>
+        <IntroTextStyle>
           Op de WBA kaart staan alle locaties die Werkgroep Blackspots in
           onderzoek en/of uitvoering heeft. Naar aanleiding van onderzoek wordt
           besloten of maatregelen nodig zijn om de verkeersveiligheid te
@@ -28,7 +29,7 @@ const ConceptPage = () => {
           <a href="http://amsterdam.nl/verkeersveiligheid">
             http://amsterdam.nl/verkeersveiligheid
           </a>
-        </p>
+        </IntroTextStyle>
         <Accordion
           title="Werkgroep Blackspots Amsterdam (WBA)"
           text="De Werkgroep Blackspots Amsterdam (WBA) is het expertteam van de
@@ -135,9 +136,9 @@ const ConceptPage = () => {
         verkeersveiligheid uit voort. De werklijst is de bron  van deze WBA
         kaart."
         />
-      </div>
+      </ContentStyle>
       <Footer />
-    </div>
+    </ConceptPageStyle>
   );
 };
 
