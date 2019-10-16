@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import auth from '../shared/auth/auth';
+import { useState, useEffect } from 'react';
+import auth from '../auth/auth';
 
-const withKeycloak = Component => () => {
+const useKeycloak = () => {
   const [authenticated, setAuthenticatied] = useState(false);
   const keycloak = auth.keycloak;
 
   useEffect(() => {
-    console.log('useEffect');
     keycloak.onAuthSuccess = () => {
       setAuthenticatied(true);
     };
@@ -16,9 +15,13 @@ const withKeycloak = Component => () => {
     keycloak.onAuthRefreshError = () => {
       setAuthenticatied(false);
     };
-  }, [keycloak.onAuthError, keycloak.onAuthRefreshError, keycloak.onAuthSuccess]);
+  }, [
+    keycloak.onAuthError,
+    keycloak.onAuthRefreshError,
+    keycloak.onAuthSuccess,
+  ]);
 
-  return <Component authenticated={authenticated} />;
+  return authenticated;
 };
 
-export default withKeycloak
+export default useKeycloak;

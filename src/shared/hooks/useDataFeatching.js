@@ -10,14 +10,12 @@ function useDataFetching() {
     setLoading(true);
     try {
       const data = await getByUrl(endpoint);
-      console.log(data);
       setResults(data);
     } catch (e) {
       setErrorMessage(e.message);
     }
 
     setLoading(false);
-    // console.log(results);
     return results;
   }
 
