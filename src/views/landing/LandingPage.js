@@ -14,14 +14,14 @@ export default () => {
       <div className={styles.Content}>
         <div className={styles.Header}>
           <img src={logo} className={styles.Logo} alt="Amsterdam logo" />
-          <h1>Werkgroepblackspots</h1>
+          <h1>Werkgroep Blackspots</h1>
         </div>
         <div className={styles.Menu} />
         <div className={styles.HeroContainer}>
           <img alt="Hero" src={headerImage} className={styles.Hero} />
         </div>
         <div className={styles.Section}>
-          <h1> Welkom bij Werkgroepblackspots</h1>
+          <h1> Welkom bij Werkgroep Blackspots</h1>
           <p className={styles.Intro}>
             De kaart bevat een overzicht van de Blackspots, Red Routes
             (wegvakken), Protocol locaties (ernstig en dodelijk) en
