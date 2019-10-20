@@ -3,7 +3,7 @@ import useKeycloak from './useKeycloak';
 import auth from '../auth/auth';
 
 describe('useKeycloak', () => {
-  it('should return an object of positions with booleans when a component hit the viewport edge', () => {
+  it('should set the authenticated flag depending on the keycloak authorization callback', () => {
     const { result } = renderHook(() => useKeycloak());
     const authenticated = result.current;
     expect(authenticated).toEqual(false);

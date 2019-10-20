@@ -3,7 +3,7 @@ import { getByUrl } from '../api/api';
 
 function useDataFetching() {
   const [results, setResults] = React.useState(null);
-  const [errorMessage, setErrorMessage] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState();
   const [loading, setLoading] = React.useState(false);
 
   async function fetchData(endpoint) {
