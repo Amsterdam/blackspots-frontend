@@ -1,8 +1,4 @@
 import React from 'react';
-import styled from '@datapunt/asc-core';
-import { themeSpacing } from '@datapunt/asc-ui';
-
-import { Heading } from '@datapunt/asc-ui';
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
 import { appRoutes } from 'constants.js';
 import DataTable from '../../shared/dataTable/DataTable';
@@ -11,12 +7,9 @@ import Footer from '../../components/footer/Footer';
 import ContactPageStyle, {
   ContentStyle,
   EmailLinkStyle,
+  HeadingStyle,
 } from './ContactPageStyle';
 import { IntroTextStyle } from '../../styles/SharedStyles';
-
-const StyledHeading = styled(Heading)`
-  margin: ${themeSpacing(5)} 0;
-`;
 
 const ContactPage = () => {
   return (
@@ -27,7 +20,7 @@ const ContactPage = () => {
           text="Terug naar kaart"
           chevronDirection="left"
         />
-        <StyledHeading>Contact</StyledHeading>
+        <HeadingStyle>Contact</HeadingStyle>
 
         <IntroTextStyle>
           Voor vragen of meer informatie over locaties op deze kaart of voor

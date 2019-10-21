@@ -9,8 +9,8 @@ import { IntroTextStyle } from '../../styles/SharedStyles';
 
 const ConceptPage = () => {
   return (
-    <ConceptPageStyle className="ConceptPageStyle">
-      <ContentStyle className={'ContentStyle'}>
+    <ConceptPageStyle>
+      <ContentStyle>
         <BlueLinkButton
           to={appRoutes.HOME}
           text="Terug naar kaart"

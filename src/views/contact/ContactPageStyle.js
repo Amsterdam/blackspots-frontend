@@ -1,5 +1,5 @@
 import styled from '@datapunt/asc-core';
-import { themeColor } from '@datapunt/asc-ui';
+import { themeColor, themeSpacing, Heading } from '@datapunt/asc-ui';
 import { ContentBoxStyle } from '../../styles/SharedStyles';
 
 export const ContactPageStyle = styled.div`
@@ -36,6 +36,10 @@ export const EmailLinkStyle = styled.a`
       fill: ${themeColor('secondary')};
     }
   }
+`;
+
+export const HeadingStyle = styled(Heading)`
+  margin: ${themeSpacing(5)} 0;
 `;
 
 export default ContactPageStyle;
