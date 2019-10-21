@@ -10,6 +10,10 @@ const config = {
 
 const keycloak = window.Keycloak(config);
 
+export const logout = () => {
+  keycloak.logout();
+};
+
 const setupKeycloack = () => {
   keycloak.init({ onLoad: 'check-sso' });
 

@@ -6,7 +6,7 @@ import styles from './ConceptPage.module.scss';
 import { appRoutes } from 'constants.js';
 import Footer from '../../components/footer/Footer';
 
-export default () => {
+const ConceptPage = () => {
   return (
     <div className={styles.Container}>
       <div className={styles.Content}>
@@ -140,3 +140,5 @@ export default () => {
     </div>
   );
 };
+
+export default ConceptPage;

@@ -4,31 +4,15 @@ import styles from './SelectMenu.module.scss';
 import classNames from 'classnames';
 import { ReactComponent as Chevron } from 'assets/icons/chevron-top.svg';
 
-function SelectMenu({ items }) {
+const SelectMenu = ({ items }) => {
   const [selected, setSelected] = useState(items[0].label);
   const [showMenu, setShowMenu] = useState(false);
 
-  function getMenu() {
-    return (
-      <div
-        className={classNames(styles.Menu, !showMenu ? styles.MenuHide : '')}
-      >
-        {items.map((i, index) => (
-          <button
-            key={index}
-            className={styles.Option}
-            onClick={() => {
-              i.onClick();
-              setShowMenu(false);
-              setSelected(i.label);
-            }}
-          >
-            {i.label}
-          </button>
-        ))}
-      </div>
-    );
-  }
+  const onClick = item => () => {
+    item.onClick();
+    setShowMenu(false);
+    setSelected(item.label);
+  };
 
   return (
     <div className={styles.Container}>
@@ -41,10 +25,22 @@ function SelectMenu({ items }) {
           )}
         />
       </button>
-      {getMenu()}
+      <div
+        className={classNames(styles.Menu, !showMenu ? styles.MenuHide : '')}
+      >
+        {items.map((i) => (
+          <button
+            key={i.id}
+            className={styles.Option}
+            onClick={onClick(i)}
+          >
+            {i.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 SelectMenu.propTypes = {
   items: PropTypes.arrayOf(

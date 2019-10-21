@@ -21,25 +21,26 @@ export function evaluateMarkerVisibility(
   quickscanListFilter,
   deliveredListFilter
 ) {
-  markers.forEach(marker => {
-    if (
-      isVisibleSpotType(
-        spotTypeFilter,
-        blackspotListFilter,
-        quickscanListFilter,
-        deliveredListFilter,
-        marker
-      ) &&
-      isVisibleStatusType(spotStatusTypeFilter, marker) &&
-      isVisibleBlackspotYear(blackspotYearFilter, marker) &&
-      isVisibleDeliveredYear(deliveredYearFilter, marker) &&
-      isVisibleQuickscanYear(quickscanYearFilter, marker)
-    ) {
-      marker._icon.style.visibility = 'visible';
-    } else {
-      marker._icon.style.visibility = 'hidden';
-    }
-  });
+  markers &&
+    markers.forEach(marker => {
+      if (
+        isVisibleSpotType(
+          spotTypeFilter,
+          blackspotListFilter,
+          quickscanListFilter,
+          deliveredListFilter,
+          marker
+        ) &&
+        isVisibleStatusType(spotStatusTypeFilter, marker) &&
+        isVisibleBlackspotYear(blackspotYearFilter, marker) &&
+        isVisibleDeliveredYear(deliveredYearFilter, marker) &&
+        isVisibleQuickscanYear(quickscanYearFilter, marker)
+      ) {
+        marker._icon.style.visibility = 'visible';
+      } else {
+        marker._icon.style.visibility = 'hidden';
+      }
+    });
 }
 
 /**

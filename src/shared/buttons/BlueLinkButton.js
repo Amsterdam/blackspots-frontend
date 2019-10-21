@@ -5,20 +5,20 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-left.svg';
 import classNames from 'classnames';
 
-function BlueLinkButton({ to, text, external, chevronDirection }) {
-  function getContent() {
-    return (
-      <>
-        <ChevronIcon
-          className={classNames(styles.ChevronIcon, {
-            [styles.ChevronIconRotated]: chevronDirection === 'right',
-          })}
-        />
-        {text}
-      </>
-    );
-  }
+const LinkContent = ({ text, chevronDirection }) => {
+  return (
+    <>
+      <ChevronIcon
+        className={classNames(styles.ChevronIcon, {
+          [styles.ChevronIconRotated]: chevronDirection === 'right',
+        })}
+      />
+      {text}
+    </>
+  );
+};
 
+const BlueLinkButton = ({ to, text, external, chevronDirection }) => {
   return external ? (
     <a
       className={styles.Container}
@@ -26,14 +26,14 @@ function BlueLinkButton({ to, text, external, chevronDirection }) {
       target="_blank"
       rel="noopener noreferrer"
     >
-      {getContent()}
+      <LinkContent text={text} chevronDirection={chevronDirection} />
     </a>
   ) : (
     <Link className={styles.Container} to={to}>
-      {getContent()}
+      <LinkContent text={text} chevronDirection={chevronDirection} />
     </Link>
   );
-}
+};
 
 BlueLinkButton.propTypes = {
   chevronDirection: PropTypes.oneOf(['left', 'right']),

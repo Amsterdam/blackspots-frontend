@@ -98,19 +98,23 @@ const FilterPanel = ({
         <SelectMenu
           items={[
             {
-              label: 'Alles vanaf 2014',
+              id: 1,
+              label: 'Alles',
               onClick: () => processOptionChange(ContextMenuOptions.ALL),
             },
             {
-              label: 'Opgeleverd in (jaar)',
+              id: 2,
+              label: 'Opgeleverd in',
               onClick: () => processOptionChange(ContextMenuOptions.DELIVERED),
             },
             {
-              label: 'Opgenomen als blackspot in (jaar)',
+              id: 3,
+              label: 'Opgenomen als blackspot in',
               onClick: () => processOptionChange(ContextMenuOptions.BLACKSPOTS),
             },
             {
-              label: 'Opgenomen als protocol in (jaar)',
+              id: 4,
+              label: 'Opgenomen als protocol in',
               onClick: () => processOptionChange(ContextMenuOptions.QUICKSCANS),
             },
           ]}
