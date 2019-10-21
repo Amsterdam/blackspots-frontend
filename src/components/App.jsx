@@ -1,17 +1,17 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import styled from '@datapunt/asc-core';
 
 import Header from './header/Header';
 import DashboardPage from 'views/dashboard/DashboardPage';
 import ConceptPage from 'views/concepts/ConceptPage';
 import ContactPage from 'views/contact/ContactPage';
 import { appRoutes } from 'constants.js';
-import LandingPage from '../views/landing/LandingPage';
+import LandingPage from 'views/landing/LandingPage';
 import { trackPageView } from '../helpers';
-import useKeycloak from '../shared/hooks/useKeycloak';
+import useKeycloak from 'shared/hooks/useKeycloak';
 import { GlobalStyle, ThemeProvider } from '@datapunt/asc-ui';
 import AppStyle, { ContentStyle } from './AppStyle';
+import ManageLocationPage from 'views/manage/ManageLocationPage';
 
 const App = () => {
   const authenticated = useKeycloak();
@@ -32,6 +32,11 @@ const App = () => {
                   component={ConceptPage}
                 />
                 <Route exact path={appRoutes.CONTACT} component={ContactPage} />
+                <Route
+                  exact
+                  path={appRoutes.ADD}
+                  component={ManageLocationPage}
+                />
                 <Route path={appRoutes.HOME} component={DashboardPage} />
               </Switch>
             </ContentStyle>

@@ -9,6 +9,8 @@ export const appRoutes = {
   HOME: '/',
   CONCEPTS: '/concepts',
   CONTACT: '/contact',
+  ADD: '/new-location',
+  MODIFY: '/modify-location',
 };
 
 export const SpotTypes = {
