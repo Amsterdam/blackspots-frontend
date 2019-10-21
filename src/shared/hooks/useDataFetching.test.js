@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useDataFeatching from './useDataFetching';
+import useDataFetching from './useDataFetching';
 import { getByUrl } from '../api/api';
 
 jest.mock('../api/api');
@@ -18,14 +18,14 @@ describe('useDataFetching', () => {
   });
 
   it('should create the hook', () => {
-    const { result } = renderHook(() => useDataFeatching());
+    const { result } = renderHook(() => useDataFetching());
     expect(result.current).not.toBeUndefined();
     expect(result.current.loading).toEqual(false);
     expect(result.current.errorMessage).toBeUndefined();
   });
 
   it('should fetch the data', async () => {
-    const { result } = renderHook(() => useDataFeatching());
+    const { result } = renderHook(() => useDataFetching());
     await act(async () => result.current.fetchData('http://test-url'));
     expect(result.current.errorMessage).toBeUndefined();
     expect(result.current.results).toEqual(mockData);
@@ -37,7 +37,7 @@ describe('useDataFetching', () => {
       throw Error(errorMessage);
     });
 
-    const { result } = renderHook(() => useDataFeatching());
+    const { result } = renderHook(() => useDataFetching());
     await act(async () => result.current.fetchData('http://test-url'));
     expect(result.current.results).toBeNull();
     expect(result.current.errorMessage).toEqual(errorMessage);
