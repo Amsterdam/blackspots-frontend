@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
+    "@datapunt/asc-assets": "^0.17.0",
+    "@datapunt/asc-core": "^0.17.0",
+    "@datapunt/asc-ui": "^0.17.1",
     "@sentry/browser": "^5.7.0",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.12",

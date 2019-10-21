@@ -5,7 +5,6 @@ import 'leaflet/dist/leaflet.css';
 import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
 import 'amsterdam-stijl/dist/css/ams-map.css';
 
-import styles from './Map.module.scss';
 import Loader from 'shared/loader/Loader';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
@@ -16,6 +15,7 @@ import useDataFetching from '../../shared/hooks/useDataFetching';
 import useYearFilters from './hooks/useYearFilters';
 import useBlackspotsLayer from './hooks/useBlackspotsLayer';
 import useMap from './hooks/useMap';
+import MapStyle from './MapStyle';
 
 import { shouldUseAccEnv } from 'helpers.js';
 
@@ -125,7 +125,7 @@ const Map = () => {
   };
 
   return (
-    <div className={styles.Map}>
+    <MapStyle>
       <div id="mapdiv" style={{ height: '100%' }}>
         {loading && <Loader />}
         {!errorMessage && !loading && (
@@ -148,7 +148,7 @@ const Map = () => {
           togglePanel={toggleDetailPanel}
         />
       </div>
-    </div>
+    </MapStyle>
   );
 };
 export default Map;

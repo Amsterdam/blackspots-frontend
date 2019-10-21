@@ -15,16 +15,22 @@ const Header = () => {
         <h2>Werkgroep Blackspots</h2>
       </NavLink>
       <div className={styles.ButtonBar}>
-        <button className={styles.ButtonLink} onClick={logout}>
-          <Logout />
-          Uitloggen
-        </button>
+        <NavLink className={styles.Link} to={appRoutes.HOME}>
+          Kaart
+        </NavLink>
+        <NavLink className={styles.Link} to={appRoutes.ADD}>
+          Toevoegen
+        </NavLink>
         <NavLink className={styles.Link} to={appRoutes.CONCEPTS}>
           Begrippenlijst
         </NavLink>
         <NavLink className={styles.Link} to={appRoutes.CONTACT}>
           Contact
         </NavLink>
+        <button className={styles.ButtonLink} onClick={logout}>
+          <Logout />
+          Uitloggen
+        </button>
       </div>
     </div>
   );

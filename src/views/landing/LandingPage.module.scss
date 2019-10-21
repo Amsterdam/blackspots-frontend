@@ -5,6 +5,7 @@
   justify-content: center;
   overflow: auto;
   height: 100%;
+
   h1 {
     font-size: 30px;
   }
@@ -21,10 +22,10 @@
 
 .Header {
   width: 940px;
-  height: 90px;
   display: flex;
-  padding-top: 20px;
+  padding: 20px 0;
   background-color: $primaryWhite;
+
   h1 {
     margin-top: -6px;
   }
@@ -58,15 +59,6 @@
   padding: 20px 90px 0 90px;
   background-color: $primaryWhite;
   position: relative;
-
-  .Intro {
-    @extend %intro-text;
-  }
-
-  p {
-    font-size: 16px;
-    line-height: 20px;
-  }
 
   a {
     text-decoration: underline;
