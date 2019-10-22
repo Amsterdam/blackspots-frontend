@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Heading, Row, Column, Typography } from '@datapunt/asc-ui';
+import { Button, Heading, Row, Column } from '@datapunt/asc-ui';
 import { Formik } from 'formik';
 import ManageFormStyle, { Label, StyledColumn } from './ManageFormStyle';
 import FormFields, { initalValues } from './FormFields';
@@ -24,7 +24,6 @@ const ManageFormBase = ({
 }) => {
   return (
     <ManageFormStyle onSubmit={handleSubmit} action="" novalidate>
-      clg
       <Row wrap>
         <StyledColumn span={6} direction="vertical">
           <Heading $as="h3" color="secondary">
