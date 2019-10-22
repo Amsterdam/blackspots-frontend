@@ -1,29 +1,8 @@
 import React from 'react';
-import styled from '@datapunt/asc-core';
-import { Input, Button, Heading, Row, Column } from '@datapunt/asc-ui';
-import TextArea from './TextArea';
-import DatePickerInput from './DatePickerInput';
+import { Button, Heading, Row, Column, Typography } from '@datapunt/asc-ui';
 import { Formik } from 'formik';
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  background-color: yellow;
-  width: 100%;
-`;
-
-export const Label = styled.label`
-  display: flex;
-  flex-direction: column;
-  margin: 0.5em 0;
-  position: relative;
-`;
-
-const StyledColumn = styled(Column)`
-  display: flex;
-  flex-direction: column;
-`;
+import ManageFormStyle, { Label, StyledColumn } from './ManageFormStyle';
+import FormFields, { initalValues } from './FormFields';
 
 const FormField = ({ name, label, Component, errors, ...otherProps }) => {
   return (
@@ -34,50 +13,68 @@ const FormField = ({ name, label, Component, errors, ...otherProps }) => {
   );
 };
 
-const fields = [
-  {
-    name: 'naam',
-    label: 'Naam',
-    Component: Input,
-  },
-  {
-    name: 'nummer',
-    label: 'Nummer',
-    Component: Input,
-  },
-  {
-    name: 'coordinaten',
-    label: 'Coordinaten',
-    Component: Input,
-  },
-];
-const fields2 = [
-  {
-    name: 'actiehouder',
-    label: 'Actiehouder',
-    Component: Input,
-  },
-  {
-    name: 'taken',
-    label: 'Taken',
-    Component: TextArea,
-  },
-  {
-    name: 'startDate',
-    label: 'Start uitvoering',
-    Component: DatePickerInput,
-    customOnChange: true,
-  },
-];
-
-const initalValues = {
-  ...fields.reduce(
-    (acc, item) => ({
-      ...acc,
-      [item.naam]: '',
-    }),
-    {}
-  ),
+const ManageFormBase = ({
+  touched,
+  errors,
+  values,
+  handleChange,
+  handleBlur,
+  handleSubmit,
+  setFieldValue,
+}) => {
+  return (
+    <ManageFormStyle onSubmit={handleSubmit} action="" novalidate>
+      clg
+      <Row wrap>
+        <StyledColumn span={6} direction="vertical">
+          <Heading $as="h3" color="secondary">
+            Locatie
+          </Heading>
+          {FormFields.filter(({ column }) => column === 1).map(
+            ({ name, customOnChange, ...fieldProps }) => (
+              <FormField
+                {...fieldProps}
+                name={name}
+                onChange={customOnChange ? setFieldValue : handleChange}
+                onBlur={handleBlur}
+                value={values[name]}
+                errors={errors[name]}
+                touched={touched[name]}
+              ></FormField>
+            )
+          )}
+        </StyledColumn>
+        <StyledColumn span={6}>
+          <Heading $as="h3" color="secondary">
+            Maatregelen
+          </Heading>
+          {FormFields.filter(({ column }) => column === 2).map(
+            ({ name, customOnChange, ...fieldProps }) => (
+              <FormField
+                {...fieldProps}
+                name={name}
+                onChange={customOnChange ? setFieldValue : handleChange}
+                onBlur={handleBlur}
+                value={values[name]}
+                errors={errors[name]}
+                touched={touched[name]}
+              ></FormField>
+            )
+          )}
+        </StyledColumn>
+      </Row>
+      <Row>
+        <Column span={12}>
+          <Button variant="primary" type="submit">
+            Opslaan
+          </Button>
+          <Button variant="primaryInverted" type="reset">
+            Annuleren
+          </Button>
+        </Column>
+      </Row>
+    </ManageFormStyle>
+  );
 };
 
 const ManageForm = () => {
@@ -85,11 +82,8 @@ const ManageForm = () => {
     <>
       <Heading>Toevoegen/Wijzigen</Heading>
       <Formik
-        initalValues={{
-          ...initalValues,
-        }}
+        initalValues={initalValues}
         validate={values => {
-          console.log('validate', values);
           let errors = {};
           if (!values.naam) errors.naam = 'verplicht';
           return errors;
@@ -106,59 +100,17 @@ const ManageForm = () => {
           handleSubmit,
           setFieldValue,
         }) => {
-          return (
-            <Form
-              onSubmit={handleSubmit}
-              action=""
-              novalidate
-              // onReset={() => console.log('onReset')}
-            >
-              <Row wrap debug>
-                <StyledColumn debug span={6} direction="vertical">
-                  <Heading $as="h3" color="secondary">
-                    Locatie
-                  </Heading>
-                  {fields.map(({ name, customOnChange, ...fieldProps }) => (
-                    <FormField
-                      {...fieldProps}
-                      name={name}
-                      onChange={customOnChange ? setFieldValue : handleChange}
-                      onBlur={handleBlur}
-                      value={values[name]}
-                      errors={errors[name]}
-                      touched={touched[name]}
-                    ></FormField>
-                  ))}
-                </StyledColumn>
-                <StyledColumn span={6}>
-                  <Heading $as="h3" color="secondary">
-                    Maatregelen
-                  </Heading>
-                  {fields2.map(({ name, customOnChange, ...fieldProps }) => (
-                    <FormField
-                      {...fieldProps}
-                      name={name}
-                      onChange={customOnChange ? setFieldValue : handleChange}
-                      onBlur={handleBlur}
-                      value={values[name]}
-                      errors={errors[name]}
-                      touched={touched[name]}
-                    ></FormField>
-                  ))}
-                </StyledColumn>
-              </Row>
-              <Row>
-                <Column span={12}>
-                  <Button variant="primary" type="submit">
-                    Opslaan
-                  </Button>
-                  <Button variant="primaryInverted" type="reset">
-                    Annuleren
-                  </Button>
-                </Column>
-              </Row>
-            </Form>
-          );
+          const formProps = {
+            touched,
+            errors,
+            values,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+          };
+          console.log('fieldProps', formProps);
+          return <ManageFormBase {...formProps} />;
         }}
       />
     </>
