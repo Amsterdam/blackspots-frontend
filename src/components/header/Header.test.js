@@ -1,23 +1,12 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
-import { UserContextProvider } from 'shared/user/UserContext';
 import Header from './Header';
-
-const history = createMemoryHistory();
+import { withUserContext } from 'test/utils';
 
 describe('Header', () => {
   const regex = /toevoegen/i;
-  const withUserContext = (Component, user) => (
-    <UserContextProvider user={user}>
-      <Router history={history}>{Component}</Router>
-    </UserContextProvider>
-  );
 
-  afterEach(() => {
-    cleanup();
-  });
+  afterEach(cleanup);
 
   it('should not render the add link when the user has no add rights', () => {
     var user = { canAdd: false };
