@@ -1,5 +1,4 @@
 import { useRef, useEffect } from 'react';
-import L from 'leaflet';
 import amaps from 'amsterdam-amaps/dist/amaps';
 
 const useMap = () => {

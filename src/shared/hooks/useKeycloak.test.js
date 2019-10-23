@@ -2,8 +2,8 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import useKeycloak from './useKeycloak';
 import auth from '../auth/auth';
 
-describe.only('useKeycloak', () => {
-  it('should return an object of positions with booleans when a component hit the viewport edge', () => {
+describe('useKeycloak', () => {
+  it('should set the authenticated flag depending on the keycloak authorization callback', () => {
     const { result } = renderHook(() => useKeycloak());
     const user = result.current;
     expect(user.authenticated).toEqual(false);
