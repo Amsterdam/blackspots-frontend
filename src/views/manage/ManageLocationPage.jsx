@@ -8,7 +8,10 @@ import ManageLocationPageStyle, {
 } from './ManageLocationPageStyle';
 import ManageForm from './ManageForm';
 
-const ManageLocationPage = () => {
+const ManageLocationPage = ({ match }) => {
+  const {
+    params: { id },
+  } = match;
   return (
     <ManageLocationPageStyle>
       <ContentStyle>
@@ -17,7 +20,7 @@ const ManageLocationPage = () => {
           text="Terug naar kaart"
           chevronDirection="left"
         />
-        <ManageForm />
+        <ManageForm id={id} />
       </ContentStyle>
       <Footer />
     </ManageLocationPageStyle>

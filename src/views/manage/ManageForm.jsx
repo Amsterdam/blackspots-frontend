@@ -3,6 +3,8 @@ import { Button, Heading, Row, Column } from '@datapunt/asc-ui';
 import { Formik } from 'formik';
 import ManageFormStyle, { Label, StyledColumn } from './ManageFormStyle';
 import FormFields, { initalValues } from './FormFields';
+import useAppReducer from 'shared/hooks/useAppReducer';
+import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 
 const FormField = ({ name, label, Component, errors, ...otherProps }) => {
   return (
@@ -76,12 +78,31 @@ const ManageFormBase = ({
   );
 };
 
-const ManageForm = () => {
+const normalize = item => {
+  if (!item) return initalValues;
+
+  const {
+    geometry: { coordinates },
+    properties,
+  } = item;
+  return {
+    ...initalValues,
+    naam: properties.description,
+    nummer: properties.locatie_id,
+    coordinaten: `${coordinates[1]}, ${coordinates[0]}`,
+  };
+};
+
+const ManageForm = ({ id }) => {
+  const [state] = useAppReducer(LOCATION);
+
+  const initialV = normalize(state.selectedLocation);
+  console.log('initial values:', initialV);
   return (
     <>
       <Heading>Toevoegen/Wijzigen</Heading>
       <Formik
-        initalValues={initalValues}
+        initalValues={initialV}
         validate={values => {
           let errors = {};
           if (!values.naam) errors.naam = 'verplicht';
@@ -99,6 +120,7 @@ const ManageForm = () => {
           handleSubmit,
           setFieldValue,
         }) => {
+          console.log('render', values);
           const formProps = {
             touched,
             errors,
@@ -108,7 +130,6 @@ const ManageForm = () => {
             handleSubmit,
             setFieldValue,
           };
-          console.log('fieldProps', formProps);
           return <ManageFormBase {...formProps} />;
         }}
       />

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
 import { ReactComponent as DocumentIcon } from 'assets/icons/document.svg';
@@ -54,10 +55,13 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
         )}
       >
         <div className={styles.Header}>
-          <h3>{locatie_id}</h3>
-          <div className={styles.CloseBtn} onClick={togglePanel}>
-            <CrossIcon />
-          </div>
+          <h3>
+            {locatie_id}
+            <NavLink to={`/modify/${locatie_id}`}>Wijzig</NavLink>
+            <div className={styles.CloseBtn} onClick={togglePanel}>
+              <CrossIcon />
+            </div>
+          </h3>
         </div>
         <div className={styles.Content}>
           <h2>{description}</h2>
