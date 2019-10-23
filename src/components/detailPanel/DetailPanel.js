@@ -20,7 +20,7 @@ import UserContext from '../../shared/user/UserContext';
 import { Heading, Button, Link } from '@datapunt/asc-ui';
 
 import { Close } from '@datapunt/asc-assets';
-import { HeaderStyle } from './DetailPanelStyle';
+import { HeaderStyle, ContentStyle } from './DetailPanelStyle';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -83,7 +83,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             onClick={togglePanel}
           />
         </HeaderStyle>
-        <div className={styles.Content}>
+        <ContentStyle>
           <h2>{description}</h2>
           <DataTable>
             <tbody>
@@ -200,7 +200,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
               </div>
             );
           })}
-        </div>
+        </ContentStyle>
       </div>
     );
   }

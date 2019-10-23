@@ -15,3 +15,12 @@ export const HeaderStyle = styled.div`
     margin-right: ${themeSpacing(4)};
   }
 `;
+
+export const ContentStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: ${themeSpacing(0, 4, 4, 4)};
+  overflow: auto;
+  max-height: calc(100% - ${themeSpacing(20)});
+  position: relative;
+`;
