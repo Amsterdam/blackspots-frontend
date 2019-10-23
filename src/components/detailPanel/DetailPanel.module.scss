@@ -8,16 +8,8 @@
   right: 0;
   background-color: $primaryWhite;
   z-index: 1010;
-  box-sizing: border-box;
   border-left: 0;
   overflow: hidden;
-
-  h3 {
-    color: $primaryRed;
-    font-size: 18px;
-    line-height: 20px;
-    margin-bottom: 10px;
-  }
 
   h2 {
     font-size: 20px;
@@ -33,19 +25,10 @@
   }
 }
 
-.Header {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 15px 15px 0 15px;
-  position: relative;
-  height: 50px;
-}
-
 .Content {
   display: flex;
   flex-direction: column;
-  margin: 0 15px 15px 15px;
+  margin: 0 16px 16px 16px;
   overflow: auto;
   max-height: calc(100% - 80px);
   position: relative;
@@ -75,6 +58,7 @@
   height: 30px;
   align-items: center;
   padding-left: 30px;
+
   svg {
     position: absolute;
     margin-left: -36px;
@@ -97,15 +81,19 @@
 .Onderzoek {
   background-color: $onderzoek;
 }
+
 .Voorbereiding {
   background-color: $voorbereiding;
 }
+
 .Gereed {
   background-color: $gereed;
 }
+
 .GeenMaatregel {
   background-color: $geen-maatregel;
 }
+
 .Uitvoering {
   background-color: $uitvoering;
 }
