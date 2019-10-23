@@ -8,6 +8,9 @@ configure({ adapter: new Adapter() });
 
 global.Keycloak = () => ({
   init: () => {},
+  realmAccess: {
+    roles: [],
+  },
 });
 
 global.window.L = L;

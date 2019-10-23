@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { ReactComponent as Logo } from 'assets/media/amsterdam-logo-small.svg';
@@ -6,8 +6,11 @@ import { ReactComponent as Logout } from 'assets/icons/logout.svg';
 import { appRoutes } from 'constants.js';
 import { logout } from 'shared/auth/auth';
 import styles from './Header.module.scss';
+import UserContext from 'shared/user/UserContext';
 
 const Header = () => {
+  const user = useContext(UserContext);
+
   return (
     <div className={styles.Container}>
       <Logo className={styles.Logo} />
@@ -18,9 +21,11 @@ const Header = () => {
         <NavLink className={styles.Link} to={appRoutes.HOME}>
           Kaart
         </NavLink>
-        <NavLink className={styles.Link} to={appRoutes.ADD}>
-          Toevoegen
-        </NavLink>
+        {user.roles.length > 0 && (
+          <NavLink className={styles.Link} to={appRoutes.ADD}>
+            Toevoegen
+          </NavLink>
+        )}
         <NavLink className={styles.Link} to={appRoutes.CONCEPTS}>
           Begrippenlijst
         </NavLink>
