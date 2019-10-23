@@ -14,14 +14,15 @@ const ManageFormComponent = ({
 }) => {
   return (
     <ManageFormStyle onSubmit={handleSubmit} action="" novalidate>
-      <Row wrap>
+      <Row>
         <StyledColumn span={6} direction="vertical">
           <Heading $as="h3" color="secondary">
             Locatie
           </Heading>
           {FormFields.filter(({ column }) => column === 1).map(
-            ({ name, customOnChange, ...fieldProps }) => (
+            ({ id, name, customOnChange, ...fieldProps }) => (
               <FormField
+                key={id}
                 {...fieldProps}
                 name={name}
                 onChange={customOnChange ? setFieldValue : handleChange}
@@ -38,8 +39,9 @@ const ManageFormComponent = ({
             Maatregelen
           </Heading>
           {FormFields.filter(({ column }) => column === 2).map(
-            ({ name, customOnChange, ...fieldProps }) => (
+            ({ id, name, customOnChange, ...fieldProps }) => (
               <FormField
+                key={id}
                 {...fieldProps}
                 name={name}
                 onChange={customOnChange ? setFieldValue : handleChange}

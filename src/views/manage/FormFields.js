@@ -6,36 +6,42 @@ import { Label } from './ManageFormStyle';
 
 const FormFields = [
   {
+    id: 1,
     column: 1,
     name: 'naam',
     label: 'Naam',
     Component: Input,
   },
   {
+    id: 2,
     column: 1,
     name: 'nummer',
     label: 'Nummer',
     Component: Input,
   },
   {
+    id: 3,
     column: 1,
     name: 'coordinaten',
     label: 'Coordinaten',
     Component: Input,
   },
   {
+    id: 4,
     column: 2,
     name: 'actiehouder',
     label: 'Actiehouder',
     Component: Input,
   },
   {
+    id: 5,
     column: 2,
     name: 'taken',
     label: 'Taken',
     Component: TextArea,
   },
   {
+    id: 6,
     column: 2,
     name: 'startDate',
     label: 'Start uitvoering',
@@ -55,6 +61,7 @@ export const initalValues = {
 };
 
 export const FormField = ({
+  // key,
   name,
   label,
   Component,
