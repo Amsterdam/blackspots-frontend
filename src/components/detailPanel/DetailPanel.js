@@ -10,7 +10,7 @@ import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'constants.js';
 import styles from './DetailPanel.module.scss';
 import classNames from 'classnames';
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
-import { spotTypeDisplayNames, appRoutes } from '../../constants';
+import { spotTypeDisplayNames } from '../../constants';
 import { trackDownload } from 'helpers';
 import UserContext from '../../shared/user/UserContext';
 
