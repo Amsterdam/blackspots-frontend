@@ -10,18 +10,18 @@ import UserContext from 'shared/user/UserContext';
 import { ContentStyle } from './AppStyle';
 
 const AppRoutes = () => {
-  const user = useContext(UserContext);
-  const canModify = user.roles.includes('bs_all');
+  const { canAdd, canEdit } = useContext(UserContext);
+
   return (
     <ContentStyle>
       <Switch>
         <Route exact path={appRoutes.CONCEPTS} component={ConceptPage} />
         <Route exact path={appRoutes.CONTACT} component={ContactPage} />
-        {canModify && (
+        {canAdd && (
           <Route exact path={appRoutes.ADD} component={ManageLocationPage} />
         )}
-        {canModify && (
-          <Route exact path={appRoutes.MODIFY} component={ManageLocationPage} />
+        {canEdit && (
+          <Route exact path={appRoutes.EDIT} component={ManageLocationPage} />
         )}
         <Route path={appRoutes.HOME} component={DashboardPage} />
       </Switch>

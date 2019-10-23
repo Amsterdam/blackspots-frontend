@@ -120,7 +120,6 @@ const ManageForm = ({ id }) => {
           handleSubmit,
           setFieldValue,
         }) => {
-          console.log('render', values);
           const formProps = {
             touched,
             errors,

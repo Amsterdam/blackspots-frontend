@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
@@ -10,8 +10,9 @@ import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'constants.js';
 import styles from './DetailPanel.module.scss';
 import classNames from 'classnames';
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
-import { spotTypeDisplayNames } from '../../constants';
+import { spotTypeDisplayNames, appRoutes } from '../../constants';
 import { trackDownload } from 'helpers';
+import UserContext from '../../shared/user/UserContext';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -27,6 +28,8 @@ function getStatusClassName(status) {
 }
 
 const DetailPanel = ({ isOpen, togglePanel, feature }) => {
+  const { canEdit } = useContext(UserContext);
+
   if (!feature) {
     return <div className={classNames(styles.Container)} />;
   } else {
@@ -57,7 +60,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
         <div className={styles.Header}>
           <h3>
             {locatie_id}
-            <NavLink to={`/modify/${locatie_id}`}>Wijzig</NavLink>
+            {canEdit && <NavLink to={`/edit/${locatie_id}`}>Wijzig</NavLink>}
             <div className={styles.CloseBtn} onClick={togglePanel}>
               <CrossIcon />
             </div>

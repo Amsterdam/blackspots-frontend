@@ -5,6 +5,6 @@ import ManageLocationPage from './ManageLocationPage';
 
 describe('ManageLocationPage', () => {
   it('should render without errors', () => {
-    shallow(<ManageLocationPage />);
+    shallow(<ManageLocationPage match={{ params: {} }} />);
   });
 });

@@ -7,7 +7,6 @@ export const initialState = {
 };
 
 const locationReducer = (state = initialState, action) => {
-  console.log(state);
   switch (action.type) {
     // Increase or decrease the number of times the backdrop is triggered.
     // We do this so other triggers of show / hide backdrops won't overrule others while the
