@@ -56,4 +56,20 @@ describe('DetailPanel', () => {
     );
     expect(queryByText(/Wijzig/)).toBeNull();
   });
+
+  it('should render the edit link when authorized ', () => {
+    var user = { canEdit: true };
+    const { queryByText } = render(
+      withUserContext(<DetailPanel {...props} />, user)
+    );
+    expect(queryByText(/Wijzig/)).not.toBeNull();
+  });
+
+  it('should NOT render the edit link when not authorized for edit ', () => {
+    var user = { canEdit: false };
+    const { queryByText } = render(
+      withUserContext(<DetailPanel {...props} />, user)
+    );
+    expect(queryByText(/Wijzig/)).toBeNull();
+  });
 });
