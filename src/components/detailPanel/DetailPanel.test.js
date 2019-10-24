@@ -46,7 +46,7 @@ describe('DetailPanel', () => {
     const { queryByText } = render(
       withUserContext(<DetailPanel {...props} />, user)
     );
-    expect(queryByText(/Wijzg/)).not.toBeNull();
+    expect(queryByText(/Wijzig/)).not.toBeNull();
   });
 
   it('should NOT render the edit link when not authorized for edit ', () => {
