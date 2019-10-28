@@ -1,8 +1,10 @@
 import React from 'react';
-import { Label, List, ListItem } from '@datapunt/asc-ui';
+import { Label, List, ListItem, themeSpacing } from '@datapunt/asc-ui';
 import styled from '@datapunt/asc-core';
 
-const RadioInputStyle = styled.input``;
+const RadioInputStyle = styled.input`
+  margin-right: ${themeSpacing(2)};
+`;
 
 const RadioInput = ({
   name,
@@ -26,14 +28,12 @@ const RadioInput = ({
   );
 };
 
-const RadioGroup = ({ label: groupLabel, name, options, onChange }) => {
-  console.log('RadioGroup', options);
+const RadioGroupField = ({ label: groupLabel, name, options, onChange }) => {
   return (
     <Label label={groupLabel} position="top" align-items="flex-start">
       <List>
         {options.map(option => {
           const { label, value } = option;
-          console.log(option.label, option.value, label, value);
           return (
             <ListItem>
               <RadioInput
@@ -51,4 +51,4 @@ const RadioGroup = ({ label: groupLabel, name, options, onChange }) => {
   );
 };
 
-export default RadioGroup;
+export default RadioGroupField;

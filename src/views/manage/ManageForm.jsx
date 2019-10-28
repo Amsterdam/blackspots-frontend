@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Heading, Label, Button, Row, Column } from '@datapunt/asc-ui';
+import { Heading, Button, Row, Column } from '@datapunt/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
@@ -44,23 +44,20 @@ const ManageForm = ({ id }) => {
     status: 'onderzoek ontwerp',
     start_uitvoering: '',
   };
-  const { register, handleSubmit, watch, setValue, errors } = useForm({
+  const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues,
   });
   const onSubmit = data => console.log(data);
   const handleChange = e => {
-    console.log('handleChange', e.target);
     const value =
       e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    console.log(value);
     setValue(e.target.name, value);
   };
-  console.log(watch('name'), watch('start_uitvoering'));
+  console.log(watch('naam'), watch('start_uitvoering'));
 
   useEffect(() => {
     Object.keys(initalValues).map(name => {
-      console.log('register', name);
-      register({ name: name });
+      return register({ name: name });
     });
   }, [register]);
 

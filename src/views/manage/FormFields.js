@@ -2,13 +2,21 @@ import React from 'react';
 import { Input, Label } from '@datapunt/asc-ui';
 import TextArea from './TextArea';
 import DatePickerField from './DatePickerField';
-import RadioGroup from './RadioInput';
+import RadioGroupField from './RadioGroupField';
 import { spotTypeDisplayNames, StatusDisplayNames } from '../../constants';
 
 const InputField = ({ name, label, ...otherProps }) => {
   return (
     <Label position="top" htmlFor={name} label={label} align="flex-start">
       <Input name={name} {...otherProps} />
+    </Label>
+  );
+};
+
+const TextAreaField = ({ name, label, ...otherProps }) => {
+  return (
+    <Label position="top" htmlFor={name} label={label} align="flex-start">
+      <TextArea name={name} {...otherProps} />
     </Label>
   );
 };
@@ -40,7 +48,7 @@ const FormFields = [
     column: 1,
     name: 'spot_type',
     label: 'Type',
-    Component: RadioGroup,
+    Component: RadioGroupField,
     options: [
       ...Object.keys(spotTypeDisplayNames).map(name => ({
         label: spotTypeDisplayNames[name],
@@ -60,7 +68,7 @@ const FormFields = [
     column: 1,
     name: 'status',
     label: 'Status',
-    Component: RadioGroup,
+    Component: RadioGroupField,
     options: [
       ...Object.keys(StatusDisplayNames).map(name => ({
         label: StatusDisplayNames[name],
@@ -80,7 +88,7 @@ const FormFields = [
     column: 2,
     name: 'taken',
     label: 'Taken',
-    Component: TextArea,
+    Component: TextAreaField,
   },
   {
     id: 9,
@@ -103,7 +111,7 @@ const FormFields = [
     column: 2,
     name: 'opmerking',
     label: 'Opmerking',
-    Component: TextArea,
+    Component: TextAreaField,
   },
 ];
 
