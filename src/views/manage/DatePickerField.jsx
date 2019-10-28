@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Label } from '@datapunt/asc-ui';
@@ -10,6 +10,15 @@ const DatePickerField = ({ name, onChange, label, defaultValue }) => {
     defaultValue && setValue(new Date(defaultValue));
   }, []);
 
+  const datePickerRef = useRef(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      datePickerRef.current.cancelFocusInput();
+      datePickerRef.current.setOpen(false);
+    }, 0);
+  }, [value]);
+
   return (
     <Label htmlFor={name} label={label} position="top">
       <DatePicker
@@ -19,6 +28,7 @@ const DatePickerField = ({ name, onChange, label, defaultValue }) => {
         isClearable
         selected={(value && new Date(value)) || null}
         value={value}
+        ref={datePickerRef}
         onChange={val => {
           setValue(val);
           const e = {
