@@ -1,8 +1,16 @@
 import React from 'react';
-import { Input } from '@datapunt/asc-ui';
+import { Input, Label } from '@datapunt/asc-ui';
 import TextArea from './TextArea';
-import DatePickerInput from './DatePickerInput';
-import { Label } from './ManageFormStyle';
+import DatePickerField from './DatePickerField';
+import { RadioGroup } from './RadioInput';
+
+const InputField = ({ name, label, ...otherProps }) => {
+  return (
+    <Label position="top" htmlFor={name} label={label} align="flex-start">
+      <Input name={name} {...otherProps} />
+    </Label>
+  );
+};
 
 const FormFields = [
   {
@@ -10,43 +18,83 @@ const FormFields = [
     column: 1,
     name: 'naam',
     label: 'Naam',
-    Component: Input,
+    Component: InputField,
   },
   {
     id: 2,
     column: 1,
     name: 'nummer',
     label: 'Nummer',
-    Component: Input,
+    Component: InputField,
   },
   {
     id: 3,
     column: 1,
     name: 'coordinaten',
     label: 'Coordinaten',
-    Component: Input,
+    Component: InputField,
   },
   {
     id: 4,
-    column: 2,
-    name: 'actiehouder',
-    label: 'Actiehouder',
-    Component: Input,
+    column: 1,
+    name: 'spot_type',
+    label: 'Type',
+    Component: InputField,
+    // Component: RadioGroup,
+    // extra props
   },
   {
     id: 5,
+    column: 1,
+    name: 'jaar_blackspotlijst',
+    label: 'Jaar opgenomen in blackspotlijst',
+    Component: InputField,
+  },
+  {
+    id: 6,
+    column: 1,
+    name: 'status',
+    label: 'Status',
+    Component: InputField,
+    // Component: RadioGroup,
+    // extra props
+  },
+  {
+    id: 7,
+    column: 2,
+    name: 'actiehouder',
+    label: 'Actiehouder',
+    Component: InputField,
+  },
+  {
+    id: 8,
     column: 2,
     name: 'taken',
     label: 'Taken',
     Component: TextArea,
   },
   {
-    id: 6,
+    id: 9,
     column: 2,
-    name: 'startDate',
+    name: 'start_uitvoering',
     label: 'Start uitvoering',
-    Component: DatePickerInput,
-    customOnChange: true,
+    Component: DatePickerField,
+    // extra props
+  },
+  {
+    id: 10,
+    column: 2,
+    name: 'eind_uitvoering',
+    label: 'Eind uitvoering',
+    Component: DatePickerField,
+    // extra props
+  },
+  {
+    id: 11,
+    column: 2,
+    name: 'opmerking',
+    label: 'Opmerking',
+    Component: TextArea,
   },
 ];
 
@@ -54,14 +102,13 @@ export const initalValues = {
   ...FormFields.reduce(
     (acc, item) => ({
       ...acc,
-      [item.naam]: '',
+      [item.name]: '',
     }),
     {}
   ),
 };
 
 export const FormField = ({
-  // key,
   name,
   label,
   Component,
@@ -69,10 +116,10 @@ export const FormField = ({
   ...otherProps
 }) => {
   return (
-    <Label>
-      {label} {errors && `- ${errors}`}
-      <Component name={name} {...otherProps} />
-    </Label>
+    // <Label>
+    //   {label} {errors && `- ${errors}`}
+    <Component name={name} {...otherProps} />
+    // </Label>
   );
 };
 

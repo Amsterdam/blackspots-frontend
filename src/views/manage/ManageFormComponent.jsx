@@ -3,33 +3,21 @@ import { Button, Heading, Row, Column } from '@datapunt/asc-ui';
 import ManageFormStyle, { StyledColumn } from './ManageFormStyle';
 import FormFields, { FormField } from './FormFields';
 
-const ManageFormComponent = ({
-  touched,
-  errors,
-  values,
-  handleChange,
-  handleBlur,
-  handleSubmit,
-  setFieldValue,
-}) => {
+const ManageFormComponent = ({ handleChange, onSubmit }) => {
   return (
-    <ManageFormStyle onSubmit={handleSubmit} action="" novalidate>
+    <ManageFormStyle onSubmit={onSubmit} action="" novalidate>
       <Row>
         <StyledColumn span={6} direction="vertical">
           <Heading $as="h3" color="secondary">
             Locatie
           </Heading>
           {FormFields.filter(({ column }) => column === 1).map(
-            ({ id, name, customOnChange, ...fieldProps }) => (
+            ({ id, name, ...fieldProps }) => (
               <FormField
                 key={id}
                 {...fieldProps}
                 name={name}
-                onChange={customOnChange ? setFieldValue : handleChange}
-                onBlur={handleBlur}
-                value={values[name]}
-                errors={errors[name]}
-                touched={touched[name]}
+                onChange={handleChange}
               ></FormField>
             )
           )}
@@ -39,16 +27,12 @@ const ManageFormComponent = ({
             Maatregelen
           </Heading>
           {FormFields.filter(({ column }) => column === 2).map(
-            ({ id, name, customOnChange, ...fieldProps }) => (
+            ({ id, name, ...fieldProps }) => (
               <FormField
                 key={id}
                 {...fieldProps}
                 name={name}
-                onChange={customOnChange ? setFieldValue : handleChange}
-                onBlur={handleBlur}
-                value={values[name]}
-                errors={errors[name]}
-                touched={touched[name]}
+                onChange={handleChange}
               ></FormField>
             )
           )}
