@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Label } from '@datapunt/asc-ui';
 
 const DatePickerField = ({ name, onChange, label, defaultValue }) => {
   const [value, setValue] = useState(null);
+
+  useEffect(() => {
+    defaultValue && setValue(new Date(defaultValue));
+  }, []);
+
   return (
     <Label htmlFor={name} label={label} position="top">
       <DatePicker

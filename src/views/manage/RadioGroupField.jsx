@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Label, List, ListItem, themeSpacing } from '@datapunt/asc-ui';
 import styled from '@datapunt/asc-core';
 
@@ -15,9 +15,9 @@ const RadioInput = ({
   checked,
 }) => {
   return (
-    <Label htmlFor={name} label={label} position="right">
+    <Label htmlFor={value} label={label} position="right">
       <RadioInputStyle
-        id={name}
+        id={value}
         name={name}
         type="radio"
         value={value}
@@ -28,7 +28,17 @@ const RadioInput = ({
   );
 };
 
-const RadioGroupField = ({ label: groupLabel, name, options, onChange }) => {
+const RadioGroupField = ({
+  label: groupLabel,
+  name,
+  options,
+  onChange,
+  defaultValue,
+}) => {
+  const [selectedValue, setSelectedValue] = useState();
+  useEffect(() => {
+    setSelectedValue(defaultValue);
+  }, []);
   return (
     <Label label={groupLabel} position="top" align-items="flex-start">
       <List>
@@ -41,7 +51,11 @@ const RadioGroupField = ({ label: groupLabel, name, options, onChange }) => {
                 name={name}
                 label={label}
                 value={value}
-                onChange={onChange}
+                checked={selectedValue === value}
+                onChange={e => {
+                  setSelectedValue(e.target.value);
+                  onChange(e);
+                }}
               />
             </ListItem>
           );

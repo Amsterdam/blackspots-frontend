@@ -7,27 +7,67 @@ import { initalValues } from './FormFields';
 import ManageFormStyle, { StyledColumn } from './ManageFormStyle';
 import FormFields, { FormField } from './FormFields';
 
+/**
+ *
+ * @param {string} date in dd/MM/yy format
+ *
+ * Temporary function to handle the date that comes from the server.
+ * It will be replaced when the retrieved date will be in ISO format
+ *
+ */
+const getDate = date => {
+  const regExp = /\d{2}\/\d{2}\/\d{2}/;
+
+  return date && date.match(regExp)
+    ? new Date(
+        `20${date
+          .split('/')
+          .reverse()
+          .join('-')}`
+      ).toISOString()
+    : null;
+};
+
+/**
+ *
+ * @param {object} item
+ *
+ * Converts the server feature to a client location object
+ *
+ */
 const normalize = item => {
   if (!item) return initalValues;
 
   const {
     geometry: { coordinates },
-    properties,
+    properties: {
+      description,
+      locatie_id,
+      spot_type,
+      jaar_blackspotlijst,
+      status,
+      actiehouders,
+      tasks,
+      start_uitvoering,
+      eind_uitvoering,
+      jaar_oplevering,
+      notes,
+    },
   } = item;
   return {
     ...initalValues,
-    naam: properties.description,
-    nummer: properties.locatie_id,
+    naam: description,
+    nummer: locatie_id,
     coordinaten: `${coordinates[1]}, ${coordinates[0]}`,
-    spot_type: properties.spot_type,
-    jaar_blackspotlijst: properties.jaar_blackspotlijst,
-    status: properties.status,
-    actiehouder: properties.actiehouders,
-    taken: properties.tasks,
-    start_uitvoering: properties.start_uitvoering,
-    eind_uitvoering: properties.eind_uitvoering,
-    jaar_oplevering: properties.jaar_oplevering,
-    opmerking: properties.notes,
+    spot_type: spot_type,
+    jaar_blackspotlijst: jaar_blackspotlijst,
+    status: status,
+    actiehouder: actiehouders,
+    taken: tasks,
+    start_uitvoering: getDate(start_uitvoering),
+    eind_uitvoering: getDate(eind_uitvoering),
+    jaar_oplevering: jaar_oplevering,
+    opmerking: notes,
   };
 };
 
@@ -35,14 +75,8 @@ const ManageForm = ({ id }) => {
   const [{ selectedLocation }] = useAppReducer(LOCATION);
 
   const location = normalize(selectedLocation);
-
   const defaultValues = {
-    naam: location.naam,
-    nummer: location.nummer,
-    approved: true,
-    spot_type: 'blackspot',
-    status: 'onderzoek ontwerp',
-    start_uitvoering: '',
+    ...location,
   };
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues,
@@ -74,9 +108,10 @@ const ManageForm = ({ id }) => {
               ({ id, name, ...otherProps }) => (
                 <FormField
                   key={id}
-                  {...otherProps}
                   name={name}
                   onChange={handleChange}
+                  defaultValue={defaultValues[name]}
+                  {...otherProps}
                 ></FormField>
               )
             )}
@@ -91,6 +126,7 @@ const ManageForm = ({ id }) => {
                   key={id}
                   name={name}
                   onChange={handleChange}
+                  defaultValue={defaultValues[name]}
                   {...otherProps}
                 ></FormField>
               )
@@ -99,12 +135,6 @@ const ManageForm = ({ id }) => {
         </Row>
         <Row>
           <Column span={12}>
-            {/* {errors && (
-              <Label>
-                De volgende velden zijn niet correct ingevuld:{' '}
-                {&& Object.keys(errors).map(key => `${errors[key]},`)}
-              </Label>
-            )} */}
             <Button variant="primary" type="submit">
               Opslaan
             </Button>
