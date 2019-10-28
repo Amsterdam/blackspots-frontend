@@ -26,18 +26,29 @@ const RadioInput = ({
   );
 };
 
-export const RadioGroup = ({ label, children }) => {
+const RadioGroup = ({ label: groupLabel, name, options, onChange }) => {
+  console.log('RadioGroup', options);
   return (
-    <>
-      <Label label={label} position="top" align-items="flex-start">
-        <List>
-          {children.map(child => (
-            <ListItem>{child}</ListItem>
-          ))}
-        </List>
-      </Label>
-    </>
+    <Label label={groupLabel} position="top" align-items="flex-start">
+      <List>
+        {options.map(option => {
+          const { label, value } = option;
+          console.log(option.label, option.value, label, value);
+          return (
+            <ListItem>
+              <RadioInput
+                key={value}
+                name={name}
+                label={label}
+                value={value}
+                onChange={onChange}
+              />
+            </ListItem>
+          );
+        })}
+      </List>
+    </Label>
   );
 };
 
-export default RadioInput;
+export default RadioGroup;

@@ -1,14 +1,11 @@
 import React, { useEffect } from 'react';
-import { Heading, Label, Input, Button } from '@datapunt/asc-ui';
+import { Heading, Label, Button, Row, Column } from '@datapunt/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 import { initalValues } from './FormFields';
-import ManageFormStyle from './ManageFormStyle';
-import RadioInput, { RadioGroup } from './RadioInput';
-import { spotTypeDisplayNames, StatusDisplayNames } from '../../constants';
-import DatePickerField from './DatePickerField';
-import ManageFormComponent from './ManageFormComponent';
+import ManageFormStyle, { StyledColumn } from './ManageFormStyle';
+import FormFields, { FormField } from './FormFields';
 
 const normalize = item => {
   if (!item) return initalValues;
@@ -70,74 +67,56 @@ const ManageForm = ({ id }) => {
   return (
     <>
       <Heading>Toevoegen/Wijzigen</Heading>
-      <ManageFormComponent
-        onSubmit={handleSubmit(onSubmit)}
-        handleChange={handleChange}
-      />
-
-      {/* <ManageFormStyle onSubmit={handleSubmit(onSubmit)}>
-        <Label position="top" htmlFor="naam" label="Naam" align="flex-start">
-          <Input
-            name="naam"
-            defaultValue={defaultValues.naam}
-            onChange={handleChange}
-          />
-        </Label>
-        <Label
-          position="top"
-          htmlFor="nummer"
-          label="Nummer"
-          align="flex-start"
-        >
-          <Input
-            name="nummer"
-            defaultValue={defaultValues.nummer}
-            onChange={handleChange}
-          />
-        </Label>
-        {errors.nummer && <span>Required field</span>}
-
-        <RadioGroup label="Type">
-          {Object.keys(spotTypeDisplayNames).map(name => {
-            return (
-              <RadioInput
-                key={name}
-                name="spot_type"
-                label={spotTypeDisplayNames[name]}
-                value={name}
-                onChange={handleChange}
-              />
-            );
-          })}
-        </RadioGroup>
-
-        <RadioGroup label="Status">
-          {Object.keys(StatusDisplayNames).map(name => {
-            return (
-              <RadioInput
-                key={name}
-                name="status"
-                label={StatusDisplayNames[name]}
-                value={name}
-                onChange={handleChange}
-              />
-            );
-          })}
-        </RadioGroup>
-
-        <DatePickerField
-          name="start_uitvoering"
-          label="Start uitvoering"
-          onChange={handleChange}
-        ></DatePickerField>
-
-        <Button type="submit" variant="primary">
-          Opslaan
-        </Button>
-        <Button type="reset" variant="tertiary">
-          Annuleren
-        </Button>
-      </ManageFormStyle> */}
+      <ManageFormStyle onSubmit={handleSubmit(onSubmit)} action="" novalidate>
+        <Row>
+          <StyledColumn span={6} direction="vertical">
+            <Heading $as="h3" color="secondary">
+              Locatie
+            </Heading>
+            {FormFields.filter(({ column }) => column === 1).map(
+              ({ id, name, ...otherProps }) => (
+                <FormField
+                  key={id}
+                  {...otherProps}
+                  name={name}
+                  onChange={handleChange}
+                ></FormField>
+              )
+            )}
+          </StyledColumn>
+          <StyledColumn span={6}>
+            <Heading $as="h3" color="secondary">
+              Maatregelen
+            </Heading>
+            {FormFields.filter(({ column }) => column === 2).map(
+              ({ id, name, ...otherProps }) => (
+                <FormField
+                  key={id}
+                  name={name}
+                  onChange={handleChange}
+                  {...otherProps}
+                ></FormField>
+              )
+            )}
+          </StyledColumn>
+        </Row>
+        <Row>
+          <Column span={12}>
+            {/* {errors && (
+              <Label>
+                De volgende velden zijn niet correct ingevuld:{' '}
+                {&& Object.keys(errors).map(key => `${errors[key]},`)}
+              </Label>
+            )} */}
+            <Button variant="primary" type="submit">
+              Opslaan
+            </Button>
+            <Button variant="primaryInverted" type="reset">
+              Annuleren
+            </Button>
+          </Column>
+        </Row>
+      </ManageFormStyle>
     </>
   );
 };

@@ -2,7 +2,8 @@ import React from 'react';
 import { Input, Label } from '@datapunt/asc-ui';
 import TextArea from './TextArea';
 import DatePickerField from './DatePickerField';
-import { RadioGroup } from './RadioInput';
+import RadioGroup from './RadioInput';
+import { spotTypeDisplayNames, StatusDisplayNames } from '../../constants';
 
 const InputField = ({ name, label, ...otherProps }) => {
   return (
@@ -39,9 +40,13 @@ const FormFields = [
     column: 1,
     name: 'spot_type',
     label: 'Type',
-    Component: InputField,
-    // Component: RadioGroup,
-    // extra props
+    Component: RadioGroup,
+    options: [
+      ...Object.keys(spotTypeDisplayNames).map(name => ({
+        label: spotTypeDisplayNames[name],
+        value: name,
+      })),
+    ],
   },
   {
     id: 5,
@@ -55,9 +60,13 @@ const FormFields = [
     column: 1,
     name: 'status',
     label: 'Status',
-    Component: InputField,
-    // Component: RadioGroup,
-    // extra props
+    Component: RadioGroup,
+    options: [
+      ...Object.keys(StatusDisplayNames).map(name => ({
+        label: StatusDisplayNames[name],
+        value: name,
+      })),
+    ],
   },
   {
     id: 7,
@@ -108,19 +117,8 @@ export const initalValues = {
   ),
 };
 
-export const FormField = ({
-  name,
-  label,
-  Component,
-  errors,
-  ...otherProps
-}) => {
-  return (
-    // <Label>
-    //   {label} {errors && `- ${errors}`}
-    <Component name={name} {...otherProps} />
-    // </Label>
-  );
+export const FormField = ({ name, Component, ...otherProps }) => {
+  return <Component name={name} {...otherProps} />;
 };
 
 export default FormFields;

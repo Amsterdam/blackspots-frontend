@@ -10,13 +10,6 @@ export const ManageFormStyle = styled.form`
   width: 100%;
 `;
 
-export const Label = styled.label`
-  display: flex;
-  flex-direction: column;
-  margin: 0.5em 0;
-  position: relative;
-`;
-
 export const StyledColumn = styled(Column)`
   display: flex;
   flex-direction: column;
