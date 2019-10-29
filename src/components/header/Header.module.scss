@@ -1,32 +1,5 @@
 @import 'styles/styles.scss';
 
-.Container {
-  display: flex;
-  align-items: center;
-  height: 50px;
-  width: 100%;
-  border-bottom: 2px solid $neutralGrey3;
-
-  h2 {
-    font-size: 16px;
-    color: $primaryBlack;
-  }
-
-  a {
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-.Logo {
-  height: 40px;
-  width: 70px;
-  margin: 0 20px 0 10px;
-}
-
 .ButtonBar {
   display: flex;
   flex: 1;
@@ -56,9 +29,4 @@
       fill: $primaryRed;
     }
   }
-}
-
-.Link {
-  margin-right: 20px;
-  color: $primaryBlack;
 }
