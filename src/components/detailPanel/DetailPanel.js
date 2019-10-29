@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { ReactComponent as CrossIcon } from 'assets/icons/cross.svg';
+import { NavLink } from 'react-router-dom';
+
 import { ReactComponent as DocumentIcon } from 'assets/icons/document.svg';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';
+
 import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'constants.js';
 import styles from './DetailPanel.module.scss';
 import classNames from 'classnames';
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
+
 import { spotTypeDisplayNames } from '../../constants';
+
 import { trackDownload } from 'helpers';
+import UserContext from '../../shared/user/UserContext';
+
+import { Heading, Button, Link } from '@datapunt/asc-ui';
+
+import { Close } from '@datapunt/asc-assets';
+import { HeaderStyle, ContentStyle } from './DetailPanelStyle';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -26,6 +36,8 @@ function getStatusClassName(status) {
 }
 
 const DetailPanel = ({ isOpen, togglePanel, feature }) => {
+  const { canEdit } = useContext(UserContext);
+
   if (!feature) {
     return <div className={classNames(styles.Container)} />;
   } else {
@@ -46,6 +58,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       documents,
     } = feature.properties;
     const [lng, lat] = feature.geometry.coordinates;
+
     return (
       <div
         className={classNames(
@@ -53,13 +66,24 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
           isOpen ? styles.ContainerOpen : ''
         )}
       >
-        <div className={styles.Header}>
-          <h3>{locatie_id}</h3>
-          <div className={styles.CloseBtn} onClick={togglePanel}>
-            <CrossIcon />
-          </div>
-        </div>
-        <div className={styles.Content}>
+        <HeaderStyle>
+          <Heading $as="h3" color="secondary">
+            {locatie_id}
+          </Heading>
+          {canEdit && (
+            <Link $as={NavLink} to={`/edit/${locatie_id}`} variant="inline">
+              Wijzig
+            </Link>
+          )}
+          <Button
+            size={24}
+            variant="blank"
+            iconSize={20}
+            icon={<Close />}
+            onClick={togglePanel}
+          />
+        </HeaderStyle>
+        <ContentStyle>
           <h2>{description}</h2>
           <DataTable>
             <tbody>
@@ -176,7 +200,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
               </div>
             );
           })}
-        </div>
+        </ContentStyle>
       </div>
     );
   }

@@ -1,88 +1,36 @@
 import React from 'react';
-import { Button, Heading, Row, Column, Typography } from '@datapunt/asc-ui';
+import { Heading } from '@datapunt/asc-ui';
 import { Formik } from 'formik';
-import ManageFormStyle, { Label, StyledColumn } from './ManageFormStyle';
-import FormFields, { initalValues } from './FormFields';
+import { initalValues } from './FormFields';
+import useAppReducer from 'shared/hooks/useAppReducer';
+import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
+import ManageFormComponent from './ManageFormComponent';
 
-const FormField = ({ name, label, Component, errors, ...otherProps }) => {
-  return (
-    <Label>
-      {label} {errors && `- ${errors}`}
-      <Component name={name} {...otherProps} />
-    </Label>
-  );
+const normalize = item => {
+  if (!item) return initalValues;
+
+  const {
+    geometry: { coordinates },
+    properties,
+  } = item;
+  return {
+    ...initalValues,
+    naam: properties.description,
+    nummer: properties.locatie_id,
+    coordinaten: `${coordinates[1]}, ${coordinates[0]}`,
+  };
 };
 
-const ManageFormBase = ({
-  touched,
-  errors,
-  values,
-  handleChange,
-  handleBlur,
-  handleSubmit,
-  setFieldValue,
-}) => {
-  return (
-    <ManageFormStyle onSubmit={handleSubmit} action="" novalidate>
-      clg
-      <Row wrap>
-        <StyledColumn span={6} direction="vertical">
-          <Heading $as="h3" color="secondary">
-            Locatie
-          </Heading>
-          {FormFields.filter(({ column }) => column === 1).map(
-            ({ name, customOnChange, ...fieldProps }) => (
-              <FormField
-                {...fieldProps}
-                name={name}
-                onChange={customOnChange ? setFieldValue : handleChange}
-                onBlur={handleBlur}
-                value={values[name]}
-                errors={errors[name]}
-                touched={touched[name]}
-              ></FormField>
-            )
-          )}
-        </StyledColumn>
-        <StyledColumn span={6}>
-          <Heading $as="h3" color="secondary">
-            Maatregelen
-          </Heading>
-          {FormFields.filter(({ column }) => column === 2).map(
-            ({ name, customOnChange, ...fieldProps }) => (
-              <FormField
-                {...fieldProps}
-                name={name}
-                onChange={customOnChange ? setFieldValue : handleChange}
-                onBlur={handleBlur}
-                value={values[name]}
-                errors={errors[name]}
-                touched={touched[name]}
-              ></FormField>
-            )
-          )}
-        </StyledColumn>
-      </Row>
-      <Row>
-        <Column span={12}>
-          <Button variant="primary" type="submit">
-            Opslaan
-          </Button>
-          <Button variant="primaryInverted" type="reset">
-            Annuleren
-          </Button>
-        </Column>
-      </Row>
-    </ManageFormStyle>
-  );
-};
+const ManageForm = ({ id }) => {
+  const [{ selectedLocation }] = useAppReducer(LOCATION);
 
-const ManageForm = () => {
+  const location = normalize(selectedLocation);
+
   return (
     <>
       <Heading>Toevoegen/Wijzigen</Heading>
       <Formik
-        initalValues={initalValues}
+        initalValues={location}
         validate={values => {
           let errors = {};
           if (!values.naam) errors.naam = 'verplicht';
@@ -109,8 +57,7 @@ const ManageForm = () => {
             handleSubmit,
             setFieldValue,
           };
-          console.log('fieldProps', formProps);
-          return <ManageFormBase {...formProps} />;
+          return <ManageFormComponent {...formProps} />;
         }}
       />
     </>

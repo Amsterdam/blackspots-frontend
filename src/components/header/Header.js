@@ -9,7 +9,7 @@ import styles from './Header.module.scss';
 import UserContext from 'shared/user/UserContext';
 
 const Header = () => {
-  const user = useContext(UserContext);
+  const { canAdd } = useContext(UserContext);
 
   return (
     <div className={styles.Container}>
@@ -21,7 +21,7 @@ const Header = () => {
         <NavLink className={styles.Link} to={appRoutes.HOME}>
           Kaart
         </NavLink>
-        {user.roles.length > 0 && (
+        {canAdd > 0 && (
           <NavLink className={styles.Link} to={appRoutes.ADD}>
             Toevoegen
           </NavLink>
