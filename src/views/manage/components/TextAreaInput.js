@@ -1,15 +1,8 @@
 import React from 'react';
-import { Label } from '@datapunt/asc-ui';
-import { styles } from '@datapunt/asc-ui';
-
-const { InputStyle } = styles;
+import { Input } from '@datapunt/asc-ui';
 
 const TextAreaInput = ({ name, label, ...otherProps }) => {
-  return (
-    <Label position="top" htmlFor={name} label={label} align="flex-start">
-      <InputStyle as="textarea" name={name} {...otherProps} />
-    </Label>
-  );
+  return <Input as="textarea" name={name} {...otherProps} />;
 };
 
 export default TextAreaInput;

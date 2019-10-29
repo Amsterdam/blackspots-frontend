@@ -1,12 +1,8 @@
 import React from 'react';
-import { Input, Label } from '@datapunt/asc-ui';
+import { Input } from '@datapunt/asc-ui';
 
 const TextInput = ({ name, label, ...otherProps }) => {
-  return (
-    <Label position="top" htmlFor={name} label={label} align="flex-start">
-      <Input name={name} {...otherProps} />
-    </Label>
-  );
+  return <Input name={name} {...otherProps} />;
 };
 
 export default TextInput;

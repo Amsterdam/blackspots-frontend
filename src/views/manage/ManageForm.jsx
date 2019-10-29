@@ -98,10 +98,11 @@ const ManageForm = ({ id }) => {
 
   return (
     <>
-      <Heading>Toevoegen/Wijzigen</Heading>
       <ManageFormStyle onSubmit={handleSubmit(onSubmit)} action="" novalidate>
         <Row>
-          <StyledColumn span={6} direction="vertical">
+          <StyledColumn
+            span={{ small: 12, medium: 12, big: 6, large: 6, xLarge: 6 }}
+          >
             <Heading $as="h3" color="secondary">
               Locatie
             </Heading>
@@ -117,7 +118,9 @@ const ManageForm = ({ id }) => {
               )
             )}
           </StyledColumn>
-          <StyledColumn span={6}>
+          <StyledColumn
+            span={{ small: 12, medium: 12, big: 6, large: 6, xLarge: 6 }}
+          >
             <Heading $as="h3" color="secondary">
               Maatregelen
             </Heading>

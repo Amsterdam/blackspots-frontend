@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Label, List, ListItem, themeSpacing } from '@datapunt/asc-ui';
+import { Label, List, ListItem, themeSpacing, styles } from '@datapunt/asc-ui';
 import styled from '@datapunt/asc-core';
+
+const RadioLabelStyle = styled(Label)`
+  font-weight: normal;
+`;
 
 const RadioInputStyle = styled.input`
   margin-right: ${themeSpacing(2)};
@@ -15,7 +19,7 @@ const RadioInput = ({
   checked,
 }) => {
   return (
-    <Label htmlFor={value} label={label} position="right">
+    <RadioLabelStyle htmlFor={value} label={label} position="right">
       <RadioInputStyle
         id={value}
         name={name}
@@ -24,7 +28,7 @@ const RadioInput = ({
         checked={checked}
         onChange={onChange}
       />
-    </Label>
+    </RadioLabelStyle>
   );
 };
 
@@ -40,28 +44,26 @@ const RadioGroupInput = ({
     setSelectedValue(defaultValue);
   }, [defaultValue]);
   return (
-    <Label label={groupLabel} position="top" align-items="flex-start">
-      <List>
-        {options.map(option => {
-          const { label, value } = option;
-          return (
-            <ListItem>
-              <RadioInput
-                key={value}
-                name={name}
-                label={label}
-                value={value}
-                checked={selectedValue === value}
-                onChange={e => {
-                  setSelectedValue(e.target.value);
-                  onChange(e);
-                }}
-              />
-            </ListItem>
-          );
-        })}
-      </List>
-    </Label>
+    <List>
+      {options.map(option => {
+        const { label, value } = option;
+        return (
+          <ListItem>
+            <RadioInput
+              key={value}
+              name={name}
+              label={label}
+              value={value}
+              checked={selectedValue === value}
+              onChange={e => {
+                setSelectedValue(e.target.value);
+                onChange(e);
+              }}
+            />
+          </ListItem>
+        );
+      })}
+    </List>
   );
 };
 
