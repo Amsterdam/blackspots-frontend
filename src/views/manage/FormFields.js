@@ -1,6 +1,8 @@
+import React from 'react';
 import { Input } from '@datapunt/asc-ui';
 import TextArea from './TextArea';
 import DatePickerInput from './DatePickerInput';
+import { Label } from './ManageFormStyle';
 
 const FormFields = [
   {
@@ -50,6 +52,21 @@ export const initalValues = {
     }),
     {}
   ),
+};
+
+export const FormField = ({
+  name,
+  label,
+  Component,
+  errors,
+  ...otherProps
+}) => {
+  return (
+    <Label>
+      {label} {errors && `- ${errors}`}
+      <Component name={name} {...otherProps} />
+    </Label>
+  );
 };
 
 export default FormFields;
