@@ -3,12 +3,12 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Label } from '@datapunt/asc-ui';
 
-const DatePickerField = ({ name, onChange, label, defaultValue }) => {
+const DatePickerInput = ({ name, onChange, label, defaultValue }) => {
   const [value, setValue] = useState(null);
 
   useEffect(() => {
     defaultValue && setValue(new Date(defaultValue));
-  }, []);
+  }, [defaultValue]);
 
   const datePickerRef = useRef(null);
 
@@ -45,4 +45,4 @@ const DatePickerField = ({ name, onChange, label, defaultValue }) => {
   );
 };
 
-export default DatePickerField;
+export default DatePickerInput;

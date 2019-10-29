@@ -3,9 +3,10 @@ import { Heading, Button, Row, Column } from '@datapunt/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
-import { initalValues } from './FormFields';
+import { initalValues } from './definitions/FormFields';
 import ManageFormStyle, { StyledColumn } from './ManageFormStyle';
-import FormFields, { FormField } from './FormFields';
+import FormFields from './definitions/FormFields';
+import FormInput from './components/FormInput';
 
 /**
  *
@@ -106,13 +107,13 @@ const ManageForm = ({ id }) => {
             </Heading>
             {FormFields.filter(({ column }) => column === 1).map(
               ({ id, name, ...otherProps }) => (
-                <FormField
+                <FormInput
                   key={id}
                   name={name}
                   onChange={handleChange}
                   defaultValue={defaultValues[name]}
                   {...otherProps}
-                ></FormField>
+                ></FormInput>
               )
             )}
           </StyledColumn>
@@ -122,13 +123,13 @@ const ManageForm = ({ id }) => {
             </Heading>
             {FormFields.filter(({ column }) => column === 2).map(
               ({ id, name, ...otherProps }) => (
-                <FormField
+                <FormInput
                   key={id}
                   name={name}
                   onChange={handleChange}
                   defaultValue={defaultValues[name]}
                   {...otherProps}
-                ></FormField>
+                ></FormInput>
               )
             )}
           </StyledColumn>

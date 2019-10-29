@@ -28,7 +28,7 @@ const RadioInput = ({
   );
 };
 
-const RadioGroupField = ({
+const RadioGroupInput = ({
   label: groupLabel,
   name,
   options,
@@ -38,7 +38,7 @@ const RadioGroupField = ({
   const [selectedValue, setSelectedValue] = useState();
   useEffect(() => {
     setSelectedValue(defaultValue);
-  }, []);
+  }, [defaultValue]);
   return (
     <Label label={groupLabel} position="top" align-items="flex-start">
       <List>
@@ -65,4 +65,4 @@ const RadioGroupField = ({
   );
 };
 
-export default RadioGroupField;
+export default RadioGroupInput;

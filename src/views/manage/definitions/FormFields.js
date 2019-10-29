@@ -1,25 +1,9 @@
 import React from 'react';
-import { Input, Label } from '@datapunt/asc-ui';
-import TextArea from './TextArea';
-import DatePickerField from './DatePickerField';
-import RadioGroupField from './RadioGroupField';
-import { spotTypeDisplayNames, StatusDisplayNames } from '../../constants';
-
-const InputField = ({ name, label, ...otherProps }) => {
-  return (
-    <Label position="top" htmlFor={name} label={label} align="flex-start">
-      <Input name={name} {...otherProps} />
-    </Label>
-  );
-};
-
-const TextAreaField = ({ name, label, ...otherProps }) => {
-  return (
-    <Label position="top" htmlFor={name} label={label} align="flex-start">
-      <TextArea name={name} {...otherProps} />
-    </Label>
-  );
-};
+import DatePickerInput from '../components/DatePickerInput';
+import RadioGroupInput from '../components/RadioGroupInput';
+import { spotTypeDisplayNames, StatusDisplayNames } from '../../../constants';
+import TextInput from '../components/TextInput';
+import TextAreaInput from '../components/TextAreaInput';
 
 const FormFields = [
   {
@@ -27,28 +11,28 @@ const FormFields = [
     column: 1,
     name: 'naam',
     label: 'Naam',
-    Component: InputField,
+    Component: TextInput,
   },
   {
     id: 2,
     column: 1,
     name: 'nummer',
     label: 'Nummer',
-    Component: InputField,
+    Component: TextInput,
   },
   {
     id: 3,
     column: 1,
     name: 'coordinaten',
     label: 'Coordinaten',
-    Component: InputField,
+    Component: TextInput,
   },
   {
     id: 4,
     column: 1,
     name: 'spot_type',
     label: 'Type',
-    Component: RadioGroupField,
+    Component: RadioGroupInput,
     options: [
       ...Object.keys(spotTypeDisplayNames).map(name => ({
         label: spotTypeDisplayNames[name],
@@ -61,14 +45,14 @@ const FormFields = [
     column: 1,
     name: 'jaar_blackspotlijst',
     label: 'Jaar opgenomen in blackspotlijst',
-    Component: InputField,
+    Component: TextInput,
   },
   {
     id: 6,
     column: 1,
     name: 'status',
     label: 'Status',
-    Component: RadioGroupField,
+    Component: RadioGroupInput,
     options: [
       ...Object.keys(StatusDisplayNames).map(name => ({
         label: StatusDisplayNames[name],
@@ -81,21 +65,21 @@ const FormFields = [
     column: 2,
     name: 'actiehouder',
     label: 'Actiehouder',
-    Component: InputField,
+    Component: TextInput,
   },
   {
     id: 8,
     column: 2,
     name: 'taken',
     label: 'Taken',
-    Component: TextAreaField,
+    Component: TextAreaInput,
   },
   {
     id: 9,
     column: 2,
     name: 'start_uitvoering',
     label: 'Start uitvoering',
-    Component: DatePickerField,
+    Component: DatePickerInput,
     // extra props
   },
   {
@@ -103,7 +87,7 @@ const FormFields = [
     column: 2,
     name: 'eind_uitvoering',
     label: 'Eind uitvoering',
-    Component: DatePickerField,
+    Component: DatePickerInput,
     // extra props
   },
   {
@@ -111,7 +95,7 @@ const FormFields = [
     column: 2,
     name: 'opmerking',
     label: 'Opmerking',
-    Component: TextAreaField,
+    Component: TextAreaInput,
   },
 ];
 
@@ -123,10 +107,6 @@ export const initalValues = {
     }),
     {}
   ),
-};
-
-export const FormField = ({ name, Component, ...otherProps }) => {
-  return <Component name={name} {...otherProps} />;
 };
 
 export default FormFields;
