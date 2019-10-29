@@ -1,6 +1,5 @@
 import styled from '@datapunt/asc-core';
 import { themeColor, themeSpacing } from '@datapunt/asc-ui';
-import { ContentBoxStyle } from '../../styles/SharedStyles';
 
 const FORM_WIDTH = 1280;
 

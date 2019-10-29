@@ -1,7 +1,6 @@
-import React from 'react';
 import DatePickerInput from '../components/DatePickerInput';
 import RadioGroupInput from '../components/RadioGroupInput';
-import { spotTypeDisplayNames, StatusDisplayNames } from '../../../constants';
+import { SpotTypeDisplayNames, StatusDisplayNames } from '../../../constants';
 import TextInput from '../components/TextInput';
 import TextAreaInput from '../components/TextAreaInput';
 
@@ -24,7 +23,7 @@ const FormFields = [
     id: 3,
     column: 1,
     name: 'coordinaten',
-    label: 'Coordinaten',
+    label: 'Coördinaten',
     Component: TextInput,
   },
   {
@@ -34,8 +33,8 @@ const FormFields = [
     label: 'Type',
     Component: RadioGroupInput,
     options: [
-      ...Object.keys(spotTypeDisplayNames).map(name => ({
-        label: spotTypeDisplayNames[name],
+      ...Object.keys(SpotTypeDisplayNames).map(name => ({
+        label: SpotTypeDisplayNames[name],
         value: name,
       })),
     ],
