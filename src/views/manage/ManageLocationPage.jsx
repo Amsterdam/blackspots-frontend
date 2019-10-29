@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Footer from '../../components/footer/Footer';
 import ManageLocationPageStyle, {
   ContentStyle,
 } from './ManageLocationPageStyle';
@@ -15,7 +14,6 @@ const ManageLocationPage = ({ match }) => {
       <ContentStyle className="content-style">
         <ManageForm id={id} className="manage-form" />
       </ContentStyle>
-      <Footer />
     </ManageLocationPageStyle>
   );
 };

@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
-import { Heading, Button, Row, Column } from '@datapunt/asc-ui';
+import { Heading, Button, Row } from '@datapunt/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 import { initalValues } from './definitions/FormFields';
-import ManageFormStyle, { StyledColumn } from './ManageFormStyle';
+import ManageFormStyle, {
+  ControlsColumn,
+  ButtonsColumn,
+} from './ManageFormStyle';
 import FormFields from './definitions/FormFields';
 import FormInput from './components/FormInput';
 
@@ -100,7 +103,7 @@ const ManageForm = ({ id }) => {
     <>
       <ManageFormStyle onSubmit={handleSubmit(onSubmit)} action="" novalidate>
         <Row>
-          <StyledColumn
+          <ControlsColumn
             span={{ small: 12, medium: 12, big: 6, large: 6, xLarge: 6 }}
           >
             <Heading $as="h3" color="secondary">
@@ -117,8 +120,8 @@ const ManageForm = ({ id }) => {
                 ></FormInput>
               )
             )}
-          </StyledColumn>
-          <StyledColumn
+          </ControlsColumn>
+          <ControlsColumn
             span={{ small: 12, medium: 12, big: 6, large: 6, xLarge: 6 }}
           >
             <Heading $as="h3" color="secondary">
@@ -135,17 +138,17 @@ const ManageForm = ({ id }) => {
                 ></FormInput>
               )
             )}
-          </StyledColumn>
+          </ControlsColumn>
         </Row>
         <Row>
-          <Column span={12}>
+          <ButtonsColumn span={12}>
             <Button variant="primary" type="submit">
               Opslaan
             </Button>
             <Button variant="primaryInverted" type="reset">
               Annuleren
             </Button>
-          </Column>
+          </ButtonsColumn>
         </Row>
       </ManageFormStyle>
     </>

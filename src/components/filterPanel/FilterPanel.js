@@ -6,7 +6,7 @@ import { resetFilter } from 'components/map/helpers';
 import styles from './FilterPanel.module.scss';
 import { ContextMenuOptions } from './FilterPanel.constants';
 import classNames from 'classnames';
-import { StatusDisplayNames, spotTypeDisplayNames } from '../../constants';
+import { StatusDisplayNames, SpotTypeDisplayNames } from '../../constants';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
@@ -331,7 +331,7 @@ const FilterPanel = ({
               >
                 <SVGIcon small type={type} />
               </div>
-              {spotTypeDisplayNames[type]}
+              {SpotTypeDisplayNames[type]}
             </label>
           );
         })}

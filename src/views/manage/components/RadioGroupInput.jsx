@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Label, List, ListItem, themeSpacing, styles } from '@datapunt/asc-ui';
+import { Label, List, ListItem, themeSpacing } from '@datapunt/asc-ui';
 import styled from '@datapunt/asc-core';
 
 const RadioLabelStyle = styled(Label)`

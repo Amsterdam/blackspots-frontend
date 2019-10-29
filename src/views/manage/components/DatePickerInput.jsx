@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import DatePicker from 'react-datepicker';
-import { Label } from '@datapunt/asc-ui';
 import styled from '@datapunt/asc-core';
 import 'react-datepicker/dist/react-datepicker.css';
 
