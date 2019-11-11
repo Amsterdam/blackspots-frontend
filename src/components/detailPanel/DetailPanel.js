@@ -71,7 +71,12 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             {locatie_id}
           </Heading>
           {canEdit && (
-            <Link $as={NavLink} to={`/edit/${locatie_id}`} variant="inline">
+            <Link
+              $as={NavLink}
+              to={`/edit/${locatie_id}`}
+              variant="inline"
+              data-testid="editButton"
+            >
               Wijzig
             </Link>
           )}

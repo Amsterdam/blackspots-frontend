@@ -27,11 +27,8 @@ node {
 
         tryStep "unittests start", {
             sh "docker-compose -p ${PROJECT} up --build --exit-code-from unittest unittest"
-        }
-        always {
-            tryStep "unittests stop", {
+        }, {
             sh "docker-compose -p ${PROJECT} down -v || true"
-            }
         }
     }
 

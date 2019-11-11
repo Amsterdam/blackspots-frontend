@@ -15,7 +15,7 @@ const ManageFormComponent = ({
   return (
     <ManageFormStyle onSubmit={handleSubmit} action="" novalidate>
       <Row>
-        <StyledColumn span={6} direction="vertical">
+        <StyledColumn span={6}>
           <Heading $as="h3" color="secondary">
             Locatie
           </Heading>
