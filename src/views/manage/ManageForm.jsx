@@ -22,14 +22,16 @@ import FormInput from './components/FormInput';
 const getDate = date => {
   const regExp = /\d{2}\/\d{2}\/\d{2}/;
 
-  return date && date.match(regExp)
-    ? new Date(
-        `20${date
-          .split('/')
-          .reverse()
-          .join('-')}`
-      ).toISOString()
-    : null;
+  return (
+    date &&
+    date.match(regExp) &&
+    new Date(
+      `20${date
+        .split('/')
+        .reverse()
+        .join('-')}`
+    ).toISOString()
+  );
 };
 
 /**
@@ -63,8 +65,8 @@ const normalize = item => {
     naam: description,
     nummer: locatie_id,
     coordinaten: `${coordinates[1]}, ${coordinates[0]}`,
-    spot_type: spot_type,
-    jaar_blackspotlijst: jaar_blackspotlijst,
+    spot_type,
+    jaar_blackspotlijst,
     status: status,
     actiehouder: actiehouders,
     taken: tasks,
@@ -82,7 +84,7 @@ const ManageForm = ({ id }) => {
   const defaultValues = {
     ...location,
   };
-  const { register, handleSubmit, watch, setValue } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     defaultValues,
   });
   const onSubmit = data => console.log(data);
@@ -91,12 +93,9 @@ const ManageForm = ({ id }) => {
       e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     setValue(e.target.name, value);
   };
-  console.log(watch('naam'), watch('start_uitvoering'));
 
   useEffect(() => {
-    Object.keys(initalValues).map(name => {
-      return register({ name: name });
-    });
+    Object.keys(initalValues).map(name => register({ name: name }));
   }, [register]);
 
   return (

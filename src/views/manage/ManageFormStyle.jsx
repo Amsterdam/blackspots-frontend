@@ -2,7 +2,6 @@ import styled from '@datapunt/asc-core';
 import { Column, themeSpacing, styles } from '@datapunt/asc-ui';
 
 export const ManageFormStyle = styled.form`
-  /* background-color: #eee; */
   width: 100%;
 `;
 

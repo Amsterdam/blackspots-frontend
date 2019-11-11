@@ -3,15 +3,6 @@ import DatePicker from 'react-datepicker';
 import styled from '@datapunt/asc-core';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const DatePickerStyle = styled.div`
-  font-size: 1rem;
-  border: solid 1px #767676;
-  border-radius: 0;
-  line-height: 18px;
-  padding: 10px;
-  width: 100%;
-`;
-
 const DatePickerInput = ({ name, onChange, label, defaultValue }) => {
   const [value, setValue] = useState(null);
 
