@@ -11,7 +11,7 @@ const useKeycloak = () => {
   useEffect(() => {
     keycloak.onAuthSuccess = () => {
       setAuthenticatied(true);
-      const { roles } = keycloak.realmAccess;
+      const { roles } = keycloak.realmAccess || [];
       setCanEdit(roles.includes('bs_all'));
       setCanAdd(roles.includes('bs_all'));
     };

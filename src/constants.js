@@ -21,7 +21,7 @@ export const SpotTypes = {
   RISICO: 'risico',
 };
 
-export const spotTypeDisplayNames = {
+export const SpotTypeDisplayNames = {
   [SpotTypes.BLACKSPOT]: 'Blackspot',
   [SpotTypes.WEGVAK]: 'Red route',
   [SpotTypes.PROTOCOL_DODELIJK]: 'Protocol dodelijk ongeval',

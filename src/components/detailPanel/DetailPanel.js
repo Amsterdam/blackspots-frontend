@@ -12,7 +12,7 @@ import styles from './DetailPanel.module.scss';
 import classNames from 'classnames';
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
 
-import { spotTypeDisplayNames } from '../../constants';
+import { SpotTypeDisplayNames } from '../../constants';
 
 import { trackDownload } from 'helpers';
 import UserContext from '../../shared/user/UserContext';
@@ -104,7 +104,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
                   )}
                 >
                   <SVGIcon small type={spot_type} />
-                  {spotTypeDisplayNames[spot_type]}
+                  {SpotTypeDisplayNames[spot_type]}
                 </td>
               </tr>
               <tr>

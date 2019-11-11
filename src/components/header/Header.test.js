@@ -6,15 +6,13 @@ import { withUserContext } from 'test/utils';
 describe('Header', () => {
   const regex = /toevoegen/i;
 
-  afterEach(cleanup);
-
   it('should not render the add link when the user has no add rights', () => {
     var user = { canAdd: false };
     const { container, queryByText } = render(
       withUserContext(<Header />, user)
     );
     expect(queryByText(regex)).toBeNull();
-    expect(container.querySelectorAll('.Link')).toHaveLength(3);
+    expect(container.querySelectorAll('nav > a')).toHaveLength(4);
   });
 
   it('should render the add link when the user has add rights', () => {
@@ -23,6 +21,6 @@ describe('Header', () => {
       withUserContext(<Header />, user)
     );
     expect(queryByText(regex)).not.toBeNull();
-    expect(container.querySelectorAll('.Link')).toHaveLength(4);
+    expect(container.querySelectorAll('nav > a')).toHaveLength(5);
   });
 });
