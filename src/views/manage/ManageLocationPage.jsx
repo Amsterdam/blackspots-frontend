@@ -6,8 +6,12 @@ import Footer from '../../components/footer/Footer';
 import ManageLocationPageStyle, {
   ContentStyle,
 } from './ManageLocationPageStyle';
+import ManageForm from './ManageForm';
 
-const ManageLocationPage = () => {
+const ManageLocationPage = ({ match }) => {
+  const {
+    params: { id },
+  } = match;
   return (
     <ManageLocationPageStyle>
       <ContentStyle>
@@ -16,7 +20,7 @@ const ManageLocationPage = () => {
           text="Terug naar kaart"
           chevronDirection="left"
         />
-        <h1>Toevoegen/Wijzigen</h1>
+        <ManageForm id={id} />
       </ContentStyle>
       <Footer />
     </ManageLocationPageStyle>

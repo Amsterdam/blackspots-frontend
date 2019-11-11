@@ -16,13 +16,15 @@ import useYearFilters from './hooks/useYearFilters';
 import useBlackspotsLayer from './hooks/useBlackspotsLayer';
 import useMap from './hooks/useMap';
 import MapStyle from './MapStyle';
-
 import { shouldUseAccEnv } from 'helpers.js';
+import useAppReducer from 'shared/hooks/useAppReducer';
+import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 
 const Map = () => {
   const { errorMessage, loading, results, fetchData } = useDataFetching();
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [showDetailPanel, setShowDetailPanel] = useState(false);
+  const [, actions] = useAppReducer(LOCATION);
 
   const mapRef = useMap();
 
@@ -48,6 +50,7 @@ const Map = () => {
   const onMarkerClick = (feature, latlng) => {
     const currentZoom = mapRef.current.getZoom();
     mapRef.current.flyTo(latlng, currentZoom < 14 ? 14 : currentZoom);
+    actions.selectLocation({ payload: feature });
     setSelectedFeature(feature);
     setShowDetailPanel(true);
   };

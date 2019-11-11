@@ -10,7 +10,7 @@ export const appRoutes = {
   CONCEPTS: '/concepts',
   CONTACT: '/contact',
   ADD: '/add',
-  MODIFY: '/modify',
+  EDIT: '/edit/:id',
 };
 
 export const SpotTypes = {

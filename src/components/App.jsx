@@ -6,29 +6,33 @@ import { trackPageView } from '../helpers';
 import useKeycloak from 'shared/hooks/useKeycloak';
 import { GlobalStyle, ThemeProvider } from '@datapunt/asc-ui';
 import AppStyle from './AppStyle';
-import UserContext from 'shared/user/UserContext';
+import { UserContextProvider } from 'shared/user/UserContext';
 import AppRoutes from './AppRoutes';
+import mainReducer, { initialState } from 'shared/reducers';
+import { AppStateProvider } from 'shared/hooks/useAppReducer';
 
 const App = () => {
   const user = useKeycloak();
   trackPageView();
 
   return (
-    <UserContext.Provider value={user}>
-      <ThemeProvider>
-        <GlobalStyle />
-        <AppStyle>
-          {user.authenticated ? (
-            <>
-              <Header />
-              <AppRoutes />
-            </>
-          ) : (
-            <LandingPage />
-          )}
-        </AppStyle>
-      </ThemeProvider>
-    </UserContext.Provider>
+    <UserContextProvider user={user}>
+      <AppStateProvider initialState={initialState} reducer={mainReducer}>
+        <ThemeProvider>
+          <GlobalStyle />
+          <AppStyle>
+            {user.authenticated ? (
+              <>
+                <Header />
+                <AppRoutes />
+              </>
+            ) : (
+              <LandingPage />
+            )}
+          </AppStyle>
+        </ThemeProvider>
+      </AppStateProvider>
+    </UserContextProvider>
   );
 };
 

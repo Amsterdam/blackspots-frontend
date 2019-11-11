@@ -3,21 +3,27 @@ import auth from '../auth/auth';
 
 const useKeycloak = () => {
   const [authenticated, setAuthenticatied] = useState(false);
-  const [roles, setRoles] = useState([]);
+  const [canEdit, setCanEdit] = useState(false);
+  const [canAdd, setCanAdd] = useState(false);
+
   const keycloak = auth.keycloak;
 
   useEffect(() => {
     keycloak.onAuthSuccess = () => {
       setAuthenticatied(true);
-      setRoles(keycloak.realmAccess.roles);
+      const { roles } = keycloak.realmAccess;
+      setCanEdit(roles.includes('bs_all'));
+      setCanAdd(roles.includes('bs_all'));
     };
     keycloak.onAuthError = () => {
       setAuthenticatied(false);
-      setRoles([]);
+      setCanAdd(false);
+      setCanEdit(false);
     };
     keycloak.onAuthRefreshError = () => {
       setAuthenticatied(false);
-      setRoles([]);
+      setCanAdd(false);
+      setCanEdit(false);
     };
   }, [
     keycloak.onAuthError,
@@ -26,7 +32,7 @@ const useKeycloak = () => {
     keycloak.realmAccess,
   ]);
 
-  return { authenticated, roles };
+  return { authenticated, canAdd, canEdit };
 };
 
 export default useKeycloak;
