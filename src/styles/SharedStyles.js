@@ -1,7 +1,7 @@
 import styled from '@datapunt/asc-core';
 import { themeSpacing } from '@datapunt/asc-ui';
 
-const CONTENT_WIDTH = 1140;
+const CONTENT_WIDTH = 1280;
 
 export const ContentBoxStyle = styled.div`
   width: ${CONTENT_WIDTH}px;

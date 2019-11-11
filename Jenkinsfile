@@ -22,11 +22,15 @@ node {
     }
 
 
-    // stage('Test') {
-    //     tryStep "Test", {
-    //         sh "api/deploy/test/jenkins-script.sh api/deploy/test/"
-    //     }
-    // }
+    stage('Test') {
+        String PROJECT = "blackspots-unittests-${env.GIT_COMMIT}"
+
+        tryStep "unittests start", {
+            sh "docker-compose -p ${PROJECT} up --build --exit-code-from unittest unittest"
+        }, {
+            sh "docker-compose -p ${PROJECT} down -v || true"
+        }
+    }
 
 
     stage("Build develop image") {

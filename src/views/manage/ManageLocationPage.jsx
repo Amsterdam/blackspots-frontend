@@ -1,8 +1,5 @@
 import React from 'react';
 
-import BlueLinkButton from 'shared/buttons/BlueLinkButton';
-import { appRoutes } from 'constants.js';
-import Footer from '../../components/footer/Footer';
 import ManageLocationPageStyle, {
   ContentStyle,
 } from './ManageLocationPageStyle';
@@ -13,16 +10,10 @@ const ManageLocationPage = ({ match }) => {
     params: { id },
   } = match;
   return (
-    <ManageLocationPageStyle>
-      <ContentStyle>
-        <BlueLinkButton
-          to={appRoutes.HOME}
-          text="Terug naar kaart"
-          chevronDirection="left"
-        />
-        <ManageForm id={id} />
+    <ManageLocationPageStyle className="page-style">
+      <ContentStyle className="content-style">
+        <ManageForm id={id} className="manage-form" />
       </ContentStyle>
-      <Footer />
     </ManageLocationPageStyle>
   );
 };

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 
 const useYearFilters = results => {
-  const [blackspotYearFilter, setBlackspotYearFilter] = useState(null);
-  const [deliveredYearFilter, setDeliveredYearFilter] = useState(null);
-  const [quickscanYearFilter, setQuickscanYearFilter] = useState(null);
+  const [blackspotYearFilter, setBlackspotYearFilter] = useState({});
+  const [deliveredYearFilter, setDeliveredYearFilter] = useState({});
+  const [quickscanYearFilter, setQuickscanYearFilter] = useState({});
 
   useEffect(() => {
     // Init all year filters
