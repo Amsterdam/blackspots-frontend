@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, cleanup } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import AppRoutes from './AppRoutes';
 import { withUserContext } from 'test/utils';
 import DashboardPage from 'views/dashboard/DashboardPage';
@@ -20,8 +20,6 @@ describe('AppRoutes', () => {
     ContactPage.mockReturnValue(<div>contact</div>);
     ManageLocationPage.mockReturnValue(<div>manage</div>);
   });
-
-  afterEach(cleanup);
 
   it('should render the dashboard ', () => {
     var user = { canAdd: true };
