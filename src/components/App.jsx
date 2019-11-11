@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import Header from './header/Header';
 import LandingPage from 'views/landing/LandingPage';
 import { trackPageView } from '../helpers';
 import useKeycloak from 'shared/hooks/useKeycloak';
