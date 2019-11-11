@@ -21,6 +21,8 @@ describe('DetailPanel', () => {
     },
   };
 
+  const editButtonTestId = 'editButton';
+
   const props = {
     isOpen: true,
     togglePanel: jest.fn(),
@@ -43,33 +45,33 @@ describe('DetailPanel', () => {
 
   it('should render the edit link when authorized ', () => {
     var user = { canEdit: true };
-    const { queryByText } = render(
+    const { queryByTestId } = render(
       withUserContext(<DetailPanel {...props} />, user)
     );
-    expect(queryByText(/Wijzig/)).not.toBeNull();
+    expect(queryByTestId(editButtonTestId)).not.toBeNull();
   });
 
   it('should NOT render the edit link when not authorized for edit ', () => {
     var user = { canEdit: false };
-    const { queryByText } = render(
+    const { queryByTestId } = render(
       withUserContext(<DetailPanel {...props} />, user)
     );
-    expect(queryByText(/Wijzig/)).toBeNull();
+    expect(queryByTestId(editButtonTestId)).toBeNull();
   });
 
   it('should render the edit link when authorized ', () => {
     var user = { canEdit: true };
-    const { queryByText } = render(
+    const { queryByTestId } = render(
       withUserContext(<DetailPanel {...props} />, user)
     );
-    expect(queryByText(/Wijzig/)).not.toBeNull();
+    expect(queryByTestId(editButtonTestId)).not.toBeNull();
   });
 
   it('should NOT render the edit link when not authorized for edit ', () => {
     var user = { canEdit: false };
-    const { queryByText } = render(
+    const { queryByTestId } = render(
       withUserContext(<DetailPanel {...props} />, user)
     );
-    expect(queryByText(/Wijzig/)).toBeNull();
+    expect(queryByTestId(editButtonTestId)).toBeNull();
   });
 });
