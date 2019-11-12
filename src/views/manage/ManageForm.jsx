@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Heading, Button, Row } from '@datapunt/asc-ui';
+import { Heading, Button } from '@datapunt/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
@@ -7,9 +7,12 @@ import { initalValues } from './definitions/FormFields';
 import ManageFormStyle, {
   ControlsColumn,
   ButtonsColumn,
+  FixedRow,
+  MainRow,
 } from './ManageFormStyle';
 import FormFields from './definitions/FormFields';
 import FormInput from './components/FormInput';
+import FileInput from './components/FileInput';
 
 /**
  *
@@ -58,8 +61,10 @@ const normalize = item => {
       eind_uitvoering,
       jaar_oplevering,
       notes,
+      documents,
     },
   } = item;
+  console.log('documents', documents);
   return {
     ...initalValues,
     naam: description,
@@ -74,6 +79,10 @@ const normalize = item => {
     eind_uitvoering: getDate(eind_uitvoering),
     jaar_oplevering: jaar_oplevering,
     opmerking: notes,
+    rapport_document_id: documents[0] && documents[0].id,
+    rapport_document_filename: documents[0] && documents[0].filename,
+    design_document_id: documents[1] && documents[1].id,
+    design_document_filename: documents[1] && documents[1].filename,
   };
 };
 
@@ -101,7 +110,7 @@ const ManageForm = ({ id }) => {
   return (
     <>
       <ManageFormStyle onSubmit={handleSubmit(onSubmit)} action="" novalidate>
-        <Row>
+        <MainRow>
           <ControlsColumn
             span={{ small: 12, medium: 12, big: 6, large: 6, xLarge: 6 }}
           >
@@ -138,17 +147,34 @@ const ManageForm = ({ id }) => {
               )
             )}
           </ControlsColumn>
-        </Row>
-        <Row>
+          <ControlsColumn span={12}>
+            <Heading $as="h3" color="secondary">
+              Documenten
+            </Heading>
+            <FileInput
+              label="Rapportage"
+              name="rapport_document_id"
+              defaultValue="QD108_17 _rapportage_Meteorenweg - Werktuigstraat.pdf"
+              // defaultValue={defaultValues['rapport_document_filename']}
+            ></FileInput>
+            <FileInput
+              document={document[1]}
+              label="Ontwerp"
+              name="design_document_id"
+              defaultValue={defaultValues['design_document_filename']}
+            ></FileInput>
+          </ControlsColumn>
+        </MainRow>
+        <FixedRow>
           <ButtonsColumn span={12}>
-            <Button variant="primary" type="submit">
+            <Button variant="secondary" type="submit">
               Opslaan
             </Button>
-            <Button variant="primaryInverted" type="reset">
+            <Button variant="tertiary" type="reset">
               Annuleren
             </Button>
           </ButtonsColumn>
-        </Row>
+        </FixedRow>
       </ManageFormStyle>
     </>
   );

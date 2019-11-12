@@ -6,7 +6,7 @@
     "@babel/polyfill": "^7.7.0",
     "@datapunt/asc-assets": "^0.17.7",
     "@datapunt/asc-core": "^0.17.7",
-    "@datapunt/asc-ui": "^0.17.7",
+    "@datapunt/asc-ui": "^0.17.8-alpha.12",
     "@sentry/browser": "^5.7.1",
     "@types/jest": "^24.0.22",
     "@types/node": "^12.12.7",
