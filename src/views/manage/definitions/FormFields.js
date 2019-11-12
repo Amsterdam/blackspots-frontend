@@ -11,6 +11,7 @@ const FormFields = [
     name: 'naam',
     label: 'Naam',
     Component: TextInput,
+    width: '80%',
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ const FormFields = [
     name: 'nummer',
     label: 'Nummer',
     Component: TextInput,
+    width: '50%',
   },
   {
     id: 3,
@@ -25,6 +27,7 @@ const FormFields = [
     name: 'coordinaten',
     label: 'Coördinaten',
     Component: TextInput,
+    width: '80%',
   },
   {
     id: 4,
@@ -45,6 +48,7 @@ const FormFields = [
     name: 'jaar_blackspotlijst',
     label: 'Jaar opgenomen in blackspotlijst',
     Component: TextInput,
+    width: '30%',
   },
   {
     id: 6,
@@ -65,6 +69,7 @@ const FormFields = [
     name: 'actiehouder',
     label: 'Actiehouder',
     Component: TextInput,
+    width: '80%',
   },
   {
     id: 8,
@@ -72,6 +77,8 @@ const FormFields = [
     name: 'taken',
     label: 'Taken',
     Component: TextAreaInput,
+    width: '80%',
+    height: '125px',
   },
   {
     id: 9,
@@ -79,7 +86,6 @@ const FormFields = [
     name: 'start_uitvoering',
     label: 'Start uitvoering',
     Component: DatePickerInput,
-    // extra props
   },
   {
     id: 10,
@@ -87,14 +93,23 @@ const FormFields = [
     name: 'eind_uitvoering',
     label: 'Eind uitvoering',
     Component: DatePickerInput,
-    // extra props
   },
   {
     id: 11,
     column: 2,
+    name: 'jaar_oplevering',
+    label: 'Jaar oplevering',
+    Component: TextInput,
+    width: '30%',
+  },
+  {
+    id: 12,
+    column: 2,
     name: 'opmerking',
     label: 'Opmerking',
     Component: TextAreaInput,
+    width: '80%',
+    height: '125px',
   },
 ];
 

@@ -6,6 +6,7 @@ const LabelInput = styled(Label)`
   margin-bottom: ${themeSpacing(6)};
   font-weight: bold;
   align-items: flex-start;
+  width: 100%;
 
   & > :first-child {
     margin-bottom: ${themeSpacing(2)};
