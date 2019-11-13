@@ -11,36 +11,33 @@ import styled from '@datapunt/asc-core';
 import FormInput from './FormInput';
 import { Close } from '@datapunt/asc-assets';
 
-const DocumentTag = styled.span`
+const DocumentName = styled.span`
   background-color: ${themeColor('tint', 'level2')};
   cursor: auto;
   font-weight: 500;
+  max-width: 100%;
   height: 40px;
   letter-spacing: normal;
   line-height: 40px;
-  margin: ${themeSpacing(2, 0)};
-  padding-bottom: 0px;
-  padding-left: 16px;
-  padding-right: 44px;
-  padding-top: 0px;
-  text-size-adjust: 100%;
-  width: 80%;
+  margin-bottom: ${themeSpacing(1)};
+  padding: ${themeSpacing(0, 11, 0, 4)};
   position: relative;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 
-  /* & > ${styles.ButtonStyle} { */
-  & > .classButton {
+  /* TODO () & > ${styles.ButtonStyle} { */
+  & > .closeButton {
     position: absolute;
     right: 0;
     top: 0;
     background-color: ${themeColor('tint', 'level2')};
-    margin: 3px;
    }
 `;
 
-const FileInputStyle = styled.div``;
+const FileInputStyle = styled.div`
+  width: 100%;
+`;
 
 const StyeldUploadButton = styled.div`
   position: relative;
@@ -110,7 +107,7 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
         const val = { id: 1, filename: files[0].name, type: label };
         updateValue(name, val);
         setIsUploading(false);
-      }, 2000);
+      }, 500);
     }
   };
 
@@ -121,17 +118,17 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
         name={name}
         Component={() =>
           value ? (
-            <DocumentTag>
+            <DocumentName title={value && value.filename}>
               {value && value.filename}
               <Button
-                className="classButton"
+                className="closeButton"
                 size={34}
                 variant="blank"
                 iconSize={20}
                 icon={<Close />}
                 onClick={() => updateValue(name)}
               />
-            </DocumentTag>
+            </DocumentName>
           ) : (
             <SelectButton id={fileUploadId} onChange={handleChange}>
               {isUploading ? (

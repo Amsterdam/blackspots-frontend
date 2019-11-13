@@ -114,7 +114,7 @@ const ManageForm = ({ id }) => {
       <ManageFormStyle onSubmit={handleSubmit(onSubmit)} action="" novalidate>
         <MainRow>
           <ControlsColumn
-            span={{ small: 12, medium: 12, big: 6, large: 6, xLarge: 6 }}
+            span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
             <Heading $as="h3" color="secondary">
               Locatie
@@ -132,7 +132,7 @@ const ManageForm = ({ id }) => {
             )}
           </ControlsColumn>
           <ControlsColumn
-            span={{ small: 12, medium: 12, big: 6, large: 6, xLarge: 6 }}
+            span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
             <Heading $as="h3" color="secondary">
               Maatregelen
@@ -149,7 +149,9 @@ const ManageForm = ({ id }) => {
               )
             )}
           </ControlsColumn>
-          <ControlsColumn span={12}>
+          <ControlsColumn
+            span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
+          >
             <Heading $as="h3" color="secondary">
               Documenten
             </Heading>
