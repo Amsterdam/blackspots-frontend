@@ -65,6 +65,7 @@ const normalize = item => {
       documents,
     },
   } = item;
+  console.log(documents);
   return {
     ...initalValues,
     naam: description,
@@ -79,10 +80,8 @@ const normalize = item => {
     eind_uitvoering: getDate(eind_uitvoering),
     jaar_oplevering: jaar_oplevering,
     opmerking: notes,
-    rapport_document_id: documents[0] && documents[0].id,
-    rapport_document_filename: documents[0] && documents[0].filename,
-    design_document_id: documents[1] && documents[1].id,
-    design_document_filename: documents[1] && documents[1].filename,
+    rapport_document: documents[0],
+    design_document: documents[1],
   };
 };
 
@@ -105,13 +104,9 @@ const ManageForm = ({ id }) => {
 
   useEffect(() => {
     Object.keys(initalValues).map(name => register({ name: name }));
-    const documentFields = [
-      'rapport_document_id',
-      'rapport_document_filename',
-      'design_document_id',
-      'design_document_filename',
-    ];
-    documentFields.map(name => register({ name: name }));
+    ['rapport_document', 'design_document'].map(name =>
+      register({ name: name })
+    );
   }, [register]);
 
   return (
@@ -160,17 +155,15 @@ const ManageForm = ({ id }) => {
             </Heading>
             <FileInput
               label="Rapportage"
-              document={document[0]}
-              name="rapport_document_filename"
+              name="rapport_document"
               onChange={handleChange}
-              defaultValue={defaultValues['rapport_document_filename']}
+              defaultValue={defaultValues['rapport_document']}
             ></FileInput>
             <FileInput
-              document={document[1]}
               label="Ontwerp"
-              name="design_document_filename"
+              name="design_document"
               onChange={handleChange}
-              defaultValue={defaultValues['design_document_filename']}
+              defaultValue={defaultValues['design_document']}
             ></FileInput>
           </ControlsColumn>
         </MainRow>

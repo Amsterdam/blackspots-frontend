@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, styles, themeColor, themeSpacing } from '@datapunt/asc-ui';
+import {
+  Button,
+  styles,
+  themeColor,
+  themeSpacing,
+  Spinner,
+} from '@datapunt/asc-ui';
 import styled from '@datapunt/asc-core';
 import FormInput from './FormInput';
 import { Close } from '@datapunt/asc-assets';
@@ -36,8 +42,10 @@ const DocumentTag = styled.span`
 
 const FileInputStyle = styled.div``;
 
-const UploadButton = styled(Button)`
+const StyeldUploadButton = styled.div`
   position: relative;
+  cursor: pointer;
+
   & > input {
     opacity: 0;
     position: absolute;
@@ -46,13 +54,37 @@ const UploadButton = styled(Button)`
     right: 0;
     bottom: 0;
   }
+
+  & > input:focus + label {
+    outline-color: #fec813;
+    outline-style: solid;
+    outline-offset: 0px;
+    outline-width: 3px;
+  }
+
+  /* ${styles.SpinnerStyle} { */
+    .spinner {
+    margin-right: ${themeSpacing(3)};
+  }
 `;
 
+const SelectButton = ({ id, onChange, children }) => {
+  return (
+    <StyeldUploadButton>
+      <input type="file" id={id} onChange={onChange} />
+      <Button variant="primary" $as="label" htmlFor={id}>
+        {children}
+      </Button>
+    </StyeldUploadButton>
+  );
+};
+
 const FileInput = ({ label, name, onChange, defaultValue }) => {
-  console.log(defaultValue, name);
   const [value, setValue] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const fileUploadId = `fileUpload${label}`;
+
   useEffect(() => {
     defaultValue && setValue(defaultValue);
   }, [defaultValue]);
@@ -60,18 +92,21 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
   const handleChange = e => {
     if (e.target.files && e.target.files.length) {
       const { files } = e.target;
+      setIsUploading(true);
       console.log('calling upload service...', files);
-      const val = files[0].name;
-      console.log('handleChange', val);
-      setValue(val);
-      const event = {
-        target: {
-          name,
-          type: 'input',
-          value: val,
-        },
-      };
-      onChange(event);
+      setTimeout(() => {
+        const val = { id: 1, filename: files[0].name, type: label };
+        setValue(val);
+        const event = {
+          target: {
+            name,
+            type: 'input',
+            value: val,
+          },
+        };
+        onChange(event);
+        setIsUploading(false);
+      }, 2000);
     }
   };
 
@@ -83,7 +118,7 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
         Component={() =>
           value ? (
             <DocumentTag>
-              {value}
+              {value && value.filename}
               <Button
                 className="classButton"
                 size={34}
@@ -94,12 +129,16 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
               />
             </DocumentTag>
           ) : (
-            <>
-              <UploadButton variant="primary">
-                Selecteer bestand
-                <input type="file" id={fileUploadId} onChange={handleChange} />
-              </UploadButton>
-            </>
+            <SelectButton id={fileUploadId} onChange={handleChange}>
+              {isUploading ? (
+                <>
+                  <Spinner className="spinner" />
+                  Aan het uploaden...
+                </>
+              ) : (
+                'Selecteer bestand'
+              )}
+            </SelectButton>
           )
         }
       ></FormInput>
