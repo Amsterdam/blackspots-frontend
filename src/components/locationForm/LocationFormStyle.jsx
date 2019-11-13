@@ -7,10 +7,6 @@ import {
   themeColor,
 } from '@datapunt/asc-ui';
 
-export const ManageFormStyle = styled.form`
-  width: 100%;
-`;
-
 export const ControlsColumn = styled(Column)`
   flex-direction: column;
   align-items: flex-start;
@@ -21,13 +17,9 @@ export const ControlsColumn = styled(Column)`
   }
 `;
 
-export const MainRow = styled(Row)`
-  margin-bottom: ${themeSpacing(20)};
-`;
-
-export const FixedRow = styled(Row)`
+export const BottomRow = styled(Row)`
   width: 100%;
-  position: absolute;
+  position: sticky;
   bottom: 0;
   border-top: 4px solid ${themeColor('tint', 'level3')};
 `;
@@ -42,5 +34,3 @@ export const ButtonsColumn = styled(Column)`
     margin-right: ${themeSpacing(2)};
   }
 `;
-
-export default ManageFormStyle;

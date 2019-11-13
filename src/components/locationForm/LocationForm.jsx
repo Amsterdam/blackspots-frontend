@@ -1,91 +1,17 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Heading, Button } from '@datapunt/asc-ui';
+import { Heading, Button, Row } from '@datapunt/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 import { initalValues } from './definitions/FormFields';
-import ManageFormStyle, {
-  ControlsColumn,
-  ButtonsColumn,
-  FixedRow,
-  MainRow,
-} from './ManageFormStyle';
+import { ControlsColumn, ButtonsColumn, BottomRow } from './LocationFormStyle';
 import FormFields from './definitions/FormFields';
 import FormInput from './components/FormInput';
 import FileInput from './components/FileInput';
+import normalize from './services/normalize';
 
-/**
- *
- * @param {string} date in dd/MM/yy format
- *
- * Temporary function to handle the date that comes from the server.
- * It will be replaced when the retrieved date will be in ISO format
- *
- */
-const getDate = date => {
-  const regExp = /\d{2}\/\d{2}\/\d{2}/;
-
-  return (
-    date &&
-    date.match(regExp) &&
-    new Date(
-      `20${date
-        .split('/')
-        .reverse()
-        .join('-')}`
-    ).toISOString()
-  );
-};
-
-/**
- *
- * @param {object} item
- *
- * Converts the server feature to a client location object
- *
- */
-const normalize = item => {
-  if (!item) return initalValues;
-
-  const {
-    geometry: { coordinates },
-    properties: {
-      description,
-      locatie_id,
-      spot_type,
-      jaar_blackspotlijst,
-      status,
-      actiehouders,
-      tasks,
-      start_uitvoering,
-      eind_uitvoering,
-      jaar_oplevering,
-      notes,
-      documents,
-    },
-  } = item;
-  console.log(documents);
-  return {
-    ...initalValues,
-    naam: description,
-    nummer: locatie_id,
-    coordinaten: `${coordinates[1]}, ${coordinates[0]}`,
-    spot_type,
-    jaar_blackspotlijst,
-    status: status,
-    actiehouder: actiehouders,
-    taken: tasks,
-    start_uitvoering: getDate(start_uitvoering),
-    eind_uitvoering: getDate(eind_uitvoering),
-    jaar_oplevering: jaar_oplevering,
-    opmerking: notes,
-    rapport_document: documents[0],
-    design_document: documents[1],
-  };
-};
-
-const ManageForm = ({ id }) => {
+const LocationForm = ({ id }) => {
   const [{ selectedLocation }] = useAppReducer(LOCATION);
 
   const location = normalize(selectedLocation);
@@ -111,8 +37,8 @@ const ManageForm = ({ id }) => {
 
   return (
     <>
-      <ManageFormStyle onSubmit={handleSubmit(onSubmit)} action="" novalidate>
-        <MainRow>
+      <form onSubmit={handleSubmit(onSubmit)} action="" novalidate>
+        <Row>
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
@@ -168,8 +94,8 @@ const ManageForm = ({ id }) => {
               defaultValue={defaultValues['design_document']}
             ></FileInput>
           </ControlsColumn>
-        </MainRow>
-        <FixedRow>
+        </Row>
+        <BottomRow>
           <ButtonsColumn span={12}>
             <Button variant="secondary" type="submit">
               Opslaan
@@ -178,18 +104,18 @@ const ManageForm = ({ id }) => {
               Annuleren
             </Button>
           </ButtonsColumn>
-        </FixedRow>
-      </ManageFormStyle>
+        </BottomRow>
+      </form>
     </>
   );
 };
 
-ManageForm.defaultProps = {
+LocationForm.defaultProps = {
   id: '',
 };
 
-ManageForm.propTypes = {
+LocationForm.propTypes = {
   id: PropTypes.string,
 };
 
-export default ManageForm;
+export default LocationForm;

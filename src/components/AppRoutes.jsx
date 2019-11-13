@@ -5,7 +5,7 @@ import DashboardPage from 'views/dashboard/DashboardPage';
 import ConceptPage from 'views/concepts/ConceptPage';
 import ContactPage from 'views/contact/ContactPage';
 import { appRoutes } from '../constants';
-import ManageLocationPage from 'views/manage/ManageLocationPage';
+import LocationPage from 'views/location/LocationPage';
 import UserContext from 'shared/user/UserContext';
 import { ContentStyle } from './AppStyle';
 
@@ -18,10 +18,10 @@ const AppRoutes = () => {
         <Route exact path={appRoutes.CONCEPTS} component={ConceptPage} />
         <Route exact path={appRoutes.CONTACT} component={ContactPage} />
         {canAdd && (
-          <Route exact path={appRoutes.ADD} component={ManageLocationPage} />
+          <Route exact path={appRoutes.ADD} component={LocationPage} />
         )}
         {canEdit && (
-          <Route exact path={appRoutes.EDIT} component={ManageLocationPage} />
+          <Route exact path={appRoutes.EDIT} component={LocationPage} />
         )}
         <Route path={appRoutes.HOME} component={DashboardPage} />
       </Switch>

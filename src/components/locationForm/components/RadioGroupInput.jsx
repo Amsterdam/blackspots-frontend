@@ -4,10 +4,19 @@ import styled from '@datapunt/asc-core';
 
 const RadioLabelStyle = styled(Label)`
   font-weight: normal;
+
+  & > :first-child {
+    margin: 0;
+    padding-top: 5px;
+  }
 `;
 
 const RadioInputStyle = styled.input`
   margin-right: ${themeSpacing(2)};
+`;
+
+const RadioGroupInputStyle = styled(List)`
+  margin-bottom: 0;
 `;
 
 const RadioInput = ({
@@ -21,6 +30,7 @@ const RadioInput = ({
   return (
     <RadioLabelStyle htmlFor={value} label={label} position="right">
       <RadioInputStyle
+        className="ristyle"
         id={value}
         name={name}
         type="radio"
@@ -44,7 +54,7 @@ const RadioGroupInput = ({
     setSelectedValue(defaultValue);
   }, [defaultValue]);
   return (
-    <List>
+    <RadioGroupInputStyle>
       {options.map(option => {
         const { label, value } = option;
         return (
@@ -63,7 +73,7 @@ const RadioGroupInput = ({
           </ListItem>
         );
       })}
-    </List>
+    </RadioGroupInputStyle>
   );
 };
 
