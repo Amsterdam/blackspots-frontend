@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Heading, Button } from '@datapunt/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
@@ -64,7 +65,6 @@ const normalize = item => {
       documents,
     },
   } = item;
-  console.log('documents', documents);
   return {
     ...initalValues,
     naam: description,
@@ -105,6 +105,13 @@ const ManageForm = ({ id }) => {
 
   useEffect(() => {
     Object.keys(initalValues).map(name => register({ name: name }));
+    const documentFields = [
+      'rapport_document_id',
+      'rapport_document_filename',
+      'design_document_id',
+      'design_document_filename',
+    ];
+    documentFields.map(name => register({ name: name }));
   }, [register]);
 
   return (
@@ -153,14 +160,16 @@ const ManageForm = ({ id }) => {
             </Heading>
             <FileInput
               label="Rapportage"
-              name="rapport_document_id"
-              defaultValue="QD108_17 _rapportage_Meteorenweg - Werktuigstraat.pdf"
-              // defaultValue={defaultValues['rapport_document_filename']}
+              document={document[0]}
+              name="rapport_document_filename"
+              onChange={handleChange}
+              defaultValue={defaultValues['rapport_document_filename']}
             ></FileInput>
             <FileInput
               document={document[1]}
               label="Ontwerp"
-              name="design_document_id"
+              name="design_document_filename"
+              onChange={handleChange}
               defaultValue={defaultValues['design_document_filename']}
             ></FileInput>
           </ControlsColumn>
@@ -178,6 +187,14 @@ const ManageForm = ({ id }) => {
       </ManageFormStyle>
     </>
   );
+};
+
+ManageForm.defaultProps = {
+  id: '',
+};
+
+ManageForm.propTypes = {
+  id: PropTypes.string,
 };
 
 export default ManageForm;

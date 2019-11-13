@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import styled from '@datapunt/asc-core';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -22,7 +23,7 @@ const DatePickerStyle = styled.div`
   }
 `;
 
-const DatePickerInput = ({ name, onChange, label, defaultValue }) => {
+const DatePickerInput = ({ name, onChange, defaultValue }) => {
   const [value, setValue] = useState(null);
 
   const onValueChange = val => {
@@ -67,6 +68,12 @@ const DatePickerInput = ({ name, onChange, label, defaultValue }) => {
       </Icon>
     </DatePickerStyle>
   );
+};
+
+DatePickerInput.propTypes = {
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  defaultValue: PropTypes.shape({}).isRequired,
 };
 
 export default DatePickerInput;

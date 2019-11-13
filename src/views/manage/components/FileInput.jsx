@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, styles, themeColor, themeSpacing } from '@datapunt/asc-ui';
 import styled from '@datapunt/asc-core';
@@ -8,10 +8,6 @@ import { Close } from '@datapunt/asc-assets';
 const DocumentTag = styled.span`
   background-color: ${themeColor('tint', 'level2')};
   cursor: auto;
-  /* font-family: AvenirNext;
-  font-size: 16px;
-  font-stretch: 100%;
-  */
   font-weight: 500;
   height: 40px;
   letter-spacing: normal;
@@ -52,49 +48,54 @@ const UploadButton = styled(Button)`
   }
 `;
 
-const FileInput = ({ label, name, defaultValue }) => {
+const FileInput = ({ label, name, onChange, defaultValue }) => {
   console.log(defaultValue, name);
+  const [value, setValue] = useState(null);
+
+  const fileUploadId = `fileUpload${label}`;
+  useEffect(() => {
+    defaultValue && setValue(defaultValue);
+  }, [defaultValue]);
 
   const handleChange = e => {
     if (e.target.files && e.target.files.length) {
       const { files } = e.target;
       console.log('calling upload service...', files);
-
-      files.forEach((file, uploadBatchIndex) => {
-        if (files[uploadBatchIndex].existing) {
-          return;
-        }
-
-        console.log(file);
-      });
+      const val = files[0].name;
+      console.log('handleChange', val);
+      setValue(val);
+      const event = {
+        target: {
+          name,
+          type: 'input',
+          value: val,
+        },
+      };
+      onChange(event);
     }
   };
 
-  const fileUploadId = `fileUpload${label}`;
   return (
     <FileInputStyle>
       <FormInput
         label={label}
         name={name}
         Component={() =>
-          defaultValue ? (
-            <DocumentTag
-            // onClick={() => alert(`remove '${defaultValue}'`)}
-            // key={`{name}`}
-            >
-              {defaultValue}
+          value ? (
+            <DocumentTag>
+              {value}
               <Button
                 className="classButton"
                 size={34}
                 variant="blank"
                 iconSize={20}
                 icon={<Close />}
-                onClick={() => alert()}
+                onClick={() => setValue(null)}
               />
             </DocumentTag>
           ) : (
             <>
-              <UploadButton variant="primary" for={fileUploadId}>
+              <UploadButton variant="primary">
                 Selecteer bestand
                 <input type="file" id={fileUploadId} onChange={handleChange} />
               </UploadButton>
@@ -113,6 +114,8 @@ FileInput.defaultProps = {
 FileInput.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  defaultValue: PropTypes.shape({}).isRequired,
 };
 
 export default FileInput;
