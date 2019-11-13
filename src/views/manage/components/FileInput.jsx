@@ -63,7 +63,7 @@ const StyeldUploadButton = styled.div`
   }
 
   /* ${styles.SpinnerStyle} { */
-    .spinner {
+  .spinner {
     margin-right: ${themeSpacing(3)};
   }
 `;
@@ -89,6 +89,18 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
     defaultValue && setValue(defaultValue);
   }, [defaultValue]);
 
+  const updateValue = (name, value = undefined) => {
+    setValue(value);
+    const event = {
+      target: {
+        name,
+        type: 'input',
+        value: value,
+      },
+    };
+    onChange(event);
+  };
+
   const handleChange = e => {
     if (e.target.files && e.target.files.length) {
       const { files } = e.target;
@@ -96,15 +108,7 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
       console.log('calling upload service...', files);
       setTimeout(() => {
         const val = { id: 1, filename: files[0].name, type: label };
-        setValue(val);
-        const event = {
-          target: {
-            name,
-            type: 'input',
-            value: val,
-          },
-        };
-        onChange(event);
+        updateValue(name, val);
         setIsUploading(false);
       }, 2000);
     }
@@ -125,7 +129,7 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
                 variant="blank"
                 iconSize={20}
                 icon={<Close />}
-                onClick={() => setValue(null)}
+                onClick={() => updateValue(name)}
               />
             </DocumentTag>
           ) : (
