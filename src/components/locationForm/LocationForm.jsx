@@ -37,7 +37,7 @@ const LocationForm = ({ id }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} action="" novalidate>
+      <form onSubmit={handleSubmit(onSubmit)} action="" noValidate>
         <Row>
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
