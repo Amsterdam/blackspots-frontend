@@ -2,9 +2,40 @@ import React, { useState, useEffect, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import styled from '@datapunt/asc-core';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Calendar } from '@datapunt/asc-assets';
+import { Icon, styles, themeColor } from '@datapunt/asc-ui';
+
+const DatePickerStyle = styled.div`
+  position: relative;
+  & > .react-datepicker-wrapper > .react-datepicker__input-container > input {
+    border: solid 1px ${themeColor('tint', 'level4')};
+    border-radius: 0;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 100%;
+  }
+
+  & > ${styles.IconStyle} {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+`;
 
 const DatePickerInput = ({ name, onChange, label, defaultValue }) => {
   const [value, setValue] = useState(null);
+
+  const onValueChange = val => {
+    setValue(val);
+    const e = {
+      target: {
+        name,
+        type: 'datepicker',
+        value: val && val.toISOString(),
+      },
+    };
+    onChange(e);
+  };
 
   useEffect(() => {
     defaultValue && setValue(new Date(defaultValue));
@@ -20,26 +51,21 @@ const DatePickerInput = ({ name, onChange, label, defaultValue }) => {
   }, [value]);
 
   return (
-    <DatePicker
-      id={name}
-      name={name}
-      dateFormat="dd-MM-yyyy"
-      isClearable
-      selected={(value && new Date(value)) || null}
-      value={value}
-      ref={datePickerRef}
-      onChange={val => {
-        setValue(val);
-        const e = {
-          target: {
-            name,
-            type: 'datepicker',
-            value: val && val.toISOString(),
-          },
-        };
-        onChange(e);
-      }}
-    />
+    <DatePickerStyle>
+      <DatePicker
+        id={name}
+        autoComplete="off"
+        name={name}
+        dateFormat="dd-MM-yyyy"
+        selected={(value && new Date(value)) || null}
+        value={value}
+        ref={datePickerRef}
+        onChange={onValueChange}
+      ></DatePicker>
+      <Icon size={20}>
+        <Calendar />
+      </Icon>
+    </DatePickerStyle>
   );
 };
 
