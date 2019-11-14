@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Heading, Button, Row } from '@datapunt/asc-ui';
+import PropTypes from 'prop-types';
+import { Heading, Button } from '@datapunt/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
@@ -7,9 +8,12 @@ import { initalValues } from './definitions/FormFields';
 import ManageFormStyle, {
   ControlsColumn,
   ButtonsColumn,
+  FixedRow,
+  MainRow,
 } from './ManageFormStyle';
 import FormFields from './definitions/FormFields';
 import FormInput from './components/FormInput';
+import FileInput from './components/FileInput';
 
 /**
  *
@@ -58,6 +62,7 @@ const normalize = item => {
       eind_uitvoering,
       jaar_oplevering,
       notes,
+      documents,
     },
   } = item;
   return {
@@ -74,6 +79,8 @@ const normalize = item => {
     eind_uitvoering: getDate(eind_uitvoering),
     jaar_oplevering: jaar_oplevering,
     opmerking: notes,
+    rapport_document: documents[0],
+    design_document: documents[1],
   };
 };
 
@@ -87,7 +94,9 @@ const ManageForm = ({ id }) => {
   const { register, handleSubmit, setValue } = useForm({
     defaultValues,
   });
+
   const onSubmit = data => console.log(data);
+
   const handleChange = e => {
     const value =
       e.target.type === 'checkbox' ? e.target.checked : e.target.value;
@@ -95,15 +104,16 @@ const ManageForm = ({ id }) => {
   };
 
   useEffect(() => {
-    Object.keys(initalValues).map(name => register({ name: name }));
+    Object.keys(initalValues).map(name => register({ name }));
+    ['rapport_document', 'design_document'].map(name => register({ name }));
   }, [register]);
 
   return (
     <>
       <ManageFormStyle onSubmit={handleSubmit(onSubmit)} action="" novalidate>
-        <Row>
+        <MainRow>
           <ControlsColumn
-            span={{ small: 12, medium: 12, big: 6, large: 6, xLarge: 6 }}
+            span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
             <Heading $as="h3" color="secondary">
               Locatie
@@ -121,7 +131,7 @@ const ManageForm = ({ id }) => {
             )}
           </ControlsColumn>
           <ControlsColumn
-            span={{ small: 12, medium: 12, big: 6, large: 6, xLarge: 6 }}
+            span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
             <Heading $as="h3" color="secondary">
               Maatregelen
@@ -138,20 +148,47 @@ const ManageForm = ({ id }) => {
               )
             )}
           </ControlsColumn>
-        </Row>
-        <Row>
+          <ControlsColumn
+            span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
+          >
+            <Heading $as="h3" color="secondary">
+              Documenten
+            </Heading>
+            <FileInput
+              label="Rapportage"
+              name="rapport_document"
+              onChange={handleChange}
+              defaultValue={defaultValues['rapport_document']}
+            />
+            <FileInput
+              label="Ontwerp"
+              name="design_document"
+              onChange={handleChange}
+              defaultValue={defaultValues['design_document']}
+            />
+          </ControlsColumn>
+        </MainRow>
+        <FixedRow>
           <ButtonsColumn span={12}>
-            <Button variant="primary" type="submit">
+            <Button variant="secondary" type="submit">
               Opslaan
             </Button>
-            <Button variant="primaryInverted" type="reset">
+            <Button variant="tertiary" type="reset">
               Annuleren
             </Button>
           </ButtonsColumn>
-        </Row>
+        </FixedRow>
       </ManageFormStyle>
     </>
   );
+};
+
+ManageForm.defaultProps = {
+  id: '',
+};
+
+ManageForm.propTypes = {
+  id: PropTypes.string,
 };
 
 export default ManageForm;
