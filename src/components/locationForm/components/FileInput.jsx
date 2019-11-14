@@ -16,9 +16,9 @@ const DocumentName = styled.span`
   cursor: auto;
   font-weight: 500;
   max-width: 100%;
-  height: 40px;
+  height: ${themeSpacing(10)};
   letter-spacing: normal;
-  line-height: 40px;
+  line-height: ${themeSpacing(10)};
   margin-bottom: ${themeSpacing(1)};
   padding: ${themeSpacing(0, 11, 0, 4)};
   position: relative;
@@ -26,11 +26,11 @@ const DocumentName = styled.span`
   white-space: nowrap;
   text-overflow: ellipsis;
 
-  /* TODO () & > ${styles.ButtonStyle} { */
+  /* TODO (WK-209) & > ${styles.ButtonStyle} { */
   & > .closeButton {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 3px;
+    top: 3px;
     background-color: ${themeColor('tint', 'level2')};
    }
 `;
@@ -39,7 +39,7 @@ const FileInputStyle = styled.div`
   width: 100%;
 `;
 
-const StyeldUploadButton = styled.div`
+const StyledUploadButton = styled.div`
   position: relative;
   cursor: pointer;
 
@@ -53,13 +53,13 @@ const StyeldUploadButton = styled.div`
   }
 
   & > input:focus + label {
-    outline-color: #fec813;
+    outline-color: ${themeColor('support', 'focus')};
     outline-style: solid;
     outline-offset: 0px;
     outline-width: 3px;
   }
 
-  /* ${styles.SpinnerStyle} { */
+  /* TODO (WK-209) ${styles.SpinnerStyle} { */
   .spinner {
     margin-right: ${themeSpacing(3)};
   }
@@ -67,12 +67,12 @@ const StyeldUploadButton = styled.div`
 
 const SelectButton = ({ id, onChange, children }) => {
   return (
-    <StyeldUploadButton>
+    <StyledUploadButton>
       <input type="file" id={id} onChange={onChange} />
       <Button variant="primary" $as="label" htmlFor={id}>
         {children}
       </Button>
-    </StyeldUploadButton>
+    </StyledUploadButton>
   );
 };
 
@@ -104,7 +104,12 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
       setIsUploading(true);
       console.log('calling upload service...', files);
       setTimeout(() => {
-        const val = { id: 1, filename: files[0].name, type: label };
+        const val = {
+          id: 1,
+          filename: files[0].name,
+          type: label,
+          file: files[0],
+        };
         updateValue(name, val);
         setIsUploading(false);
       }, 500);
