@@ -9,7 +9,6 @@ import {
 
 export const ControlsColumn = styled(Column)`
   flex-direction: column;
-  align-items: flex-start;
   justify-content: flex-start;
 
   & > ${styles.HeadingStyle} {
@@ -26,8 +25,7 @@ export const BottomRow = styled(Row)`
 
 export const ButtonsColumn = styled(Column)`
   background-color: ${themeColor('tint', 'level1')};
-  padding: 8px 0 12px;
-  align-items: flex-start;
+  padding: ${themeSpacing(2, 0, 3)};
   justify-content: flex-start;
 
   & > :first-child {
