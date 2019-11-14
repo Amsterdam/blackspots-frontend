@@ -6,19 +6,19 @@ import { withUserContext } from 'test/utils';
 import DashboardPage from 'views/dashboard/DashboardPage';
 import ConceptPage from 'views/concepts/ConceptPage';
 import ContactPage from 'views/contact/ContactPage';
-import ManageLocationPage from 'views/manage/ManageLocationPage';
+import LocationPage from 'views/location/LocationPage';
 
 jest.mock('views/dashboard/DashboardPage');
 jest.mock('views/concepts/ConceptPage');
 jest.mock('views/contact/ContactPage');
-jest.mock('views/manage/ManageLocationPage');
+jest.mock('views/location/LocationPage');
 
 describe('AppRoutes', () => {
   beforeEach(() => {
     DashboardPage.mockReturnValue(<div>dashboard</div>);
     ConceptPage.mockReturnValue(<div>concept</div>);
     ContactPage.mockReturnValue(<div>contact</div>);
-    ManageLocationPage.mockReturnValue(<div>manage</div>);
+    LocationPage.mockReturnValue(<div>location</div>);
   });
 
   it('should render the dashboard ', () => {
@@ -29,12 +29,12 @@ describe('AppRoutes', () => {
     expect(queryByText('dashboard')).not.toBeNull();
   });
 
-  it('should render the manage page when authorized ', () => {
+  it('should render the location page when authorized ', () => {
     var user = { canAdd: true };
     const { queryByText } = render(
       withUserContext(<AppRoutes></AppRoutes>, user, '/add')
     );
-    expect(queryByText('manage')).not.toBeNull();
+    expect(queryByText('location')).not.toBeNull();
   });
 
   it('should navigate home when not authorized to add ', () => {
@@ -42,7 +42,7 @@ describe('AppRoutes', () => {
     const { queryByText } = render(
       withUserContext(<AppRoutes></AppRoutes>, user, '/add')
     );
-    expect(queryByText('manage')).toBeNull();
+    expect(queryByText('location')).toBeNull();
     expect(queryByText('dashboard')).not.toBeNull();
   });
 });
