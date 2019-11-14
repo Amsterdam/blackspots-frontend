@@ -65,7 +65,6 @@ const normalize = item => {
       documents,
     },
   } = item;
-  console.log(documents);
   return {
     ...initalValues,
     naam: description,
@@ -95,7 +94,9 @@ const ManageForm = ({ id }) => {
   const { register, handleSubmit, setValue } = useForm({
     defaultValues,
   });
+
   const onSubmit = data => console.log(data);
+
   const handleChange = e => {
     const value =
       e.target.type === 'checkbox' ? e.target.checked : e.target.value;
@@ -103,10 +104,8 @@ const ManageForm = ({ id }) => {
   };
 
   useEffect(() => {
-    Object.keys(initalValues).map(name => register({ name: name }));
-    ['rapport_document', 'design_document'].map(name =>
-      register({ name: name })
-    );
+    Object.keys(initalValues).map(name => register({ name }));
+    ['rapport_document', 'design_document'].map(name => register({ name }));
   }, [register]);
 
   return (
@@ -160,13 +159,13 @@ const ManageForm = ({ id }) => {
               name="rapport_document"
               onChange={handleChange}
               defaultValue={defaultValues['rapport_document']}
-            ></FileInput>
+            />
             <FileInput
               label="Ontwerp"
               name="design_document"
               onChange={handleChange}
               defaultValue={defaultValues['design_document']}
-            ></FileInput>
+            />
           </ControlsColumn>
         </MainRow>
         <FixedRow>
