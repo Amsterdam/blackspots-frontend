@@ -46,8 +46,8 @@ const DatePickerInput = ({ name, onChange, defaultValue }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      datePickerRef.current.cancelFocusInput();
-      datePickerRef.current.setOpen(false);
+      datePickerRef.current && datePickerRef.current.cancelFocusInput();
+      datePickerRef.current && datePickerRef.current.setOpen(false);
     }, 0);
   }, [value]);
 

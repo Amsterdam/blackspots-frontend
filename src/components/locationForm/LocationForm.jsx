@@ -22,7 +22,9 @@ const LocationForm = ({ id }) => {
     defaultValues,
   });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => {
+    console.log(data);
+  };
 
   const handleChange = e => {
     const value =
