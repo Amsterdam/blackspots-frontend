@@ -33,3 +33,6 @@ window.Element.prototype.closest = function closest(selector) {
 
   return el;
 };
+
+// Mock the window.fetch function
+global.fetch = require('jest-fetch-mock');
