@@ -58,3 +58,28 @@ export const getByUrl = async (url, params, cancel, reloadOnUnauthorized) => {
     getWithToken(url, params, cancel, token, reloadOnUnauthorized)
   );
 };
+
+const getFormData = data => {
+  const formData = new FormData();
+
+  for (const name in data) {
+    formData.append(name, data[name]);
+  }
+
+  return formData;
+};
+
+export const sendData = async (url, data, method = 'POST') => {
+  const token = getAccessToken();
+  const options = {
+    method: 'method',
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+    body: getFormData(data),
+  };
+
+  return fetch(url, options)
+    .then(response => handleErrors(response))
+    .then(response => response.json());
+};
