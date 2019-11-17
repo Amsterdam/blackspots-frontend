@@ -72,7 +72,7 @@ const getFormData = data => {
 export const sendData = async (url, data, method = 'POST') => {
   const token = getAccessToken();
   const options = {
-    method: 'method',
+    method,
     headers: {
       Authorization: 'Bearer ' + token,
     },
