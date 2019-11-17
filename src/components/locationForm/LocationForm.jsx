@@ -10,6 +10,7 @@ import FormFields from './definitions/FormFields';
 import FormInput from './components/FormInput';
 import FileInput from './components/FileInput';
 import normalize from './services/normalize';
+import { sendData } from 'shared/api/api';
 
 const LocationForm = ({ id }) => {
   const [{ selectedLocation }] = useAppReducer(LOCATION);
@@ -22,8 +23,15 @@ const LocationForm = ({ id }) => {
     defaultValues,
   });
 
-  const onSubmit = data => {
-    console.log(data);
+  const onSubmit = async data => {
+    try {
+      console.log(data);
+      const url = '/api/location';
+      const response = await sendData(url, data);
+      console.log(response);
+    } catch (error) {
+      console.log('Error! ', error);
+    }
   };
 
   const handleChange = e => {

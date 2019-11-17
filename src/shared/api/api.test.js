@@ -106,6 +106,8 @@ describe('Api service', () => {
       expect(fetch.mock.calls[0][1].headers).toEqual({
         Authorization: `Bearer token12345`,
       });
+
+      expect(response).toEqual(responseMock);
     });
   });
 });
