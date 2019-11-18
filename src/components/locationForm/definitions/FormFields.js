@@ -121,6 +121,8 @@ export const initalValues = {
     }),
     {}
   ),
+  rapport_document: {},
+  design_document: {},
 };
 
 export default FormFields;

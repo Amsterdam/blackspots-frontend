@@ -16,7 +16,9 @@ const StyledInput = styled(Input)`
 `;
 
 const TextInput = ({ name, label, ...otherProps }) => {
-  return <StyledInput name={name} {...otherProps} />;
+  return (
+    <StyledInput name={name} data-testid={`${name}-test-id`} {...otherProps} />
+  );
 };
 
 export default TextInput;

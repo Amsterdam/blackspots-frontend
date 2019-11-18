@@ -46,8 +46,8 @@ const DatePickerInput = ({ name, onChange, defaultValue }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      datePickerRef.current.cancelFocusInput();
-      datePickerRef.current.setOpen(false);
+      datePickerRef.current && datePickerRef.current.cancelFocusInput();
+      datePickerRef.current && datePickerRef.current.setOpen(false);
     }, 0);
   }, [value]);
 
@@ -73,7 +73,8 @@ const DatePickerInput = ({ name, onChange, defaultValue }) => {
 DatePickerInput.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  defaultValue: PropTypes.shape({}).isRequired,
+  defaultValue: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
+    .isRequired,
 };
 
 export default DatePickerInput;

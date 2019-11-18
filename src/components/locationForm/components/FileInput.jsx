@@ -154,13 +154,14 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
 
 FileInput.defaultProps = {
   name: '',
+  defaultValue: undefined,
 };
 
 FileInput.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  defaultValue: PropTypes.shape({}).isRequired,
+  defaultValue: PropTypes.shape({}),
 };
 
 export default FileInput;

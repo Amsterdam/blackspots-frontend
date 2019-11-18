@@ -58,9 +58,8 @@ const RadioGroupInput = ({
       {options.map(option => {
         const { label, value } = option;
         return (
-          <ListItem>
+          <ListItem key={value}>
             <RadioInput
-              key={value}
               name={name}
               label={label}
               value={value}
