@@ -28,7 +28,7 @@ const LocationForm = ({ id }) => {
       const url = '/api/location';
       await sendData(url, data);
     } catch (error) {
-      // Diapatch the error message. console.log('Error! ', error);
+      // Dispatch the error message. console.log('Error! ', error);
     }
   };
 
