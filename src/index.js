@@ -11,13 +11,6 @@ import './styles/fonts.scss';
 
 const environment = process.env.NODE_ENV;
 
-export const configuration = {
-  API_ROOT: process.env.REACT_APP_API_ROOT,
-  ROOT: process.env.REACT_APP_ROOT,
-  AUTH_ROOT: process.env.REACT_APP_AUTH_ROOT,
-  AUTH_REALM: process.env.REACT_APP_AUTH_REALM,
-};
-
 Sentry.init({
   environment,
   dsn: 'https://45be21450b804b1e85ad7462a529b0f8@sentry.data.amsterdam.nl/24',
