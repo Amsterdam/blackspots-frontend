@@ -3,6 +3,8 @@ services:
   web:
     build:
       context: .
+      args:
+        - BUILD_ARG=acc
     environment:
       - TZ=Europe/Amsterdam
     ipc: host
@@ -17,4 +19,5 @@ services:
       - NODE_ENV=test
       - CI=true
       - TZ=Europe/Amsterdam
+      - BUILD_ARG=acc
     command: npm run test

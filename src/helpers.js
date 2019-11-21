@@ -33,17 +33,6 @@ export function getQuickscanYearFromMarker(marker) {
   return marker.feature.properties.jaar_ongeval_quickscan;
 }
 
-/**
- * Check if the acc or prod env should be used
- */
-export function shouldUseAccEnv() {
-  return (
-    window.location.hostname.indexOf('acc') >= 0 ||
-    window.location.hostname.indexOf('localhost') >= 0 ||
-    window.location.hostname.indexOf('blackspots-frontend.netlify.com') >= 0
-  );
-}
-
 // =====
 // MATOMO
 // Temporarily simple setup, wating for hook library which is on the way
