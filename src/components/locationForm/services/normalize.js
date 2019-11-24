@@ -1,5 +1,4 @@
 import { initalValues } from '../definitions/FormFields';
-import { stringToDate } from './dateUtil';
 
 /**
  *
@@ -38,14 +37,57 @@ const fromFeature = feature => {
     status,
     actiehouder: actiehouders,
     taken: tasks,
-    start_uitvoering: stringToDate(start_uitvoering),
-    eind_uitvoering: stringToDate(eind_uitvoering),
+    start_uitvoering,
+    eind_uitvoering,
     jaar_oplevering,
     opmerking: notes,
     rapport_document: documents[0],
     design_document: documents[1],
   };
 };
+
+export const toFeature = (location) => {
+  const {
+    id,
+    description,
+    locatie_id,
+    point ,
+    spot_type,
+    jaar_blackspotlijst,
+    status,
+    actiehouders,
+    tasks,
+    start_uitvoering,
+    eind_uitvoering,
+    jaar_oplevering,
+    notes,
+    rapport_document,
+    design_document,
+  } = location;
+  return {
+    type: 'Feature',
+    id,
+    properties: {
+      description,
+      locatie_id,
+      spot_type,
+      jaar_blackspotlijst,
+      status,
+      actiehouders,
+      tasks,
+      start_uitvoering,
+      eind_uitvoering,
+      jaar_oplevering,
+      notes,
+      documents: [
+        ...(rapport_document ? [rapport_document] : []),
+        ...(design_document ? [design_document] : []),
+      ]
+    },
+    geometry: point
+  }
+
+}
 
 /**
  *
@@ -69,7 +111,6 @@ export const toFormData = location => {
     rapport_document,
     design_document,
   } = location;
-
   return {
     description: naam,
     locatie_id: nummer,
