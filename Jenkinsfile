@@ -43,7 +43,8 @@ node {
 
 String BRANCH = "${env.BRANCH_NAME}"
 
-if (BRANCH == "master") {
+
+if (BRANCH == "master" || BRANCH == "develop") {
     node {
         stage('Push acceptance image') {
             tryStep "image tagging", {
@@ -66,6 +67,10 @@ if (BRANCH == "master") {
         }
     }
 
+}
+
+
+if (BRANCH == "master") {
     stage('Waiting for approval') {
         slackSend channel: '#ci-channel', color: 'warning', message: 'Blackspots is waiting for Production Release - please confirm'
         input "Deploy to Production?"

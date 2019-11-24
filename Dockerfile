@@ -32,7 +32,6 @@ ENV NODE_PATH=src/
 ENV NODE_ENV=production
 RUN npm run build
 
-
 # Deploy
 FROM nginx:stable-alpine
 ARG BUILD_ENV=prod
