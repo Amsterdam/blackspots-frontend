@@ -23,17 +23,22 @@ const Map = () => {
   const { errorMessage, loading, results, fetchData } = useDataFetching();
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [showDetailPanel, setShowDetailPanel] = useState(false);
-  const [, actions] = useAppReducer(LOCATION);
+  const [{ locations }, actions] = useAppReducer(LOCATION);
 
   const mapRef = useMap();
 
-  React.useEffect(() => {
-    (async () => {
-      const blackspotsEndpoint = `${process.env.REACT_APP_API_ROOT}blackspots/spots/?format=geojson`;
-      fetchData(blackspotsEndpoint);
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (locations.length === 0)
+      (async () => {
+        const blackspotsEndpoint = `${process.env.REACT_APP_API_ROOT}blackspots/spots/?format=geojson`;
+        fetchData(blackspotsEndpoint);
+      })();
   }, []);
+
+  useEffect(() => {
+    if (locations.length === 0)
+      actions.addLocations({ payload: results ? [...results.features] : [] });
+  }, [results]);
 
   const [
     blackspotYearFilter,
@@ -42,7 +47,7 @@ const Map = () => {
     setBlackspotYearFilter,
     setDeliveredYearFilter,
     setQuickscanYearFilter,
-  ] = useYearFilters(results);
+  ] = useYearFilters(locations);
 
   const onMarkerClick = (feature, latlng) => {
     const currentZoom = mapRef.current.getZoom();
@@ -52,7 +57,7 @@ const Map = () => {
     setShowDetailPanel(true);
   };
 
-  const geoLayerRef = useBlackspotsLayer(mapRef, results, onMarkerClick);
+  const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
 
   const toggleDetailPanel = () => {
     setShowDetailPanel(!showDetailPanel);
