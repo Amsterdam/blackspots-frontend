@@ -5,6 +5,7 @@ import styled from '@datapunt/asc-core';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Calendar } from '@datapunt/asc-assets';
 import { Icon, styles, themeColor } from '@datapunt/asc-ui';
+import { dateToString } from '../services/dateUtil';
 
 const DatePickerStyle = styled.div`
   position: relative;
@@ -32,7 +33,7 @@ const DatePickerInput = ({ name, onChange, defaultValue }) => {
       target: {
         name,
         type: 'datepicker',
-        value: val && val.toISOString(),
+        value: val && dateToString(val),
       },
     };
     onChange(e);
@@ -70,11 +71,14 @@ const DatePickerInput = ({ name, onChange, defaultValue }) => {
   );
 };
 
+DatePickerInput.defaultValues = {
+  defaultValue: ''
+};
+
 DatePickerInput.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  defaultValue: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string])
-    .isRequired,
+  defaultValue: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string]),
 };
 
 export default DatePickerInput;

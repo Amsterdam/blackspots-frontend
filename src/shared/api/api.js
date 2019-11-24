@@ -63,9 +63,12 @@ const getFormData = data => {
   const formData = new FormData();
 
   for (const name in data) {
-    formData.append(name, data[name]);
-  }
-
+    data[name] &&
+      formData.append(
+        name,
+        data[name].file ? data[name].file : data[name]
+      );
+  };
   return formData;
 };
 
