@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import L from 'leaflet';
+import icon from 'leaflet/dist/images/marker-icon.png';
 
 // Imports needed for amaps
 import 'leaflet/dist/leaflet.css';
@@ -21,9 +23,9 @@ import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 
 const Map = () => {
   const { errorMessage, loading, results, fetchData } = useDataFetching();
-  const [selectedFeature, setSelectedFeature] = useState(null);
   const [showDetailPanel, setShowDetailPanel] = useState(false);
-  const [{ locations }, actions] = useAppReducer(LOCATION);
+  const [marker, setMarker] = useState(null);
+  const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
 
   const mapRef = useMap();
 
@@ -50,12 +52,32 @@ const Map = () => {
   ] = useYearFilters(locations);
 
   const onMarkerClick = (feature, latlng) => {
-    const currentZoom = mapRef.current.getZoom();
-    mapRef.current.flyTo(latlng, currentZoom < 14 ? 14 : currentZoom);
+    console.log(feature, latlng);
     actions.selectLocation({ payload: feature });
-    setSelectedFeature(feature);
-    setShowDetailPanel(true);
   };
+
+  useEffect(() => {
+    if (selectedLocation) {
+      const currentZoom = mapRef.current.getZoom();
+      const latlng = {
+        lat: selectedLocation.geometry.coordinates[1],
+        lng: selectedLocation.geometry.coordinates[0],
+      };
+      mapRef.current.flyTo(latlng, currentZoom < 14 ? 14 : currentZoom);
+
+      if (marker) {
+        marker.setLatLng(latlng);
+      } else {
+        setMarker(L.marker([latlng.lat, latlng.lng], {
+          icon: L.icon({
+            iconUrl: icon,
+            iconAnchor: [18,45]
+          }),
+        }).addTo(mapRef.current));
+      }
+      setShowDetailPanel(true);
+    }
+  }, [selectedLocation]);
 
   const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
 
@@ -148,7 +170,7 @@ const Map = () => {
         )}
 
         <DetailPanel
-          feature={selectedFeature}
+          feature={selectedLocation}
           isOpen={showDetailPanel}
           togglePanel={toggleDetailPanel}
         />
