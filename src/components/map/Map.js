@@ -52,7 +52,6 @@ const Map = () => {
   ] = useYearFilters(locations);
 
   const onMarkerClick = (feature, latlng) => {
-    console.log(feature, latlng);
     actions.selectLocation({ payload: feature });
   };
 
