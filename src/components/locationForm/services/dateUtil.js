@@ -6,7 +6,7 @@
  * It will be replaced when the retrieved date will be in ISO format
  *
  */
-const getDate = date => {
+export const stringToDate = date => {
   const regExp = /\d{2}\/\d{2}\/\d{2}/;
 
   return (
@@ -17,8 +17,17 @@ const getDate = date => {
         .split('/')
         .reverse()
         .join('-')}`
-    ).toISOString()
+    )
   );
 };
 
-export default getDate;
+/**
+ *
+ * @param {date} date
+ * Temporary function that converts a date object in the dd/MM/yy format as expected in the api
+ */
+export const dateToString = (date) => {
+  return date && `${date.getDate()}/${String(date.getMonth() +1).padStart(2, '0')}/${String(date.getFullYear()).substring(2)}`
+}
+
+
