@@ -19,13 +19,13 @@ const useMap = () => {
     });
 
     // Add the stadsdelen WMS
-    L.tileLayer
-      .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
-        layers: ['stadsdeel'],
-        transparent: true,
-        format: 'image/png',
-      })
-      .addTo(mapRef.current);
+    // L.tileLayer
+    //   .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
+    //     layers: ['stadsdeel'],
+    //     transparent: true,
+    //     format: 'image/png',
+    //   })
+    //   .addTo(mapRef.current);
 
     // Set zoom config manually after adding WMS
     // For some reason this doesn't work when set during the creation of the map

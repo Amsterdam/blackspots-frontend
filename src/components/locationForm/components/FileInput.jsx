@@ -83,7 +83,7 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
   const fileUploadId = `fileUpload${label}`;
 
   useEffect(() => {
-    defaultValue && setValue(defaultValue);
+    setValue(defaultValue || null);
   }, [defaultValue]);
 
   const updateValue = (name, value = undefined) => {
