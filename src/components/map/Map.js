@@ -16,7 +16,6 @@ import useYearFilters from './hooks/useYearFilters';
 import useBlackspotsLayer from './hooks/useBlackspotsLayer';
 import useMap from './hooks/useMap';
 import MapStyle from './MapStyle';
-import { shouldUseAccEnv } from 'helpers.js';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 
@@ -30,9 +29,7 @@ const Map = () => {
 
   React.useEffect(() => {
     (async () => {
-      const blackspotsEndpoint = `https://${
-        shouldUseAccEnv() ? 'acc.' : ''
-      }api.data.amsterdam.nl/blackspots/spots/?format=geojson`;
+      const blackspotsEndpoint = `${process.env.REACT_APP_API_ROOT}blackspots/spots/?format=geojson`;
       fetchData(blackspotsEndpoint);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps

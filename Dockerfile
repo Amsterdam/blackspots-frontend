@@ -27,6 +27,9 @@ RUN npm --production=false \
 # Build dependencies
 COPY . /app/
 
+ARG BUILD_ENV=prod
+COPY .env.${BUILD_ENV} /app/.env
+
 # Build
 ENV NODE_PATH=src/
 ENV NODE_ENV=production

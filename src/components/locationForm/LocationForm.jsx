@@ -25,12 +25,10 @@ const LocationForm = ({ id }) => {
 
   const onSubmit = async data => {
     try {
-      console.log(data);
       const url = '/api/location';
-      const response = await sendData(url, data);
-      console.log(response);
+      await sendData(url, data);
     } catch (error) {
-      console.log('Error! ', error);
+      // Dispatch the error message. console.log('Error! ', error);
     }
   };
 
