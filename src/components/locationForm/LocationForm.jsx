@@ -9,12 +9,11 @@ import { ControlsColumn, ButtonsColumn, BottomRow } from './LocationFormStyle';
 import FormFields from './definitions/FormFields';
 import FormInput from './components/FormInput';
 import FileInput from './components/FileInput';
-import fromFeature, { toFormData } from './services/normalize';
+import fromFeature, { toFormData, toFeature } from './services/normalize';
 import { sendData } from 'shared/api/api';
 
-
 const LocationForm = ({ id }) => {
-  const [{ selectedLocation }] = useAppReducer(LOCATION);
+  const [{ selectedLocation }, actions] = useAppReducer(LOCATION);
 
   const location = fromFeature(selectedLocation);
   const defaultValues = {
@@ -27,9 +26,13 @@ const LocationForm = ({ id }) => {
   const onSubmit = async data => {
     try {
       const url = `/api/blackspots/spots/${data.nummer}/`;
-      await sendData(url, toFormData(data), 'PATCH');
+      const location = await sendData(url, toFormData(data), 'PATCH');
+
+      const feature = toFeature(location);
+      actions.updateLocation({ payload: feature });
     } catch (error) {
-      // Dispatch the error message. console.log('Error! ', error);
+      // Dispatch the error message. This will be removed by the implementation of the error handling
+      console.log('Error! ', error);
     }
   };
 

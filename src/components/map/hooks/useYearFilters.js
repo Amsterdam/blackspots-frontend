@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useYearFilters = results => {
+const useYearFilters = features => {
   const [blackspotYearFilter, setBlackspotYearFilter] = useState({});
   const [deliveredYearFilter, setDeliveredYearFilter] = useState({});
   const [quickscanYearFilter, setQuickscanYearFilter] = useState({});
@@ -15,8 +15,8 @@ const useYearFilters = results => {
     const blackspotYears = [];
     const deliveredYears = [];
     const quickscanYears = [];
-    results &&
-      results.features.forEach(f => {
+    features &&
+      features.forEach(f => {
         // Get the year values
         const {
           jaar_blackspotlijst,
@@ -56,7 +56,7 @@ const useYearFilters = results => {
     setBlackspotYearFilter(blackspotYearFilter);
     setDeliveredYearFilter(deliveredYearFilter);
     setQuickscanYearFilter(quickscanYearFilter);
-  }, [results]);
+  }, [features]);
   return [
     blackspotYearFilter,
     deliveredYearFilter,

@@ -5,7 +5,7 @@ import styled from '@datapunt/asc-core';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Calendar } from '@datapunt/asc-assets';
 import { Icon, styles, themeColor } from '@datapunt/asc-ui';
-import { dateToString } from '../services/dateUtil';
+import { dateToString, stringToDate } from '../services/dateUtil';
 
 const DatePickerStyle = styled.div`
   position: relative;
@@ -40,7 +40,7 @@ const DatePickerInput = ({ name, onChange, defaultValue }) => {
   };
 
   useEffect(() => {
-    defaultValue && setValue(new Date(defaultValue));
+    defaultValue && setValue(stringToDate(defaultValue));
   }, [defaultValue]);
 
   const datePickerRef = useRef(null);

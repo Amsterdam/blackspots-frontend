@@ -4,10 +4,10 @@ import L from 'leaflet';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 import { SpotTypes, SpotStatusTypes } from 'constants.js';
 
-const useBlackspotsLayer = (mapRef, results, onMarkerClick) => {
+const useBlackspotsLayer = (mapRef, locations, onMarkerClick) => {
   const geoLayerRef = useRef(null);
   useEffect(() => {
-    geoLayerRef.current = L.geoJSON(results, {
+    geoLayerRef.current = L.geoJSON(locations, {
       // Add custom markers
       onEachFeature: function(feature, layer) {
         layer.on('click', ({ latlng }) => {
@@ -37,7 +37,7 @@ const useBlackspotsLayer = (mapRef, results, onMarkerClick) => {
       },
     }).addTo(mapRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [results]);
+  }, [locations]);
 
   return geoLayerRef;
 };
