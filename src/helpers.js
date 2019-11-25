@@ -33,25 +33,3 @@ export function getQuickscanYearFromMarker(marker) {
   return marker.feature.properties.jaar_ongeval_quickscan;
 }
 
-// =====
-// MATOMO
-// Temporarily simple setup, wating for hook library which is on the way
-// =====
-
-function pushToMatomo(payload) {
-  const matomo = window._paq || [];
-  matomo.push(payload);
-}
-
-export function trackPageView() {
-  pushToMatomo(['setCustomUrl', document.location.href]);
-  pushToMatomo(['trackPageView']);
-}
-
-export function trackFilter(name) {
-  pushToMatomo(['trackEvent', 'Map filters', name]);
-}
-
-export function trackDownload() {
-  pushToMatomo(['trackEvent', 'PDF download']);
-}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 import SVGIcon from 'components/SVGIcon/SVGIcon';
 import { SpotStatusTypes, SpotTypes } from 'constants.js';
 import { resetFilter } from 'components/map/helpers';
@@ -10,7 +11,6 @@ import { StatusDisplayNames, SpotTypeDisplayNames } from '../../constants';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
-import { trackFilter } from '../../helpers';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -38,6 +38,11 @@ const FilterPanel = ({
 }) => {
   const [optionValue, setOptionValue] = useState(ContextMenuOptions.ALL);
   const [showPanel, setShowPanel] = useState(true);
+  const { trackEvent } = useMatomo();
+
+  const trackFilter= (name) => {
+    trackEvent({category: 'Map filters', action: name});
+  }
 
   /**
    * Update the filters of the actual map
