@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
 import './styles/styles.scss';
 import './styles/fonts.scss';
+require('formdata-polyfill');
 
 const environment = process.env.NODE_ENV;
 

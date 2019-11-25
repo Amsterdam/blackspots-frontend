@@ -1,15 +1,15 @@
 import { initalValues } from '../definitions/FormFields';
-import getDate from './getDate';
+import { stringToDate } from './dateUtil';
 
 /**
  *
- * @param {object} item
+ * @param {object} feature
  *
  * Converts the server feature to a client location object
  *
  */
-const normalize = item => {
-  if (!item) return initalValues;
+const fromFeature = feature => {
+  if (!feature) return initalValues;
 
   const {
     geometry: { coordinates },
@@ -27,7 +27,7 @@ const normalize = item => {
       notes,
       documents,
     },
-  } = item;
+  } = feature;
   return {
     ...initalValues,
     naam: description,
@@ -38,8 +38,8 @@ const normalize = item => {
     status,
     actiehouder: actiehouders,
     taken: tasks,
-    start_uitvoering: getDate(start_uitvoering),
-    eind_uitvoering: getDate(eind_uitvoering),
+    start_uitvoering: stringToDate(start_uitvoering),
+    eind_uitvoering: stringToDate(eind_uitvoering),
     jaar_oplevering,
     opmerking: notes,
     rapport_document: documents[0],
@@ -47,4 +47,51 @@ const normalize = item => {
   };
 };
 
-export default normalize;
+/**
+ *
+ * @param {object} location
+ * Converts the location object to the api expected fromat
+ */
+export const toFormData = location => {
+  const {
+    naam,
+    nummer,
+    coordinaten,
+    spot_type,
+    jaar_blackspotlijst,
+    status,
+    actiehouder,
+    taken,
+    start_uitvoering,
+    eind_uitvoering,
+    jaar_oplevering,
+    opmerking,
+    rapport_document,
+    design_document,
+  } = location;
+
+  return {
+    description: naam,
+    locatie_id: nummer,
+    point: JSON.stringify({
+      type: 'Point',
+      coordinates: coordinaten
+        .split(', ')
+        .map(s => parseFloat(s))
+        .reverse(),
+    }),
+    spot_type,
+    jaar_blackspotlijst,
+    status,
+    actiehouders: actiehouder,
+    tasks: taken,
+    start_uitvoering,
+    eind_uitvoering,
+    jaar_oplevering,
+    notes: opmerking,
+    rapport_document,
+    design_document,
+  };
+};
+
+export default fromFeature;

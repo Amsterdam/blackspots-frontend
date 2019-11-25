@@ -27,6 +27,8 @@
   npm start
 ```
 
+For development a dyson server can be used
+
 - Open <http://localhost:3000>
 
 ## Testing
