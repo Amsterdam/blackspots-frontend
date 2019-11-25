@@ -18,6 +18,7 @@ import useMap from './hooks/useMap';
 import MapStyle from './MapStyle';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
+import { endpoints } from '../../constants';
 
 const Map = () => {
   const { errorMessage, loading, results, fetchData } = useDataFetching();
@@ -30,8 +31,7 @@ const Map = () => {
   useEffect(() => {
     if (locations.length === 0)
       (async () => {
-        const blackspotsEndpoint = `${process.env.REACT_APP_API_ROOT}blackspots/spots/?format=geojson`;
-        fetchData(blackspotsEndpoint);
+        fetchData(endpoints.blackspots);
       })();
   }, []);
 

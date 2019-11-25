@@ -60,3 +60,7 @@ export const SpotStatusColor = {
   [SpotStatusTypes.GEREED]: StatusColors.GEREED,
   [SpotStatusTypes.GEEN_MAATREGEL]: StatusColors.GEEN_MAATREGEL,
 };
+
+export const endpoints = {
+  blackspots: `${process.env.REACT_APP_API_ROOT}blackspots/spots/?format=geojson`,
+}
