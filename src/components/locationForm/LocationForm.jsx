@@ -20,16 +20,20 @@ const LocationForm = withRouter(({ id, history }) => {
   const location = fromFeature(selectedLocation);
   const defaultValues = id
     ? {
+        ...initalValues,
         ...location,
       }
-    : {};
+    : {
+      ...initalValues
+    };
+
   const { register, handleSubmit, setValue } = useForm({
     defaultValues,
   });
 
   const onSubmit = async data => {
     try {
-      const url = `/api/blackspots/spots/${id && data.nummer + '/'}`;
+      const url = `/api/blackspots/spots/${(id && data.nummer + '/') || ''}`;
       const location = await sendData(
         url,
         toFormData(data),
