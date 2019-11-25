@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import { NavLink } from 'react-router-dom';
 
@@ -14,7 +15,6 @@ import BlueLinkButton from 'shared/buttons/BlueLinkButton';
 
 import { SpotTypeDisplayNames } from '../../constants';
 
-import { trackDownload } from 'helpers';
 import UserContext from '../../shared/user/UserContext';
 
 import { Heading, Button, Link } from '@datapunt/asc-ui';
@@ -37,6 +37,11 @@ function getStatusClassName(status) {
 
 const DetailPanel = ({ isOpen, togglePanel, feature }) => {
   const { canEdit } = useContext(UserContext);
+  const { trackEvent } = useMatomo();
+  console.log('trackEvent', trackEvent);
+  const trackDownload = () => {
+    trackEvent({ category: 'PDF download' });
+  };
 
   if (!feature) {
     return <div className={classNames(styles.Container)} />;
@@ -192,7 +197,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
                       </td>
                       <td>
                         <a
-                          onClick={() => trackDownload()}
+                          onClick={trackDownload}
                           href={`${d._links.self.href.split('?')[0]}file`}
                           download
                         >
