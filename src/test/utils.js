@@ -15,6 +15,11 @@ export const withUserContext = (Component, user, route) => {
   );
 };
 
-export const withTheme = Component => (
-  <ThemeProvider>{Component}</ThemeProvider>
-);
+export const withTheme = (Component, route) => {
+  if (route) history.push(route);
+  return (
+    <Router history={history}>
+      <ThemeProvider>{Component}</ThemeProvider>
+    </Router>
+  );
+};

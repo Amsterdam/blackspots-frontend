@@ -1,6 +1,6 @@
 import DatePickerInput from '../components/DatePickerInput';
 import RadioGroupInput from '../components/RadioGroupInput';
-import { SpotTypeDisplayNames, StatusDisplayNames } from '../../../constants';
+import { SpotTypeDisplayNames, StatusDisplayNames, SpotStatusTypes, SpotTypes } from '../../../constants';
 import TextInput from '../components/TextInput';
 import TextAreaInput from '../components/TextAreaInput';
 
@@ -34,6 +34,7 @@ const FormFields = [
     column: 1,
     name: 'spot_type',
     label: 'Type',
+    defaultValue: SpotTypes.BLACKSPOT,
     Component: RadioGroupInput,
     options: [
       ...Object.keys(SpotTypeDisplayNames).map(name => ({
@@ -47,6 +48,7 @@ const FormFields = [
     column: 1,
     name: 'jaar_blackspotlijst',
     label: 'Jaar opgenomen in blackspotlijst',
+    defaultValue: String(new Date().getFullYear()),
     Component: TextInput,
     width: '30%',
   },
@@ -55,6 +57,7 @@ const FormFields = [
     column: 1,
     name: 'status',
     label: 'Status',
+    defaultValue: SpotStatusTypes.ONDERZOEK,
     Component: RadioGroupInput,
     options: [
       ...Object.keys(StatusDisplayNames).map(name => ({
@@ -117,7 +120,7 @@ export const initalValues = {
   ...FormFields.reduce(
     (acc, item) => ({
       ...acc,
-      [item.name]: '',
+      [item.name]: item.defaultValue || '',
     }),
     {}
   ),

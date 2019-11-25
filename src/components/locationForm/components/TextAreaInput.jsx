@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types'
 import { Input } from '@datapunt/asc-ui';
 import styled, { css } from '@datapunt/asc-core';
 
@@ -22,7 +23,7 @@ const TextAreaInput = ({
   onChange,
   ...otherProps
 }) => {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState('');
 
   useEffect(() => {
     setValue(defaultValue || '');
@@ -44,5 +45,13 @@ const TextAreaInput = ({
     />
   );
 };
+
+TextAreaInput.defaultValues = {
+  defaultValue: ''
+};
+
+TextAreaInput.propTypes = {
+  defaultValue: PropTypes.string
+}
 
 export default TextAreaInput;
