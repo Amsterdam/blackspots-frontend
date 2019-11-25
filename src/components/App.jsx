@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import LandingPage from 'views/landing/LandingPage';
-import { trackPageView } from '../helpers';
 import useKeycloak from 'shared/hooks/useKeycloak';
 import { GlobalStyle, ThemeProvider } from '@datapunt/asc-ui';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 import AppStyle from './AppStyle';
 import { UserContextProvider } from 'shared/user/UserContext';
 import AppRoutes from './AppRoutes';
@@ -13,7 +13,9 @@ import Header from './header/Header';
 
 const App = () => {
   const user = useKeycloak();
-  trackPageView();
+  const { trackPageView } = useMatomo()
+
+  useEffect(() => trackPageView(), []);
 
   return (
     <UserContextProvider user={user}>

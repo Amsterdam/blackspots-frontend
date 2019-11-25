@@ -41,11 +41,10 @@ const LocationForm = withRouter(({ id, history }) => {
       );
 
       const feature = toFeature(location);
-      actions.selectLocation({ payload: feature });
       actions.updateLocation({ payload: feature });
       history.push(appRoutes.HOME);
     } catch (error) {
-      // Dispatch the error message. console.log('Error! ', error);
+      // Dispatch the error message. This will be removed by the implementation of the error handling
       console.log('Error! ', error);
     }
   };

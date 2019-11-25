@@ -28,6 +28,7 @@ const locationReducer = (state = initialState, action) => {
       return {
         ...state,
         locations: [ ...state.locations.filter(location => location.properties.locatie_id !== action.payload.properties.locatie_id), action.payload],
+        selectedLocation: { ...action.payload },
       };
     default:
       return state;
