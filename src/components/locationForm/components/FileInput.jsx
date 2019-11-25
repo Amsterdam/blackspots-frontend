@@ -102,7 +102,6 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
     if (e.target.files && e.target.files.length) {
       const { files } = e.target;
       setIsUploading(true);
-      console.log('calling upload service...', files);
       setTimeout(() => {
         const val = {
           id: 1,
