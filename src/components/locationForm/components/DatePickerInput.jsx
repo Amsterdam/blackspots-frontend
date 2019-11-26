@@ -40,7 +40,7 @@ const DatePickerInput = ({ name, onChange, defaultValue }) => {
   };
 
   useEffect(() => {
-    setValue(defaultValue ? stringToDate(defaultValue) : null);
+    defaultValue && setValue(stringToDate(defaultValue));
   }, [defaultValue]);
 
   const datePickerRef = useRef(null);

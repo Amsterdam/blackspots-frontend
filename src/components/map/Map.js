@@ -20,20 +20,19 @@ import useMap from './hooks/useMap';
 import MapStyle from './MapStyle';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
+import { endpoints } from '../../constants';
 
 const Map = () => {
   const { errorMessage, loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
-  const [marker, setMarker] = useState(null);
-  const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
+  const [{ locations }, actions] = useAppReducer(LOCATION);
 
   const mapRef = useMap();
 
   useEffect(() => {
     if (locations.length === 0)
       (async () => {
-        const blackspotsEndpoint = `${process.env.REACT_APP_API_ROOT}blackspots/spots/?format=geojson`;
-        fetchData(blackspotsEndpoint);
+        fetchData(endpoints.blackspots);
       })();
   }, []);
 
@@ -54,29 +53,6 @@ const Map = () => {
   const onMarkerClick = (feature, latlng) => {
     actions.selectLocation({ payload: feature });
   };
-
-  useEffect(() => {
-    if (selectedLocation) {
-      const currentZoom = mapRef.current.getZoom();
-      const latlng = {
-        lat: selectedLocation.geometry.coordinates[1],
-        lng: selectedLocation.geometry.coordinates[0],
-      };
-      mapRef.current.flyTo(latlng, currentZoom < 14 ? 14 : currentZoom);
-
-      if (marker) {
-        marker.setLatLng(latlng);
-      } else {
-        setMarker(L.marker([latlng.lat, latlng.lng], {
-          icon: L.icon({
-            iconUrl: icon,
-            iconAnchor: [18,45]
-          }),
-        }).addTo(mapRef.current));
-      }
-      setShowDetailPanel(true);
-    }
-  }, [selectedLocation]);
 
   const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
 
