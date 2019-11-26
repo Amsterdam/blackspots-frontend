@@ -19,13 +19,13 @@ const LocationForm = withRouter(({ id, history }) => {
 
   const location = fromFeature(selectedLocation);
   const defaultValues = id
-    ? {
-        ...initalValues,
-        ...location,
-      }
-    : {
-      ...initalValues
-    };
+  ? {
+    ...initalValues,
+    ...location,
+  }
+  : {
+    ...initalValues
+  };
 
   const { register, handleSubmit, setValue } = useForm({
     defaultValues,

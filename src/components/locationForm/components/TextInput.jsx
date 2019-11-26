@@ -44,7 +44,7 @@ TextInput.defaultValues = {
 };
 
 TextInput.propTypes = {
-  defaultValue: PropTypes.string
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 export default TextInput;
