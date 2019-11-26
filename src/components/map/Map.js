@@ -25,7 +25,7 @@ import { endpoints } from '../../constants';
 const Map = () => {
   const { errorMessage, loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
-  const [{ locations }, actions] = useAppReducer(LOCATION);
+  const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
 
   const mapRef = useMap();
 

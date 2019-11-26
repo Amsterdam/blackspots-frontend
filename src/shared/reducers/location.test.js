@@ -13,6 +13,6 @@ describe('locationReducer', () => {
         type: actions.selectLocation,
         payload,
       })
-    ).toEqual({ selectedLocation: { ...payload } });
+    ).toEqual({ selectedLocation: { ...payload }, locations: [] });
   });
 });
