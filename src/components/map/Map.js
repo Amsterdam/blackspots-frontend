@@ -21,11 +21,13 @@ import MapStyle from './MapStyle';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 import { endpoints } from '../../constants';
+import useMarkerLayer from './hooks/useMarkerLayer';
 
 const Map = () => {
   const { errorMessage, loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
   const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
+  const [latlng, setLatlng] = useState(null);
 
   const mapRef = useMap();
 
@@ -50,11 +52,23 @@ const Map = () => {
     setQuickscanYearFilter,
   ] = useYearFilters(locations);
 
-  const onMarkerClick = (feature, latlng) => {
+  const onMarkerClick = (feature) => {
     actions.selectLocation({ payload: feature });
   };
 
+  useEffect(() => {
+    if (selectedLocation) {
+      setLatlng({
+        lat: selectedLocation.geometry.coordinates[1],
+        lng: selectedLocation.geometry.coordinates[0],
+      });
+
+      setShowDetailPanel(true);
+    }
+  }, [selectedLocation]);
+
   const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
+  useMarkerLayer(mapRef, latlng);
 
   const toggleDetailPanel = () => {
     setShowDetailPanel(!showDetailPanel);

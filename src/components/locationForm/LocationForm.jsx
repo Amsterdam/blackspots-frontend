@@ -18,20 +18,31 @@ const LocationForm = withRouter(({ id, history }) => {
   const [{ selectedLocation }, actions] = useAppReducer(LOCATION);
 
   const location = fromFeature(selectedLocation);
-  const defaultValues = {
-    ...location,
-  };
+  const defaultValues = id
+    ? {
+        ...initalValues,
+        ...location,
+      }
+    : {
+      ...initalValues
+    };
+
   const { register, handleSubmit, setValue } = useForm({
     defaultValues,
   });
 
   const onSubmit = async data => {
     try {
-      const url = `/api/blackspots/spots/${data.nummer}/`;
-      const location = await sendData(url, toFormData(data), 'PATCH');
+      const url = `/api/blackspots/spots/${(id && data.nummer + '/') || ''}`;
+      const location = await sendData(
+        url,
+        toFormData(data),
+        id ? 'PATCH' : 'POST'
+      );
 
       const feature = toFeature(location);
       actions.updateLocation({ payload: feature });
+      history.push(appRoutes.HOME);
     } catch (error) {
       // Dispatch the error message. This will be removed by the implementation of the error handling
       console.log('Error! ', error);

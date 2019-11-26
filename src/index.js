@@ -25,8 +25,6 @@ const matomo = createInstance({
   siteId: hostname === 'wbakaart.amsterdam.nl' ? 22 : 23,
 });
 
-console.log('matomo!', matomo);
-
 ReactDOM.render(
   <MatomoProvider value={matomo}>
     <BrowserRouter>
