@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 const proxy = require('http-proxy-middleware');
 module.exports = function(app) {
   console.log('registering location api ...');
