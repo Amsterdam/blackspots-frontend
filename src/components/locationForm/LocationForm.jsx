@@ -5,29 +5,29 @@ import { Heading, Button, Row } from '@datapunt/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
-import { initalValues } from './definitions/FormFields';
+import { initalValues, formValidation } from './definitions/FormFields';
 import { ControlsColumn, ButtonsColumn, BottomRow } from './LocationFormStyle';
 import FormFields from './definitions/FormFields';
 import FormInput from './components/FormInput';
 import FileInput from './components/FileInput';
 import fromFeature, { toFormData, toFeature } from './services/normalize';
 import { sendData } from 'shared/api/api';
-import { appRoutes } from '../../constants';
+import { appRoutes, SpotTypes } from '../../constants';
 
 const LocationForm = withRouter(({ id, history }) => {
   const [{ selectedLocation }, actions] = useAppReducer(LOCATION);
 
   const location = fromFeature(selectedLocation);
   const defaultValues = id
-  ? {
-    ...initalValues,
-    ...location,
-  }
-  : {
-    ...initalValues
-  };
+    ? {
+        ...initalValues,
+        ...location,
+      }
+    : {
+        ...initalValues,
+      };
 
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit, setValue, errors } = useForm({
     defaultValues,
   });
 
@@ -60,18 +60,15 @@ const LocationForm = withRouter(({ id, history }) => {
   };
 
   useEffect(() => {
-    Object.keys(initalValues).map(name => register({ name }));
+    Object.entries(formValidation).map(pair => {
+      register({ name: pair[0] }, pair[1]);
+    });
     ['rapport_document', 'design_document'].map(name => register({ name }));
   }, [register, id]);
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        action=""
-        noValidate
-        onReset={onReset}
-      >
+      <form onSubmit={handleSubmit(onSubmit)} action="" noValidate>
         <Row>
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
@@ -86,6 +83,7 @@ const LocationForm = withRouter(({ id, history }) => {
                   name={name}
                   onChange={handleChange}
                   defaultValue={defaultValues[name]}
+                  error={errors[name]}
                   {...otherProps}
                 ></FormInput>
               )
@@ -104,6 +102,7 @@ const LocationForm = withRouter(({ id, history }) => {
                   name={name}
                   onChange={handleChange}
                   defaultValue={defaultValues[name]}
+                  error={errors[name]}
                   {...otherProps}
                 ></FormInput>
               )
@@ -134,7 +133,7 @@ const LocationForm = withRouter(({ id, history }) => {
             <Button variant="secondary" type="submit">
               Opslaan
             </Button>
-            <Button variant="tertiary" type="reset">
+            <Button variant="tertiary" type="button" onClick={onReset}>
               Annuleren
             </Button>
           </ButtonsColumn>

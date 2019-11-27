@@ -1,36 +1,53 @@
 import DatePickerInput from '../components/DatePickerInput';
 import RadioGroupInput from '../components/RadioGroupInput';
-import { SpotTypeDisplayNames, StatusDisplayNames, SpotStatusTypes, SpotTypes } from '../../../constants';
+import {
+  SpotTypeDisplayNames,
+  StatusDisplayNames,
+  SpotStatusTypes,
+  SpotTypes,
+} from '../../../constants';
 import TextInput from '../components/TextInput';
 import TextAreaInput from '../components/TextAreaInput';
 
+const REQUIRED_MESSAGE = 'Er is geen waarde ingevuld';
+
 const FormFields = [
   {
-    id: 1,
     column: 1,
     name: 'naam',
     label: 'Naam',
     Component: TextInput,
     width: '80%',
+    validation: {
+      required: REQUIRED_MESSAGE,
+    },
   },
   {
-    id: 2,
     column: 1,
     name: 'nummer',
     label: 'Nummer',
     Component: TextInput,
     width: '50%',
+    validation: {
+      required: REQUIRED_MESSAGE,
+    },
   },
   {
-    id: 3,
     column: 1,
     name: 'coordinaten',
     label: 'Coördinaten',
     Component: TextInput,
     width: '80%',
+    validation: {
+      required: REQUIRED_MESSAGE,
+      pattern: {
+        value: /^\d{1,2}.\d{7}, \d{1,2}.\d{7}$/,
+        message:
+          'De coordinaten zijn niet in de correct format `xx.xxxxxxx, x.xxxxxxx,` ',
+      },
+    },
   },
   {
-    id: 4,
     column: 1,
     name: 'spot_type',
     label: 'Type',
@@ -42,18 +59,41 @@ const FormFields = [
         value: name,
       })),
     ],
+    validation: {
+      required: REQUIRED_MESSAGE,
+    },
   },
   {
-    id: 5,
     column: 1,
     name: 'jaar_blackspotlijst',
     label: 'Jaar opgenomen in blackspotlijst',
     defaultValue: String(new Date().getFullYear()),
+    hidden: false,
     Component: TextInput,
     width: '30%',
+    validation: {
+      pattern: {
+        value: /^\d{4}?$/,
+        message: 'Het jaar is niet in de correct format `jjjj` ',
+      },
+    },
   },
   {
-    id: 6,
+    column: 1,
+    name: 'jaar_ongeval_quickscan',
+    label: 'Jaar opgenomen in de protocol',
+    defaultValue: String(new Date().getFullYear()),
+    hidden: false,
+    Component: TextInput,
+    width: '30%',
+    validation: {
+      pattern: {
+        value: /^\d{4}?$/,
+        message: 'Het jaar is niet in de correct format `jjjj` ',
+      },
+    },
+  },
+  {
     column: 1,
     name: 'status',
     label: 'Status',
@@ -65,17 +105,21 @@ const FormFields = [
         value: name,
       })),
     ],
+    validation: {
+      required: REQUIRED_MESSAGE,
+    },
   },
   {
-    id: 7,
     column: 2,
     name: 'actiehouder',
     label: 'Actiehouder',
     Component: TextInput,
     width: '80%',
+    validation: {
+      required: REQUIRED_MESSAGE,
+    },
   },
   {
-    id: 8,
     column: 2,
     name: 'taken',
     label: 'Taken',
@@ -84,21 +128,18 @@ const FormFields = [
     height: '125px',
   },
   {
-    id: 9,
     column: 2,
     name: 'start_uitvoering',
     label: 'Start uitvoering',
     Component: DatePickerInput,
   },
   {
-    id: 10,
     column: 2,
     name: 'eind_uitvoering',
     label: 'Eind uitvoering',
     Component: DatePickerInput,
   },
   {
-    id: 11,
     column: 2,
     name: 'jaar_oplevering',
     label: 'Jaar oplevering',
@@ -106,7 +147,6 @@ const FormFields = [
     width: '30%',
   },
   {
-    id: 12,
     column: 2,
     name: 'opmerking',
     label: 'Opmerking',
@@ -114,7 +154,7 @@ const FormFields = [
     width: '80%',
     height: '125px',
   },
-];
+].map((item, id) => ({ ...item, id }));
 
 export const initalValues = {
   ...FormFields.reduce(
@@ -126,6 +166,16 @@ export const initalValues = {
   ),
   rapport_document: {},
   design_document: {},
+};
+
+export const formValidation = {
+  ...FormFields.reduce(
+    (acc, item) => ({
+      ...acc,
+      [item.name]: item.validation || {},
+    }),
+    {}
+  ),
 };
 
 export default FormFields;
