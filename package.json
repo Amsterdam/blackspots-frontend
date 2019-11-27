@@ -21,7 +21,6 @@
     "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-to-json": "^3.4.3",
     "formdata-polyfill": "^3.0.19",
-    "formik": "^1.5.8",
     "http-proxy-middleware": "^0.20.0",
     "leaflet": "^1.5.1",
     "node-sass": "^4.13.0",
