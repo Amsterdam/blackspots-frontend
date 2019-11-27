@@ -31,7 +31,7 @@ export const mockFeature = {
     tasks: '',
     notes: '',
     jaar_blackspotlijst: 2014,
-    jaar_ongeval_quickscan: null,
+    jaar_ongeval_quickscan: 2015,
     jaar_oplevering: 2016,
   },
 };
@@ -42,6 +42,7 @@ export const mockLocation = {
   design_document: undefined,
   eind_uitvoering: '10/10/16',
   jaar_blackspotlijst: 2014,
+  jaar_ongeval_quickscan: 2015,
   jaar_oplevering: 2016,
   naam: 'Johan van Hasseltweg - Meeuwenlaan 2',
   nummer: 'B87_14',
