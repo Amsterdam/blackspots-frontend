@@ -16,35 +16,16 @@ const StyledInput = styled(Input)`
     `}
 `;
 
-const TextInput = ({ name, label, defaultValue, onChange, ...otherProps }) => {
-  const [value, setValue] = useState('');
-
-  useEffect(() => {
-    setValue(defaultValue || '');
-  }, [defaultValue]);
-
-  const onValueChange = e => {
-    setValue(e.target.value);
-    onChange(e);
-  };
-
+const TextInput = ({ name, label, value, onChange, ...otherProps }) => {
   return (
     <StyledInput
       name={name}
       value={value}
       data-testid={`${name}-test-id`}
       {...otherProps}
-      onChange={onValueChange}
+      onChange={onChange}
     />
   );
 };
-
-TextInput.defaultValues = {
-  defaultValue: ''
-};
-
-TextInput.propTypes = {
-  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-}
 
 export default TextInput;

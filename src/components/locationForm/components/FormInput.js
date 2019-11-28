@@ -35,20 +35,12 @@ const ErrorLabel = styled.span`
   margin-bottom: ${themeSpacing(2)};
 `;
 
-export const FormInput = ({
-  name,
-  label,
-  defaultValue,
-  error,
-  hidden,
-  Component,
-  ...otherProps
-}) => {
+export const FormInput = ({ name, label, error, Component, ...otherProps }) => {
   return (
-    <LabelInput position="top" htmlFor={name} label={label} error={error} hidden={hidden}>
+    <LabelInput position="top" htmlFor={name} label={label} error={error}>
       <>
         {error && <ErrorLabel>{error.message}</ErrorLabel>}
-        <Component name={name} defaultValue={defaultValue} {...otherProps} />
+        <Component name={name} {...otherProps} />
       </>
     </LabelInput>
   );

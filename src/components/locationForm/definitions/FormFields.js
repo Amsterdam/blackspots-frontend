@@ -38,14 +38,14 @@ const FormFields = [
     label: 'Coördinaten',
     Component: TextInput,
     width: '80%',
-    validation: {
-      required: REQUIRED_MESSAGE,
-      pattern: {
-        value: /^\d{1,2}.\d{7}, \d{1,2}.\d{7}$/,
-        message:
-          'De coordinaten zijn niet in de correct format `xx.xxxxxxx, x.xxxxxxx,` ',
-      },
-    },
+    // validation: {
+    //   required: REQUIRED_MESSAGE,
+    //   pattern: {
+    //     value: /^\d{1,2}.\d{7}, \d{1,2}.\d{7}$/,
+    //     message:
+    //       'De coordinaten zijn niet in de correct format `xx.xxxxxxx, x.xxxxxxx,` ',
+    //   },
+    // },
   },
   {
     column: 1,
@@ -68,12 +68,12 @@ const FormFields = [
     name: 'jaar_blackspotlijst',
     label: 'Jaar opgenomen in blackspotlijst',
     defaultValue: String(new Date().getFullYear()),
-    hidden: false,
+    visible: true,
     Component: TextInput,
     width: '30%',
     validation: {
       pattern: {
-        value: /^\d{4}?$/,
+        value: /^(\d{4})?$/,
         message: 'Het jaar is niet in de correct format `jjjj` ',
       },
     },
@@ -83,12 +83,12 @@ const FormFields = [
     name: 'jaar_ongeval_quickscan',
     label: 'Jaar opgenomen in de protocol',
     defaultValue: String(new Date().getFullYear()),
-    hidden: false,
+    visible: false,
     Component: TextInput,
     width: '30%',
     validation: {
       pattern: {
-        value: /^\d{4}?$/,
+        value: /^(\d{4})?$/,
         message: 'Het jaar is niet in de correct format `jjjj` ',
       },
     },
@@ -173,6 +173,15 @@ export const formValidation = {
     (acc, item) => ({
       ...acc,
       [item.name]: item.validation || {},
+    }),
+    {}
+  ),
+};
+export const formVisibility = {
+  ...FormFields.reduce(
+    (acc, item) => ({
+      ...acc,
+      [item.name]: item.visible || true,
     }),
     {}
   ),

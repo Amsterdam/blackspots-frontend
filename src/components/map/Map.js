@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import L from 'leaflet';
-import icon from 'leaflet/dist/images/marker-icon.png';
 
 // Imports needed for amaps
 import 'leaflet/dist/leaflet.css';
