@@ -24,7 +24,7 @@ const DatePickerStyle = styled.div`
   }
 `;
 
-const DatePickerInput = ({ name, onChange, initialValue }) => {
+const DatePickerInput = ({ name, onChange, value: selectedValue }) => {
   const [value, setValue] = useState(null);
 
   const onValueChange = val => {
@@ -40,8 +40,8 @@ const DatePickerInput = ({ name, onChange, initialValue }) => {
   };
 
   useEffect(() => {
-    setValue(initialValue ? stringToDate(initialValue) : null);
-  }, [initialValue]);
+    setValue(selectedValue ? stringToDate(selectedValue) : null);
+  }, [selectedValue]);
 
   const datePickerRef = useRef(null);
 
@@ -72,13 +72,11 @@ const DatePickerInput = ({ name, onChange, initialValue }) => {
 };
 
 DatePickerInput.defaultValues = {
-  initialValue: ''
 };
 
 DatePickerInput.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  initialValue: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string]),
 };
 
 export default DatePickerInput;
