@@ -51,7 +51,7 @@ const FormFields = [
     column: 1,
     name: 'spot_type',
     label: 'Type',
-    defaultValue: SpotTypes.BLACKSPOT,
+    initialValue: SpotTypes.BLACKSPOT,
     Component: RadioGroupInput,
     options: [
       ...Object.keys(SpotTypeDisplayNames).map(name => ({
@@ -67,7 +67,7 @@ const FormFields = [
     column: 1,
     name: 'jaar_blackspotlijst',
     label: 'Jaar opgenomen in blackspotlijst',
-    defaultValue: String(new Date().getFullYear()),
+    initialValue: String(new Date().getFullYear()),
     visible: true,
     Component: TextInput,
     width: '30%',
@@ -82,7 +82,7 @@ const FormFields = [
     column: 1,
     name: 'jaar_ongeval_quickscan',
     label: 'Jaar opgenomen in de protocol',
-    defaultValue: String(new Date().getFullYear()),
+    initialValue: String(new Date().getFullYear()),
     visible: false,
     Component: TextInput,
     width: '30%',
@@ -97,7 +97,7 @@ const FormFields = [
     column: 1,
     name: 'status',
     label: 'Status',
-    defaultValue: SpotStatusTypes.ONDERZOEK,
+    initialValue: SpotStatusTypes.ONDERZOEK,
     Component: RadioGroupInput,
     options: [
       ...Object.keys(StatusDisplayNames).map(name => ({
@@ -160,12 +160,12 @@ export const initalValues = {
   ...FormFields.reduce(
     (acc, item) => ({
       ...acc,
-      [item.name]: item.defaultValue || '',
+      [item.name]: item.initialValue || '',
     }),
     {}
   ),
-  rapport_document: {},
-  design_document: {},
+  rapport_document: undefined,
+  design_document: undefined,
 };
 
 export const formValidation = {

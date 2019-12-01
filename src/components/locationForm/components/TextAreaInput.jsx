@@ -19,15 +19,15 @@ const StyledInput = styled(Input)`
 const TextAreaInput = ({
   name,
   label,
-  defaultValue,
+  initialValue,
   onChange,
   ...otherProps
 }) => {
   const [value, setValue] = useState('');
 
   useEffect(() => {
-    setValue(defaultValue || '');
-  }, [defaultValue]);
+    setValue(initialValue || '');
+  }, [initialValue]);
 
   const onValueChange = e => {
     setValue(e.target.value);
@@ -38,7 +38,7 @@ const TextAreaInput = ({
     <StyledInput
       as="textarea"
       name={name}
-      value={value}
+      value={value || ''}
       data-testid={`${name}-test-id`}
       {...otherProps}
       onChange={onValueChange}
@@ -47,11 +47,11 @@ const TextAreaInput = ({
 };
 
 TextAreaInput.defaultValues = {
-  defaultValue: ''
+  initialValue: ''
 };
 
 TextAreaInput.propTypes = {
-  defaultValue: PropTypes.string
+  initialValue: PropTypes.string
 }
 
 export default TextAreaInput;

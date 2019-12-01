@@ -38,19 +38,12 @@ const LocationForm = withRouter(({ id, history }) => {
     []
   );
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    errors,
-    watch,
-    getValues,
-  } = useForm({
+  console.log('defaultValues', defaultValues, location);
+  const { register, handleSubmit, setValue, errors, watch } = useForm({
     ...defaultValues,
   });
 
-
-  const values = watch();
+  const values = watch(Object.keys(defaultValues), defaultValues);
 
   const spotType = watch('spot_type');
   useEffect(() => {
@@ -62,7 +55,10 @@ const LocationForm = withRouter(({ id, history }) => {
         spotType === SpotTypes.PROTOCOL_DODELIJK ||
         spotType === SpotTypes.PROTOCOL_ERNSTIG,
     }));
-    setValue('jaar_blackspotlijst', '');
+    setValue(
+      'jaar_blackspotlijst',
+      SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK ? '1994' : ''
+    );
     setValue('jaar_ongeval_quickscan', '');
   }, [spotType]);
 
@@ -97,10 +93,14 @@ const LocationForm = withRouter(({ id, history }) => {
   };
 
   useEffect(() => {
-    Object.entries(formValidation).map(pair =>
-      register({ name: pair[0], type: 'custom' }, pair[1])
-    );
-    ['rapport_document', 'design_document'].map(name => register({ name }));
+    Object.entries(formValidation).forEach(([name, val]) => {
+      register({ name, type: 'custom' });
+      setValue(name, defaultValues[name]);
+    });
+    ['rapport_document', 'design_document'].forEach(name => {
+      register({ name, type: 'custom' });
+      setValue(name, defaultValues[name]);
+    });
   }, [register, id]);
 
   return (
@@ -140,7 +140,7 @@ const LocationForm = withRouter(({ id, history }) => {
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={getValues()[name]}
+                    value={values[name]}
                     error={errors[name]}
                     {...otherProps}
                   ></FormInput>
@@ -157,13 +157,13 @@ const LocationForm = withRouter(({ id, history }) => {
               label="Rapportage"
               name="rapport_document"
               onChange={handleChange}
-              defaultValue={defaultValues['rapport_document']}
+              value={values['rapport_document']}
             />
             <FileInput
               label="Ontwerp"
               name="design_document"
               onChange={handleChange}
-              defaultValue={defaultValues['design_document']}
+              value={values['design_document']}
             />
           </ControlsColumn>
         </Row>

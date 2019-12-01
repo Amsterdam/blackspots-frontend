@@ -20,7 +20,7 @@ const TextInput = ({ name, label, value, onChange, ...otherProps }) => {
   return (
     <StyledInput
       name={name}
-      value={value}
+      value={value || ''}
       data-testid={`${name}-test-id`}
       {...otherProps}
       onChange={onChange}

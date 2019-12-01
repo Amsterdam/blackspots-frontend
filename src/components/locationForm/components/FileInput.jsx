@@ -76,18 +76,12 @@ const SelectButton = ({ id, onChange, children }) => {
   );
 };
 
-const FileInput = ({ label, name, onChange, defaultValue }) => {
-  const [value, setValue] = useState(null);
+const FileInput = ({ label, name, value, onChange }) => {
   const [isUploading, setIsUploading] = useState(false);
 
   const fileUploadId = `fileUpload${label}`;
 
-  useEffect(() => {
-    setValue(defaultValue || null);
-  }, [defaultValue]);
-
   const updateValue = (name, value = undefined) => {
-    setValue(value);
     const event = {
       target: {
         name,
@@ -153,14 +147,12 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
 
 FileInput.defaultProps = {
   name: '',
-  defaultValue: undefined,
 };
 
 FileInput.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  defaultValue: PropTypes.shape({}),
 };
 
 export default FileInput;

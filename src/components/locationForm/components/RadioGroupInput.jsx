@@ -24,7 +24,6 @@ const RadioInput = ({
   label,
   value,
   onChange,
-  defaultValue,
   checked,
 }) => {
   return (
@@ -47,12 +46,12 @@ const RadioGroupInput = ({
   name,
   options,
   onChange,
-  defaultValue,
+  initialValue,
 }) => {
   const [selectedValue, setSelectedValue] = useState();
   useEffect(() => {
-    setSelectedValue(defaultValue);
-  }, [defaultValue]);
+    setSelectedValue(initialValue);
+  }, [initialValue]);
   return (
     <RadioGroupInputStyle>
       {options.map(option => {
