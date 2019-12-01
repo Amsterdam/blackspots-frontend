@@ -21,6 +21,17 @@ export const SpotTypes = {
   RISICO: 'risico',
 };
 
+export const Stadsdeel = {
+  CENTRUM: { name: 'Centrum', value: 'A' },
+  NIEUW_WEST: { name: 'Centrum', value: 'F' },
+  NOORD: { name: 'Noord', value: 'N' },
+  OOST: { name: 'Oost', value: 'M' },
+  WEST: { name: 'West', value: 'E' },
+  WESTPOORT: { name: 'Westpoort', value: 'B' },
+  ZUID: { name: 'Zuid', value: 'K' },
+  ZUIDOOST: { name: 'Zuidoost', value: 'T' },
+};
+
 export const SpotTypeDisplayNames = {
   [SpotTypes.BLACKSPOT]: 'Blackspot',
   [SpotTypes.WEGVAK]: 'Red route',
@@ -63,4 +74,4 @@ export const SpotStatusColor = {
 
 export const endpoints = {
   blackspots: `${process.env.REACT_APP_API_ROOT}blackspots/spots/?format=geojson`,
-}
+};

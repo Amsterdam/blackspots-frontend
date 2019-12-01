@@ -19,7 +19,8 @@ export function evaluateMarkerVisibility(
   quickscanYearFilter,
   blackspotListFilter,
   quickscanListFilter,
-  deliveredListFilter
+  deliveredListFilter,
+  stadsdeelFilter,
 ) {
   markers &&
     markers.forEach(marker => {
@@ -29,6 +30,7 @@ export function evaluateMarkerVisibility(
           blackspotListFilter,
           quickscanListFilter,
           deliveredListFilter,
+          stadsdeelFilter,
           marker
         ) &&
         isVisibleStatusType(spotStatusTypeFilter, marker) &&
@@ -51,10 +53,12 @@ function isVisibleSpotType(
   blackspotListFilter,
   quickscanListFilter,
   deliveredListFilter,
+  stadsdeelFilter,
   marker
 ) {
   const spotType = getSpotTypeFromMarker(marker);
   const spotStatus = getStatusTypeFromMarker(marker);
+  const stadsdeel = marker.feature.properties.stadsdeel;
 
   // Check if the spot should be visible based on the spotTypeFilter
   const showBasedOnTypeFilter = allValuesAreFalse(spotTypeFilter)
@@ -77,7 +81,9 @@ function isVisibleSpotType(
     }
   })();
 
-  return showBasedOnTypeFilter && showBasedOnListFilter;
+  const showBasedOnStadsdeelFilter = allValuesAreFalse(stadsdeelFilter) ? true : stadsdeelFilter[stadsdeel]
+
+  return showBasedOnTypeFilter && showBasedOnListFilter && showBasedOnStadsdeelFilter ;
 }
 
 /**
