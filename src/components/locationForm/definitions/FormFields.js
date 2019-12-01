@@ -8,6 +8,7 @@ import {
 } from '../../../constants';
 import TextInput from '../components/TextInput';
 import TextAreaInput from '../components/TextAreaInput';
+import FileInput from '../components/FileInput';
 
 const REQUIRED_MESSAGE = 'Er is geen waarde ingevuld';
 
@@ -154,6 +155,20 @@ const FormFields = [
     width: '80%',
     height: '125px',
   },
+  {
+    column: 3,
+    name: 'rapport_document',
+    label: 'Rapportage',
+    initialValue: undefined,
+    Component: FileInput,
+  },
+  {
+    column: 3,
+    name: 'design_document',
+    label: 'Rapportage',
+    initialValue: undefined,
+    Component: FileInput,
+  },
 ].map((item, id) => ({ ...item, id }));
 
 export const initalValues = {
@@ -163,9 +178,7 @@ export const initalValues = {
       [item.name]: item.initialValue || '',
     }),
     {}
-  ),
-  rapport_document: undefined,
-  design_document: undefined,
+  )
 };
 
 export const formValidation = {

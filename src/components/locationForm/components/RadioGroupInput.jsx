@@ -46,12 +46,8 @@ const RadioGroupInput = ({
   name,
   options,
   onChange,
-  initialValue,
 }) => {
   const [selectedValue, setSelectedValue] = useState();
-  useEffect(() => {
-    setSelectedValue(initialValue);
-  }, [initialValue]);
   return (
     <RadioGroupInputStyle>
       {options.map(option => {

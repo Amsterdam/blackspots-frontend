@@ -13,7 +13,6 @@ import {
 import { ControlsColumn, ButtonsColumn, BottomRow } from './LocationFormStyle';
 import FormFields from './definitions/FormFields';
 import FormInput from './components/FormInput';
-import FileInput from './components/FileInput';
 import fromFeature, { toFormData, toFeature } from './services/normalize';
 import { sendData } from 'shared/api/api';
 import { appRoutes, SpotTypes } from '../../constants';
@@ -25,6 +24,7 @@ const LocationForm = withRouter(({ id, history }) => {
   const location = useMemo(() => fromFeature(selectedLocation), [
     selectedLocation,
   ]);
+
   const defaultValues = useMemo(
     () =>
       id
@@ -38,7 +38,6 @@ const LocationForm = withRouter(({ id, history }) => {
     []
   );
 
-  console.log('defaultValues', defaultValues, location);
   const { register, handleSubmit, setValue, errors, watch } = useForm({
     ...defaultValues,
   });
@@ -93,12 +92,8 @@ const LocationForm = withRouter(({ id, history }) => {
   };
 
   useEffect(() => {
-    Object.entries(formValidation).forEach(([name, val]) => {
-      register({ name, type: 'custom' });
-      setValue(name, defaultValues[name]);
-    });
-    ['rapport_document', 'design_document'].forEach(name => {
-      register({ name, type: 'custom' });
+    Object.entries(formValidation).forEach(([name, validation]) => {
+      register({ name, type: 'custom' }, validation);
       setValue(name, defaultValues[name]);
     });
   }, [register, id]);
@@ -153,18 +148,19 @@ const LocationForm = withRouter(({ id, history }) => {
             <Heading $as="h3" color="secondary">
               Documenten
             </Heading>
-            <FileInput
-              label="Rapportage"
-              name="rapport_document"
-              onChange={handleChange}
-              value={values['rapport_document']}
-            />
-            <FileInput
-              label="Ontwerp"
-              name="design_document"
-              onChange={handleChange}
-              value={values['design_document']}
-            />
+            {FormFields.filter(({ column }) => column === 3).map(
+              ({ id, name, ...otherProps }) =>
+                visible[name] && (
+                  <FormInput
+                    key={id}
+                    name={name}
+                    onChange={handleChange}
+                    value={values[name]}
+                    error={errors[name]}
+                    {...otherProps}
+                  ></FormInput>
+                )
+            )}
           </ControlsColumn>
         </Row>
         <BottomRow>
