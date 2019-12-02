@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { render } from '@testing-library/react';
 import AppRoutes from './AppRoutes';
 import { withUserContext } from 'test/utils';

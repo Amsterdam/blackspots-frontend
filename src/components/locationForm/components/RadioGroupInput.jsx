@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Label, List, ListItem, themeSpacing } from '@datapunt/asc-ui';
 import styled from '@datapunt/asc-core';
 
@@ -24,7 +24,6 @@ const RadioInput = ({
   label,
   value,
   onChange,
-  defaultValue,
   checked,
 }) => {
   return (
@@ -43,16 +42,11 @@ const RadioInput = ({
 };
 
 const RadioGroupInput = ({
-  label: groupLabel,
   name,
+  value: selectedValue,
   options,
   onChange,
-  defaultValue,
 }) => {
-  const [selectedValue, setSelectedValue] = useState();
-  useEffect(() => {
-    setSelectedValue(defaultValue);
-  }, [defaultValue]);
   return (
     <RadioGroupInputStyle>
       {options.map(option => {
@@ -64,10 +58,7 @@ const RadioGroupInput = ({
               label={label}
               value={value}
               checked={selectedValue === value}
-              onChange={e => {
-                setSelectedValue(e.target.value);
-                onChange(e);
-              }}
+              onChange={onChange}
             />
           </ListItem>
         );

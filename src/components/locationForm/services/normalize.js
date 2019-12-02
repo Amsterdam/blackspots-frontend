@@ -17,6 +17,7 @@ const fromFeature = feature => {
       locatie_id,
       spot_type,
       jaar_blackspotlijst,
+      jaar_ongeval_quickscan,
       status,
       actiehouders,
       tasks,
@@ -36,6 +37,7 @@ const fromFeature = feature => {
     stadsdeel,
     spot_type,
     jaar_blackspotlijst,
+    jaar_ongeval_quickscan,
     status,
     actiehouder: actiehouders,
     taken: tasks,
@@ -43,12 +45,12 @@ const fromFeature = feature => {
     eind_uitvoering,
     jaar_oplevering,
     opmerking: notes,
-    rapport_document: documents[0],
-    design_document: documents[1],
+    rapport_document: documents.filter(d => d.type === 'Rapportage')[0],
+    design_document: documents.filter(d => d.type === 'Ontwerp')[0],
   };
 };
 
-export const toFeature = (location) => {
+export const toFeature = location => {
   const {
     id,
     description,
@@ -57,6 +59,7 @@ export const toFeature = (location) => {
     stadsdeel,
     spot_type,
     jaar_blackspotlijst,
+    jaar_ongeval_quickscan,
     status,
     actiehouders,
     tasks,
@@ -76,6 +79,7 @@ export const toFeature = (location) => {
       stadsdeel,
       spot_type,
       jaar_blackspotlijst,
+      jaar_ongeval_quickscan,
       status,
       actiehouders,
       tasks,
@@ -86,12 +90,11 @@ export const toFeature = (location) => {
       documents: [
         ...(rapport_document ? [rapport_document] : []),
         ...(design_document ? [design_document] : []),
-      ]
+      ],
     },
-    geometry: point
-  }
-
-}
+    geometry: point,
+  };
+};
 
 /**
  *
@@ -106,6 +109,7 @@ export const toFormData = location => {
     stadsdeel,
     spot_type,
     jaar_blackspotlijst,
+    jaar_ongeval_quickscan,
     status,
     actiehouder,
     taken,
@@ -116,7 +120,7 @@ export const toFormData = location => {
     rapport_document,
     design_document,
   } = location;
-  return {
+  const item = {
     description: naam,
     locatie_id: nummer,
     point: JSON.stringify({
@@ -129,6 +133,7 @@ export const toFormData = location => {
     stadsdeel,
     spot_type,
     jaar_blackspotlijst,
+    jaar_ongeval_quickscan,
     status,
     actiehouders: actiehouder,
     tasks: taken,
@@ -136,9 +141,22 @@ export const toFormData = location => {
     eind_uitvoering,
     jaar_oplevering,
     notes: opmerking,
-    rapport_document,
-    design_document,
+    rapport_document:
+      rapport_document && rapport_document.file ? rapport_document : undefined,
+    design_document:
+      design_document && design_document.file ? design_document : undefined,
   };
+
+  // Skip the undefined values when creating the formData object
+  const ret = Object.keys(item).reduce((acc, key) => {
+    return item[key]
+      ? {
+          ...acc,
+          [key]: item[key],
+        }
+      : { ...acc };
+  }, {});
+  return ret;
 };
 
 export default fromFeature;
