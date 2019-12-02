@@ -38,7 +38,6 @@ function getStatusClassName(status) {
 const DetailPanel = ({ isOpen, togglePanel, feature }) => {
   const { canEdit } = useContext(UserContext);
   const { trackEvent } = useMatomo();
-  console.log('trackEvent', trackEvent);
   const trackDownload = () => {
     trackEvent({ category: 'PDF download' });
   };

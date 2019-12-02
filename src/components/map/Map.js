@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import L from 'leaflet';
+import icon from 'leaflet/dist/images/marker-icon.png';
 
 // Imports needed for amaps
 import 'leaflet/dist/leaflet.css';
@@ -19,12 +21,13 @@ import MapStyle from './MapStyle';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 import { endpoints } from '../../constants';
+import useMarkerLayer from './hooks/useMarkerLayer';
 
 const Map = () => {
   const { errorMessage, loading, results, fetchData } = useDataFetching();
-  const [selectedFeature, setSelectedFeature] = useState(null);
   const [showDetailPanel, setShowDetailPanel] = useState(false);
-  const [{ locations }, actions] = useAppReducer(LOCATION);
+  const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
+  const [latlng, setLatlng] = useState(null);
 
   const mapRef = useMap();
 
@@ -50,14 +53,22 @@ const Map = () => {
   ] = useYearFilters(locations);
 
   const onMarkerClick = (feature, latlng) => {
-    const currentZoom = mapRef.current.getZoom();
-    mapRef.current.flyTo(latlng, currentZoom < 14 ? 14 : currentZoom);
     actions.selectLocation({ payload: feature });
-    setSelectedFeature(feature);
-    setShowDetailPanel(true);
   };
 
+  useEffect(() => {
+    if (selectedLocation) {
+      setLatlng({
+        lat: selectedLocation.geometry.coordinates[1],
+        lng: selectedLocation.geometry.coordinates[0],
+      });
+
+      setShowDetailPanel(true);
+    }
+  }, [selectedLocation]);
+
   const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
+  useMarkerLayer(mapRef, latlng);
 
   const toggleDetailPanel = () => {
     setShowDetailPanel(!showDetailPanel);
@@ -148,7 +159,7 @@ const Map = () => {
         )}
 
         <DetailPanel
-          feature={selectedFeature}
+          feature={selectedLocation}
           isOpen={showDetailPanel}
           togglePanel={toggleDetailPanel}
         />

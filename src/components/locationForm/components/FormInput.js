@@ -13,10 +13,10 @@ const LabelInput = styled(Label)`
   }
 `;
 
-export const FormInput = ({ name, label, Component, ...otherProps }) => {
+export const FormInput = ({ name, label,defaultValue, Component, ...otherProps }) => {
   return (
     <LabelInput position="top" htmlFor={name} label={label}>
-      <Component name={name} {...otherProps} />
+      <Component name={name} defaultValue={defaultValue} {...otherProps} />
     </LabelInput>
   );
 };
