@@ -87,9 +87,8 @@ const Map = () => {
     [SpotTypes.WEGVAK]: false,
   });
   const [stadsdeelFilter, setStadsdeelFilter] = useState({
-    ...Object.keys(Stadsdeel).reduce((acc, item) => ({...acc, [item.name]: false}), {}),
+    ...Object.values(Stadsdeel).reduce((acc, item) => ({...acc, [item.name]: false}), {}),
   });
-  console.log('stadsdeelFilter', stadsdeelFilter);
 
   // A filter to only show items on the 'blackspot list', which are all
   // spots with type BLACKSPOT or WEGVAk
@@ -156,6 +155,7 @@ const Map = () => {
             blackspotYearFilter={blackspotYearFilter}
             deliveredYearFilter={deliveredYearFilter}
             quickscanYearFilter={quickscanYearFilter}
+            stadsdeelFilter={stadsdeelFilter}
             setFilters={setFilters}
             setBlackspotListFilter={value => setBlackspotListFilter(value)}
             setQuickscanListFilter={setQuickscanListFilter}

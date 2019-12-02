@@ -23,7 +23,7 @@ export const SpotTypes = {
 
 export const Stadsdeel = {
   CENTRUM: { name: 'Centrum', value: 'A' },
-  NIEUW_WEST: { name: 'Centrum', value: 'F' },
+  NIEUW_WEST: { name: 'Nieuw West', value: 'F' },
   NOORD: { name: 'Noord', value: 'N' },
   OOST: { name: 'Oost', value: 'M' },
   WEST: { name: 'West', value: 'E' },

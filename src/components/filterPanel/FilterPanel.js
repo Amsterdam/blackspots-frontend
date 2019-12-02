@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import SVGIcon from 'components/SVGIcon/SVGIcon';
-import { SpotStatusTypes, SpotTypes } from 'constants.js';
+import { SpotStatusTypes, SpotTypes, Stadsdeel } from 'constants.js';
 import { resetFilter } from 'components/map/helpers';
 import styles from './FilterPanel.module.scss';
 import { ContextMenuOptions } from './FilterPanel.constants';
@@ -31,18 +31,20 @@ const FilterPanel = ({
   blackspotYearFilter,
   deliveredYearFilter,
   quickscanYearFilter,
+  stadsdeelFilter,
   setFilters,
   setBlackspotListFilter,
   setQuickscanListFilter,
   setDeliveredListFilter,
+  setStadsdeelFilter,
 }) => {
   const [optionValue, setOptionValue] = useState(ContextMenuOptions.ALL);
   const [showPanel, setShowPanel] = useState(true);
   const { trackEvent } = useMatomo();
 
-  const trackFilter= (name) => {
-    trackEvent({category: 'Map filters', action: name});
-  }
+  const trackFilter = name => {
+    trackEvent({ category: 'Map filters', action: name });
+  };
 
   /**
    * Update the filters of the actual map
@@ -52,7 +54,8 @@ const FilterPanel = ({
     updatedSpotStatusTypeFilter = false,
     updatedBlackspotYearFilter = false,
     updatedDeliveredYearFilter = false,
-    updatedQuickscanYearFilter = false
+    updatedQuickscanYearFilter = false,
+    updatedStadsdeelFilter = false
   ) {
     // For every filter, if it has an actual filter object, pass it along to
     // the setFilter function received from the map, else, pass a resetted
@@ -72,7 +75,10 @@ const FilterPanel = ({
         : resetFilter(deliveredYearFilter),
       updatedQuickscanYearFilter
         ? updatedQuickscanYearFilter
-        : resetFilter(quickscanYearFilter)
+        : resetFilter(quickscanYearFilter),
+      updatedStadsdeelFilter
+        ? updatedStadsdeelFilter
+        : resetFilter(stadsdeelFilter)
     );
   }
 
@@ -344,6 +350,45 @@ const FilterPanel = ({
     );
   }
 
+  const renderStadsdeelCheckboxes = () => {
+    return (
+      <>
+        <h5>Stadsdeel</h5>
+        {Object.keys(Stadsdeel).map(key => {
+          const type = Stadsdeel[key].name;
+          const value = stadsdeelFilter[type];
+          return (
+            <label key={key} className={styles.CheckboxWrapper}>
+              <input
+                type="checkbox"
+                checked={value}
+                onChange={e => {
+                  const updatedFilter = {
+                    ...stadsdeelFilter,
+                    [type]: !value,
+                  };
+                  if (!value) {
+                    trackFilter(type);
+                  }
+                  updateFilters(
+                    spotTypeFilter,
+                    spotStatusTypeFilter,
+                    blackspotYearFilter,
+                    deliveredYearFilter,
+                    quickscanYearFilter,
+                    updatedFilter
+                  );
+                }}
+              />
+              <span />
+              {type}
+            </label>
+          );
+        })}
+      </>
+    );
+  };
+
   return (
     <div
       className={classNames(styles.FilterPanel, {
@@ -362,28 +407,24 @@ const FilterPanel = ({
       </div>
       <div className={styles.FilterContainer}>
         {renderOptions()}
-
         {optionValue !== ContextMenuOptions.ALL ? <h5>Jaar</h5> : ''}
         {optionValue === ContextMenuOptions.BLACKSPOTS
           ? renderBlackspotYearCheckboxes()
           : ''}
-
         {optionValue === ContextMenuOptions.DELIVERED
           ? renderDeliveredYearCheckboxes()
           : ''}
-
         {optionValue === ContextMenuOptions.QUICKSCANS
           ? renderQuickscanYearCheckboxes()
           : ''}
-
         {optionValue === ContextMenuOptions.ALL ||
         optionValue === ContextMenuOptions.DELIVERED
           ? renderTypeCheckboxes()
           : ''}
-
         {optionValue !== ContextMenuOptions.DELIVERED
           ? renderStatusCheckboxes()
           : ''}
+        {renderStadsdeelCheckboxes()}
       </div>
     </div>
   );
@@ -395,10 +436,12 @@ FilterPanel.propTypes = {
   blackspotYearFilter: PropTypes.object.isRequired,
   deliveredYearFilter: PropTypes.object.isRequired,
   quickscanYearFilter: PropTypes.object.isRequired,
+  stadsdeelFilter: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired,
   setBlackspotListFilter: PropTypes.func.isRequired,
   setQuickscanListFilter: PropTypes.func.isRequired,
   setDeliveredListFilter: PropTypes.func.isRequired,
+  setStadsdeelFilter: PropTypes.func.isRequired,
 };
 
 export default FilterPanel;
