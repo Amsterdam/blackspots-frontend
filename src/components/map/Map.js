@@ -27,7 +27,6 @@ const Map = () => {
   const { errorMessage, loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
   const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
-  const [latlng, setLatlng] = useState(null);
 
   const mapRef = useMap();
 
@@ -52,13 +51,16 @@ const Map = () => {
     setQuickscanYearFilter,
   ] = useYearFilters(locations);
 
-  const onMarkerClick = (feature, latlng) => {
+  const onMarkerClick = feature => {
     actions.selectLocation({ payload: feature });
   };
 
+  const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
+  const { setLocation } = useMarkerLayer(mapRef);
+
   useEffect(() => {
     if (selectedLocation) {
-      setLatlng({
+      setLocation({
         lat: selectedLocation.geometry.coordinates[1],
         lng: selectedLocation.geometry.coordinates[0],
       });
@@ -66,9 +68,6 @@ const Map = () => {
       setShowDetailPanel(true);
     }
   }, [selectedLocation]);
-
-  const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
-  useMarkerLayer(mapRef, latlng);
 
   const toggleDetailPanel = () => {
     setShowDetailPanel(!showDetailPanel);

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation, useHistory} from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { Heading, Button, Row } from '@datapunt/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
