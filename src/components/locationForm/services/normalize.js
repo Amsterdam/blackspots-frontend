@@ -43,8 +43,8 @@ const fromFeature = feature => {
     eind_uitvoering,
     jaar_oplevering,
     opmerking: notes,
-    rapport_document: documents[0],
-    design_document: documents[1],
+    rapport_document: documents.filter(d => d.type === 'Rapportage')[0],
+    design_document: documents.filter(d => d.type === 'Ontwerp')[0],
   };
 };
 
