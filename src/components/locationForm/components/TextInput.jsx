@@ -44,7 +44,7 @@ TextInput.defaultValues = {
 };
 
 TextInput.propTypes = {
-  defaultValue: PropTypes.string
+  defaultValue: PropTypes.any
 }
 
 export default TextInput;

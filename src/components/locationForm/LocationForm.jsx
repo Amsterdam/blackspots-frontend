@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useLocation, useHistory} from 'react-router-dom';
 import { Heading, Button, Row } from '@datapunt/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
@@ -14,7 +14,8 @@ import fromFeature, { toFormData, toFeature } from './services/normalize';
 import { sendData } from 'shared/api/api';
 import { appRoutes } from '../../constants';
 
-const LocationForm = withRouter(({ id, history }) => {
+const LocationForm = ({ id }) => {
+  const history = useHistory();
   const [{ selectedLocation }, actions] = useAppReducer(LOCATION);
 
   const location = fromFeature(selectedLocation);
@@ -24,8 +25,8 @@ const LocationForm = withRouter(({ id, history }) => {
         ...location,
       }
     : {
-      ...initalValues
-    };
+        ...initalValues,
+      };
 
   const { register, handleSubmit, setValue } = useForm({
     defaultValues,
@@ -142,7 +143,7 @@ const LocationForm = withRouter(({ id, history }) => {
       </form>
     </>
   );
-});
+};
 
 LocationForm.defaultProps = {
   id: null,
