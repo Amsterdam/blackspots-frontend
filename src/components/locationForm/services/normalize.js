@@ -48,12 +48,12 @@ const fromFeature = feature => {
   };
 };
 
-export const toFeature = (location) => {
+export const toFeature = location => {
   const {
     id,
     description,
     locatie_id,
-    point ,
+    point,
     spot_type,
     jaar_blackspotlijst,
     jaar_ongeval_quickscan,
@@ -86,12 +86,11 @@ export const toFeature = (location) => {
       documents: [
         ...(rapport_document ? [rapport_document] : []),
         ...(design_document ? [design_document] : []),
-      ]
+      ],
     },
-    geometry: point
-  }
-
-}
+    geometry: point,
+  };
+};
 
 /**
  *
@@ -116,7 +115,7 @@ export const toFormData = location => {
     rapport_document,
     design_document,
   } = location;
-  return {
+  const item = {
     description: naam,
     locatie_id: nummer,
     point: JSON.stringify({
@@ -136,9 +135,22 @@ export const toFormData = location => {
     eind_uitvoering,
     jaar_oplevering,
     notes: opmerking,
-    rapport_document,
-    design_document,
+    rapport_document:
+      rapport_document && rapport_document.file ? rapport_document : undefined,
+    design_document:
+      design_document && design_document.file ? design_document : undefined,
   };
+
+  // Skip the undefined values when creating the formData object
+  const ret = Object.keys(item).reduce((acc, key) => {
+    return item[key]
+      ? {
+          ...acc,
+          [key]: item[key],
+        }
+      : { ...acc };
+  }, {});
+  return ret;
 };
 
 export default fromFeature;

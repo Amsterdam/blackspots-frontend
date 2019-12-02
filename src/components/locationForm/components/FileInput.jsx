@@ -99,7 +99,6 @@ const FileInput = ({ name, value, onChange }) => {
       setIsUploading(true);
       setTimeout(() => {
         const val = {
-          id: 1,
           filename: files[0].name,
           type: name,
           file: files[0],
