@@ -39,14 +39,14 @@ const FormFields = [
     label: 'Coördinaten',
     Component: TextInput,
     width: '80%',
-    // validation: {
-    //   required: REQUIRED_MESSAGE,
-    //   pattern: {
-    //     value: /^\d{1,2}.\d{7}, \d{1,2}.\d{7}$/,
-    //     message:
-    //       'De coordinaten zijn niet in de correct format `xx.xxxxxxx, x.xxxxxxx,` ',
-    //   },
-    // },
+    validation: {
+      required: REQUIRED_MESSAGE,
+      pattern: {
+        value: /^\d{1,2}.\d{7}, \d{1,2}.\d{7}$/,
+        message:
+          'De coordinaten zijn niet in de correct format `xx.xxxxxxx, x.xxxxxxx,` ',
+      },
+    },
   },
   {
     column: 1,

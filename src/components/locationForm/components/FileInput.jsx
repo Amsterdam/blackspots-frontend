@@ -12,6 +12,7 @@ import FormInput from './FormInput';
 import { Close } from '@datapunt/asc-assets';
 
 const DocumentName = styled.span`
+  display: inline-block;
   background-color: ${themeColor('tint', 'level2')};
   cursor: auto;
   font-weight: 500;

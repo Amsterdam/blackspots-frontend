@@ -54,15 +54,20 @@ const LocationForm = withRouter(({ id, history }) => {
         spotType === SpotTypes.PROTOCOL_DODELIJK ||
         spotType === SpotTypes.PROTOCOL_ERNSTIG,
     }));
+    const year = String(new Date().getFullYear());
     setValue(
       'jaar_blackspotlijst',
-      SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK ? '1994' : ''
+      SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK ? year : ''
     );
-    setValue('jaar_ongeval_quickscan', '');
+    setValue(
+      'jaar_ongeval_quickscan',
+      SpotTypes.PROTOCOL_DODELIJK || spotType === SpotTypes.PROTOCOL_ERNSTIG
+        ? year
+        : ''
+    );
   }, [spotType]);
 
   const onSubmit = async data => {
-    return console.log('onSubmit', data);
     try {
       const url = `/api/blackspots/spots/${(id && data.nummer + '/') || ''}`;
       const location = await sendData(
@@ -84,7 +89,6 @@ const LocationForm = withRouter(({ id, history }) => {
     const value =
       e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     setValue(e.target.name, value);
-    console.log('handleChange', e.target.name, value);
   };
 
   const onReset = () => {

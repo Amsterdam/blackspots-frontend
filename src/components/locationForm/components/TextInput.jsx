@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Input } from '@datapunt/asc-ui';
 import styled, { css } from '@datapunt/asc-core';
+import { Input } from '@datapunt/asc-ui';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const StyledInput = styled(Input)`
   ${({ width }) =>
@@ -28,9 +28,12 @@ const TextInput = ({ name, value, onChange, ...otherProps }) => {
   );
 };
 
+TextInput.defaultProps = {
+  value: ''
+};
 TextInput.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func.isRequired,
 };
 
