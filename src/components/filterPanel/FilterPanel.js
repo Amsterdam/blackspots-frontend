@@ -5,7 +5,7 @@ import SVGIcon from 'components/SVGIcon/SVGIcon';
 import { SpotStatusTypes, SpotTypes, Stadsdeel, endpoints } from 'constants.js';
 import { resetFilter } from 'components/map/helpers';
 import styles from './FilterPanel.module.scss';
-import { ContextMenuOptions } from './FilterPanel.constants';
+import { ContextMenuOptions, MenuOptions } from './FilterPanel.constants';
 import classNames from 'classnames';
 import { StatusDisplayNames, SpotTypeDisplayNames } from '../../constants';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
@@ -19,7 +19,7 @@ const ExportButton = styled(Button)`
   margin: ${themeSpacing(2, 0)};
   &:focus,
   &:hover {
-    background-color: ${themeColor('tint', 'level0  ')};
+    background-color: ${themeColor('tint', 'level0')};
     color: ${themeColor('tint', 'level7')};
     text-decoration: none;
   }
@@ -40,17 +40,15 @@ function getStatusClassName(status) {
 
 const exportUrl = `${endpoints.blackspotsExport}`;
 
-const getExportFilter = stadsdeelFilter => {
+export const getExportFilter = stadsdeelFilter => {
   if (Object.values(stadsdeelFilter).filter(e => e).length === 0) return '';
   const stadsdeel = Object.keys(stadsdeelFilter).find(
     key => stadsdeelFilter[key] === true
   );
-  console.log('stadsdeel', stadsdeel);
-  const ret = Object.entries(Stadsdeel).find(
+  const filterValue = Object.values(Stadsdeel).find(
     ([key, value]) => value.name === stadsdeel
   );
-  console.log('ret', ret);
-  return `stadsdeel=${ret[1].value}`;
+  return `stadsdeel=${filterValue[1].value}`;
 };
 
 const FilterPanel = ({
@@ -89,6 +87,7 @@ const FilterPanel = ({
         Object.values(spotStatusTypeFilter).filter(e => e).length === 0 &&
         optionValue === ContextMenuOptions.ALL
     );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stadsdeelFilter]);
 
   const trackFilter = name => {
@@ -132,7 +131,6 @@ const FilterPanel = ({
   }
 
   function processOptionChange(value) {
-    console.log('processOptionChange', value);
     // Changing options should reset the filters
     updateFilters(
       // Reset the type filter
@@ -157,28 +155,7 @@ const FilterPanel = ({
       <>
         <h5>Toon</h5>
         <SelectMenu
-          items={[
-            {
-              id: 1,
-              label: 'Alles',
-              value: ContextMenuOptions.ALL,
-            },
-            {
-              id: 2,
-              label: 'Opgeleverd in',
-              value: ContextMenuOptions.DELIVERED,
-            },
-            {
-              id: 3,
-              label: 'Opgenomen als blackspot in',
-              value: ContextMenuOptions.BLACKSPOTS,
-            },
-            {
-              id: 4,
-              label: 'Opgenomen als protocol in',
-              value: ContextMenuOptions.QUICKSCANS,
-            },
-          ]}
+          items={[...MenuOptions]}
           selectionChanged={processOptionChange}
         />
       </>

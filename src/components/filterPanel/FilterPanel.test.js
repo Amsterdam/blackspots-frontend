@@ -15,6 +15,7 @@ describe('Filter Panel', () => {
     setQuickscanListFilter: () => {},
     setDeliveredListFilter: () => {},
   };
+
   it('should render without errors', () => {
     shallow(<FilterPanel {...props} />);
   });
