@@ -129,14 +129,14 @@ function isVisibleQuickscanYear(quickscanYearFilter, marker) {
 /**
  * Check if all values of an object are falsy
  */
-function allValuesAreFalse(object) {
+export const allValuesAreFalse = (object) => {
   return Object.values(object).every(v => !v);
 }
 
 /**
  * Set all values in an object to false, effectively resetting a filter
  */
-export function resetFilter(filter) {
+export const resetFilter = (filter) => {
   const resetFilter = {};
   Object.keys(filter).forEach(k => (resetFilter[k] = false));
   return resetFilter;

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import SVGIcon from 'components/SVGIcon/SVGIcon';
-import { SpotStatusTypes, SpotTypes, Stadsdeel } from 'constants.js';
+import { SpotStatusTypes, SpotTypes, Stadsdeel, endpoints } from 'constants.js';
 import { resetFilter } from 'components/map/helpers';
 import styles from './FilterPanel.module.scss';
 import { ContextMenuOptions } from './FilterPanel.constants';
@@ -11,6 +11,19 @@ import { StatusDisplayNames, SpotTypeDisplayNames } from '../../constants';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
+import { Button, themeColor, themeSpacing } from '@datapunt/asc-ui';
+import styled from '@datapunt/asc-core';
+import useDownload from 'shared/hooks/useDownload';
+
+const ExportButton = styled(Button)`
+  margin: ${themeSpacing(2, 0)};
+  &:focus,
+  &:hover {
+    background-color: ${themeColor('tint', 'level0  ')};
+    color: ${themeColor('tint', 'level7')};
+    text-decoration: none;
+  }
+`;
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -24,6 +37,21 @@ function getStatusClassName(status) {
 
   return statusClassMapper[status];
 }
+
+const exportUrl = `${endpoints.blackspotsExport}`;
+
+const getExportFilter = stadsdeelFilter => {
+  if (Object.values(stadsdeelFilter).filter(e => e).length === 0) return '';
+  const stadsdeel = Object.keys(stadsdeelFilter).find(
+    key => stadsdeelFilter[key] === true
+  );
+  console.log('stadsdeel', stadsdeel);
+  const ret = Object.entries(Stadsdeel).find(
+    ([key, value]) => value.name === stadsdeel
+  );
+  console.log('ret', ret);
+  return `stadsdeel=${ret[1].value}`;
+};
 
 const FilterPanel = ({
   spotTypeFilter,
@@ -41,6 +69,27 @@ const FilterPanel = ({
   const [optionValue, setOptionValue] = useState(ContextMenuOptions.ALL);
   const [showPanel, setShowPanel] = useState(true);
   const { trackEvent } = useMatomo();
+  const [downloadUrl, setDownloadUrl] = useState(exportUrl);
+  const [canDownload, setCanDownload] = useState(true);
+
+  const [, downloadFile] = useDownload();
+
+  const exportFilter = () => {
+    downloadFile(
+      downloadUrl,
+      `wbakaart-export-${(new Date()).toLocaleDateString("nl-NL")}.csv`
+    );
+  };
+
+  useEffect(() => {
+    setDownloadUrl(`${exportUrl}${getExportFilter(stadsdeelFilter)}`);
+    setCanDownload(
+      Object.values(stadsdeelFilter).filter(e => e).length <= 1 &&
+        Object.values(spotTypeFilter).filter(e => e).length === 0 &&
+        Object.values(spotStatusTypeFilter).filter(e => e).length === 0 &&
+        optionValue === ContextMenuOptions.ALL
+    );
+  }, [stadsdeelFilter]);
 
   const trackFilter = name => {
     trackEvent({ category: 'Map filters', action: name });
@@ -83,6 +132,7 @@ const FilterPanel = ({
   }
 
   function processOptionChange(value) {
+    console.log('processOptionChange', value);
     // Changing options should reset the filters
     updateFilters(
       // Reset the type filter
@@ -111,24 +161,25 @@ const FilterPanel = ({
             {
               id: 1,
               label: 'Alles',
-              onClick: () => processOptionChange(ContextMenuOptions.ALL),
+              value: ContextMenuOptions.ALL,
             },
             {
               id: 2,
               label: 'Opgeleverd in',
-              onClick: () => processOptionChange(ContextMenuOptions.DELIVERED),
+              value: ContextMenuOptions.DELIVERED,
             },
             {
               id: 3,
               label: 'Opgenomen als blackspot in',
-              onClick: () => processOptionChange(ContextMenuOptions.BLACKSPOTS),
+              value: ContextMenuOptions.BLACKSPOTS,
             },
             {
               id: 4,
               label: 'Opgenomen als protocol in',
-              onClick: () => processOptionChange(ContextMenuOptions.QUICKSCANS),
+              value: ContextMenuOptions.QUICKSCANS,
             },
           ]}
+          selectionChanged={processOptionChange}
         />
       </>
     );
@@ -425,6 +476,15 @@ const FilterPanel = ({
           ? renderStatusCheckboxes()
           : ''}
         {renderStadsdeelCheckboxes()}
+        <div>
+          <ExportButton
+            variant="application"
+            onClick={exportFilter}
+            disabled={!canDownload}
+          >
+            Exporteer
+          </ExportButton>
+        </div>
       </div>
     </div>
   );

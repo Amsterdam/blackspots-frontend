@@ -4,14 +4,15 @@ import styles from './SelectMenu.module.scss';
 import classNames from 'classnames';
 import { ReactComponent as Chevron } from 'assets/icons/chevron-top.svg';
 
-const SelectMenu = ({ items }) => {
+const SelectMenu = ({ items, selectionChanged }) => {
   const [selected, setSelected] = useState(items[0].label);
   const [showMenu, setShowMenu] = useState(false);
 
   const onClick = item => () => {
-    item.onClick();
+    // item.onClick();
     setShowMenu(false);
     setSelected(item.label);
+    selectionChanged && selectionChanged(item.value);
   };
 
   return (
@@ -42,6 +43,10 @@ const SelectMenu = ({ items }) => {
   );
 };
 
+SelectMenu.defaultValues = {
+  selectionChanged: undefined
+}
+
 SelectMenu.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
@@ -49,6 +54,7 @@ SelectMenu.propTypes = {
       onClick: PropTypes.func.isRequired,
     })
   ),
+  selectionChanged: PropTypes.func
 };
 
 export default SelectMenu;

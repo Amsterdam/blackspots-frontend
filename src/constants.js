@@ -74,4 +74,5 @@ export const SpotStatusColor = {
 
 export const endpoints = {
   blackspots: `${process.env.REACT_APP_API_ROOT}blackspots/spots/?format=geojson`,
+  blackspotsExport: `${process.env.REACT_APP_API_ROOT}blackspots/spots/export/?`
 };

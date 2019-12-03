@@ -20,6 +20,7 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-to-json": "^3.4.3",
+    "file-saver": "^2.0.2",
     "formdata-polyfill": "^3.0.19",
     "http-proxy-middleware": "^0.20.0",
     "leaflet": "^1.5.1",
