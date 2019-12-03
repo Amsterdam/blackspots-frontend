@@ -1,6 +1,6 @@
 import fromFeature from './normalize';
 import { initalValues } from '../definitions/FormFields';
-import { mockFeature, mockLocation } from '../LocationForm.mock';
+import { featureMock, locationMock } from '../LocationForm.mock';
 
 describe('normalize', () => {
   it('should return the default form values when no feature is provided', () => {
@@ -8,6 +8,6 @@ describe('normalize', () => {
   });
 
   it('should convert the feature to the location', () => {
-    expect(fromFeature(mockFeature)).toEqual(mockLocation);
+    expect(fromFeature(featureMock)).toEqual(locationMock);
   });
 });

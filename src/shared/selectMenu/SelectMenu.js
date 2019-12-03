@@ -9,7 +9,6 @@ const SelectMenu = ({ items, selectionChanged }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   const onClick = item => () => {
-    // item.onClick();
     setShowMenu(false);
     setSelected(item.label);
     selectionChanged && selectionChanged(item.value);
@@ -51,7 +50,7 @@ SelectMenu.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      onClick: PropTypes.func.isRequired,
+      value: PropTypes.string.isRequired,
     })
   ),
   selectionChanged: PropTypes.func

@@ -6,7 +6,7 @@ import SelectMenu from './SelectMenu';
 describe('SelectMenu', () => {
   it('should render without errors', () => {
     shallow(
-      <SelectMenu items={[{ id: 1, label: 'test', onClick: () => {} }]} />
+      <SelectMenu items={[{ id: 1, label: 'test', value: 'test-value' }]} />
     );
   });
 });

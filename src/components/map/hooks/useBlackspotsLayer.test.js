@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import amaps from 'amsterdam-amaps/dist/amaps';
 import useBlackspotsLayer from './useBlackspotsLayer';
-import { mockFeature } from 'components/locationForm/LocationForm.mock';
+import { featureMock } from 'components/locationForm/LocationForm.mock';
 
 jest.mock('amsterdam-amaps/dist/amaps');
 
