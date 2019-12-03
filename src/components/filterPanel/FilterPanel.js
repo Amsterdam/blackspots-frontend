@@ -42,13 +42,13 @@ const exportUrl = `${endpoints.blackspotsExport}`;
 
 export const getExportFilter = stadsdeelFilter => {
   if (Object.values(stadsdeelFilter).filter(e => e).length === 0) return '';
-  const stadsdeel = Object.keys(stadsdeelFilter).find(
+  const stadsdeelName = Object.keys(stadsdeelFilter).find(
     key => stadsdeelFilter[key] === true
   );
-  const filterValue = Object.values(Stadsdeel).find(
-    ([key, value]) => value.name === stadsdeel
+  const stadsdeel = Object.values(Stadsdeel).find(
+    item => item.name === stadsdeelName
   );
-  return `stadsdeel=${filterValue[1].value}`;
+  return `stadsdeel=${stadsdeel.value}`;
 };
 
 const FilterPanel = ({
@@ -75,7 +75,7 @@ const FilterPanel = ({
   const exportFilter = () => {
     downloadFile(
       downloadUrl,
-      `wbakaart-export-${(new Date()).toLocaleDateString("nl-NL")}.csv`
+      `wbakaart-export-${new Date().toLocaleDateString('nl-NL')}.csv`
     );
   };
 
@@ -87,7 +87,7 @@ const FilterPanel = ({
         Object.values(spotStatusTypeFilter).filter(e => e).length === 0 &&
         optionValue === ContextMenuOptions.ALL
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stadsdeelFilter]);
 
   const trackFilter = name => {
