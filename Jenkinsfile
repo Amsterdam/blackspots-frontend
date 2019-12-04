@@ -22,29 +22,29 @@ node {
     }
 
 
-    // stage('Test') {
-    //     tryStep "Test", {
-    //         sh "api/deploy/test/jenkins-script.sh api/deploy/test/"
-    //     }
-    // }
+    stage('Test') {
+        String PROJECT = "blackspots-unittests-${env.GIT_COMMIT}"
 
-
-    stage("Build develop image") {
-        tryStep "build", {
-            def image = docker.build("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}")
-            image.push()
+        tryStep "unittests start", {
+            sh "docker-compose -p ${PROJECT} up --build --exit-code-from unittest unittest"
+        }, {
+            sh "docker-compose -p ${PROJECT} down -v || true"
         }
     }
 }
 
 String BRANCH = "${env.BRANCH_NAME}"
 
-
 if (BRANCH == "master" || BRANCH == "develop") {
     node {
         stage('Push acceptance image') {
             tryStep "image tagging", {
-                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}")
+                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}",
+                    "--shm-size 1G " +
+                    "--build-arg BUILD_ENV=acc " +
+                    "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
+                    ".")
+
                 image.pull()
                 image.push("acceptance")
             }
@@ -63,6 +63,10 @@ if (BRANCH == "master" || BRANCH == "develop") {
         }
     }
 
+}
+
+
+if (BRANCH == "master") {
     stage('Waiting for approval') {
         slackSend channel: '#ci-channel', color: 'warning', message: 'Blackspots is waiting for Production Release - please confirm'
         input "Deploy to Production?"
@@ -71,7 +75,12 @@ if (BRANCH == "master" || BRANCH == "develop") {
     node {
         stage('Push production image') {
             tryStep "image tagging", {
-                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}")
+                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}",
+                    "--shm-size 1G " +
+                    "--build-arg BUILD_ENV=prod " +
+                    "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
+                    ".")
+
                 image.pull()
                 image.push("production")
                 image.push("latest")
