@@ -1,8 +1,8 @@
-# Amaps as map core
+# Using react-hook-form for editing data
 
 ## Date
 
-Oktober 2019 
+Oktober 2019
 
 ## Status
 
