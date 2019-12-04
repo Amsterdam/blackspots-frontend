@@ -8,16 +8,6 @@ const SVGIcon = ({ type, status, small }) => {
   const Icon = SpotIcons[type];
   const markerStatus = SpotStatusColor[status];
 
-  if (!Icon) {
-    // eslint-disable-next-line no-console
-    console.error('Unable to resolve spot type:', type);
-  }
-
-  if (!small && !markerStatus) {
-    // eslint-disable-next-line no-console
-    console.error('Unable to resolve spot status:', status);
-  }
-
   if (small) {
     return <Icon className={styles.SmallIcon} />;
   }

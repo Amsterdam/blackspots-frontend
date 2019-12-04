@@ -83,7 +83,7 @@ const LocationForm = ({ id: locationId }) => {
     } catch (error) {
       // Dispatch the error message. This will be removed by the implementation of the error handling
       // eslint-disable-next-line no-console
-      console.log('Error! ', error);
+      console.error('Error! ', error);
     }
   };
 
