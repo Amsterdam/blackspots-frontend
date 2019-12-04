@@ -5,19 +5,18 @@ import { Heading, Button, Row } from '@datapunt/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
-import {
+import { sendData } from 'shared/api/api';
+import FormFields, {
   initalValues,
   formValidation,
   formVisibility,
 } from './definitions/FormFields';
 import { ControlsColumn, ButtonsColumn, BottomRow } from './LocationFormStyle';
-import FormFields from './definitions/FormFields';
 import FormInput from './components/FormInput';
 import fromFeature, { toFormData, toFeature } from './services/normalize';
-import { sendData } from 'shared/api/api';
-import { appRoutes, SpotTypes } from '../../constants';
+import { appRoutes, SpotTypes } from '../../config';
 
-const LocationForm = ({ id }) => {
+const LocationForm = ({ id: locationId }) => {
   const history = useHistory();
   const [{ selectedLocation }, actions] = useAppReducer(LOCATION);
   const [visible, setVisible] = useState({ ...formVisibility });
@@ -28,7 +27,7 @@ const LocationForm = ({ id }) => {
 
   const defaultValues = useMemo(
     () =>
-      id
+      locationId
         ? {
             ...initalValues,
             ...location,
@@ -70,18 +69,20 @@ const LocationForm = ({ id }) => {
 
   const onSubmit = async data => {
     try {
-      const url = `/api/blackspots/spots/${(id && data.nummer + '/') || ''}`;
-      const location = await sendData(
+      const url = `/api/blackspots/spots/${(locationId && `${data.nummer}/`) ||
+        ''}`;
+      const result = await sendData(
         url,
         toFormData(data),
-        id ? 'PATCH' : 'POST'
+        locationId ? 'PATCH' : 'POST'
       );
 
-      const feature = toFeature(location);
+      const feature = toFeature(result);
       actions.updateLocation({ payload: feature });
       history.push(appRoutes.HOME);
     } catch (error) {
       // Dispatch the error message. This will be removed by the implementation of the error handling
+      // eslint-disable-next-line no-console
       console.log('Error! ', error);
     }
   };
@@ -101,7 +102,7 @@ const LocationForm = ({ id }) => {
       register({ name, type: 'custom' }, validation);
       setValue(name, defaultValues[name]);
     });
-  }, [register, id]);
+  }, [register, locationId]);
 
   return (
     <>

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
+import { appRoutes } from 'config';
 import Accordion from '../../shared/accordion/Accordion';
-import { appRoutes } from 'constants.js';
 import Footer from '../../components/footer/Footer';
 import ConceptPageStyle, { ContentStyle } from './ConceptPageStyle';
 import { IntroTextStyle } from '../../styles/SharedStyles';

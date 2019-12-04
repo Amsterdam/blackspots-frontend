@@ -4,6 +4,7 @@ import { withUserContext } from 'test/utils';
 
 import DetailPanel from './DetailPanel';
 import SVGIcon from '../SVGIcon/SVGIcon';
+
 jest.mock('../SVGIcon/SVGIcon');
 
 describe('DetailPanel', () => {
@@ -36,7 +37,7 @@ describe('DetailPanel', () => {
   afterEach(cleanup);
 
   it('should not be visible when the feature is empty', () => {
-    var user = { canEdit: true };
+    const user = { canEdit: true };
     const { container } = render(
       withUserContext(<DetailPanel {...{ ...props, feature: null }} />, user)
     );
@@ -44,7 +45,7 @@ describe('DetailPanel', () => {
   });
 
   it('should render the edit link when authorized ', () => {
-    var user = { canEdit: true };
+    const user = { canEdit: true };
     const { queryByTestId } = render(
       withUserContext(<DetailPanel {...props} />, user)
     );
@@ -52,7 +53,7 @@ describe('DetailPanel', () => {
   });
 
   it('should NOT render the edit link when not authorized for edit ', () => {
-    var user = { canEdit: false };
+    const user = { canEdit: false };
     const { queryByTestId } = render(
       withUserContext(<DetailPanel {...props} />, user)
     );
@@ -60,7 +61,7 @@ describe('DetailPanel', () => {
   });
 
   it('should render the edit link when authorized ', () => {
-    var user = { canEdit: true };
+    const user = { canEdit: true };
     const { queryByTestId } = render(
       withUserContext(<DetailPanel {...props} />, user)
     );
@@ -68,7 +69,7 @@ describe('DetailPanel', () => {
   });
 
   it('should NOT render the edit link when not authorized for edit ', () => {
-    var user = { canEdit: false };
+    const user = { canEdit: false };
     const { queryByTestId } = render(
       withUserContext(<DetailPanel {...props} />, user)
     );

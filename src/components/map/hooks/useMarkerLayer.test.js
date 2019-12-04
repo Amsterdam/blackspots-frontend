@@ -1,10 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useMarkerLayer from './useMarkerLayer';
-import { featureMock } from 'components/locationForm/LocationForm.mock';
-import { useState } from 'react';
 
 describe('useMarkerLayer', () => {
-  // const featureMock = mockFeature;
   const mapMock = {
     map: 'the map object',
     addLayer: jest.fn(),

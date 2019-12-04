@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import DashboardPage from 'views/dashboard/DashboardPage';
 import ConceptPage from 'views/concepts/ConceptPage';
 import ContactPage from 'views/contact/ContactPage';
-import { appRoutes } from '../constants';
+import { appRoutes } from 'config';
 import LocationPage from 'views/location/LocationPage';
 import UserContext from 'shared/user/UserContext';
 import { ContentStyle } from './AppStyle';

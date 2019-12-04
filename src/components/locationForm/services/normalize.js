@@ -55,7 +55,7 @@ export const toFeature = location => {
     id,
     description,
     locatie_id,
-    point ,
+    point,
     stadsdeel,
     spot_type,
     jaar_blackspotlijst,

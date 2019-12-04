@@ -2,18 +2,18 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import SVGIcon from 'components/SVGIcon/SVGIcon';
-import { SpotStatusTypes, SpotTypes, Stadsdeel, endpoints } from 'constants.js';
+import { SpotStatusTypes, SpotTypes, Stadsdeel, endpoints } from 'config';
 import { resetFilter } from 'components/map/helpers';
-import styles from './FilterPanel.module.scss';
-import { ContextMenuOptions, MenuOptions } from './FilterPanel.constants';
 import classNames from 'classnames';
-import { StatusDisplayNames, SpotTypeDisplayNames } from '../../constants';
-import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
 import { Button, themeSpacing } from '@datapunt/asc-ui';
 import styled from '@datapunt/asc-core';
 import useDownload from 'shared/hooks/useDownload';
+import SelectMenu from '../../shared/selectMenu/SelectMenu';
+import { StatusDisplayNames, SpotTypeDisplayNames } from '../../config';
+import { ContextMenuOptions, MenuOptions } from './FilterPanel.constants';
+import styles from './FilterPanel.module.scss';
 
 const ExportButton = styled(Button)`
   margin: ${themeSpacing(2, 0)};
@@ -62,7 +62,6 @@ const FilterPanel = ({
   setBlackspotListFilter,
   setQuickscanListFilter,
   setDeliveredListFilter,
-  setStadsdeelFilter,
 }) => {
   const [optionValue, setOptionValue] = useState(ContextMenuOptions.ALL);
   const [showPanel, setShowPanel] = useState(true);
@@ -111,24 +110,12 @@ const FilterPanel = ({
     // the setFilter function received from the map, else, pass a resetted
     // filter.
     setFilters(
-      updatedSpotTypeFilter
-        ? updatedSpotTypeFilter
-        : resetFilter(spotTypeFilter),
-      updatedSpotStatusTypeFilter
-        ? updatedSpotStatusTypeFilter
-        : resetFilter(spotStatusTypeFilter),
-      updatedBlackspotYearFilter
-        ? updatedBlackspotYearFilter
-        : resetFilter(blackspotYearFilter),
-      updatedDeliveredYearFilter
-        ? updatedDeliveredYearFilter
-        : resetFilter(deliveredYearFilter),
-      updatedQuickscanYearFilter
-        ? updatedQuickscanYearFilter
-        : resetFilter(quickscanYearFilter),
-      updatedStadsdeelFilter
-        ? updatedStadsdeelFilter
-        : resetFilter(stadsdeelFilter)
+      updatedSpotTypeFilter || resetFilter(spotTypeFilter),
+      updatedSpotStatusTypeFilter || resetFilter(spotStatusTypeFilter),
+      updatedBlackspotYearFilter || resetFilter(blackspotYearFilter),
+      updatedDeliveredYearFilter || resetFilter(deliveredYearFilter),
+      updatedQuickscanYearFilter || resetFilter(quickscanYearFilter),
+      updatedStadsdeelFilter || resetFilter(stadsdeelFilter)
     );
   }
 
@@ -175,11 +162,16 @@ const FilterPanel = ({
           .map(year => {
             const value = blackspotYearFilter[year];
             return (
-              <label key={year} className={styles.CheckboxWrapper}>
+              <label
+                key={year}
+                htmlFor={year}
+                className={styles.CheckboxWrapper}
+              >
                 <input
+                  id={year}
                   type="checkbox"
                   checked={value}
-                  onChange={e => {
+                  onChange={() => {
                     const updatedFilter = {
                       ...blackspotYearFilter,
                       [year]: !value,
@@ -190,7 +182,7 @@ const FilterPanel = ({
                       updatedFilter
                     );
                     if (!value) {
-                      trackFilter('On blackspot list: ' + year);
+                      trackFilter(`On blackspot list: ${year}`);
                     }
                   }}
                 />
@@ -214,11 +206,16 @@ const FilterPanel = ({
           .map(year => {
             const value = deliveredYearFilter[year];
             return (
-              <label key={year} className={styles.CheckboxWrapper}>
+              <label
+                key={year}
+                htmlFor={year}
+                className={styles.CheckboxWrapper}
+              >
                 <input
+                  id={year}
                   type="checkbox"
                   checked={value}
-                  onChange={e => {
+                  onChange={() => {
                     const updatedFilter = {
                       ...deliveredYearFilter,
                       [year]: !value,
@@ -230,7 +227,7 @@ const FilterPanel = ({
                       updatedFilter
                     );
                     if (!value) {
-                      trackFilter('Delivered on: ' + year);
+                      trackFilter(`Delivered on: ${year}`);
                     }
                   }}
                 />
@@ -254,11 +251,16 @@ const FilterPanel = ({
           .map(year => {
             const value = quickscanYearFilter[year];
             return (
-              <label key={year} className={styles.CheckboxWrapper}>
+              <label
+                key={year}
+                htmlFor={year}
+                className={styles.CheckboxWrapper}
+              >
                 <input
+                  id={year}
                   type="checkbox"
                   checked={value}
-                  onChange={e => {
+                  onChange={() => {
                     const updatedFilter = {
                       ...quickscanYearFilter,
                       [year]: !value,
@@ -271,7 +273,7 @@ const FilterPanel = ({
                       updatedFilter
                     );
                     if (!value) {
-                      trackFilter('On quickscan list: ' + year);
+                      trackFilter(`On quickscan list: ${year}`);
                     }
                   }}
                 />
@@ -295,8 +297,9 @@ const FilterPanel = ({
           const type = SpotStatusTypes[key];
           const value = spotStatusTypeFilter[type];
           return (
-            <label key={key} className={styles.CheckboxWrapper}>
+            <label key={key} htmlFor={key} className={styles.CheckboxWrapper}>
               <input
+                id={key}
                 type="checkbox"
                 checked={value}
                 onChange={() => {
@@ -342,11 +345,12 @@ const FilterPanel = ({
           const type = SpotTypes[key];
           const value = spotTypeFilter[type];
           return (
-            <label key={key} className={styles.CheckboxWrapper}>
+            <label key={key} htmlFor={key} className={styles.CheckboxWrapper}>
               <input
+                id={key}
                 type="checkbox"
                 checked={value}
-                onChange={e => {
+                onChange={() => {
                   const updatedFilter = {
                     ...spotTypeFilter,
                     [type]: !value,
@@ -388,11 +392,12 @@ const FilterPanel = ({
           const type = Stadsdeel[key].name;
           const value = stadsdeelFilter[type];
           return (
-            <label key={key} className={styles.CheckboxWrapper}>
+            <label key={key} htmlFor={key} className={styles.CheckboxWrapper}>
               <input
+                id={key}
                 type="checkbox"
                 checked={value}
-                onChange={e => {
+                onChange={() => {
                   const updatedFilter = {
                     ...stadsdeelFilter,
                     [type]: !value,
@@ -425,7 +430,11 @@ const FilterPanel = ({
         [styles.FilterPanelCollapsed]: !showPanel,
       })}
     >
-      <div className={styles.TopBar} onClick={() => setShowPanel(!showPanel)}>
+      <button
+        type="button"
+        className={styles.TopBar}
+        onClick={() => setShowPanel(!showPanel)}
+      >
         <FilterIcon className={styles.FilterIcon} />
         Filters
         <ChevronIcon
@@ -434,7 +443,7 @@ const FilterPanel = ({
             showPanel ? '' : styles.ChevronIconRotated
           )}
         />
-      </div>
+      </button>
       <FilterWrapperStyle>
         <div className={styles.FilterContainer}>
           {renderOptions()}
@@ -467,17 +476,16 @@ const FilterPanel = ({
 };
 
 FilterPanel.propTypes = {
-  spotTypeFilter: PropTypes.object.isRequired,
-  spotStatusTypeFilter: PropTypes.object.isRequired,
-  blackspotYearFilter: PropTypes.object.isRequired,
-  deliveredYearFilter: PropTypes.object.isRequired,
-  quickscanYearFilter: PropTypes.object.isRequired,
-  stadsdeelFilter: PropTypes.object.isRequired,
+  spotTypeFilter: PropTypes.shape({}).isRequired,
+  spotStatusTypeFilter: PropTypes.shape({}).isRequired,
+  blackspotYearFilter: PropTypes.shape({}).isRequired,
+  deliveredYearFilter: PropTypes.shape({}).isRequired,
+  quickscanYearFilter: PropTypes.shape({}).isRequired,
+  stadsdeelFilter: PropTypes.shape({}).isRequired,
   setFilters: PropTypes.func.isRequired,
   setBlackspotListFilter: PropTypes.func.isRequired,
   setQuickscanListFilter: PropTypes.func.isRequired,
   setDeliveredListFilter: PropTypes.func.isRequired,
-  setStadsdeelFilter: PropTypes.func.isRequired,
 };
 
 export default FilterPanel;

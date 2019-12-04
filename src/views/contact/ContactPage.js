@@ -1,8 +1,8 @@
 import React from 'react';
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
-import { appRoutes } from 'constants.js';
-import DataTable from '../../shared/dataTable/DataTable';
+import { appRoutes } from 'config';
 import { ReactComponent as Chevron } from 'assets/icons/chevron-left.svg';
+import DataTable from '../../shared/dataTable/DataTable';
 import Footer from '../../components/footer/Footer';
 import ContactPageStyle, {
   ContentStyle,

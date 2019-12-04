@@ -4,6 +4,12 @@ import { createMemoryHistory } from 'history';
 import { ThemeProvider } from '@datapunt/asc-ui';
 import { UserContextProvider } from 'shared/user/UserContext';
 
+export const withHistory = route => Component => {
+  const history = createMemoryHistory();
+  if (route) history.push(route);
+  return <Router history={history}>{Component}</Router>;
+};
+
 export const withUserContext = (Component, user, route) => {
   return withHistory(route)(
     <UserContextProvider user={user}>{Component}</UserContextProvider>
@@ -12,10 +18,4 @@ export const withUserContext = (Component, user, route) => {
 
 export const withTheme = (Component, route) => {
   return withHistory(route)(<ThemeProvider>{Component}</ThemeProvider>);
-};
-
-export const withHistory = route => Component => {
-  const history = createMemoryHistory();
-  if (route) history.push(route);
-  return <Router history={history}>{Component}</Router>;
 };

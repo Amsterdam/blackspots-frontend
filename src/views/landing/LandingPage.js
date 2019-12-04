@@ -1,8 +1,8 @@
 import React from 'react';
 import auth from 'shared/auth/auth';
-import styles from './LandingPage.module.scss';
 import logo from 'assets/media/amsterdam-logo.svg';
 import headerImage from 'assets/media/main-header-blur.jpg';
+import styles from './LandingPage.module.scss';
 import Footer from '../../components/footer/Footer';
 import { IntroTextStyle } from '../../styles/SharedStyles';
 
@@ -41,7 +41,7 @@ const LandingPage = () => {
             </a>
           </IntroTextStyle>
           <h2>Inloggen</h2>
-          <button onClick={login} className={styles.LoginBtn}>
+          <button type="button" onClick={login} className={styles.LoginBtn}>
             Datapunt account
           </button>
           <p>

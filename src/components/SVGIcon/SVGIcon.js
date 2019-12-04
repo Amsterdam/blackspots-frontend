@@ -1,33 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SpotStatusColor, SpotIcons } from 'constants.js';
+import { SpotStatusColor, SpotIcons, SpotStatusTypes } from 'config';
 import styles from './SVGIcon.module.scss';
-import { SpotStatusTypes } from '../../constants';
 
 const SVGIcon = ({ type, status, small }) => {
-  const SVGIcon = SpotIcons[type];
+  const Icon = SpotIcons[type];
   const markerStatus = SpotStatusColor[status];
 
-  if (!SVGIcon) {
+  if (!Icon) {
+    // eslint-disable-next-line no-console
     console.error('Unable to resolve spot type:', type);
   }
 
   if (!small && !markerStatus) {
+    // eslint-disable-next-line no-console
     console.error('Unable to resolve spot status:', status);
   }
 
   if (small) {
-    return <SVGIcon className={styles.SmallIcon} />;
-  } else {
-    return (
-      <SVGIcon
-        fill={
-          status === SpotStatusTypes.GEEN_MAATREGEL ? '#000000' : markerStatus
-        }
-      />
-    );
+    return <Icon className={styles.SmallIcon} />;
   }
+  return (
+    <Icon
+      fill={
+        status === SpotStatusTypes.GEEN_MAATREGEL ? '#000000' : markerStatus
+      }
+    />
+  );
 };
 
 SVGIcon.defaultProps = {

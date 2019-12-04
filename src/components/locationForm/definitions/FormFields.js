@@ -5,7 +5,7 @@ import {
   StatusDisplayNames,
   SpotStatusTypes,
   SpotTypes,
-} from '../../../constants';
+} from '../../../config';
 import TextInput from '../components/TextInput';
 import TextAreaInput from '../components/TextAreaInput';
 import FileInput from '../components/FileInput';
