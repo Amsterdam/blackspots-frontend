@@ -20,10 +20,9 @@ const ExportButton = styled(Button)`
 `;
 
 const FilterWrapperStyle = styled.div`
-  max-height: calc(780px - 33px);
+  max-height: calc(550px - 33px);
   overflow-x: hidden;
   overflow-y: auto;
-  will-change: transform;
 `;
 
 function getStatusClassName(status) {
@@ -76,7 +75,7 @@ const FilterPanel = ({
   const exportFilter = () => {
     downloadFile(
       downloadUrl,
-      `wbakaart-export-${(new Date()).toLocaleDateString("nl-NL")}.csv`
+      `wbakaart-export-${new Date().toLocaleDateString('nl-NL')}.csv`
     );
   };
 
@@ -88,7 +87,7 @@ const FilterPanel = ({
         Object.values(spotStatusTypeFilter).filter(e => e).length === 0 &&
         optionValue === ContextMenuOptions.ALL
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stadsdeelFilter]);
 
   const trackFilter = name => {
