@@ -36,7 +36,7 @@ const LocationForm = ({ id }) => {
         : {
             ...initalValues,
           },
-    []
+    [location, initalValues]
   );
 
   const { register, handleSubmit, setValue, errors, watch } = useForm({
@@ -123,7 +123,7 @@ const LocationForm = ({ id }) => {
                     value={values[name]}
                     error={errors[name]}
                     {...otherProps}
-                  ></FormInput>
+                  />
                 )
             )}
           </ControlsColumn>
@@ -143,7 +143,7 @@ const LocationForm = ({ id }) => {
                     value={values[name]}
                     error={errors[name]}
                     {...otherProps}
-                  ></FormInput>
+                  />
                 )
             )}
           </ControlsColumn>
@@ -163,7 +163,7 @@ const LocationForm = ({ id }) => {
                     value={values[name]}
                     error={errors[name]}
                     {...otherProps}
-                  ></FormInput>
+                  />
                 )
             )}
           </ControlsColumn>

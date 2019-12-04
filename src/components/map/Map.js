@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-// Imports needed for amaps
-import 'leaflet/dist/leaflet.css';
-import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
-import 'amsterdam-stijl/dist/css/ams-map.css';
-
 import Loader from 'shared/loader/Loader';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';

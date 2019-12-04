@@ -44,7 +44,7 @@ const FormFields = [
       pattern: {
         value: /^\d{1,2}.\d{7}, \d{1,2}.\d{7}$/,
         message:
-          'De coordinaten zijn niet in de correct format `xx.xxxxxxx, x.xxxxxxx,` ',
+          'De coördinaten zijn niet in het correct format `xx.xxxxxxx, xx.xxxxxxx`',
       },
     },
   },
@@ -75,7 +75,7 @@ const FormFields = [
     validation: {
       pattern: {
         value: /^(\d{4})?$/,
-        message: 'Het jaar is niet in de correct format `jjjj` ',
+        message: 'Het jaar is niet in het correcte format `jjjj`',
       },
     },
   },
@@ -90,7 +90,7 @@ const FormFields = [
     validation: {
       pattern: {
         value: /^(\d{4})?$/,
-        message: 'Het jaar is niet in de correct format `jjjj` ',
+        message: 'Het jaar is niet in het correcte format `jjjj`',
       },
     },
   },
@@ -178,7 +178,7 @@ export const initalValues = {
       [item.name]: item.initialValue || '',
     }),
     {}
-  )
+  ),
 };
 
 export const formValidation = {

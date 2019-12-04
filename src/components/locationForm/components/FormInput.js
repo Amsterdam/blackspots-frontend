@@ -3,14 +3,7 @@ import styled, { css } from '@datapunt/asc-core';
 import { Label, themeSpacing, themeColor } from '@datapunt/asc-ui';
 
 const LabelInput = styled(Label)`
-  ${({ hidden }) =>
-    hidden
-      ? css`
-          display: none;
-        `
-      : css`
-          display: flex;
-        `};
+  display: ${({ hidden }) => (hidden ? 'none' : 'flex')};
   flex-direction: column;
   margin-bottom: ${themeSpacing(6)};
   font-weight: bold;
