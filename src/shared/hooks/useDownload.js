@@ -3,9 +3,11 @@ import fileSaver from 'file-saver';
 
 function useDownload() {
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState();
 
   async function downloadFile(url, name) {
     setLoading(true);
+    setError();
 
     const fileName = name || url.split('/').pop();
 
@@ -13,11 +15,14 @@ function useDownload() {
       .then(response => response.blob())
       .then(blob => {
         fileSaver(blob, fileName);
-        setLoading(false);
-      });
+      })
+      .catch(e => {
+        setError(e);
+      })
+      .finally(() => setLoading(false));
   }
 
-  return [loading, downloadFile];
+  return { downloadFile, loading, error };
 }
 
 export default useDownload;

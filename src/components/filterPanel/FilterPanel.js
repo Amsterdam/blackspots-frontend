@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import SVGIcon from 'components/SVGIcon/SVGIcon';
@@ -41,7 +41,7 @@ function getStatusClassName(status) {
 const exportUrl = `${endpoints.blackspotsExport}`;
 
 export const getExportFilter = stadsdeelFilter => {
-  if (Object.values(stadsdeelFilter).filter(e => e).length === 0) return '';
+  if (Object.values(stadsdeelFilter).filter(Boolean).length === 0) return '';
   const stadsdeelName = Object.keys(stadsdeelFilter).find(
     key => stadsdeelFilter[key] === true
   );
@@ -70,14 +70,14 @@ const FilterPanel = ({
   const [downloadUrl, setDownloadUrl] = useState(exportUrl);
   const [canDownload, setCanDownload] = useState(true);
 
-  const [, downloadFile] = useDownload();
+  const { downloadFile } = useDownload();
 
-  const exportFilter = () => {
+  const exportFilter = useCallback(() => {
     downloadFile(
       downloadUrl,
       `wbakaart-export-${new Date().toLocaleDateString('nl-NL')}.csv`
     );
-  };
+  }, [downloadUrl]);
 
   useEffect(() => {
     setDownloadUrl(`${exportUrl}${getExportFilter(stadsdeelFilter)}`);
@@ -87,12 +87,14 @@ const FilterPanel = ({
         Object.values(spotStatusTypeFilter).filter(e => e).length === 0 &&
         optionValue === ContextMenuOptions.ALL
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stadsdeelFilter]);
+  }, [stadsdeelFilter, spotTypeFilter, spotStatusTypeFilter]);
 
-  const trackFilter = name => {
-    trackEvent({ category: 'Map filters', action: name });
-  };
+  const trackFilter = useCallback(
+    name => {
+      trackEvent({ category: 'Map filters', action: name });
+    },
+    [trackEvent]
+  );
 
   /**
    * Update the filters of the actual map
@@ -378,7 +380,7 @@ const FilterPanel = ({
     );
   }
 
-  const renderStadsdeelCheckboxes = () => {
+  const renderStadsdeelCheckboxes = useMemo(() => {
     return (
       <>
         <h5>Stadsdeel</h5>
@@ -415,7 +417,7 @@ const FilterPanel = ({
         })}
       </>
     );
-  };
+  }, [stadsdeelFilter]);
 
   return (
     <div
@@ -436,24 +438,19 @@ const FilterPanel = ({
       <FilterWrapperStyle>
         <div className={styles.FilterContainer}>
           {renderOptions()}
-          {optionValue !== ContextMenuOptions.ALL ? <h5>Jaar</h5> : ''}
-          {optionValue === ContextMenuOptions.BLACKSPOTS
-            ? renderBlackspotYearCheckboxes()
-            : ''}
-          {optionValue === ContextMenuOptions.DELIVERED
-            ? renderDeliveredYearCheckboxes()
-            : ''}
-          {optionValue === ContextMenuOptions.QUICKSCANS
-            ? renderQuickscanYearCheckboxes()
-            : ''}
-          {optionValue === ContextMenuOptions.ALL ||
-          optionValue === ContextMenuOptions.DELIVERED
-            ? renderTypeCheckboxes()
-            : ''}
-          {optionValue !== ContextMenuOptions.DELIVERED
-            ? renderStatusCheckboxes()
-            : ''}
-          {renderStadsdeelCheckboxes()}
+          {optionValue !== ContextMenuOptions.ALL && <h5>Jaar</h5>}
+          {optionValue === ContextMenuOptions.BLACKSPOTS &&
+            renderBlackspotYearCheckboxes()}
+          {optionValue === ContextMenuOptions.DELIVERED &&
+            renderDeliveredYearCheckboxes()}
+          {optionValue === ContextMenuOptions.QUICKSCANS &&
+            renderQuickscanYearCheckboxes()}
+          {(optionValue === ContextMenuOptions.ALL ||
+            optionValue === ContextMenuOptions.DELIVERED) &&
+            renderTypeCheckboxes()}
+          {optionValue !== ContextMenuOptions.DELIVERED &&
+            renderStatusCheckboxes()}
+          {renderStadsdeelCheckboxes}
           <div>
             <ExportButton
               variant="application"
