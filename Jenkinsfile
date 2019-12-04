@@ -39,14 +39,16 @@ if (BRANCH == "master" || BRANCH == "develop") {
     node {
         stage('Push acceptance image') {
             tryStep "image tagging", {
-                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}",
+                docker.withRegistry('build.app.amsterdam.nl:5000','docker-registry') {
+                  def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER} ",
                     "--shm-size 1G " +
                     "--build-arg BUILD_ENV=acc " +
                     "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
                     ".")
 
-                image.pull()
-                image.push("acceptance")
+                  image.pull()
+                  image.push("acceptance")
+                }
             }
         }
     }
@@ -75,15 +77,17 @@ if (BRANCH == "master") {
     node {
         stage('Push production image') {
             tryStep "image tagging", {
-                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}",
-                    "--shm-size 1G " +
-                    "--build-arg BUILD_ENV=prod " +
-                    "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
-                    ".")
+              docker.withRegistry('build.app.amsterdam.nl:5000','docker-registry') {
+                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER} ",
+                  "--shm-size 1G " +
+                  "--build-arg BUILD_ENV=prod " +
+                  "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
+                  ".")
 
                 image.pull()
                 image.push("production")
                 image.push("latest")
+              }
             }
         }
     }
