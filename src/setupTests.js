@@ -1,5 +1,7 @@
 /* istanbul ignore file */
+// eslint-disable-next-line import/no-extraneous-dependencies
 import '@testing-library/jest-dom/extend-expect';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import L from 'leaflet-headless';
 
 import { configure } from 'enzyme';
@@ -36,4 +38,5 @@ window.Element.prototype.closest = function closest(selector) {
 };
 
 // Mock the window.fetch function
+// eslint-disable-next-line import/no-extraneous-dependencies
 global.fetch = require('jest-fetch-mock');

@@ -32,4 +32,3 @@ export function getDeliveredYearFromMarker(marker) {
 export function getQuickscanYearFromMarker(marker) {
   return marker.feature.properties.jaar_ongeval_quickscan;
 }
-

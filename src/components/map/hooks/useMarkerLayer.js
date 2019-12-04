@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 
-const useMarkerLayer = (mapRef) => {
+const useMarkerLayer = mapRef => {
   const layerRef = useRef(null);
   const [location, setLocation] = useState(null);
   useEffect(() => {

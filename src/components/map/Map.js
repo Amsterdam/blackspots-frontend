@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
 import Loader from 'shared/loader/Loader';
+import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
+import useAppReducer from 'shared/hooks/useAppReducer';
+import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
 import { evaluateMarkerVisibility } from './helpers';
-import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'constants.js';
 import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
 import useYearFilters from './hooks/useYearFilters';
 import useBlackspotsLayer from './hooks/useBlackspotsLayer';
 import useMap from './hooks/useMap';
 import MapStyle from './MapStyle';
-import useAppReducer from 'shared/hooks/useAppReducer';
-import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
-import { endpoints } from '../../constants';
+import { endpoints } from '../../config';
 import useMarkerLayer from './hooks/useMarkerLayer';
 
 const Map = () => {
@@ -82,7 +82,10 @@ const Map = () => {
     [SpotTypes.WEGVAK]: false,
   });
   const [stadsdeelFilter, setStadsdeelFilter] = useState({
-    ...Object.values(Stadsdeel).reduce((acc, item) => ({...acc, [item.name]: false}), {}),
+    ...Object.values(Stadsdeel).reduce(
+      (acc, item) => ({ ...acc, [item.name]: false }),
+      {}
+    ),
   });
 
   // A filter to only show items on the 'blackspot list', which are all
@@ -108,7 +111,7 @@ const Map = () => {
       blackspotListFilter,
       quickscanListFilter,
       deliveredListFilter,
-      stadsdeelFilter,
+      stadsdeelFilter
     );
   }, [
     geoLayerRef,
@@ -124,19 +127,19 @@ const Map = () => {
   ]);
 
   const setFilters = (
-    spotTypeFilter,
-    spotStatusTypeFilter,
-    blackspotYearFilter,
-    deliveredYearFilter,
-    quickscanYearFilter,
-    stadsdeelFilter,
+    spotTypeFilterValue,
+    spotStatusTypeFilterValue,
+    blackspotYearFilterValue,
+    deliveredYearFilterValue,
+    quickscanYearFilterValue,
+    stadsdeelFilterValue
   ) => {
-    setSpotTypeFilter(spotTypeFilter);
-    setSpotStatusTypeFilter(spotStatusTypeFilter);
-    setBlackspotYearFilter(blackspotYearFilter);
-    setDeliveredYearFilter(deliveredYearFilter);
-    setQuickscanYearFilter(quickscanYearFilter);
-    setStadsdeelFilter(stadsdeelFilter);
+    setSpotTypeFilter(spotTypeFilterValue);
+    setSpotStatusTypeFilter(spotStatusTypeFilterValue);
+    setBlackspotYearFilter(blackspotYearFilterValue);
+    setDeliveredYearFilter(deliveredYearFilterValue);
+    setQuickscanYearFilter(quickscanYearFilterValue);
+    setStadsdeelFilter(stadsdeelFilterValue);
   };
 
   return (

@@ -2,7 +2,7 @@ import styled from '@datapunt/asc-core';
 import { themeColor, themeSpacing, Heading } from '@datapunt/asc-ui';
 import { ContentBoxStyle } from '../../styles/SharedStyles';
 
-export const ContactPageStyle = styled.div`
+const ContactPageStyle = styled.div`
   width: 100%;
 
   p > a {

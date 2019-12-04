@@ -26,8 +26,11 @@ export const stringToDate = date => {
  * @param {date} date
  * Temporary function that converts a date object in the dd/MM/yy format as expected in the api
  */
-export const dateToString = (date) => {
-  return date && `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() +1).padStart(2, '0')}/${String(date.getFullYear()).substring(2)}`
-}
-
-
+export const dateToString = date => {
+  return (
+    date &&
+    `${String(date.getDate()).padStart(2, '0')}/${String(
+      date.getMonth() + 1
+    ).padStart(2, '0')}/${String(date.getFullYear()).substring(2)}`
+  );
+};

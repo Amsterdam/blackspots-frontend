@@ -19,13 +19,7 @@ const RadioGroupInputStyle = styled(List)`
   margin-bottom: 0;
 `;
 
-const RadioInput = ({
-  name,
-  label,
-  value,
-  onChange,
-  checked,
-}) => {
+const RadioInput = ({ name, label, value, onChange, checked }) => {
   return (
     <RadioLabelStyle htmlFor={value} label={label} position="right">
       <RadioInputStyle
@@ -41,12 +35,7 @@ const RadioInput = ({
   );
 };
 
-const RadioGroupInput = ({
-  name,
-  value: selectedValue,
-  options,
-  onChange,
-}) => {
+const RadioGroupInput = ({ name, value: selectedValue, options, onChange }) => {
   return (
     <RadioGroupInputStyle>
       {options.map(option => {

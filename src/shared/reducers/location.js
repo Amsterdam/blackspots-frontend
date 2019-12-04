@@ -6,7 +6,7 @@ export const UPDATE_LOCATION = `${REDUCER_KEY}/UPDATE_LOCATION`;
 
 export const initialState = {
   selectedLocation: null,
-  locations: []
+  locations: [],
 };
 
 const locationReducer = (state = initialState, action) => {
@@ -22,12 +22,19 @@ const locationReducer = (state = initialState, action) => {
     case ADD_LOCATIONS:
       return {
         ...state,
-        locations: [ ...action.payload ],
+        locations: [...action.payload],
       };
     case UPDATE_LOCATION:
       return {
         ...state,
-        locations: [ ...state.locations.filter(location => location.properties.locatie_id !== action.payload.properties.locatie_id), action.payload],
+        locations: [
+          ...state.locations.filter(
+            location =>
+              location.properties.locatie_id !==
+              action.payload.properties.locatie_id
+          ),
+          action.payload,
+        ],
         selectedLocation: { ...action.payload },
       };
     default:
@@ -38,7 +45,7 @@ const locationReducer = (state = initialState, action) => {
 export const actions = {
   selectLocation: SELECT_LOCATION,
   addLocations: ADD_LOCATIONS,
-  updateLocation: UPDATE_LOCATION
+  updateLocation: UPDATE_LOCATION,
 };
 
 export default locationReducer;

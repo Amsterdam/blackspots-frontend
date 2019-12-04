@@ -5,6 +5,6 @@ import ErrorMsg from './ErrorMsg';
 
 describe('ErrorMsg', () => {
   it('should render without errors', () => {
-    shallow(<ErrorMsg isOpen={true} />);
+    shallow(<ErrorMsg isOpen />);
   });
 });

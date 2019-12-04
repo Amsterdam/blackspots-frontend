@@ -2,7 +2,7 @@ import styled from '@datapunt/asc-core';
 import { themeColor } from '@datapunt/asc-ui';
 import { ContentBoxStyle } from '../../styles/SharedStyles';
 
-export const ConceptPageStyle = styled.div`
+const ConceptPageStyle = styled.div`
   width: 100%;
   min-height: 100%;
 `;

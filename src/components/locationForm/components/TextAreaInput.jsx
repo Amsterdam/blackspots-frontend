@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Input } from '@datapunt/asc-ui';
 import styled, { css } from '@datapunt/asc-core';

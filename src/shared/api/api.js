@@ -1,5 +1,4 @@
-import { logout } from '../auth/auth';
-import auth from '../auth/auth';
+import auth, { logout } from '../auth/auth';
 
 export const getAccessToken = () => auth.keycloak.token;
 
@@ -34,7 +33,7 @@ export const getWithToken = (
   const headers = {};
 
   if (token) {
-    headers.Authorization = 'Bearer ' + token;
+    headers.Authorization = `Bearer ${token}`;
   }
 
   const options = {
@@ -62,13 +61,10 @@ export const getByUrl = async (url, params, cancel, reloadOnUnauthorized) => {
 const getFormData = data => {
   const formData = new FormData();
 
-  for (const name in data) {
-    data[name] &&
-      formData.append(
-        name,
-        data[name].file ? data[name].file : data[name]
-      );
-  };
+  Object.keys(data).forEach(name => {
+    if (data[name])
+      formData.append(name, data[name].file ? data[name].file : data[name]);
+  });
   return formData;
 };
 
@@ -77,7 +73,7 @@ export const sendData = async (url, data, method = 'POST') => {
   const options = {
     method,
     headers: {
-      Authorization: 'Bearer ' + token,
+      Authorization: `Bearer ${token}`,
     },
     body: getFormData(data),
   };

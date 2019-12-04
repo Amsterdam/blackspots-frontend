@@ -1,13 +1,13 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import Header from './Header';
+import { render } from '@testing-library/react';
 import { withUserContext } from 'test/utils';
+import Header from './Header';
 
 describe('Header', () => {
   const regex = /toevoegen/i;
 
   it('should not render the add link when the user has no add rights', () => {
-    var user = { canAdd: false };
+    const user = { canAdd: false };
     const { container, queryByText } = render(
       withUserContext(<Header />, user)
     );
@@ -16,7 +16,7 @@ describe('Header', () => {
   });
 
   it('should render the add link when the user has add rights', () => {
-    var user = { canAdd: true };
+    const user = { canAdd: true };
     const { container, queryByText } = render(
       withUserContext(<Header />, user)
     );

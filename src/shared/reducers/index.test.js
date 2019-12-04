@@ -1,4 +1,4 @@
-import mainReducer, { actionsCreator } from './';
+import mainReducer, { actionsCreator } from '.';
 
 describe('mainReducer', () => {
   it('should create the reducer', () => {

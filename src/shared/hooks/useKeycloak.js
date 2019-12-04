@@ -6,7 +6,7 @@ const useKeycloak = () => {
   const [canEdit, setCanEdit] = useState(false);
   const [canAdd, setCanAdd] = useState(false);
 
-  const keycloak = auth.keycloak;
+  const { keycloak } = auth;
 
   useEffect(() => {
     keycloak.onAuthSuccess = () => {

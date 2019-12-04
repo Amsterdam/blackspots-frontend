@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { Logout } from '@datapunt/asc-assets';
-import { appRoutes } from 'constants.js';
+import { appRoutes } from 'config';
 import { logout } from 'shared/auth/auth';
 import UserContext from 'shared/user/UserContext';
 import { Header as HeaderComponent, Link } from '@datapunt/asc-ui';

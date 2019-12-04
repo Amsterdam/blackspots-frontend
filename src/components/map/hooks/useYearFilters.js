@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { useState, useEffect } from 'react';
 
 const useYearFilters = features => {
@@ -7,15 +8,15 @@ const useYearFilters = features => {
 
   useEffect(() => {
     // Init all year filters
-    const blackspotYearFilter = {};
-    const quickscanYearFilter = {};
-    const deliveredYearFilter = {};
+    setBlackspotYearFilter({});
+    setDeliveredYearFilter({});
+    setQuickscanYearFilter({});
 
     // Get all the relevant year values for the filters
     const blackspotYears = [];
     const deliveredYears = [];
     const quickscanYears = [];
-    features &&
+    if (features)
       features.forEach(f => {
         // Get the year values
         const {
