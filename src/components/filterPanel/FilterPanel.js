@@ -11,18 +11,19 @@ import { StatusDisplayNames, SpotTypeDisplayNames } from '../../constants';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
-import { Button, themeColor, themeSpacing } from '@datapunt/asc-ui';
+import { Button, themeSpacing } from '@datapunt/asc-ui';
 import styled from '@datapunt/asc-core';
 import useDownload from 'shared/hooks/useDownload';
 
 const ExportButton = styled(Button)`
   margin: ${themeSpacing(2, 0)};
-  &:focus,
-  &:hover {
-    background-color: ${themeColor('tint', 'level0')};
-    color: ${themeColor('tint', 'level7')};
-    text-decoration: none;
-  }
+`;
+
+const FilterWrapperStyle = styled.div`
+  max-height: calc(780px - 33px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  will-change: transform;
 `;
 
 function getStatusClassName(status) {
@@ -433,36 +434,38 @@ const FilterPanel = ({
           )}
         />
       </div>
-      <div className={styles.FilterContainer}>
-        {renderOptions()}
-        {optionValue !== ContextMenuOptions.ALL ? <h5>Jaar</h5> : ''}
-        {optionValue === ContextMenuOptions.BLACKSPOTS
-          ? renderBlackspotYearCheckboxes()
-          : ''}
-        {optionValue === ContextMenuOptions.DELIVERED
-          ? renderDeliveredYearCheckboxes()
-          : ''}
-        {optionValue === ContextMenuOptions.QUICKSCANS
-          ? renderQuickscanYearCheckboxes()
-          : ''}
-        {optionValue === ContextMenuOptions.ALL ||
-        optionValue === ContextMenuOptions.DELIVERED
-          ? renderTypeCheckboxes()
-          : ''}
-        {optionValue !== ContextMenuOptions.DELIVERED
-          ? renderStatusCheckboxes()
-          : ''}
-        {renderStadsdeelCheckboxes()}
-        <div>
-          <ExportButton
-            variant="application"
-            onClick={exportFilter}
-            disabled={!canDownload}
-          >
-            Exporteer
-          </ExportButton>
+      <FilterWrapperStyle>
+        <div className={styles.FilterContainer}>
+          {renderOptions()}
+          {optionValue !== ContextMenuOptions.ALL ? <h5>Jaar</h5> : ''}
+          {optionValue === ContextMenuOptions.BLACKSPOTS
+            ? renderBlackspotYearCheckboxes()
+            : ''}
+          {optionValue === ContextMenuOptions.DELIVERED
+            ? renderDeliveredYearCheckboxes()
+            : ''}
+          {optionValue === ContextMenuOptions.QUICKSCANS
+            ? renderQuickscanYearCheckboxes()
+            : ''}
+          {optionValue === ContextMenuOptions.ALL ||
+          optionValue === ContextMenuOptions.DELIVERED
+            ? renderTypeCheckboxes()
+            : ''}
+          {optionValue !== ContextMenuOptions.DELIVERED
+            ? renderStatusCheckboxes()
+            : ''}
+          {renderStadsdeelCheckboxes()}
+          <div>
+            <ExportButton
+              variant="application"
+              onClick={exportFilter}
+              disabled={!canDownload}
+            >
+              Exporteer
+            </ExportButton>
+          </div>
         </div>
-      </div>
+      </FilterWrapperStyle>
     </div>
   );
 };
