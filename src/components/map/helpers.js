@@ -19,7 +19,8 @@ export function evaluateMarkerVisibility(
   quickscanYearFilter,
   blackspotListFilter,
   quickscanListFilter,
-  deliveredListFilter
+  deliveredListFilter,
+  stadsdeelFilter,
 ) {
   markers &&
     markers.forEach(marker => {
@@ -29,6 +30,7 @@ export function evaluateMarkerVisibility(
           blackspotListFilter,
           quickscanListFilter,
           deliveredListFilter,
+          stadsdeelFilter,
           marker
         ) &&
         isVisibleStatusType(spotStatusTypeFilter, marker) &&
@@ -51,10 +53,12 @@ function isVisibleSpotType(
   blackspotListFilter,
   quickscanListFilter,
   deliveredListFilter,
+  stadsdeelFilter,
   marker
 ) {
   const spotType = getSpotTypeFromMarker(marker);
   const spotStatus = getStatusTypeFromMarker(marker);
+  const stadsdeel = marker.feature.properties.stadsdeel;
 
   // Check if the spot should be visible based on the spotTypeFilter
   const showBasedOnTypeFilter = allValuesAreFalse(spotTypeFilter)
@@ -77,7 +81,9 @@ function isVisibleSpotType(
     }
   })();
 
-  return showBasedOnTypeFilter && showBasedOnListFilter;
+  const showBasedOnStadsdeelFilter = allValuesAreFalse(stadsdeelFilter) ? true : stadsdeelFilter[stadsdeel]
+
+  return showBasedOnTypeFilter && showBasedOnListFilter && showBasedOnStadsdeelFilter ;
 }
 
 /**
@@ -123,14 +129,14 @@ function isVisibleQuickscanYear(quickscanYearFilter, marker) {
 /**
  * Check if all values of an object are falsy
  */
-function allValuesAreFalse(object) {
+export const allValuesAreFalse = (object) => {
   return Object.values(object).every(v => !v);
 }
 
 /**
  * Set all values in an object to false, effectively resetting a filter
  */
-export function resetFilter(filter) {
+export const resetFilter = (filter) => {
   const resetFilter = {};
   Object.keys(filter).forEach(k => (resetFilter[k] = false));
   return resetFilter;

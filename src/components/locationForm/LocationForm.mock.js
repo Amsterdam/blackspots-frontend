@@ -1,4 +1,4 @@
-export const mockFeature = {
+export const featureMock = {
   id: 1,
   type: 'Feature',
   geometry: {
@@ -36,7 +36,7 @@ export const mockFeature = {
   },
 };
 
-export const mockLocation = {
+export const locationMock = {
   actiehouder: 'Uitgevoerd door het IB',
   coordinaten: '52.3875654, 4.9239022',
   design_document: {
@@ -59,6 +59,7 @@ export const mockLocation = {
   opmerking: '',
   rapport_document: undefined,
   spot_type: 'blackspot',
+  stadsdeel: 'Noord',
   start_uitvoering: '03/10/16',
   status: 'gereed',
   taken: '',

@@ -4,7 +4,7 @@ import Loader from 'shared/loader/Loader';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
 import { evaluateMarkerVisibility } from './helpers';
-import { SpotTypes, SpotStatusTypes } from 'constants.js';
+import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'constants.js';
 import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
 import useYearFilters from './hooks/useYearFilters';
@@ -81,6 +81,9 @@ const Map = () => {
     [SpotTypes.RISICO]: false,
     [SpotTypes.WEGVAK]: false,
   });
+  const [stadsdeelFilter, setStadsdeelFilter] = useState({
+    ...Object.values(Stadsdeel).reduce((acc, item) => ({...acc, [item.name]: false}), {}),
+  });
 
   // A filter to only show items on the 'blackspot list', which are all
   // spots with type BLACKSPOT or WEGVAk
@@ -104,7 +107,8 @@ const Map = () => {
       quickscanYearFilter,
       blackspotListFilter,
       quickscanListFilter,
-      deliveredListFilter
+      deliveredListFilter,
+      stadsdeelFilter,
     );
   }, [
     geoLayerRef,
@@ -116,6 +120,7 @@ const Map = () => {
     blackspotListFilter,
     quickscanListFilter,
     deliveredListFilter,
+    stadsdeelFilter,
   ]);
 
   const setFilters = (
@@ -123,13 +128,15 @@ const Map = () => {
     spotStatusTypeFilter,
     blackspotYearFilter,
     deliveredYearFilter,
-    quickscanYearFilter
+    quickscanYearFilter,
+    stadsdeelFilter,
   ) => {
     setSpotTypeFilter(spotTypeFilter);
     setSpotStatusTypeFilter(spotStatusTypeFilter);
     setBlackspotYearFilter(blackspotYearFilter);
     setDeliveredYearFilter(deliveredYearFilter);
     setQuickscanYearFilter(quickscanYearFilter);
+    setStadsdeelFilter(stadsdeelFilter);
   };
 
   return (
@@ -143,10 +150,12 @@ const Map = () => {
             blackspotYearFilter={blackspotYearFilter}
             deliveredYearFilter={deliveredYearFilter}
             quickscanYearFilter={quickscanYearFilter}
+            stadsdeelFilter={stadsdeelFilter}
             setFilters={setFilters}
             setBlackspotListFilter={value => setBlackspotListFilter(value)}
             setQuickscanListFilter={setQuickscanListFilter}
             setDeliveredListFilter={setDeliveredListFilter}
+            setStadsdeelFilter={setStadsdeelFilter}
           />
         )}
 

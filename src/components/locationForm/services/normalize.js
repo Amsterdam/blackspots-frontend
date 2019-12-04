@@ -26,6 +26,7 @@ const fromFeature = feature => {
       jaar_oplevering,
       notes,
       documents,
+      stadsdeel,
     },
   } = feature;
   return {
@@ -33,6 +34,7 @@ const fromFeature = feature => {
     naam: description,
     nummer: locatie_id,
     coordinaten: `${coordinates[1]}, ${coordinates[0]}`,
+    stadsdeel,
     spot_type,
     jaar_blackspotlijst,
     jaar_ongeval_quickscan,
@@ -53,7 +55,8 @@ export const toFeature = location => {
     id,
     description,
     locatie_id,
-    point,
+    point ,
+    stadsdeel,
     spot_type,
     jaar_blackspotlijst,
     jaar_ongeval_quickscan,
@@ -73,6 +76,7 @@ export const toFeature = location => {
     properties: {
       description,
       locatie_id,
+      stadsdeel,
       spot_type,
       jaar_blackspotlijst,
       jaar_ongeval_quickscan,
@@ -102,6 +106,7 @@ export const toFormData = location => {
     naam,
     nummer,
     coordinaten,
+    stadsdeel,
     spot_type,
     jaar_blackspotlijst,
     jaar_ongeval_quickscan,
@@ -125,6 +130,7 @@ export const toFormData = location => {
         .map(s => parseFloat(s))
         .reverse(),
     }),
+    stadsdeel,
     spot_type,
     jaar_blackspotlijst,
     jaar_ongeval_quickscan,

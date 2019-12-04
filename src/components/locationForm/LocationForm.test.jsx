@@ -4,7 +4,7 @@ import useAppReducer from 'shared/hooks/useAppReducer';
 import useForm from 'react-hook-form';
 import LocationForm from './LocationForm';
 import { withTheme } from '../../test/utils';
-import { mockFeature, mockLocation } from './LocationForm.mock';
+import { featureMock, locationMock } from './LocationForm.mock';
 import { initalValues } from './definitions/FormFields';
 
 jest.mock('shared/hooks/useAppReducer');
@@ -38,15 +38,15 @@ describe('LocationForm', () => {
   });
 
   it('should render the edit form ', () => {
-    useAppReducer.mockReturnValue([{ selectedLocation: mockFeature }]);
-    useFormMock.watch.mockReturnValue(mockLocation);
+    useAppReducer.mockReturnValue([{ selectedLocation: featureMock }]);
+    useFormMock.watch.mockReturnValue(locationMock);
     useForm.mockReturnValue({...useFormMock});
     const { container } = render(withTheme(<LocationForm id={'1'} />));
     expect(container.firstChild.innerHTML).not.toBeUndefined();
     expect(container.querySelectorAll('textarea').length).toEqual(2);
     expect(container.querySelectorAll('input[type="text"]').length).toEqual(7);
     expect(container.querySelector('input[type="text"]').value).toEqual(
-      mockFeature.properties.description
+      featureMock.properties.description
     );
   });
 
