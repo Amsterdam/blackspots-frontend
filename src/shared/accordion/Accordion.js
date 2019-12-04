@@ -10,16 +10,26 @@ const Accordion = ({ title, text }) => {
     setOpen(!open);
   }
 
+  const handleKeyPress = event => {
+    if (event.key === 'Enter') toggle();
+  };
+
   return (
     <div className={styles.Container}>
-      <button type="button" className={styles.Header} onClick={toggle}>
+      <div
+        className={styles.Header}
+        onClick={toggle}
+        role="button"
+        tabIndex="0"
+        onKeyPress={handleKeyPress}
+      >
         <div className={styles.Title}>{title}</div>
         <div
           className={classNames(styles.Expander, {
             [styles.ExpanderOpen]: open,
           })}
         />
-      </button>
+      </div>
       <div className={classNames(styles.Text, { [styles.TextOpen]: open })}>
         <div className={styles.TextInner}>{text}</div>
       </div>

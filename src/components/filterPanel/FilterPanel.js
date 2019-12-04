@@ -424,16 +424,23 @@ const FilterPanel = ({
     );
   }, [stadsdeelFilter]);
 
+  const togglePanel = () => setShowPanel(!showPanel);
+  const handleKeyPress = event => {
+    if (event.key === 'Enter') togglePanel();
+  };
+
   return (
     <div
       className={classNames(styles.FilterPanel, {
         [styles.FilterPanelCollapsed]: !showPanel,
       })}
     >
-      <button
-        type="button"
+      <div
+        role="button"
         className={styles.TopBar}
-        onClick={() => setShowPanel(!showPanel)}
+        onClick={togglePanel}
+        onKeyPress={handleKeyPress}
+        tabIndex="0"
       >
         <FilterIcon className={styles.FilterIcon} />
         Filters
@@ -443,7 +450,7 @@ const FilterPanel = ({
             showPanel ? '' : styles.ChevronIconRotated
           )}
         />
-      </button>
+      </div>
       <FilterWrapperStyle>
         <div className={styles.FilterContainer}>
           {renderOptions()}
