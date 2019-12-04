@@ -1,11 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import L from 'leaflet';
-import icon from 'leaflet/dist/images/marker-icon.png';
-
-// Imports needed for amaps
-import 'leaflet/dist/leaflet.css';
-import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
-import 'amsterdam-stijl/dist/css/ams-map.css';
 
 import Loader from 'shared/loader/Loader';
 import DetailPanel from '../detailPanel/DetailPanel';

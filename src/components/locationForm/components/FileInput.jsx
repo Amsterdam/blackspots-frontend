@@ -12,6 +12,7 @@ import FormInput from './FormInput';
 import { Close } from '@datapunt/asc-assets';
 
 const DocumentName = styled.span`
+  display: inline-block;
   background-color: ${themeColor('tint', 'level2')};
   cursor: auto;
   font-weight: 500;
@@ -76,18 +77,12 @@ const SelectButton = ({ id, onChange, children }) => {
   );
 };
 
-const FileInput = ({ label, name, onChange, defaultValue }) => {
-  const [value, setValue] = useState(null);
+const FileInput = ({ name, value, onChange }) => {
   const [isUploading, setIsUploading] = useState(false);
 
-  const fileUploadId = `fileUpload${label}`;
-
-  useEffect(() => {
-    setValue(defaultValue || null);
-  }, [defaultValue]);
+  const fileUploadId = `fileUpload${name}`;
 
   const updateValue = (name, value = undefined) => {
-    setValue(value);
     const event = {
       target: {
         name,
@@ -104,63 +99,54 @@ const FileInput = ({ label, name, onChange, defaultValue }) => {
       setIsUploading(true);
       setTimeout(() => {
         const val = {
-          id: 1,
           filename: files[0].name,
-          type: label,
+          type: name,
           file: files[0],
         };
         updateValue(name, val);
         setIsUploading(false);
-      }, 500);
+      }, 0);
     }
   };
 
   return (
     <FileInputStyle>
-      <FormInput
-        label={label}
-        name={name}
-        Component={() =>
-          value ? (
-            <DocumentName title={value && value.filename}>
-              {value && value.filename}
-              <Button
-                className="closeButton"
-                size={34}
-                variant="blank"
-                iconSize={20}
-                icon={<Close />}
-                onClick={() => updateValue(name)}
-              />
-            </DocumentName>
+      {value ? (
+        <DocumentName title={value && value.filename}>
+          {value && value.filename}
+          <Button
+            className="closeButton"
+            size={34}
+            variant="blank"
+            iconSize={20}
+            icon={<Close />}
+            onClick={() => updateValue(name)}
+          />
+        </DocumentName>
+      ) : (
+        <SelectButton id={fileUploadId} onChange={handleChange}>
+          {isUploading ? (
+            <>
+              <Spinner className="spinner" />
+              Aan het uploaden...
+            </>
           ) : (
-            <SelectButton id={fileUploadId} onChange={handleChange}>
-              {isUploading ? (
-                <>
-                  <Spinner className="spinner" />
-                  Aan het uploaden...
-                </>
-              ) : (
-                'Selecteer bestand'
-              )}
-            </SelectButton>
-          )
-        }
-      ></FormInput>
+            'Selecteer bestand'
+          )}
+        </SelectButton>
+      )}
     </FileInputStyle>
   );
 };
 
-FileInput.defaultProps = {
-  name: '',
-  defaultValue: undefined,
+FileInput.defaultValues = {
+  value: undefined,
 };
 
 FileInput.propTypes = {
-  label: PropTypes.string.isRequired,
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string]),
   onChange: PropTypes.func.isRequired,
-  defaultValue: PropTypes.shape({}),
 };
 
 export default FileInput;

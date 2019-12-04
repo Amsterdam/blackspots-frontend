@@ -1,36 +1,72 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Heading, Button, Row } from '@datapunt/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
-import { initalValues } from './definitions/FormFields';
+import {
+  initalValues,
+  formValidation,
+  formVisibility,
+} from './definitions/FormFields';
 import { ControlsColumn, ButtonsColumn, BottomRow } from './LocationFormStyle';
 import FormFields from './definitions/FormFields';
 import FormInput from './components/FormInput';
-import FileInput from './components/FileInput';
 import fromFeature, { toFormData, toFeature } from './services/normalize';
 import { sendData } from 'shared/api/api';
-import { appRoutes } from '../../constants';
+import { appRoutes, SpotTypes } from '../../constants';
 
 const LocationForm = ({ id }) => {
   const history = useHistory();
   const [{ selectedLocation }, actions] = useAppReducer(LOCATION);
+  const [visible, setVisible] = useState({ ...formVisibility });
 
-  const location = fromFeature(selectedLocation);
-  const defaultValues = id
-    ? {
-        ...initalValues,
-        ...location,
-      }
-    : {
-        ...initalValues,
-      };
+  const location = useMemo(() => fromFeature(selectedLocation), [
+    selectedLocation,
+  ]);
 
-  const { register, handleSubmit, setValue } = useForm({
-    defaultValues,
+  const defaultValues = useMemo(
+    () =>
+      id
+        ? {
+            ...initalValues,
+            ...location,
+          }
+        : {
+            ...initalValues,
+          },
+    [location, initalValues]
+  );
+
+  const { register, handleSubmit, setValue, errors, watch } = useForm({
+    ...defaultValues,
   });
+
+  const values = watch(Object.keys(defaultValues), defaultValues);
+
+  const spotType = watch('spot_type');
+  useEffect(() => {
+    setVisible(v => ({
+      ...v,
+      jaar_blackspotlijst:
+        spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK,
+      jaar_ongeval_quickscan:
+        spotType === SpotTypes.PROTOCOL_DODELIJK ||
+        spotType === SpotTypes.PROTOCOL_ERNSTIG,
+    }));
+    const year = String(new Date().getFullYear());
+    setValue(
+      'jaar_blackspotlijst',
+      SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK ? year : ''
+    );
+    setValue(
+      'jaar_ongeval_quickscan',
+      SpotTypes.PROTOCOL_DODELIJK || spotType === SpotTypes.PROTOCOL_ERNSTIG
+        ? year
+        : ''
+    );
+  }, [spotType]);
 
   const onSubmit = async data => {
     try {
@@ -61,18 +97,15 @@ const LocationForm = ({ id }) => {
   };
 
   useEffect(() => {
-    Object.keys(initalValues).map(name => register({ name }));
-    ['rapport_document', 'design_document'].map(name => register({ name }));
+    Object.entries(formValidation).forEach(([name, validation]) => {
+      register({ name, type: 'custom' }, validation);
+      setValue(name, defaultValues[name]);
+    });
   }, [register, id]);
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        action=""
-        noValidate
-        onReset={onReset}
-      >
+      <form onSubmit={handleSubmit(onSubmit)} action="" noValidate>
         <Row>
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
@@ -81,15 +114,17 @@ const LocationForm = ({ id }) => {
               Locatie
             </Heading>
             {FormFields.filter(({ column }) => column === 1).map(
-              ({ id, name, ...otherProps }) => (
-                <FormInput
-                  key={id}
-                  name={name}
-                  onChange={handleChange}
-                  defaultValue={defaultValues[name]}
-                  {...otherProps}
-                ></FormInput>
-              )
+              ({ id, name, ...otherProps }) =>
+                visible[name] && (
+                  <FormInput
+                    key={id}
+                    name={name}
+                    onChange={handleChange}
+                    value={values[name]}
+                    error={errors[name]}
+                    {...otherProps}
+                  />
+                )
             )}
           </ControlsColumn>
           <ControlsColumn
@@ -99,15 +134,17 @@ const LocationForm = ({ id }) => {
               Maatregelen
             </Heading>
             {FormFields.filter(({ column }) => column === 2).map(
-              ({ id, name, ...otherProps }) => (
-                <FormInput
-                  key={id}
-                  name={name}
-                  onChange={handleChange}
-                  defaultValue={defaultValues[name]}
-                  {...otherProps}
-                ></FormInput>
-              )
+              ({ id, name, ...otherProps }) =>
+                visible[name] && (
+                  <FormInput
+                    key={id}
+                    name={name}
+                    onChange={handleChange}
+                    value={values[name]}
+                    error={errors[name]}
+                    {...otherProps}
+                  />
+                )
             )}
           </ControlsColumn>
           <ControlsColumn
@@ -116,18 +153,19 @@ const LocationForm = ({ id }) => {
             <Heading $as="h3" color="secondary">
               Documenten
             </Heading>
-            <FileInput
-              label="Rapportage"
-              name="rapport_document"
-              onChange={handleChange}
-              defaultValue={defaultValues['rapport_document']}
-            />
-            <FileInput
-              label="Ontwerp"
-              name="design_document"
-              onChange={handleChange}
-              defaultValue={defaultValues['design_document']}
-            />
+            {FormFields.filter(({ column }) => column === 3).map(
+              ({ id, name, ...otherProps }) =>
+                visible[name] && (
+                  <FormInput
+                    key={id}
+                    name={name}
+                    onChange={handleChange}
+                    value={values[name]}
+                    error={errors[name]}
+                    {...otherProps}
+                  />
+                )
+            )}
           </ControlsColumn>
         </Row>
         <BottomRow>
@@ -135,7 +173,7 @@ const LocationForm = ({ id }) => {
             <Button variant="secondary" type="submit">
               Opslaan
             </Button>
-            <Button variant="tertiary" type="reset">
+            <Button variant="tertiary" type="button" onClick={onReset}>
               Annuleren
             </Button>
           </ButtonsColumn>

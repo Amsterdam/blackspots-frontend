@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { Input } from '@datapunt/asc-ui';
 import styled, { css } from '@datapunt/asc-core';
 
@@ -16,42 +16,23 @@ const StyledInput = styled(Input)`
     `}
 `;
 
-const TextAreaInput = ({
-  name,
-  label,
-  defaultValue,
-  onChange,
-  ...otherProps
-}) => {
-  const [value, setValue] = useState('');
-
-  useEffect(() => {
-    setValue(defaultValue || '');
-  }, [defaultValue]);
-
-  const onValueChange = e => {
-    setValue(e.target.value);
-    onChange(e);
-  };
-
+const TextAreaInput = ({ name, value, onChange, ...otherProps }) => {
   return (
     <StyledInput
       as="textarea"
       name={name}
-      value={value}
+      value={value || ''}
       data-testid={`${name}-test-id`}
       {...otherProps}
-      onChange={onValueChange}
+      onChange={onChange}
     />
   );
 };
 
-TextAreaInput.defaultValues = {
-  defaultValue: ''
-};
-
 TextAreaInput.propTypes = {
-  defaultValue: PropTypes.string
-}
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default TextAreaInput;
