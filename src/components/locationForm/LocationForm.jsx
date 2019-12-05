@@ -14,7 +14,7 @@ import FormFields, {
 import { ControlsColumn, ButtonsColumn, BottomRow } from './LocationFormStyle';
 import FormInput from './components/FormInput';
 import fromFeature, { toFormData, toFeature } from './services/normalize';
-import { appRoutes, SpotTypes } from '../../config';
+import { appRoutes, SpotTypes, endpoints } from '../../config';
 
 const LocationForm = ({ id: locationId }) => {
   const history = useHistory();
@@ -69,7 +69,7 @@ const LocationForm = ({ id: locationId }) => {
 
   const onSubmit = async data => {
     try {
-      const url = `/api/blackspots/spots/${(locationId && `${data.nummer}/`) ||
+      const url = `${endpoints.blackspots}${(locationId && `${data.nummer}/`) ||
         ''}`;
       const result = await sendData(
         url,

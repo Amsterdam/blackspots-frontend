@@ -38,7 +38,7 @@ function getStatusClassName(status) {
   return statusClassMapper[status];
 }
 
-const exportUrl = `${endpoints.blackspotsExport}`;
+const exportUrl = `${endpoints.blackspots}export/?`;
 
 export const getExportFilter = stadsdeelFilter => {
   if (Object.values(stadsdeelFilter).filter(Boolean).length === 0) return '';

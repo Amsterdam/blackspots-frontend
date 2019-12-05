@@ -26,7 +26,7 @@ const Map = () => {
   useEffect(() => {
     if (locations.length === 0)
       (async () => {
-        fetchData(endpoints.blackspots);
+        fetchData(`${endpoints.blackspots}?format=geojson`);
       })();
   }, []);
 
