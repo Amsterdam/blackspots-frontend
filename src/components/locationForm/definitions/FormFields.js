@@ -42,7 +42,7 @@ const FormFields = [
     validation: {
       required: REQUIRED_MESSAGE,
       pattern: {
-        value: /^\d{1,2}.\d{7}, \d{1,2}.\d{7}$/,
+        value: /^\d{1,2}\.\d{2,7}, \d{1,2}\.\d{2,7}$/,
         message:
           'De coördinaten zijn niet in het correct format `xx.xxxxxxx, xx.xxxxxxx`',
       },
