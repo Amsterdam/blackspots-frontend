@@ -109,7 +109,8 @@ const FileInput = ({ name, value, onChange }) => {
     }
   };
 
-  const fileName = value && value.filename !== 'deleted' && value.filename;
+  const fileName = value && value.filename !== '' && value.filename;
+
   return (
     <FileInputStyle>
       {fileName ? (
@@ -125,10 +126,8 @@ const FileInput = ({ name, value, onChange }) => {
               e.preventDefault();
               updateValue(name, {
                 ...value,
-                filename: 'deleted',
-                file: new File(['empty'], 'foo.txt', {
-                  type: 'text/plain',
-                }),
+                filename: '',
+                file: new File([''], '', { type: 'text/plain' }),
               });
             }}
           />
