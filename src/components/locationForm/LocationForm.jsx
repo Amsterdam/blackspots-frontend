@@ -16,6 +16,12 @@ import FormInput from './components/FormInput';
 import fromFeature, { toFormData, toFeature } from './services/normalize';
 import { appRoutes, SpotTypes, endpoints } from '../../config';
 
+const isBlackspotType = spotType =>
+  spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
+const isProtocolType = spotType =>
+  spotType === SpotTypes.PROTOCOL_DODELIJK ||
+  spotType === SpotTypes.PROTOCOL_ERNSTIG;
+
 const LocationForm = ({ id: locationId }) => {
   const history = useHistory();
   const [{ selectedLocation }, actions] = useAppReducer(LOCATION);
@@ -48,23 +54,26 @@ const LocationForm = ({ id: locationId }) => {
   useEffect(() => {
     setVisible(v => ({
       ...v,
-      jaar_blackspotlijst:
-        spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK,
-      jaar_ongeval_quickscan:
-        spotType === SpotTypes.PROTOCOL_DODELIJK ||
-        spotType === SpotTypes.PROTOCOL_ERNSTIG,
+      jaar_blackspotlijst: isBlackspotType(spotType),
+      jaar_ongeval_quickscan: isProtocolType(spotType),
     }));
+
     const year = String(new Date().getFullYear());
-    setValue(
-      'jaar_blackspotlijst',
-      SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK ? year : ''
-    );
-    setValue(
-      'jaar_ongeval_quickscan',
-      SpotTypes.PROTOCOL_DODELIJK || spotType === SpotTypes.PROTOCOL_ERNSTIG
-        ? year
-        : ''
-    );
+
+    if (isBlackspotType(spotType) && !values.jaar_blackspotlijst) {
+      setValue('jaar_blackspotlijst', year);
+      setValue('jaar_ongeval_quickscan', '');
+    }
+
+    if (isProtocolType(spotType) && !values.jaar_ongeval_quickscan) {
+      setValue('jaar_blackspotlijst', '');
+      setValue('jaar_ongeval_quickscan', year);
+    }
+
+    if (!isBlackspotType(spotType) && !isProtocolType(spotType)) {
+      setValue('jaar_blackspotlijst', '');
+      setValue('jaar_ongeval_quickscan', '');
+    }
   }, [spotType]);
 
   const onSubmit = async data => {
@@ -83,7 +92,7 @@ const LocationForm = ({ id: locationId }) => {
     } catch (error) {
       // Dispatch the error message. This will be removed by the implementation of the error handling
       // eslint-disable-next-line no-console
-      console.error('Error! ', error);
+      console.error('Error when submitting the form! ', error);
     }
   };
 
@@ -112,7 +121,7 @@ const LocationForm = ({ id: locationId }) => {
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
             <Heading $as="h3" color="secondary">
-              Locatie
+              Locatie {JSON.stringify(errors)}
             </Heading>
             {FormFields.filter(({ column }) => column === 1).map(
               ({ id, name, ...otherProps }) =>
