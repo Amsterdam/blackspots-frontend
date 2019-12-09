@@ -121,7 +121,7 @@ const LocationForm = ({ id: locationId }) => {
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
             <Heading $as="h3" color="secondary">
-              Locatie {JSON.stringify(errors)}
+              Locatie
             </Heading>
             {FormFields.filter(({ column }) => column === 1).map(
               ({ id, name, ...otherProps }) =>

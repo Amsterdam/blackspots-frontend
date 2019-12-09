@@ -67,8 +67,7 @@ export const toFeature = location => {
     eind_uitvoering,
     jaar_oplevering,
     notes,
-    rapport_document,
-    design_document,
+    documents,
   } = location;
   return {
     type: 'Feature',
@@ -87,10 +86,7 @@ export const toFeature = location => {
       eind_uitvoering,
       jaar_oplevering,
       notes,
-      documents: [
-        ...(rapport_document ? [rapport_document] : []),
-        ...(design_document ? [design_document] : []),
-      ],
+      documents,
     },
     geometry: point,
   };
