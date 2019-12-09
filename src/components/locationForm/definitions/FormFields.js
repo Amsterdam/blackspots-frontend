@@ -159,14 +159,14 @@ const FormFields = [
     column: 3,
     name: 'rapport_document',
     label: 'Rapportage',
-    initialValue: undefined,
+    initialValue: {},
     Component: FileInput,
   },
   {
     column: 3,
     name: 'design_document',
     label: 'Rapportage',
-    initialValue: undefined,
+    initialValue: {},
     Component: FileInput,
   },
 ].map((item, id) => ({ ...item, id }));

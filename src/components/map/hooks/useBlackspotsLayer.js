@@ -36,7 +36,6 @@ const useBlackspotsLayer = (mapRef, locations, onMarkerClick) => {
         });
       },
     }).addTo(mapRef.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locations]);
 
   return geoLayerRef;

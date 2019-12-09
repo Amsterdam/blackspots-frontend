@@ -16,6 +16,8 @@ import MapStyle from './MapStyle';
 import { endpoints } from '../../config';
 import useMarkerLayer from './hooks/useMarkerLayer';
 
+const functionList = new Set();
+
 const Map = () => {
   const { errorMessage, loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
@@ -47,6 +49,7 @@ const Map = () => {
   const onMarkerClick = feature => {
     actions.selectLocation({ payload: feature });
   };
+  functionList.add(onMarkerClick);
 
   const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
   const { setLocation } = useMarkerLayer(mapRef);
