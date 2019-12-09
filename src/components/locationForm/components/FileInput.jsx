@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -8,7 +8,6 @@ import {
   Spinner,
 } from '@datapunt/asc-ui';
 import styled from '@datapunt/asc-core';
-import FormInput from './FormInput';
 import { Close } from '@datapunt/asc-assets';
 
 const DocumentName = styled.span`
@@ -82,12 +81,13 @@ const FileInput = ({ name, value, onChange }) => {
 
   const fileUploadId = `fileUpload${name}`;
 
-  const updateValue = (name, value = undefined) => {
+  // eslint-disable-next-line no-shadow
+  const updateValue = (name, value = null) => {
     const event = {
       target: {
         name,
         type: 'input',
-        value: value,
+        value,
       },
     };
     onChange(event);
@@ -109,18 +109,28 @@ const FileInput = ({ name, value, onChange }) => {
     }
   };
 
+  const fileName = value && value.filename !== 'deleted' && value.filename;
   return (
     <FileInputStyle>
-      {value ? (
-        <DocumentName title={value && value.filename}>
-          {value && value.filename}
+      {fileName ? (
+        <DocumentName title={fileName}>
+          {fileName}
           <Button
             className="closeButton"
             size={34}
             variant="blank"
             iconSize={20}
             icon={<Close />}
-            onClick={() => updateValue(name)}
+            onClick={e => {
+              e.preventDefault();
+              updateValue(name, {
+                ...value,
+                filename: 'deleted',
+                file: new File(['empty'], 'foo.txt', {
+                  type: 'text/plain',
+                }),
+              });
+            }}
           />
         </DocumentName>
       ) : (
@@ -139,13 +149,13 @@ const FileInput = ({ name, value, onChange }) => {
   );
 };
 
-FileInput.defaultValues = {
-  value: undefined,
+FileInput.defaultProps = {
+  value: null,
 };
 
 FileInput.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.string]),
+  value: PropTypes.shape({}),
   onChange: PropTypes.func.isRequired,
 };
 

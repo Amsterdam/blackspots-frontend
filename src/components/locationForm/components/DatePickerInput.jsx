@@ -47,8 +47,10 @@ const DatePickerInput = ({ name, onChange, value: selectedValue }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      datePickerRef.current && datePickerRef.current.cancelFocusInput();
-      datePickerRef.current && datePickerRef.current.setOpen(false);
+      if (datePickerRef.current) {
+        datePickerRef.current.cancelFocusInput();
+        datePickerRef.current.setOpen(false);
+      }
     }, 0);
   }, [value]);
 
@@ -63,15 +65,12 @@ const DatePickerInput = ({ name, onChange, value: selectedValue }) => {
         value={value}
         ref={datePickerRef}
         onChange={onValueChange}
-      ></DatePicker>
+      />
       <Icon size={20}>
         <Calendar />
       </Icon>
     </DatePickerStyle>
   );
-};
-
-DatePickerInput.defaultValues = {
 };
 
 DatePickerInput.propTypes = {
