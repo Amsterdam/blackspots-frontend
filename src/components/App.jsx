@@ -15,7 +15,7 @@ const App = () => {
   const user = useKeycloak();
   const { trackPageView } = useMatomo();
 
-  useEffect(() => trackPageView(), []);
+  useEffect(() => trackPageView(), [trackPageView]);
 
   return (
     <UserContextProvider user={user}>

@@ -28,12 +28,14 @@ const Map = () => {
       (async () => {
         fetchData(`${endpoints.blackspots}?format=geojson`);
       })();
-  }, []);
+    // Keep the dependency array empty to prevent an infinite loop
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (locations.length === 0)
       actions.addLocations({ payload: results ? [...results.features] : [] });
-  }, [results]);
+    // Keep the actions and locations out from the dependency array to prevent infinite loop
+  }, [results]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [
     blackspotYearFilter,
@@ -60,7 +62,7 @@ const Map = () => {
 
       setShowDetailPanel(true);
     }
-  }, [selectedLocation]);
+  }, [selectedLocation, setLocation]);
 
   const toggleDetailPanel = () => {
     setShowDetailPanel(!showDetailPanel);
