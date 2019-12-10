@@ -52,6 +52,8 @@ export const getWithToken = (
 };
 
 export const getByUrl = async (url, params, cancel, reloadOnUnauthorized) => {
+  // Ensure authenticated
+  await auth.keycloak.updateToken(30);
   const token = getAccessToken();
   return Promise.resolve(
     getWithToken(url, params, cancel, token, reloadOnUnauthorized)
@@ -69,7 +71,10 @@ const getFormData = data => {
 };
 
 export const sendData = async (url, data, method = 'POST') => {
+  // Ensure authenticated
+  await auth.keycloak.updateToken(30);
   const token = getAccessToken();
+
   const options = {
     method,
     headers: {

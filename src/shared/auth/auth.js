@@ -19,4 +19,6 @@ const setupKeycloack = () => {
   };
 };
 
-export default setupKeycloack();
+const auth = setupKeycloack();
+
+export default auth;
