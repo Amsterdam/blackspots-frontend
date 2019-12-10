@@ -36,7 +36,7 @@ const useBlackspotsLayer = (mapRef, locations, onMarkerClick) => {
         });
       },
     }).addTo(mapRef.current);
-  }, [mapRef, locations]);
+  }, [mapRef, locations, onMarkerClick]);
 
   return geoLayerRef;
 };
