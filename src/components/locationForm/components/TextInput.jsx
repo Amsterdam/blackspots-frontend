@@ -29,7 +29,7 @@ const TextInput = ({ name, value, onChange, ...otherProps }) => {
 };
 
 TextInput.defaultProps = {
-  value: ''
+  value: '',
 };
 TextInput.propTypes = {
   name: PropTypes.string.isRequired,
