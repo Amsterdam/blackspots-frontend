@@ -19,8 +19,7 @@ describe('LocationForm', () => {
     watch: jest.fn(),
   };
 
-  beforeEach(() => {
-  });
+  beforeEach(() => {});
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -29,8 +28,8 @@ describe('LocationForm', () => {
   it('should render the add form ', () => {
     useAppReducer.mockReturnValue([{ selectedLocation: null }]);
     useFormMock.watch.mockReturnValue(initalValues);
-    useForm.mockReturnValue({...useFormMock});
-    const { container } = render(withTheme(<LocationForm id={''} />));
+    useForm.mockReturnValue({ ...useFormMock });
+    const { container } = render(withTheme(<LocationForm id="" />));
     expect(container.firstChild.innerHTML).not.toBeUndefined();
     expect(container.querySelectorAll('textarea').length).toEqual(2);
     expect(container.querySelectorAll('input[type="text"]').length).toEqual(7);
@@ -40,8 +39,8 @@ describe('LocationForm', () => {
   it('should render the edit form ', () => {
     useAppReducer.mockReturnValue([{ selectedLocation: featureMock }]);
     useFormMock.watch.mockReturnValue(locationMock);
-    useForm.mockReturnValue({...useFormMock});
-    const { container } = render(withTheme(<LocationForm id={'1'} />));
+    useForm.mockReturnValue({ ...useFormMock });
+    const { container } = render(withTheme(<LocationForm id="1" />));
     expect(container.firstChild.innerHTML).not.toBeUndefined();
     expect(container.querySelectorAll('textarea').length).toEqual(2);
     expect(container.querySelectorAll('input[type="text"]').length).toEqual(7);
@@ -54,8 +53,8 @@ describe('LocationForm', () => {
     const setValueMock = jest.fn();
     useAppReducer.mockReturnValue([{ selectedLocation: null }]);
     useFormMock.watch.mockReturnValue(initalValues);
-    useForm.mockReturnValue({...useFormMock, setValue: setValueMock});
-    const { getByTestId } = render(withTheme(<LocationForm id={''} />));
+    useForm.mockReturnValue({ ...useFormMock, setValue: setValueMock });
+    const { getByTestId } = render(withTheme(<LocationForm id="" />));
 
     const inputId = 'naam';
     const inputValue = `${inputId}-value`;

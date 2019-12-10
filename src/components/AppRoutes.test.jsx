@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import AppRoutes from './AppRoutes';
-import { withUserContext } from 'test/utils';
+import { withUserContext, history } from 'test/utils';
 import DashboardPage from 'views/dashboard/DashboardPage';
 import ConceptPage from 'views/concepts/ConceptPage';
 import ContactPage from 'views/contact/ContactPage';
 import LocationPage from 'views/location/LocationPage';
+import AppRoutes from './AppRoutes';
 
 jest.mock('views/dashboard/DashboardPage');
 jest.mock('views/concepts/ConceptPage');
@@ -21,26 +21,22 @@ describe('AppRoutes', () => {
   });
 
   it('should render the dashboard ', () => {
-    var user = { canAdd: true };
-    const { queryByText } = render(
-      withUserContext(<AppRoutes></AppRoutes>, user)
-    );
+    const user = { canAdd: true };
+    const { queryByText } = render(withUserContext(<AppRoutes />, user));
     expect(queryByText('dashboard')).not.toBeNull();
   });
 
   it('should render the location page when authorized ', () => {
-    var user = { canAdd: true };
-    const { queryByText } = render(
-      withUserContext(<AppRoutes></AppRoutes>, user, '/add')
-    );
+    const user = { canAdd: true };
+    history.push('/add');
+    const { queryByText } = render(withUserContext(<AppRoutes />, user));
     expect(queryByText('location')).not.toBeNull();
   });
 
   it('should navigate home when not authorized to add ', () => {
-    var user = { canAdd: false };
-    const { queryByText } = render(
-      withUserContext(<AppRoutes></AppRoutes>, user, '/add')
-    );
+    const user = { canAdd: false };
+    history.push('/add');
+    const { queryByText } = render(withUserContext(<AppRoutes />, user));
     expect(queryByText('location')).toBeNull();
     expect(queryByText('dashboard')).not.toBeNull();
   });
