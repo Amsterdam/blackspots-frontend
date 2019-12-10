@@ -16,8 +16,6 @@ import MapStyle from './MapStyle';
 import { endpoints } from '../../config';
 import useMarkerLayer from './hooks/useMarkerLayer';
 
-const functionList = new Set();
-
 const Map = () => {
   const { errorMessage, loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
@@ -30,12 +28,14 @@ const Map = () => {
       (async () => {
         fetchData(`${endpoints.blackspots}?format=geojson`);
       })();
-  }, []);
+    // Keep the dependency array empty to prevent an infinite loop
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (locations.length === 0)
       actions.addLocations({ payload: results ? [...results.features] : [] });
-  }, [results]);
+    // Keep the actions and locations out from the dependency array to prevent infinite loop
+  }, [results]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [
     blackspotYearFilter,
@@ -49,7 +49,6 @@ const Map = () => {
   const onMarkerClick = feature => {
     actions.selectLocation({ payload: feature });
   };
-  functionList.add(onMarkerClick);
 
   const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
   const { setLocation } = useMarkerLayer(mapRef);
@@ -63,7 +62,7 @@ const Map = () => {
 
       setShowDetailPanel(true);
     }
-  }, [selectedLocation]);
+  }, [selectedLocation, setLocation]);
 
   const toggleDetailPanel = () => {
     setShowDetailPanel(!showDetailPanel);
