@@ -1,5 +1,4 @@
-import { getAccessToken, generateParams, sendData, getWithToken } from './api';
-import auth from '../auth/auth';
+import { generateParams, getWithToken } from './api';
 
 jest.mock('../auth/auth');
 

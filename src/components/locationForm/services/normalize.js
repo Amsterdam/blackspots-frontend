@@ -11,6 +11,7 @@ const fromFeature = feature => {
   if (!feature) return initalValues;
 
   const {
+    id,
     geometry: { coordinates },
     properties: {
       description,
@@ -31,6 +32,7 @@ const fromFeature = feature => {
   } = feature;
   return {
     ...initalValues,
+    id,
     naam: description,
     nummer: locatie_id,
     coordinaten: `${coordinates[1]}, ${coordinates[0]}`,
@@ -99,6 +101,7 @@ export const toFeature = location => {
  */
 export const toFormData = location => {
   const {
+    id,
     naam,
     nummer,
     coordinaten,
@@ -117,6 +120,7 @@ export const toFormData = location => {
     design_document,
   } = location;
   const item = {
+    id,
     description: naam,
     locatie_id: nummer,
     point: JSON.stringify({

@@ -31,6 +31,12 @@ const LocationForm = ({ id: locationId }) => {
     selectedLocation,
   ]);
 
+  useEffect(() => {
+    if (locationId && !selectedLocation) {
+      history.push(appRoutes.HOME);
+    }
+  }, [locationId, selectedLocation]);
+
   const defaultValues = useMemo(
     () =>
       locationId
@@ -78,11 +84,11 @@ const LocationForm = ({ id: locationId }) => {
 
   const onSubmit = async data => {
     try {
-      const url = `${endpoints.blackspots}${(locationId && `${data.nummer}/`) ||
+      const url = `${endpoints.blackspots}${(locationId && `${locationId}/`) ||
         ''}`;
       const result = await sendData(
         url,
-        toFormData(data),
+        toFormData({ ...data, id: locationId }),
         locationId ? 'PATCH' : 'POST'
       );
 
