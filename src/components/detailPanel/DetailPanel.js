@@ -77,7 +77,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
         {canEdit && (
           <Link
             $as={NavLink}
-            to={`/edit/${locatie_id}`}
+            to={`/edit/${feature.id}`}
             variant="inline"
             data-testid="editButton"
           >
