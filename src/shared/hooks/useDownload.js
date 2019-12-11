@@ -1,5 +1,6 @@
 import React from 'react';
 import fileSaver from 'file-saver';
+import auth from 'shared/auth/auth';
 
 function useDownload() {
   const [loading, setLoading] = React.useState(false);
@@ -11,7 +12,13 @@ function useDownload() {
 
     const fileName = name || url.split('/').pop();
 
-    fetch(url)
+    const token = await auth.token();
+    const options = {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    fetch(url, options)
       .then(response => response.blob())
       .then(blob => {
         fileSaver(blob, fileName);
