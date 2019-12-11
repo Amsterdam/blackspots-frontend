@@ -7,24 +7,22 @@ const setupKeycloack = () => {
 
   const keycloak = window.Keycloak(config);
 
-  const init = async () => {
+  const init = () => {
     const options = {
       promiseType: 'native', // To enable async/await
       'check-sso': false, // To enable refresh token
       checkLoginIframe: false, // To enable refresh token
       onLoad: 'check-sso', // To enable refresh token
-      // onLoad: 'login-required', // Login on application start and browser refresh
-      // onLoad: 'check-sso', // Login on application start and browser refresh
     };
 
     return keycloak.init(options);
   };
 
-  const isReady = new Promise(async (resolve, reject) => {
+  const isReady = new Promise((resolve, reject) => {
     // This is executed during load of this module
     // The promise is awaited in the other methods to be sure that keycloak has been initialised
     try {
-      await init();
+      init();
       resolve();
     } catch (e) {
       reject();
@@ -70,42 +68,42 @@ const setupKeycloack = () => {
           updateInterval * 1000
         );
     } else {
-      keepAlive && clearInterval(keepAlive);
+      if (keepAlive) clearInterval(keepAlive);
       keepAlive = null;
     }
   };
 
-  keycloak.onReady = authenticated => {
-    console.log('Keycloak ready, authenticated', authenticated);
-  };
+  // keycloak.onReady = authenticated => {
+  //   console.log('Keycloak ready, authenticated', authenticated);
+  // };
 
-  keycloak.onAuthSuccess = function() {
-    console.log('Auth success');
+  keycloak.onAuthSuccess = () => {
+    // console.log('Auth success');
     autoRefreshToken(true);
   };
 
-  keycloak.onAuthError = function() {
-    console.log('Auth error');
+  keycloak.onAuthError = () => {
+    // console.log('Auth error');
     autoRefreshToken(false);
   };
 
-  keycloak.onAuthRefreshSuccess = function() {
-    console.log('Auth refresh success');
+  keycloak.onAuthRefreshSuccess = () => {
+    // console.log('Auth refresh success');
   };
 
-  keycloak.onAuthRefreshError = function() {
-    console.log('Auth refresh error');
+  keycloak.onAuthRefreshError = () => {
+    // console.log('Auth refresh error');
     autoRefreshToken(false);
   };
 
-  keycloak.onAuthLogout = function() {
-    console.log('Auth logout');
+  keycloak.onAuthLogout = () => {
+    // console.log('Auth logout');
     autoRefreshToken(false);
   };
 
-  keycloak.onTokenExpired = function() {
+  keycloak.onTokenExpired = () => {
     // This should never happen
-    console.log('Unexpected: Token expired');
+    // console.log('Unexpected: Token expired');
     autoRefreshToken(false);
   };
 
