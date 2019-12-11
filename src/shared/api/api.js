@@ -1,6 +1,4 @@
-import auth, { logout } from '../auth/auth';
-
-export const getAccessToken = () => auth.keycloak.token;
+import auth from '../auth/auth';
 
 export const generateParams = data =>
   Object.entries(data)
@@ -13,7 +11,7 @@ const handleErrors = (response, reloadOnUnauthorized) => {
     response.status <= 401 &&
     reloadOnUnauthorized
   ) {
-    logout();
+    auth.logout();
   }
   if (!response.ok) {
     throw Error(response.statusText);
@@ -53,8 +51,7 @@ export const getWithToken = (
 
 export const getByUrl = async (url, params, cancel, reloadOnUnauthorized) => {
   // Ensure authenticated
-  await auth.keycloak.updateToken(30);
-  const token = getAccessToken();
+  const token = await auth.token();
   return Promise.resolve(
     getWithToken(url, params, cancel, token, reloadOnUnauthorized)
   );
@@ -72,8 +69,7 @@ const getFormData = data => {
 
 export const sendData = async (url, data, method = 'POST') => {
   // Ensure authenticated
-  await auth.keycloak.updateToken(30);
-  const token = getAccessToken();
+  const token = await auth.token();
 
   const options = {
     method,
