@@ -76,35 +76,35 @@ const setupKeycloack = () => {
   //   console.log('Keycloak ready, authenticated', authenticated);
   // };
 
-  keycloak.onAuthSuccess = () => {
-    // console.log('Auth success');
-    autoRefreshToken(true);
-  };
+  // keycloak.onAuthSuccess = () => {
+  //   // console.log('Auth success');
+  //   autoRefreshToken(true);
+  // };
 
-  keycloak.onAuthError = () => {
-    // console.log('Auth error');
-    autoRefreshToken(false);
-  };
+  // keycloak.onAuthError = () => {
+  //   // console.log('Auth error');
+  //   autoRefreshToken(false);
+  // };
 
-  keycloak.onAuthRefreshSuccess = () => {
-    // console.log('Auth refresh success');
-  };
+  // keycloak.onAuthRefreshSuccess = () => {
+  //   // console.log('Auth refresh success');
+  // };
 
-  keycloak.onAuthRefreshError = () => {
-    // console.log('Auth refresh error');
-    autoRefreshToken(false);
-  };
+  // keycloak.onAuthRefreshError = () => {
+  //   // console.log('Auth refresh error');
+  //   autoRefreshToken(false);
+  // };
 
-  keycloak.onAuthLogout = () => {
-    // console.log('Auth logout');
-    autoRefreshToken(false);
-  };
+  // keycloak.onAuthLogout = () => {
+  //   // console.log('Auth logout');
+  //   autoRefreshToken(false);
+  // };
 
-  keycloak.onTokenExpired = () => {
-    // This should never happen
-    // console.log('Unexpected: Token expired');
-    autoRefreshToken(false);
-  };
+  // keycloak.onTokenExpired = () => {
+  //   // This should never happen
+  //   // console.log('Unexpected: Token expired');
+  //   autoRefreshToken(false);
+  // };
 
   return {
     keycloak,
