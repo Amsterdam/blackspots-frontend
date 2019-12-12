@@ -29,9 +29,7 @@ const locationReducer = (state = initialState, action) => {
         ...state,
         locations: [
           ...state.locations.filter(
-            location =>
-              location.properties.locatie_id !==
-              action.payload.properties.locatie_id
+            location => location.id !== action.payload.id
           ),
           action.payload,
         ],

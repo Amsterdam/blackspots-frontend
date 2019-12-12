@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import { Logout } from '@datapunt/asc-assets';
 import { appRoutes } from 'config';
-import { logout } from 'shared/auth/auth';
+import auth from 'shared/auth/auth';
 import UserContext from 'shared/user/UserContext';
 import { Header as HeaderComponent, Link } from '@datapunt/asc-ui';
 import { HeaderLink, LogoutLink } from './HeaderStyle';
@@ -38,7 +38,7 @@ const Header = () => {
             variant="textButton"
             iconSize={16}
             iconLeft={<Logout />}
-            onClick={logout}
+            onClick={auth.logout}
           >
             Uitloggen
           </LogoutLink>

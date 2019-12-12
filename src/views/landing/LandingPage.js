@@ -7,7 +7,9 @@ import Footer from '../../components/footer/Footer';
 import { IntroTextStyle } from '../../styles/SharedStyles';
 
 const LandingPage = () => {
-  const login = () => auth.keycloak.login();
+  const login = async () => {
+    await auth.login();
+  };
 
   return (
     <div className={styles.Container}>

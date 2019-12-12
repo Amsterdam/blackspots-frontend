@@ -55,7 +55,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
     eind_uitvoering,
     tasks,
     notes,
-    jaar_blackspot_lijst,
+    jaar_blackspotlijst,
     jaar_ongeval_quickscan,
     jaar_oplevering,
     actiehouders,
@@ -77,7 +77,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
         {canEdit && (
           <Link
             $as={NavLink}
-            to={`/edit/${locatie_id}`}
+            to={`/edit/${feature.id}`}
             variant="inline"
             data-testid="editButton"
           >
@@ -134,10 +134,10 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
                 {lat}, {lng}
               </td>
             </tr>
-            {jaar_blackspot_lijst && (
+            {jaar_blackspotlijst && (
               <tr>
                 <td>Op blackspotlijst</td>
-                <td>{jaar_blackspot_lijst}</td>
+                <td>{jaar_blackspotlijst}</td>
               </tr>
             )}
             {jaar_ongeval_quickscan && (

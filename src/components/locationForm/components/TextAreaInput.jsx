@@ -29,9 +29,13 @@ const TextAreaInput = ({ name, value, onChange, ...otherProps }) => {
   );
 };
 
+TextAreaInput.defaultProps = {
+  value: '',
+};
+
 TextAreaInput.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
