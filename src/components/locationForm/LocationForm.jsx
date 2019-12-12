@@ -50,7 +50,15 @@ const LocationForm = ({ id: locationId }) => {
     [location, initalValues]
   );
 
-  const { register, handleSubmit, setValue, errors, watch } = useForm({
+  const {
+    register,
+    unregister,
+    handleSubmit,
+    setValue,
+    errors,
+    watch,
+    triggerValidation,
+  } = useForm({
     ...defaultValues,
   });
 
@@ -82,6 +90,34 @@ const LocationForm = ({ id: locationId }) => {
     }
   }, [spotType]);
 
+  const coordinaten = watch('coordinaten');
+  useEffect(() => {
+    (async () => {
+      setVisible(v => ({
+        ...v,
+        stadsdeel: false,
+      }));
+      setValue('stadsdeel', '', true);
+      unregister('stadsdeel');
+    })();
+  }, [coordinaten]);
+
+  const handleServerValidation = async reason => {
+    if (reason.point && reason.point.length) {
+      // add the extra stadsdeel
+      setVisible(v => ({
+        ...v,
+        stadsdeel: true,
+      }));
+      register(
+        { name: 'stadsdeel', type: 'custom' },
+        { required: reason.point[0] }
+      );
+      setValue('stadsdeel', '', true);
+      await triggerValidation({ name: 'stadsdeel' });
+    }
+  };
+
   const onSubmit = async data => {
     try {
       const url = `${endpoints.blackspots}${(locationId && `${locationId}/`) ||
@@ -92,13 +128,20 @@ const LocationForm = ({ id: locationId }) => {
         locationId ? 'PATCH' : 'POST'
       );
 
-      const feature = toFeature(result);
-      actions.updateLocation({ payload: feature });
-      history.push(appRoutes.HOME);
+      if (!result.errors) {
+        const feature = toFeature(result);
+        actions.updateLocation({ payload: feature });
+        history.push(appRoutes.HOME);
+      }
     } catch (error) {
-      // Dispatch the error message. This will be removed by the implementation of the error handling
-      // eslint-disable-next-line no-console
-      console.error('Error when submitting the form! ', error);
+      const { status, reason } = error;
+      if (status === 400) {
+        await handleServerValidation(reason);
+      } else {
+        // TODO implement show general error on screen (WK-274)
+        // eslint-disable-next-line no-console
+        console.error('Unhandled error when submitting the form! ', error);
+      }
     }
   };
 
@@ -192,6 +235,7 @@ const LocationForm = ({ id: locationId }) => {
             <Button variant="tertiary" type="button" onClick={onReset}>
               Annuleren
             </Button>
+            <input type="hidden" value={JSON.stringify(errors)} />
           </ButtonsColumn>
         </BottomRow>
       </form>

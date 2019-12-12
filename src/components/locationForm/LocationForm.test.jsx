@@ -13,6 +13,7 @@ jest.mock('react-hook-form');
 describe('LocationForm', () => {
   const useFormMock = {
     register: jest.fn(),
+    unregister: jest.fn(),
     handleSubmit: jest.fn(),
     setValue: jest.fn(),
     errors: {},

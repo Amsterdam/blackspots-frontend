@@ -51,6 +51,7 @@ export const locationMock = {
     type: 'Ontwerp',
   },
   eind_uitvoering: '10/10/16',
+  id: 1,
   jaar_blackspotlijst: 2014,
   jaar_ongeval_quickscan: 2015,
   jaar_oplevering: 2016,
