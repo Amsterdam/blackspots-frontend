@@ -5,6 +5,7 @@ import {
   StatusDisplayNames,
   SpotStatusTypes,
   SpotTypes,
+  Stadsdeel,
 } from '../../../config';
 import TextInput from '../components/TextInput';
 import TextAreaInput from '../components/TextAreaInput';
@@ -44,10 +45,24 @@ const FormFields = [
       pattern: {
         value: /^\d{1,2}\.\d{2,7}, \d{1,2}\.\d{2,7}$/,
         message:
-          'De coördinaten zijn niet in het correct format `xx.xxxxxxx, xx.xxxxxxx`',
+          'De coördinaten zijn niet in het correcte format `xx.xxxxxxx, xx.xxxxxxx`',
       },
     },
   },
+  {
+    column: 1,
+    name: 'stadsdeel',
+    label: 'Stadsdeel',
+    Component: RadioGroupInput,
+    options: [
+      ...Object.values(Stadsdeel).map(stadsdeel => ({
+        label: stadsdeel.name,
+        value: stadsdeel.value,
+      })),
+    ],
+    visible: false,
+  },
+
   {
     column: 1,
     name: 'spot_type',
