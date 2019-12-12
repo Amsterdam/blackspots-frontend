@@ -12,17 +12,17 @@ const setupKeycloack = () => {
       promiseType: 'native', // To enable async/await
       'check-sso': false, // To enable refresh token
       checkLoginIframe: false, // To enable refresh token
-      onLoad: 'check-sso', // To enable refresh token
+      onLoad: 'check-sso',
     };
 
     return keycloak.init(options);
   };
 
-  const isReady = new Promise((resolve, reject) => {
+  const isReady = new Promise(async (resolve, reject) => {
     // This is executed during load of this module
     // The promise is awaited in the other methods to be sure that keycloak has been initialised
     try {
-      init();
+      await init();
       resolve();
     } catch (e) {
       reject();
@@ -58,15 +58,14 @@ const setupKeycloack = () => {
     // Refresh the token automatically once the user has been authenticated
     // Turn off when the user has logged out
     const minValidity = 30; // Token should be valid for at least the next 30 seconds
-    const updateInterval = minValidity * 0.75; // Keep token valid by checking regularly
+    const updateInterval = minValidity * 0.5; // Keep token valid by checking regularly
     if (turnOn) {
       // Start a token updater, if not yet running
       keepAlive =
         keepAlive ||
-        setInterval(
-          () => keycloak.updateToken(minValidity),
-          updateInterval * 1000
-        );
+        setInterval(() => {
+          keycloak.updateToken(minValidity);
+        }, updateInterval * 1000);
     } else {
       if (keepAlive) clearInterval(keepAlive);
       keepAlive = null;
