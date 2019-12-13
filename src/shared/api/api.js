@@ -1,3 +1,4 @@
+import objectToFormData from 'shared/util/objectToFormData';
 import auth from '../auth/auth';
 
 export const ApiException = (status, reason) => {
@@ -41,7 +42,7 @@ export const getWithToken = (
   const headers = {};
 
   if (token) {
-    headers.Authorization = `Bearer ${token}`;
+    headers.Authorization = token;
   }
 
   const options = {
@@ -67,16 +68,6 @@ export const getByUrl = async (url, params, cancel, reloadOnUnauthorized) => {
   );
 };
 
-const getFormData = data => {
-  const formData = new FormData();
-
-  Object.keys(data).forEach(name => {
-    if (data[name])
-      formData.append(name, data[name].file ? data[name].file : data[name]);
-  });
-  return formData;
-};
-
 export const sendData = async (url, data, method = 'POST') => {
   // Ensure authenticated
   const token = await auth.token();
@@ -84,9 +75,9 @@ export const sendData = async (url, data, method = 'POST') => {
   const options = {
     method,
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: token,
     },
-    body: getFormData(data),
+    body: objectToFormData(data),
   };
 
   return fetch(url, options)

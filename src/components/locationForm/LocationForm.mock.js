@@ -65,3 +65,19 @@ export const locationMock = {
   status: 'gereed',
   taken: '',
 };
+
+export const formDataMock = {
+  id: 1,
+  description: 'Johan van Hasseltweg - Meeuwenlaan 2',
+  locatie_id: 'B87_14',
+  point: { type: 'Point', coordinates: [4.9239022, 52.3875654] },
+  stadsdeel: 'Noord',
+  spot_type: 'blackspot',
+  jaar_blackspotlijst: 2014,
+  jaar_ongeval_quickscan: 2015,
+  status: 'gereed',
+  actiehouders: 'Uitgevoerd door het IB',
+  start_uitvoering: '03/10/16',
+  eind_uitvoering: '10/10/16',
+  jaar_oplevering: 2016,
+};

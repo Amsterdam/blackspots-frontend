@@ -15,7 +15,7 @@ function useDownload() {
     const token = await auth.token();
     const options = {
       method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: token },
     };
 
     fetch(url, options)
