@@ -72,6 +72,7 @@ export const sendData = async (url, data, method = 'POST') => {
   // Ensure authenticated
   const token = await auth.token();
 
+  console.log(objectToFormData(data));
   const options = {
     method,
     headers: {

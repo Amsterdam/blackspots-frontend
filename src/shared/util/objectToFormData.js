@@ -22,8 +22,8 @@ const objectToFormData = (obj, form = null, namespace = null) => {
       } else if (obj[property].file && obj[property].file instanceof File) {
         fd.append(formKey, obj[property].file);
       } else {
-        // parse the object recursively
-        objectToFormData(obj[property], fd, property);
+        // get the property in json format
+        fd.append(formKey, JSON.stringify(obj[property]));
       }
     }
   });
