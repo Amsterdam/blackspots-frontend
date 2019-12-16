@@ -72,39 +72,39 @@ const setupKeycloack = () => {
     }
   };
 
-  // keycloak.onReady = authenticated => {
-  //   console.log('Keycloak ready, authenticated', authenticated);
-  // };
+  keycloak.onReady = authenticated => {
+    // eslint-disable-next-line no-console
+    console.log('Keycloak ready, authenticated', authenticated);
+  };
 
-  // keycloak.onAuthSuccess = () => {
-  //   // console.log('Auth success');
-  //   autoRefreshToken(true);
-  // };
+  keycloak.onAuthSuccess = () => {
+    autoRefreshToken(true);
+  };
 
-  // keycloak.onAuthError = () => {
-  //   // console.log('Auth error');
-  //   autoRefreshToken(false);
-  // };
+  keycloak.onAuthError = () => {
+    autoRefreshToken(false);
+  };
 
-  // keycloak.onAuthRefreshSuccess = () => {
-  //   // console.log('Auth refresh success');
-  // };
+  keycloak.onAuthRefreshError = () => {
+    autoRefreshToken(false);
+  };
 
-  // keycloak.onAuthRefreshError = () => {
-  //   // console.log('Auth refresh error');
-  //   autoRefreshToken(false);
-  // };
+  const isAuthenticated = async () => {
+    await isReady;
+    return keycloak.authenticated;
+  };
 
-  // keycloak.onAuthLogout = () => {
-  //   // console.log('Auth logout');
-  //   autoRefreshToken(false);
-  // };
+  const canAdd = async () => {
+    await isReady;
+    const { roles } = keycloak.realmAccess || { roles: [] };
+    return roles.includes('bs_all');
+  };
 
-  // keycloak.onTokenExpired = () => {
-  //   // This should never happen
-  //   // console.log('Unexpected: Token expired');
-  //   autoRefreshToken(false);
-  // };
+  const canEdit = async () => {
+    await isReady;
+    const { roles } = keycloak.realmAccess || { roles: [] };
+    return roles.includes('bs_all');
+  };
 
   return {
     keycloak,
@@ -113,11 +113,12 @@ const setupKeycloack = () => {
     userInfo,
     logout,
     autoRefreshToken,
+    isAuthenticated,
+    canAdd,
+    canEdit,
   };
 };
 
-const { keycloak, ...auth } = setupKeycloack();
-
-export { keycloak };
+const auth = setupKeycloack();
 
 export default auth;

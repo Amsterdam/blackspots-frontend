@@ -127,7 +127,6 @@ const LocationForm = ({ id: locationId }) => {
     try {
       const route = `${(locationId && `${locationId}/`) || ''}`;
       const url = `${endpoints.blackspots}${route}`;
-      console.log('locationToFormData', locationToFormData(data));
       const result = await sendData(
         url,
         locationToFormData({ ...data, id: locationId }),

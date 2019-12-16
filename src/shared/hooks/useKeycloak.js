@@ -1,46 +1,18 @@
 import { useState, useEffect } from 'react';
-import auth, { keycloak } from '../auth/auth';
+import auth from '../auth/auth';
 
 const useKeycloak = () => {
   const [authenticated, setAuthenticatied] = useState(false);
   const [canEdit, setCanEdit] = useState(false);
   const [canAdd, setCanAdd] = useState(false);
 
-  const { autoRefreshToken } = auth;
-
   useEffect(() => {
-    keycloak.onAuthSuccess = () => {
-      autoRefreshToken(true);
-      setAuthenticatied(true);
-      const { roles } = keycloak.realmAccess || [];
-      setCanEdit(roles.includes('bs_all'));
-      setCanAdd(roles.includes('bs_all'));
-    };
-    keycloak.onAuthError = () => {
-      autoRefreshToken(false);
-      setAuthenticatied(false);
-      setCanAdd(false);
-      setCanEdit(false);
-    };
-    keycloak.onAuthRefreshError = () => {
-      autoRefreshToken(false);
-      setAuthenticatied(false);
-      setCanAdd(false);
-      setCanEdit(false);
-    };
-    keycloak.onAuthRefreshSuccess = () => {
-      setAuthenticatied(true);
-
-      const { roles } = keycloak.realmAccess || [];
-      setCanEdit(roles.includes('bs_all'));
-      setCanAdd(roles.includes('bs_all'));
-    };
-  }, [
-    keycloak.onAuthError,
-    keycloak.onAuthRefreshError,
-    keycloak.onAuthSuccess,
-    keycloak.realmAccess,
-  ]);
+    (async () => {
+      setAuthenticatied(await auth.isAuthenticated());
+      setCanAdd(await auth.canAdd());
+      setCanEdit(await auth.canEdit());
+    })();
+  }, [auth]);
 
   return { authenticated, canAdd, canEdit };
 };
