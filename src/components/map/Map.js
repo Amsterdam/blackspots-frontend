@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import Loader from 'shared/loader/Loader';
 import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
@@ -28,12 +28,14 @@ const Map = () => {
       (async () => {
         fetchData(`${endpoints.blackspots}?format=geojson`);
       })();
-  }, []);
+    // Keep the dependency array empty to prevent an infinite loop
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (locations.length === 0)
       actions.addLocations({ payload: results ? [...results.features] : [] });
-  }, [results]);
+    // Keep the actions and locations out from the dependency array to prevent infinite loop
+  }, [results]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [
     blackspotYearFilter,
@@ -44,9 +46,9 @@ const Map = () => {
     setQuickscanYearFilter,
   ] = useYearFilters(locations);
 
-  const onMarkerClick = feature => {
+  const onMarkerClick = useCallback(feature => {
     actions.selectLocation({ payload: feature });
-  };
+  }, []);
 
   const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
   const { setLocation } = useMarkerLayer(mapRef);
@@ -60,11 +62,11 @@ const Map = () => {
 
       setShowDetailPanel(true);
     }
-  }, [selectedLocation]);
+  }, [selectedLocation, setLocation]);
 
-  const toggleDetailPanel = () => {
+  const toggleDetailPanel = useCallback(() => {
     setShowDetailPanel(!showDetailPanel);
-  };
+  }, [showDetailPanel]);
 
   const [spotStatusTypeFilter, setSpotStatusTypeFilter] = useState({
     [SpotStatusTypes.ONDERZOEK]: false,

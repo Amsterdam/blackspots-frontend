@@ -1,30 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
-import styled from '@datapunt/asc-core';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Calendar } from '@datapunt/asc-assets';
-import { Icon, styles, themeColor } from '@datapunt/asc-ui';
+import { Icon } from '@datapunt/asc-ui';
 import { dateToString, stringToDate } from '../services/dateUtil';
+import DatePickerInputStyle from './DatePickerInputStyle';
 
-const DatePickerStyle = styled.div`
-  position: relative;
-  & > .react-datepicker-wrapper > .react-datepicker__input-container > input {
-    border: solid 1px ${themeColor('tint', 'level4')};
-    border-radius: 0;
-    box-sizing: border-box;
-    padding: 10px;
-    width: 100%;
-  }
-
-  & > ${styles.IconStyle} {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-`;
-
-const DatePickerInput = ({ name, onChange, value: selectedValue }) => {
+const DatePickerInput = ({
+  name,
+  onChange,
+  value: selectedValue,
+  ...otherProps
+}) => {
   const [value, setValue] = useState(null);
 
   const onValueChange = val => {
@@ -55,7 +43,7 @@ const DatePickerInput = ({ name, onChange, value: selectedValue }) => {
   }, [value]);
 
   return (
-    <DatePickerStyle>
+    <DatePickerInputStyle {...otherProps}>
       <DatePicker
         id={name}
         autoComplete="off"
@@ -69,7 +57,7 @@ const DatePickerInput = ({ name, onChange, value: selectedValue }) => {
       <Icon size={20}>
         <Calendar />
       </Icon>
-    </DatePickerStyle>
+    </DatePickerInputStyle>
   );
 };
 

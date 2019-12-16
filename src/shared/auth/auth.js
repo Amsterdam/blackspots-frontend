@@ -49,7 +49,7 @@ const setupKeycloack = () => {
 
   const token = async () => {
     await isReady;
-    return keycloak.token;
+    return keycloak.token && `Bearer ${keycloak.token}`;
   };
 
   let keepAlive = null;

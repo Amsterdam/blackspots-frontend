@@ -13,7 +13,11 @@ import FormFields, {
 } from './definitions/FormFields';
 import { ControlsColumn, ButtonsColumn, BottomRow } from './LocationFormStyle';
 import FormInput from './components/FormInput';
-import fromFeature, { toFormData, toFeature } from './services/normalize';
+import {
+  featureToLocation,
+  locationToFormData,
+  locationToFeature,
+} from './services/normalize';
 import { appRoutes, SpotTypes, endpoints } from '../../config';
 
 const isBlackspotType = spotType =>
@@ -27,10 +31,11 @@ const LocationForm = ({ id: locationId }) => {
   const [{ selectedLocation }, actions] = useAppReducer(LOCATION);
   const [visible, setVisible] = useState({ ...formVisibility });
 
-  const location = useMemo(() => fromFeature(selectedLocation), [
+  const location = useMemo(() => featureToLocation(selectedLocation), [
     selectedLocation,
   ]);
 
+  // Return to home when navigating to a not selected location
   useEffect(() => {
     if (locationId && !selectedLocation) {
       history.push(appRoutes.HOME);
@@ -120,16 +125,16 @@ const LocationForm = ({ id: locationId }) => {
 
   const onSubmit = async data => {
     try {
-      const url = `${endpoints.blackspots}${(locationId && `${locationId}/`) ||
-        ''}`;
+      const route = `${(locationId && `${locationId}/`) || ''}`;
+      const url = `${endpoints.blackspots}${route}`;
       const result = await sendData(
         url,
-        toFormData({ ...data, id: locationId }),
+        locationToFormData({ ...data, id: locationId }),
         locationId ? 'PATCH' : 'POST'
       );
 
       if (!result.errors) {
-        const feature = toFeature(result);
+        const feature = locationToFeature(result);
         actions.updateLocation({ payload: feature });
         history.push(appRoutes.HOME);
       }

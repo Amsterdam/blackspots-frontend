@@ -7,11 +7,6 @@ const useYearFilters = features => {
   const [quickscanYearFilter, setQuickscanYearFilter] = useState({});
 
   useEffect(() => {
-    // Init all year filters
-    setBlackspotYearFilter({});
-    setDeliveredYearFilter({});
-    setQuickscanYearFilter({});
-
     // Get all the relevant year values for the filters
     const blackspotYears = [];
     const deliveredYears = [];
@@ -44,19 +39,19 @@ const useYearFilters = features => {
       });
 
     // Add the year values to the filter as false (default filter value)
-    blackspotYears.forEach(y => {
-      blackspotYearFilter[y] = false;
-    });
-    deliveredYears.forEach(y => {
-      deliveredYearFilter[y] = false;
-    });
-    quickscanYears.forEach(y => {
-      quickscanYearFilter[y] = false;
-    });
+    const blackspotFilter = blackspotYears.reduce((acc, y) => {
+      return { ...acc, [y]: false };
+    }, {});
+    const deliveredFilter = deliveredYears.reduce((acc, y) => {
+      return { ...acc, [y]: false };
+    }, {});
+    const quickscanFilter = quickscanYears.reduce((acc, y) => {
+      return { ...acc, [y]: false };
+    }, {});
 
-    setBlackspotYearFilter(blackspotYearFilter);
-    setDeliveredYearFilter(deliveredYearFilter);
-    setQuickscanYearFilter(quickscanYearFilter);
+    setBlackspotYearFilter(blackspotFilter);
+    setDeliveredYearFilter(deliveredFilter);
+    setQuickscanYearFilter(quickscanFilter);
   }, [features]);
   return [
     blackspotYearFilter,
