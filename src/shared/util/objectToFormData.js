@@ -15,7 +15,8 @@ const objectToFormData = (obj, form = null, namespace = null) => {
     if (Object.prototype.hasOwnProperty.call(obj, property)) {
       const formKey = namespace ? `${namespace}[${property}]` : property;
 
-      if (typeof obj[property] !== 'object') {
+      const propType = typeof obj[property];
+      if (propType === 'string' || propType === 'number') {
         // if it's a string or number
         fd.append(formKey, obj[property]);
       } else if (obj[property].file && obj[property].file instanceof File) {
