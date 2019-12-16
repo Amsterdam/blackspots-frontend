@@ -1,13 +1,26 @@
 import { initalValues } from '../definitions/FormFields';
 
+export const cleanUndefined = item => {
+  // Skip the undefined values when creating the formData object
+  const result = Object.keys(item).reduce((acc, key) => {
+    return item[key]
+      ? {
+          ...acc,
+          [key]: item[key],
+        }
+      : { ...acc };
+  }, {});
+  return result;
+};
+
 /**
  *
  * @param {object} feature
  *
- * Converts the server feature to a client location object
+ * Converts the server geojson feature to a client location object
  *
  */
-const fromFeature = feature => {
+export const featureToLocation = feature => {
   if (!feature) return initalValues;
 
   const {
@@ -52,7 +65,12 @@ const fromFeature = feature => {
   };
 };
 
-export const toFeature = location => {
+/**
+ *
+ * @param {object} location
+ * Converts a location to the geojson feature
+ */
+export const locationToFeature = location => {
   const {
     id,
     description,
@@ -70,6 +88,7 @@ export const toFeature = location => {
     jaar_oplevering,
     notes,
     documents,
+    wegvak,
   } = location;
   return {
     type: 'Feature',
@@ -89,6 +108,7 @@ export const toFeature = location => {
       jaar_oplevering,
       notes,
       documents,
+      wegvak,
     },
     geometry: point,
   };
@@ -97,9 +117,9 @@ export const toFeature = location => {
 /**
  *
  * @param {object} location
- * Converts the location object to the api expected fromat
+ * Converts the location object to FormData for sendig to the server
  */
-export const toFormData = location => {
+export const locationToFormData = location => {
   const {
     id,
     naam,
@@ -123,13 +143,13 @@ export const toFormData = location => {
     id,
     description: naam,
     locatie_id: nummer,
-    point: JSON.stringify({
+    point: {
       type: 'Point',
       coordinates: coordinaten
         .split(', ')
         .map(s => parseFloat(s))
         .reverse(),
-    }),
+    },
     stadsdeel,
     spot_type,
     jaar_blackspotlijst,
@@ -147,16 +167,5 @@ export const toFormData = location => {
       design_document && design_document.file ? design_document : undefined,
   };
 
-  // Skip the undefined values when creating the formData object
-  const ret = Object.keys(item).reduce((acc, key) => {
-    return item[key]
-      ? {
-          ...acc,
-          [key]: item[key],
-        }
-      : { ...acc };
-  }, {});
-  return ret;
+  return cleanUndefined(item);
 };
-
-export default fromFeature;

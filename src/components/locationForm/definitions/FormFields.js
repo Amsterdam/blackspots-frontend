@@ -180,7 +180,7 @@ const FormFields = [
   {
     column: 3,
     name: 'design_document',
-    label: 'Rapportage',
+    label: 'Ontwerp',
     initialValue: {},
     Component: FileInput,
   },

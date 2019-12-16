@@ -4,13 +4,17 @@ import useBlackspotsLayer from './useBlackspotsLayer';
 
 jest.mock('amsterdam-amaps/dist/amaps');
 
-describe('useBlackspotsLayer', () => {
-  it('should should return a reference to the layer', () => {
-    // const featureMock = mockFeature;
-    const mapMock = { map: 'the map object', addLayer: jest.fn(), options: {} };
-    const onMarkerClickMock = jest.fn();
-    amaps.createMap.mockReturnValue(mapMock);
+describe('createSpotIcon', () => {});
 
+describe('useBlackspotsLayer', () => {
+  const mapMock = { map: 'the map object', addLayer: jest.fn(), options: {} };
+  const onMarkerClickMock = jest.fn();
+
+  beforeEach(() => {
+    amaps.createMap.mockReturnValue(mapMock);
+  });
+
+  it('should should return a reference to the layer', () => {
     const { result } = renderHook(() =>
       useBlackspotsLayer({ current: mapMock }, [], onMarkerClickMock)
     );

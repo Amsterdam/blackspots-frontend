@@ -39,7 +39,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
   const { canEdit } = useContext(UserContext);
   const { trackEvent } = useMatomo();
   const trackDownload = () => {
-    trackEvent({ category: 'PDF download' });
+    trackEvent({ category: 'PDF download', action: 'download' });
   };
 
   if (!feature) {
