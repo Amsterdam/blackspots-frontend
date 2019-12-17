@@ -10,7 +10,7 @@ export const handleFeature = (feature, layer, onClick) => {
   });
 };
 
-const createSpotIcon = feature => {
+const createFeatureIcon = feature => {
   // Leaflet only accepts HTML elements for custom markers so we need to
   // create one from the SVGIcon
   const { status, spot_type: spotType } = feature.properties;
@@ -26,10 +26,10 @@ const createSpotIcon = feature => {
   };
 };
 
-export const createSpot = (feature, latlng) => {
+export const createFeature = (feature, latlng) => {
   // Create a marker with the correct icon and onClick method
   return L.marker(latlng, {
-    icon: L.divIcon(createSpotIcon(feature)),
+    icon: L.divIcon(createFeatureIcon(feature)),
   });
 };
 
@@ -41,7 +41,7 @@ const useBlackspotsLayer = (mapRef, locations, onMarkerClick) => {
       onEachFeature(feature, layer) {
         handleFeature(feature, layer, onMarkerClick);
       },
-      pointToLayer: createSpot,
+      pointToLayer: createFeature,
     }).addTo(mapRef.current);
   }, [mapRef, locations, onMarkerClick]);
 
