@@ -1,16 +1,18 @@
 /* eslint-disable camelcase */
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Heading, Button, Link } from '@datapunt/asc-ui';
+import { Heading, Button, Link, Icon } from '@datapunt/asc-ui';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import { NavLink } from 'react-router-dom';
 
-import { ReactComponent as DocumentIcon } from 'assets/icons/document.svg';
+import { ExternalLink, Close, Download } from '@datapunt/asc-assets';
+
 import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'config';
 import classNames from 'classnames';
-import { Close } from '@datapunt/asc-assets';
-import BlueLinkButton from 'shared/buttons/BlueLinkButton';
+
+// import BlueLinkButton from 'shared/buttons/BlueLinkButton';
+import styled from '@datapunt/asc-core';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';
 
@@ -20,7 +22,14 @@ import { SpotTypeDisplayNames } from '../../config';
 
 import UserContext from '../../shared/user/UserContext';
 
-import { HeaderStyle, ContentStyle } from './DetailPanelStyle';
+import {
+  HeaderStyle,
+  ContentStyle,
+  TitleStyle,
+  ExternalLinkContainerStyle,
+  ExternalLinkStyle,
+  DocumentContainerStyle,
+} from './DetailPanelStyle';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -35,13 +44,31 @@ function getStatusClassName(status) {
   return statusClassMapper[status];
 }
 
-const DetailPanel = ({ isOpen, togglePanel, feature }) => {
-  const { canEdit } = useContext(UserContext);
+const DocumentLink = ({ document: documentData }) => {
   const { trackEvent } = useMatomo();
   const trackDownload = () => {
     trackEvent({ category: 'PDF download', action: 'download' });
   };
+  return (
+    <DocumentContainerStyle>
+      <ExternalLinkStyle
+        onClick={trackDownload}
+        // eslint-disable-next-line no-underscore-dangle
+        href={`${documentData._links.self.href.split('?')[0]}file`}
+        download
+        variant="inline"
+      >
+        <Icon size={14} color="primary">
+          <Download />
+        </Icon>
+        {documentData.filename}
+      </ExternalLinkStyle>
+    </DocumentContainerStyle>
+  );
+};
 
+const DetailPanel = ({ isOpen, togglePanel, feature }) => {
+  const { canEdit } = useContext(UserContext);
   if (!feature) {
     return <div className={classNames(styles.Container)} />;
   }
@@ -62,7 +89,8 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
     documents,
   } = feature.properties;
   const [lng, lat] = feature.geometry.coordinates;
-
+  const reportDocument = documents.find(d => d.type === 'Rapportage');
+  const designDocument = documents.find(d => d.type === 'Ontwerp');
   return (
     <div
       className={classNames(
@@ -93,7 +121,9 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
         />
       </HeaderStyle>
       <ContentStyle>
-        <h2>{description}</h2>
+        <TitleStyle>
+          <Heading $as="h2">{description}</Heading>
+        </TitleStyle>
         <DataTable>
           <tbody>
             <tr>
@@ -129,7 +159,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
               <td>{stadsdeel}</td>
             </tr>
             <tr>
-              <td>Breedte- en lengtegraad</td>
+              <td>Coördinaten</td>
               <td>
                 {lat}, {lng}
               </td>
@@ -148,14 +178,22 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             )}
           </tbody>
         </DataTable>
-        <div className={styles.LinkContainer}>
-          <BlueLinkButton
-            text="Panoramabeeld"
-            external
-            to={`http://maps.google.com/maps?q=&layer=c&cbll=${lat},${lng}`}
-          />
-        </div>
-        <h3>Maatregelen</h3>
+        <ExternalLinkContainerStyle>
+          <ExternalLinkStyle
+            href={`http://maps.google.com/maps?q=&layer=c&cbll=${lat},${lng}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="inline"
+          >
+            <Icon size={14} color="primary">
+              <ExternalLink />
+            </Icon>
+            Panoramabeeld
+          </ExternalLinkStyle>
+        </ExternalLinkContainerStyle>
+        <Heading $as="h3" color="secondary">
+          Maatregelen
+        </Heading>
         <DataTable>
           <tbody>
             <tr>
@@ -184,10 +222,37 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             </tr>
           </tbody>
         </DataTable>
-        {documents.length > 0 && <h3>Documenten</h3>}
-        {documents.map(d => {
+        {documents.length > 0 && (
+          <Heading $as="h3" color="secondary">
+            Documenten
+          </Heading>
+        )}
+
+        {reportDocument || designDocument ? (
+          <DataTable>
+            <tbody>
+              {reportDocument && (
+                <tr>
+                  <td>Rapportage</td>
+                  <td>
+                    <DocumentLink document={reportDocument} />
+                  </td>
+                </tr>
+              )}
+              {designDocument && (
+                <tr>
+                  <td>Ontwerp</td>
+                  <td>
+                    <DocumentLink document={designDocument} />
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </DataTable>
+        ) : null}
+        {/* {documents.map(d => {
           return (
-            <div key={d.id} className={styles.DocumentsContainer}>
+            <DocumentContainerStyle key={d.id}>
               <table>
                 <tbody>
                   <tr>
@@ -195,21 +260,22 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
                       <DocumentIcon />
                     </td>
                     <td>
-                      <a
+                      <Link
                         onClick={trackDownload}
                         // eslint-disable-next-line no-underscore-dangle
                         href={`${d._links.self.href.split('?')[0]}file`}
                         download
+                        variant="inline"
                       >
                         {d.filename}
-                      </a>
+                      </Link>
                     </td>
                   </tr>
                 </tbody>
               </table>
-            </div>
+            </DocumentContainerStyle>
           );
-        })}
+        })} */}
       </ContentStyle>
     </div>
   );
