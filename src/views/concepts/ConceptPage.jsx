@@ -2,6 +2,7 @@ import React from 'react';
 
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
 import { appRoutes } from 'config';
+import { Link } from '@datapunt/asc-ui';
 import Accordion from '../../shared/accordion/Accordion';
 import Footer from '../../components/footer/Footer';
 import ConceptPageStyle, { ContentStyle } from './ConceptPageStyle';
@@ -26,9 +27,9 @@ const ConceptPage = () => {
           <br />
           <br />
           Voor meer informatie zie:{' '}
-          <a href="http://amsterdam.nl/verkeersveiligheid">
+          <Link href="http://amsterdam.nl/verkeersveiligheid" variant="inline">
             http://amsterdam.nl/verkeersveiligheid
-          </a>
+          </Link>
         </IntroTextStyle>
         <Accordion
           title="Werkgroep Blackspots Amsterdam (WBA)"

@@ -1,5 +1,4 @@
 import styled from '@datapunt/asc-core';
-import { themeColor } from '@datapunt/asc-ui';
 import { ContentBoxStyle } from '../../styles/SharedStyles';
 
 const ConceptPageStyle = styled.div`
@@ -7,10 +6,6 @@ const ConceptPageStyle = styled.div`
   min-height: 100%;
 `;
 
-export const ContentStyle = styled(ContentBoxStyle)`
-  a {
-    color: ${themeColor('secondary')};
-  }
-`;
+export const ContentStyle = styled(ContentBoxStyle)``;
 
 export default ConceptPageStyle;

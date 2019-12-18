@@ -2,6 +2,7 @@ import React from 'react';
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
 import { appRoutes } from 'config';
 import { ReactComponent as Chevron } from 'assets/icons/chevron-left.svg';
+import { Link } from '@datapunt/asc-ui';
 import DataTable from '../../shared/dataTable/DataTable';
 import Footer from '../../components/footer/Footer';
 import ContactPageStyle, {
@@ -95,9 +96,9 @@ const ContactPage = () => {
         <p>
           Voor meer informatie over de WBA en het Programma Verkeersveiligheid
           ga naar:{' '}
-          <a href="http://amsterdam.nl/verkeersveiligheid">
+          <Link href="http://amsterdam.nl/verkeersveiligheid" variant="inline">
             http://amsterdam.nl/verkeersveiligheid
-          </a>
+          </Link>
         </p>
       </ContentStyle>
       <Footer />

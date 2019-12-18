@@ -51,14 +51,11 @@ const Map = () => {
   }, []);
 
   const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
-  const { setLocation } = useMarkerLayer(mapRef);
+  const { setLocation, layerRef } = useMarkerLayer(mapRef);
 
   useEffect(() => {
     if (selectedLocation) {
-      setLocation({
-        lat: selectedLocation.geometry.coordinates[1],
-        lng: selectedLocation.geometry.coordinates[0],
-      });
+      setLocation(selectedLocation);
 
       setShowDetailPanel(true);
     }
@@ -104,7 +101,7 @@ const Map = () => {
 
   useEffect(() => {
     evaluateMarkerVisibility(
-      geoLayerRef.current.getLayers(),
+      [...geoLayerRef.current.getLayers()],
       spotTypeFilter,
       spotStatusTypeFilter,
       blackspotYearFilter,
@@ -115,8 +112,23 @@ const Map = () => {
       deliveredListFilter,
       stadsdeelFilter
     );
+    if (layerRef.current) {
+      evaluateMarkerVisibility(
+        [layerRef.current],
+        spotTypeFilter,
+        spotStatusTypeFilter,
+        blackspotYearFilter,
+        deliveredYearFilter,
+        quickscanYearFilter,
+        blackspotListFilter,
+        quickscanListFilter,
+        deliveredListFilter,
+        stadsdeelFilter
+      );
+    }
   }, [
     geoLayerRef,
+    layerRef,
     spotTypeFilter,
     spotStatusTypeFilter,
     blackspotYearFilter,
@@ -146,7 +158,7 @@ const Map = () => {
 
   return (
     <MapStyle>
-      <div id="mapdiv" style={{ height: '100%' }}>
+      <div id="mapdiv">
         {loading && <Loader />}
         {!errorMessage && !loading && (
           <FilterPanel

@@ -10,7 +10,11 @@ describe('useMarkerLayer', () => {
     flyTo: jest.fn(),
     options: {},
   };
-  const latlng = { lat: 1, lng: 2 };
+  const testLocation = {
+    geometry: {
+      coordinates: [1, 0],
+    },
+  };
 
   it('should should return a reference to the layer', () => {
     const { result } = renderHook(() => useMarkerLayer({ current: mapMock }));
@@ -18,7 +22,7 @@ describe('useMarkerLayer', () => {
     const { layerRef, setLocation } = result.current;
     expect(layerRef.current).toBeNull();
 
-    act(() => setLocation(latlng));
+    act(() => setLocation(testLocation));
 
     expect(layerRef.current).not.toBeNull();
     expect(layerRef.current.options.icon.options).toEqual({
@@ -34,10 +38,15 @@ describe('useMarkerLayer', () => {
     const { result } = renderHook(() => useMarkerLayer({ current: mapMock }));
 
     const { layerRef, setLocation } = result.current;
-    act(() => setLocation(latlng));
+    act(() => setLocation(testLocation));
     expect(layerRef.current).not.toBeNull();
 
-    act(() => setLocation({ ...latlng, lng: 3 }));
+    const otherTestLocation = {
+      geometry: {
+        coordinates: [1, 0],
+      },
+    };
+    act(() => setLocation(otherTestLocation));
 
     expect(mapMock.removeLayer).toHaveBeenCalledTimes(1);
   });
@@ -46,7 +55,7 @@ describe('useMarkerLayer', () => {
     const { result } = renderHook(() => useMarkerLayer({ current: mapMock }));
 
     const { layerRef, setLocation } = result.current;
-    act(() => setLocation(latlng));
+    act(() => setLocation(testLocation));
     expect(layerRef.current).not.toBeNull();
     expect(mapMock.getZoom).toHaveBeenCalled();
     expect(mapMock.flyTo).toHaveBeenCalled();

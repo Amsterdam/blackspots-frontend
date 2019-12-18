@@ -1,8 +1,46 @@
 import React from 'react';
-import styles from './DataTable.module.scss';
+import styled from '@datapunt/asc-core';
+import { themeColor, themeSpacing } from '@datapunt/asc-ui';
 
-const DataTable = ({ children }) => {
-  return <table className={styles.Container}>{children}</table>;
+const DataTableStyle = styled.table`
+  margin-bottom: ${({ bottom }) => themeSpacing(bottom || 5)};
+
+  & > tbody {
+    & > tr {
+      height: 32px;
+    }
+
+    /* Remove borders */
+    & > tr > td {
+      border: 0;
+    }
+
+    /* Remove hover */
+    & > tr:hover {
+      background-color: ${themeColor('tint', 'level0')};
+
+      td {
+        box-shadow: none;
+      }
+    }
+
+    /* Grey text in first column */
+    & > tr > td:nth-child(1) {
+      color: ${themeColor('tint', 'level5')};
+      width: 176px; /* fixed column width from design */
+      font-size: 16px;
+    }
+    & > tr > td:nth-child(2) {
+    }
+  }
+`;
+
+const DataTable = ({ children, bottom, ...otherProps }) => {
+  return (
+    <DataTableStyle bottom={bottom} {...otherProps}>
+      {children}
+    </DataTableStyle>
+  );
 };
 
 export default DataTable;
