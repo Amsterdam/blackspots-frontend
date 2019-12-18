@@ -18,6 +18,7 @@ const setupKeycloack = () => {
     return keycloak.init(options);
   };
 
+  // eslint-disable-next-line no-async-promise-executor
   const isReady = new Promise(async (resolve, reject) => {
     // This is executed during load of this module
     // The promise is awaited in the other methods to be sure that keycloak has been initialised

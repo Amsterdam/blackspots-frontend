@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useContext, Children } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Heading, Button, Link, Icon } from '@datapunt/asc-ui';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
