@@ -146,7 +146,7 @@ const Map = () => {
 
   return (
     <MapStyle>
-      <div id="mapdiv" style={{ height: '100%' }}>
+      <div id="mapdiv">
         {loading && <Loader />}
         {!errorMessage && !loading && (
           <FilterPanel

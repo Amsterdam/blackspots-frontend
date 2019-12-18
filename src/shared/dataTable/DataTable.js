@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from '@datapunt/asc-core';
-import { themeColor } from '@datapunt/asc-ui';
+import { themeColor, themeSpacing } from '@datapunt/asc-ui';
 
 const DataTableStyle = styled.table`
+  margin-bottom: ${({ bottom }) => themeSpacing(bottom || 5)};
+
   & > tbody {
     & > tr {
       height: 32px;
@@ -24,18 +26,21 @@ const DataTableStyle = styled.table`
 
     /* Grey text in first column */
     & > tr > td:nth-child(1) {
-      color: ${themeColor('tint', 'level4')};
-      /* width: 176px; */
+      color: ${themeColor('tint', 'level5')};
+      width: 176px; /* fixed column width from design */
       font-size: 16px;
     }
     & > tr > td:nth-child(2) {
-      width: 253px;
     }
   }
 `;
 
-const DataTable = ({ children }) => {
-  return <DataTableStyle>{children}</DataTableStyle>;
+const DataTable = ({ children, bottom, ...otherProps }) => {
+  return (
+    <DataTableStyle bottom={bottom} {...otherProps}>
+      {children}
+    </DataTableStyle>
+  );
 };
 
 export default DataTable;

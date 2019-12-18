@@ -107,7 +107,6 @@ const setupKeycloack = () => {
   };
 
   return {
-    keycloak,
     login,
     token,
     userInfo,

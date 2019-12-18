@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useContext } from 'react';
+import React, { useContext, Children } from 'react';
 import PropTypes from 'prop-types';
 import { Heading, Button, Link, Icon } from '@datapunt/asc-ui';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
@@ -44,6 +44,18 @@ function getStatusClassName(status) {
   return statusClassMapper[status];
 }
 
+const TextWithOverflowStyle = styled.span`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const TextWithOverflow = ({ children, ...otherProps }) => (
+  <TextWithOverflowStyle title={children} {...otherProps}>
+    {children}
+  </TextWithOverflowStyle>
+);
+
 const DocumentLink = ({ document: documentData }) => {
   const { trackEvent } = useMatomo();
   const trackDownload = () => {
@@ -61,7 +73,7 @@ const DocumentLink = ({ document: documentData }) => {
         <Icon size={14} color="primary">
           <Download />
         </Icon>
-        {documentData.filename}
+        <TextWithOverflow>{documentData.filename}</TextWithOverflow>
       </ExternalLinkStyle>
     </DocumentContainerStyle>
   );
@@ -124,7 +136,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
         <TitleStyle>
           <Heading $as="h2">{description}</Heading>
         </TitleStyle>
-        <DataTable>
+        <DataTable bottom={2}>
           <tbody>
             <tr>
               <td>Locatie type</td>
@@ -191,7 +203,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             Panoramabeeld
           </ExternalLinkStyle>
         </ExternalLinkContainerStyle>
-        <Heading $as="h3" color="secondary">
+        <Heading $as="h4" color="secondary">
           Maatregelen
         </Heading>
         <DataTable>
@@ -223,7 +235,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
           </tbody>
         </DataTable>
         {documents.length > 0 && (
-          <Heading $as="h3" color="secondary">
+          <Heading $as="h4" color="secondary">
             Documenten
           </Heading>
         )}

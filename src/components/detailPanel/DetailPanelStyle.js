@@ -16,7 +16,6 @@ export const HeaderStyle = styled.div`
   }
 
   border-bottom: 2px solid ${themeColor('tint', 'level3')};
-  border-top: 3px solid ${themeColor('tint', 'level3')};
 `;
 
 export const ContentStyle = styled.div`
@@ -33,22 +32,27 @@ export const TitleStyle = styled.div`
 `;
 
 export const ExternalLinkContainerStyle = styled.div`
-  margin: ${themeSpacing(5, 0)};
+  margin-left: ${themeSpacing(1)};
+  margin-bottom: ${themeSpacing(6)};
 `;
 
 export const ExternalLinkStyle = styled(Link)`
   display: flex;
   font-size: 16px;
   line-height: 16px;
-  overflow: visible;
+
+  &:hover {
+    & > ${styles.IconStyle} > svg > path {
+      fill: ${themeColor('secondary')};
+    }
+  }
+
   & > ${styles.IconStyle} {
-    margin-right: ${themeSpacing(1)};
+    margin-top: 1px;
+    margin-right: ${themeSpacing(2)};
   }
 `;
 
 export const DocumentContainerStyle = styled.div`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 253px;
+  max-width: 253px; /* fixed column width from design */
 `;
