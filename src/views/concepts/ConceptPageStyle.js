@@ -7,10 +7,6 @@ const ConceptPageStyle = styled.div`
   min-height: 100%;
 `;
 
-export const ContentStyle = styled(ContentBoxStyle)`
-  a {
-    color: ${themeColor('secondary')};
-  }
-`;
+export const ContentStyle = styled(ContentBoxStyle)``;
 
 export default ConceptPageStyle;

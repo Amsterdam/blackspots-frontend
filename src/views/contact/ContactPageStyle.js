@@ -4,10 +4,6 @@ import { ContentBoxStyle } from '../../styles/SharedStyles';
 
 const ContactPageStyle = styled.div`
   width: 100%;
-
-  p > a {
-    color: ${themeColor('secondary')};
-  }
 `;
 
 export const ContentStyle = styled(ContentBoxStyle)`
