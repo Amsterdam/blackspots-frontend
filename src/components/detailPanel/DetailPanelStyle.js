@@ -52,7 +52,3 @@ export const ExternalLinkStyle = styled(Link)`
     margin-right: ${themeSpacing(2)};
   }
 `;
-
-export const DocumentContainerStyle = styled.div`
-  max-width: 253px; /* fixed column width from design */
-`;

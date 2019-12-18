@@ -2,17 +2,15 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Heading, Button, Link, Icon } from '@datapunt/asc-ui';
-import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import { NavLink } from 'react-router-dom';
 
-import { ExternalLink, Close, Download } from '@datapunt/asc-assets';
+import { ExternalLink, Close } from '@datapunt/asc-assets';
 
 import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'config';
 import classNames from 'classnames';
 
 // import BlueLinkButton from 'shared/buttons/BlueLinkButton';
-import styled from '@datapunt/asc-core';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';
 
@@ -28,8 +26,8 @@ import {
   TitleStyle,
   ExternalLinkContainerStyle,
   ExternalLinkStyle,
-  DocumentContainerStyle,
 } from './DetailPanelStyle';
+import DocumentLink from './components/DocumentLink';
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -43,41 +41,6 @@ function getStatusClassName(status) {
 
   return statusClassMapper[status];
 }
-
-const TextWithOverflowStyle = styled.span`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const TextWithOverflow = ({ children, ...otherProps }) => (
-  <TextWithOverflowStyle title={children} {...otherProps}>
-    {children}
-  </TextWithOverflowStyle>
-);
-
-const DocumentLink = ({ document: documentData }) => {
-  const { trackEvent } = useMatomo();
-  const trackDownload = () => {
-    trackEvent({ category: 'PDF download', action: 'download' });
-  };
-  return (
-    <DocumentContainerStyle>
-      <ExternalLinkStyle
-        onClick={trackDownload}
-        // eslint-disable-next-line no-underscore-dangle
-        href={`${documentData._links.self.href.split('?')[0]}file`}
-        download
-        variant="inline"
-      >
-        <Icon size={14} color="primary">
-          <Download />
-        </Icon>
-        <TextWithOverflow>{documentData.filename}</TextWithOverflow>
-      </ExternalLinkStyle>
-    </DocumentContainerStyle>
-  );
-};
 
 const DetailPanel = ({ isOpen, togglePanel, feature }) => {
   const { canEdit } = useContext(UserContext);
@@ -262,32 +225,6 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             </tbody>
           </DataTable>
         ) : null}
-        {/* {documents.map(d => {
-          return (
-            <DocumentContainerStyle key={d.id}>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <DocumentIcon />
-                    </td>
-                    <td>
-                      <Link
-                        onClick={trackDownload}
-                        // eslint-disable-next-line no-underscore-dangle
-                        href={`${d._links.self.href.split('?')[0]}file`}
-                        download
-                        variant="inline"
-                      >
-                        {d.filename}
-                      </Link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </DocumentContainerStyle>
-          );
-        })} */}
       </ContentStyle>
     </div>
   );
