@@ -1,46 +1,18 @@
 import { getSpotTypeFromMarker } from 'helpers';
+import { SpotTypes, SpotStatusTypes } from 'config';
 import {
   getStatusTypeFromMarker,
   getBlackspotYearFromMarker,
   getDeliveredYearFromMarker,
   getQuickscanYearFromMarker,
 } from '../../helpers';
-import { SpotTypes, SpotStatusTypes } from '../../constants';
 
 /**
- * Loop through markers and set its visibility based on the filters
+ * Check if all values of an object are falsy
  */
-export function evaluateMarkerVisibility(
-  markers,
-  spotTypeFilter,
-  spotStatusTypeFilter,
-  blackspotYearFilter,
-  deliveredYearFilter,
-  quickscanYearFilter,
-  blackspotListFilter,
-  quickscanListFilter,
-  deliveredListFilter
-) {
-  markers.forEach(marker => {
-    if (
-      isVisibleSpotType(
-        spotTypeFilter,
-        blackspotListFilter,
-        quickscanListFilter,
-        deliveredListFilter,
-        marker
-      ) &&
-      isVisibleStatusType(spotStatusTypeFilter, marker) &&
-      isVisibleBlackspotYear(blackspotYearFilter, marker) &&
-      isVisibleDeliveredYear(deliveredYearFilter, marker) &&
-      isVisibleQuickscanYear(quickscanYearFilter, marker)
-    ) {
-      marker._icon.style.visibility = 'visible';
-    } else {
-      marker._icon.style.visibility = 'hidden';
-    }
-  });
-}
+export const allValuesAreFalse = object => {
+  return Object.values(object).every(v => !v);
+};
 
 /**
  * Check if a marker should be visible based on the type filter
@@ -50,10 +22,12 @@ function isVisibleSpotType(
   blackspotListFilter,
   quickscanListFilter,
   deliveredListFilter,
+  stadsdeelFilter,
   marker
 ) {
   const spotType = getSpotTypeFromMarker(marker);
   const spotStatus = getStatusTypeFromMarker(marker);
+  const { stadsdeel } = marker.feature.properties;
 
   // Check if the spot should be visible based on the spotTypeFilter
   const showBasedOnTypeFilter = allValuesAreFalse(spotTypeFilter)
@@ -61,22 +35,29 @@ function isVisibleSpotType(
     : spotTypeFilter[spotType];
 
   // Check if the spot should be visible based on the list filters
-  const showBasedOnListFilter = (function() {
+  const showBasedOnListFilter = (() => {
     if (blackspotListFilter) {
       return spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
-    } else if (quickscanListFilter) {
+    }
+    if (quickscanListFilter) {
       return (
         spotType === SpotTypes.PROTOCOL_DODELIJK ||
         spotType === SpotTypes.PROTOCOL_ERNSTIG
       );
-    } else if (deliveredListFilter) {
-      return spotStatus === SpotStatusTypes.GEREED;
-    } else {
-      return true;
     }
+    if (deliveredListFilter) {
+      return spotStatus === SpotStatusTypes.GEREED;
+    }
+    return true;
   })();
 
-  return showBasedOnTypeFilter && showBasedOnListFilter;
+  const showBasedOnStadsdeelFilter = allValuesAreFalse(stadsdeelFilter)
+    ? true
+    : stadsdeelFilter[stadsdeel];
+
+  return (
+    showBasedOnTypeFilter && showBasedOnListFilter && showBasedOnStadsdeelFilter
+  );
 }
 
 /**
@@ -120,17 +101,52 @@ function isVisibleQuickscanYear(quickscanYearFilter, marker) {
 }
 
 /**
- * Check if all values of an object are falsy
- */
-function allValuesAreFalse(object) {
-  return Object.values(object).every(v => !v);
-}
-
-/**
  * Set all values in an object to false, effectively resetting a filter
  */
-export function resetFilter(filter) {
-  const resetFilter = {};
-  Object.keys(filter).forEach(k => (resetFilter[k] = false));
-  return resetFilter;
-}
+export const resetFilter = filter => {
+  const result = {};
+  Object.keys(filter).forEach(k => {
+    result[k] = false;
+  });
+  return result;
+};
+
+/**
+ * Loop through markers and set its visibility based on the filters
+ */
+export const evaluateMarkerVisibility = (
+  markers,
+  spotTypeFilter,
+  spotStatusTypeFilter,
+  blackspotYearFilter,
+  deliveredYearFilter,
+  quickscanYearFilter,
+  blackspotListFilter,
+  quickscanListFilter,
+  deliveredListFilter,
+  stadsdeelFilter
+) => {
+  if (markers)
+    markers.forEach(marker => {
+      if (
+        isVisibleSpotType(
+          spotTypeFilter,
+          blackspotListFilter,
+          quickscanListFilter,
+          deliveredListFilter,
+          stadsdeelFilter,
+          marker
+        ) &&
+        isVisibleStatusType(spotStatusTypeFilter, marker) &&
+        isVisibleBlackspotYear(blackspotYearFilter, marker) &&
+        isVisibleDeliveredYear(deliveredYearFilter, marker) &&
+        isVisibleQuickscanYear(quickscanYearFilter, marker)
+      ) {
+        // eslint-disable-next-line no-param-reassign
+        marker._icon.style.visibility = 'visible'; // eslint-disable-line no-underscore-dangle
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        marker._icon.style.visibility = 'hidden'; // eslint-disable-line no-underscore-dangle
+      }
+    });
+};

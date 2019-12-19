@@ -3,27 +3,49 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/polyfill": "^7.4.4",
-    "@sentry/browser": "^5.4.3",
-    "amsterdam-amaps": "^2.0.0",
-    "amsterdam-stijl": "^3.0.4",
+    "@babel/polyfill": "^7.7.0",
+    "@datapunt/asc-assets": "^0.17.7",
+    "@datapunt/asc-core": "^0.17.7",
+    "@datapunt/asc-ui": "^0.17.7",
+    "@datapunt/matomo-tracker-react": "0.0.15",
+    "@sentry/browser": "^5.10.2",
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.17",
+    "@types/react": "^16.9.16",
+    "@types/react-dom": "^16.9.4",
+    "amsterdam-amaps": "^2.0.1",
+    "amsterdam-stijl": "^3.0.5",
     "classnames": "^2.2.6",
-    "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.11.2",
-    "enzyme-to-json": "^3.3.5",
-    "leaflet": "^1.4.0",
-    "node-sass": "^4.11.0",
-    "react": "^16.8.3",
-    "react-app-polyfill": "^1.0.1",
-    "react-dom": "^16.8.3",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.8"
+    "core-js": "^3.5.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "enzyme-to-json": "^3.4.3",
+    "file-saver": "^2.0.2",
+    "formdata-polyfill": "^3.0.19",
+    "history": "^4.10.1",
+    "http-proxy-middleware": "^0.20.0",
+    "leaflet": "^1.6.0",
+    "node-sass": "^4.13.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-app-polyfill": "^1.0.5",
+    "react-datepicker": "^2.10.1",
+    "react-dom": "^16.12.0",
+    "react-hook-form": "^3.28.15",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.3.0",
+    "regenerator-runtime": "^0.13.3",
+    "typescript": "^3.7.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:coverage": "CI=true npm run test -- --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "precommit": "lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,11 +57,35 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "eslint-plugin-react": "^7.12.4"
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.3",
+    "@testing-library/react-hooks": "^3.2.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.17.0",
+    "husky": "^3.1.0",
+    "jest-fetch-mock": "^2.1.2",
+    "leaflet-headless": "^0.2.6",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1"
   },
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier — single-quote — write",
+      "git add"
     ]
   }
 }

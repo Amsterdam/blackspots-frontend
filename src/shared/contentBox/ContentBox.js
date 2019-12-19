@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './ContentBox.module.scss';
 
-export default props => {
-  return <div className={styles.Container}>{props.children}</div>;
+const ContentBox = ({ children }) => {
+  return <div className={styles.Container}>{children}</div>;
 };
+
+export default ContentBox;

@@ -1,39 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './BlueLinkButton.module.scss';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-left.svg';
 import classNames from 'classnames';
+import { Link } from '@datapunt/asc-ui';
+import styles from './BlueLinkButton.module.scss';
 
-function BlueLinkButton({ to, text, external, chevronDirection }) {
-  function getContent() {
-    return (
-      <>
-        <ChevronIcon
-          className={classNames(styles.ChevronIcon, {
-            [styles.ChevronIconRotated]: chevronDirection === 'right',
-          })}
-        />
-        {text}
-      </>
-    );
-  }
+const LinkContent = ({ text, chevronDirection }) => {
+  return (
+    <>
+      <ChevronIcon
+        className={classNames(styles.ChevronIcon, {
+          [styles.ChevronIconRotated]: chevronDirection === 'right',
+        })}
+      />
+      {text}
+    </>
+  );
+};
 
+const BlueLinkButton = ({ to, text, external, chevronDirection }) => {
   return external ? (
-    <a
-      className={styles.Container}
-      href={to}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {getContent()}
-    </a>
+    <Link href={to} target="_blank" rel="noopener noreferrer" variant="inline">
+      <LinkContent text={text} chevronDirection={chevronDirection} />
+    </Link>
   ) : (
-    <Link className={styles.Container} to={to}>
-      {getContent()}
+    <Link $as={RouterLink} className={styles.Container} to={to}>
+      <LinkContent text={text} chevronDirection={chevronDirection} />
     </Link>
   );
-}
+};
 
 BlueLinkButton.propTypes = {
   chevronDirection: PropTypes.oneOf(['left', 'right']),

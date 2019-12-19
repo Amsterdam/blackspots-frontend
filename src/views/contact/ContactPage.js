@@ -1,29 +1,34 @@
 import React from 'react';
-
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
-import { appRoutes } from 'constants.js';
-import DataTable from '../../shared/dataTable/DataTable';
-import styles from './ContactPage.module.scss';
+import { appRoutes } from 'config';
 import { ReactComponent as Chevron } from 'assets/icons/chevron-left.svg';
+import { Link } from '@datapunt/asc-ui';
+import DataTable from '../../shared/dataTable/DataTable';
 import Footer from '../../components/footer/Footer';
+import ContactPageStyle, {
+  ContentStyle,
+  EmailLinkStyle,
+  HeadingStyle,
+} from './ContactPageStyle';
+import { IntroTextStyle } from '../../styles/SharedStyles';
 
-export default () => {
+const ContactPage = () => {
   return (
-    <div className={styles.Container}>
-      <div className={styles.Content}>
+    <ContactPageStyle>
+      <ContentStyle>
         <BlueLinkButton
           to={appRoutes.HOME}
           text="Terug naar kaart"
           chevronDirection="left"
         />
-        <h1>Contact</h1>
+        <HeadingStyle>Contact</HeadingStyle>
 
-        <p className={styles.Intro}>
+        <IntroTextStyle>
           Voor vragen of meer informatie over locaties op deze kaart of voor
           inzicht in de longlist om projecten duidelijkheid te verschaffen over
           de aanwezigheid van blackspots in een (project)gebied kan je contact
           opnemen met projectleider Elsbeth van den Bout.
-        </p>
+        </IntroTextStyle>
 
         <h3>Details</h3>
         <DataTable>
@@ -55,25 +60,19 @@ export default () => {
             <tr>
               <td>Inhoudelijk contactpersoon</td>
               <td>
-                <a
-                  className={styles.EmailLink}
-                  href="mailto:e.van.den.bout@amsterdam.nl"
-                >
+                <EmailLinkStyle href="mailto:e.van.den.bout@amsterdam.nl">
                   <Chevron />
                   Elsbeth van den Bout (e.van.den.bout@amsterdam.nl)
-                </a>
+                </EmailLinkStyle>
               </td>
             </tr>
             <tr>
               <td>Technisch contactpersoon</td>
               <td>
-                <a
-                  className={styles.EmailLink}
-                  href="mailto:datapunt@amsterdam.nl"
-                >
+                <EmailLinkStyle href="mailto:datapunt@amsterdam.nl">
                   <Chevron />
                   datapunt@amsterdam.nl
-                </a>
+                </EmailLinkStyle>
               </td>
             </tr>
           </tbody>
@@ -97,12 +96,14 @@ export default () => {
         <p>
           Voor meer informatie over de WBA en het Programma Verkeersveiligheid
           ga naar:{' '}
-          <a href="http://amsterdam.nl/verkeersveiligheid">
+          <Link href="http://amsterdam.nl/verkeersveiligheid" variant="inline">
             http://amsterdam.nl/verkeersveiligheid
-          </a>
+          </Link>
         </p>
-      </div>
+      </ContentStyle>
       <Footer />
-    </div>
+    </ContactPageStyle>
   );
 };
+
+export default ContactPage;

@@ -5,6 +5,11 @@ import SelectMenu from './SelectMenu';
 
 describe('SelectMenu', () => {
   it('should render without errors', () => {
-    shallow(<SelectMenu items={[{ label: 'test', onClick: () => {} }]} />);
+    shallow(
+      <SelectMenu
+        items={[{ id: 1, label: 'test', value: 'test-value' }]}
+        selectionChanged={jest.fn()}
+      />
+    );
   });
 });

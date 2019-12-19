@@ -32,36 +32,3 @@ export function getDeliveredYearFromMarker(marker) {
 export function getQuickscanYearFromMarker(marker) {
   return marker.feature.properties.jaar_ongeval_quickscan;
 }
-
-/**
- * Check if the acc or prod env should be used
- */
-export function shouldUseAccEnv() {
-  return (
-    window.location.hostname.indexOf('acc') >= 0 ||
-    window.location.hostname.indexOf('localhost') >= 0
-  );
-}
-
-// =====
-// MATOMO
-// Temporarily simple setup, wating for hook library which is on the way
-// =====
-
-function pushToMatomo(payload) {
-  const matomo = window._paq || [];
-  matomo.push(payload);
-}
-
-export function trackPageView() {
-  pushToMatomo(['setCustomUrl', document.location.href]);
-  pushToMatomo(['trackPageView']);
-}
-
-export function trackFilter(name) {
-  pushToMatomo(['trackEvent', 'Map filters', name]);
-}
-
-export function trackDownload() {
-  pushToMatomo(['trackEvent', 'PDF download']);
-}

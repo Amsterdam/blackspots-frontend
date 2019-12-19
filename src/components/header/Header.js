@@ -1,36 +1,51 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { ReactComponent as Logo } from 'assets/media/amsterdam-logo-small.svg';
-import { ReactComponent as Logout } from 'assets/icons/logout.svg';
-import { appRoutes } from 'constants.js';
+import { Logout } from '@datapunt/asc-assets';
+import { appRoutes } from 'config';
 import auth from 'shared/auth/auth';
-import styles from './Header.module.scss';
+import UserContext from 'shared/user/UserContext';
+import { Header as HeaderComponent, Link } from '@datapunt/asc-ui';
+import { HeaderLink, LogoutLink } from './HeaderStyle';
 
-const logout = () => {
-  const keycloak = auth.keycloak;
-  keycloak.logout();
-};
+const Header = () => {
+  const { canAdd } = useContext(UserContext);
 
-export default () => {
   return (
-    <div className={styles.Container}>
-      <Logo className={styles.Logo} />
-      <NavLink className={styles.Title} exact to={appRoutes.HOME}>
-        <h2>Werkgroep Blackspots</h2>
-      </NavLink>
-      <div className={styles.ButtonBar}>
-        <button className={styles.ButtonLink} onClick={logout}>
-          <Logout />
-          Uitloggen
-        </button>
-        <NavLink className={styles.Link} to={appRoutes.CONCEPTS}>
-          Begrippenlijst
-        </NavLink>
-        <NavLink className={styles.Link} to={appRoutes.CONTACT}>
-          Contact
-        </NavLink>
-      </div>
-    </div>
+    <HeaderComponent
+      tall={false}
+      title="Werkgroep Blackspots"
+      homeLink="/"
+      fullWidth
+      navigation={
+        <>
+          <HeaderLink $as={NavLink} to={appRoutes.HOME} variant="blank">
+            Kaart
+          </HeaderLink>
+          {canAdd > 0 && (
+            <HeaderLink $as={NavLink} to={appRoutes.ADD} variant="blank">
+              Toevoegen
+            </HeaderLink>
+          )}
+          <HeaderLink $as={NavLink} to={appRoutes.CONCEPTS} variant="blank">
+            Begrippenlijst
+          </HeaderLink>
+          <HeaderLink $as={NavLink} to={appRoutes.CONTACT} variant="blank">
+            Contact
+          </HeaderLink>
+          <LogoutLink
+            $as={Link}
+            variant="textButton"
+            iconSize={16}
+            iconLeft={<Logout />}
+            onClick={auth.logout}
+          >
+            Uitloggen
+          </LogoutLink>
+        </>
+      }
+    />
   );
 };
+
+export default Header;

@@ -1,6 +1,23 @@
 version: '3.5'
 services:
   web:
-    build: .
+    build:
+      context: .
+      args:
+        - BUILD_ARG=acc
+    environment:
+      - TZ=Europe/Amsterdam
+    ipc: host
     ports:
-      - "8000:80"
+      - '3000:80'
+
+  unittest:
+    build:
+      context: .
+      target: builder
+    environment:
+      - NODE_ENV=test
+      - CI=true
+      - TZ=Europe/Amsterdam
+      - BUILD_ARG=acc
+    command: npm run test

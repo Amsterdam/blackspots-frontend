@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './Footer.module.scss';
 
-export default () => {
+const Footer = () => {
   return (
     <div className={styles.Container}>
       <h3>Disclaimer</h3>
@@ -24,3 +24,5 @@ export default () => {
     </div>
   );
 };
+
+export default Footer;

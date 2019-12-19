@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import styles from './Accordion.module.scss';
 import classNames from 'classnames';
+import styles from './Accordion.module.scss';
 
 const Accordion = ({ title, text }) => {
   const [open, setOpen] = useState(false);
@@ -10,9 +10,19 @@ const Accordion = ({ title, text }) => {
     setOpen(!open);
   }
 
+  const handleKeyPress = event => {
+    if (event.key === 'Enter') toggle();
+  };
+
   return (
     <div className={styles.Container}>
-      <div className={styles.Header} onClick={toggle}>
+      <div
+        className={styles.Header}
+        onClick={toggle}
+        role="button"
+        tabIndex="0"
+        onKeyPress={handleKeyPress}
+      >
         <div className={styles.Title}>{title}</div>
         <div
           className={classNames(styles.Expander, {
