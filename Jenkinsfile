@@ -43,7 +43,12 @@ if (BRANCH == "master") {
     node {
         stage('Push acceptance image') {
             tryStep "image tagging", {
-                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}")
+                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}",
+                    "--shm-size 1G " +
+                    "--build-arg BUILD_ENV=acc " +
+                    "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
+                    ".")
+
                 image.pull()
                 image.push("acceptance")
             }
@@ -62,6 +67,10 @@ if (BRANCH == "master") {
         }
     }
 
+}
+
+
+if (BRANCH == "master") {
     stage('Waiting for approval') {
         slackSend channel: '#ci-channel', color: 'warning', message: 'blackspots-frontend is waiting for Production Release - please confirm'
         timeout(10) {
@@ -101,7 +110,12 @@ if (BRANCH == "develop") {
     node {
         stage('Push acceptance image') {
             tryStep "image tagging", {
-                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}")
+                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}",
+                    "--shm-size 1G " +
+                    "--build-arg BUILD_ENV=prod " +
+                    "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
+                    ".")
+
                 image.pull()
                 image.push("acceptance")
             }
