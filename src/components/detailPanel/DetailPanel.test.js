@@ -41,7 +41,7 @@ describe('DetailPanel', () => {
     const { container } = render(
       withUserContext(<DetailPanel {...{ ...props, feature: null }} />, user)
     );
-    expect(container.firstChild.innerHTML).toBe('');
+    expect(container.firstChild.innerHTML).toBeUndefined();
   });
 
   it('should render the edit link when authorized ', () => {

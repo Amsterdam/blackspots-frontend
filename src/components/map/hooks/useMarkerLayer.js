@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
 import L from 'leaflet';
-// import icon from 'leaflet/dist/images/marker-icon.png';
 import icon from 'leaflet/dist/images/marker-icon.png';
 
 const useMarkerLayer = mapRef => {

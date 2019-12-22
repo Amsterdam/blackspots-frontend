@@ -8,7 +8,7 @@ import 'leaflet/dist/leaflet.css';
 import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
 import 'amsterdam-stijl/dist/css/ams-map.css';
 
-const useMap = () => {
+const useMap = mapId => {
   const mapRef = useRef(null);
   useEffect(() => {
     // Create map
@@ -19,7 +19,7 @@ const useMap = () => {
       },
       style: 'zwartwit',
       layer: 'standaard',
-      target: 'mapdiv',
+      target: mapId,
       search: true,
       zoom: 13,
     });

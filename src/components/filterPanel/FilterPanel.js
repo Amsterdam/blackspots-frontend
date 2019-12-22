@@ -431,6 +431,7 @@ const FilterPanel = ({
 
   return (
     <div
+      data-testid="filter-panel"
       className={classNames(styles.FilterPanel, {
         [styles.FilterPanelCollapsed]: !showPanel,
       })}

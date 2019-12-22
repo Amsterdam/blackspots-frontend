@@ -8,20 +8,35 @@ import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
 import { evaluateMarkerVisibility } from './helpers';
 import './markerStyle.css';
+import MapStyle from './MapStyle';
+import { endpoints } from '../../config';
 import useDataFetching from '../../shared/hooks/useDataFetching';
 import useYearFilters from './hooks/useYearFilters';
 import useBlackspotsLayer from './hooks/useBlackspotsLayer';
 import useMap from './hooks/useMap';
-import MapStyle from './MapStyle';
-import { endpoints } from '../../config';
 import useMarkerLayer from './hooks/useMarkerLayer';
 
 const Map = () => {
+  const mapId = 'mapdiv';
+  const mapRef = useMap(mapId);
   const { errorMessage, loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
   const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
 
-  const mapRef = useMap();
+  const {
+    blackspotYearFilter,
+    deliveredYearFilter,
+    quickscanYearFilter,
+    setBlackspotYearFilter,
+    setDeliveredYearFilter,
+    setQuickscanYearFilter,
+  } = useYearFilters(locations);
+
+  const onMarkerClick = useCallback(feature => {
+    actions.selectLocation({ payload: feature });
+  }, []);
+  const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
+  const { setLocation, layerRef } = useMarkerLayer(mapRef);
 
   useEffect(() => {
     if (locations.length === 0)
@@ -36,22 +51,6 @@ const Map = () => {
       actions.addLocations({ payload: results ? [...results.features] : [] });
     // Keep the actions and locations out from the dependency array to prevent infinite loop
   }, [results]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const [
-    blackspotYearFilter,
-    deliveredYearFilter,
-    quickscanYearFilter,
-    setBlackspotYearFilter,
-    setDeliveredYearFilter,
-    setQuickscanYearFilter,
-  ] = useYearFilters(locations);
-
-  const onMarkerClick = useCallback(feature => {
-    actions.selectLocation({ payload: feature });
-  }, []);
-
-  const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
-  const { setLocation, layerRef } = useMarkerLayer(mapRef);
 
   useEffect(() => {
     if (selectedLocation) {
@@ -73,6 +72,7 @@ const Map = () => {
     [SpotStatusTypes.UITVOERING]: false,
     [SpotStatusTypes.ONBEKEND]: false,
   });
+
   const [spotTypeFilter, setSpotTypeFilter] = useState({
     [SpotTypes.BLACKSPOT]: false,
     [SpotTypes.PROTOCOL_DODELIJK]: false,
@@ -80,6 +80,7 @@ const Map = () => {
     [SpotTypes.RISICO]: false,
     [SpotTypes.WEGVAK]: false,
   });
+
   const [stadsdeelFilter, setStadsdeelFilter] = useState({
     ...Object.values(Stadsdeel).reduce(
       (acc, item) => ({ ...acc, [item.name]: false }),
@@ -158,7 +159,7 @@ const Map = () => {
 
   return (
     <MapStyle>
-      <div id="mapdiv">
+      <div id={mapId}>
         {loading && <Loader />}
         {!errorMessage && !loading && (
           <FilterPanel

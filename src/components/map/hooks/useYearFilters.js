@@ -53,14 +53,14 @@ const useYearFilters = features => {
     setDeliveredYearFilter(deliveredFilter);
     setQuickscanYearFilter(quickscanFilter);
   }, [features]);
-  return [
+  return {
     blackspotYearFilter,
     deliveredYearFilter,
     quickscanYearFilter,
     setBlackspotYearFilter,
     setDeliveredYearFilter,
     setQuickscanYearFilter,
-  ];
+  };
 };
 
 export default useYearFilters;

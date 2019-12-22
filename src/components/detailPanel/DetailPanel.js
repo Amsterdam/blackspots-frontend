@@ -45,7 +45,7 @@ function getStatusClassName(status) {
 const DetailPanel = ({ isOpen, togglePanel, feature }) => {
   const { canEdit } = useContext(UserContext);
   if (!feature) {
-    return <div className={classNames(styles.Container)} />;
+    return null;
   }
   const {
     locatie_id,
@@ -68,6 +68,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
   const designDocument = documents.find(d => d.type === 'Ontwerp');
   return (
     <div
+      data-testid="detail-panel"
       className={classNames(
         styles.Container,
         isOpen ? styles.ContainerOpen : ''
