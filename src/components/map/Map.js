@@ -170,7 +170,7 @@ const Map = () => {
             quickscanYearFilter={quickscanYearFilter}
             stadsdeelFilter={stadsdeelFilter}
             setFilters={setFilters}
-            setBlackspotListFilter={value => setBlackspotListFilter(value)}
+            setBlackspotListFilter={setBlackspotListFilter}
             setQuickscanListFilter={setQuickscanListFilter}
             setDeliveredListFilter={setDeliveredListFilter}
             setStadsdeelFilter={setStadsdeelFilter}
