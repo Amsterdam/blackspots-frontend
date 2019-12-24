@@ -15,7 +15,7 @@ const SelectMenu = ({ items, selectionChanged }) => {
   };
 
   return (
-    <div className={styles.Container}>
+    <div className={styles.Container} data-testid="select-menu">
       <button
         type="button"
         className={styles.Select}

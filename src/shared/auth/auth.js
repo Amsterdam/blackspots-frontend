@@ -108,6 +108,7 @@ const setupKeycloack = () => {
   };
 
   return {
+    instance: () => keycloak,
     login,
     token,
     userInfo,

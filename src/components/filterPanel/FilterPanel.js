@@ -156,7 +156,7 @@ const FilterPanel = ({
    */
   function renderBlackspotYearCheckboxes() {
     return (
-      <div className={styles.YearFilter}>
+      <div className={styles.YearFilter} data-testid="blackspot-year-checkbox">
         {Object.keys(blackspotYearFilter)
           .reverse()
           .map(year => {
@@ -200,7 +200,7 @@ const FilterPanel = ({
    */
   function renderDeliveredYearCheckboxes() {
     return (
-      <div className={styles.YearFilter}>
+      <div className={styles.YearFilter} data-testid="delivery-year-checkbox">
         {Object.keys(deliveredYearFilter)
           .reverse()
           .map(year => {
@@ -245,7 +245,7 @@ const FilterPanel = ({
    */
   function renderQuickscanYearCheckboxes() {
     return (
-      <div className={styles.YearFilter}>
+      <div className={styles.YearFilter} data-testid="quickscan-year-checkbox">
         {Object.keys(quickscanYearFilter)
           .reverse()
           .map(year => {
@@ -291,7 +291,7 @@ const FilterPanel = ({
    */
   function renderStatusCheckboxes() {
     return (
-      <>
+      <div data-testid="status-checkbox">
         <h5>Status</h5>
         {Object.keys(SpotStatusTypes).map(key => {
           const type = SpotStatusTypes[key];
@@ -330,7 +330,7 @@ const FilterPanel = ({
             </label>
           );
         })}
-      </>
+      </div>
     );
   }
 
@@ -339,7 +339,7 @@ const FilterPanel = ({
    */
   function renderTypeCheckboxes() {
     return (
-      <>
+      <div data-testid="spot-type-checkbox">
         <h5>Type</h5>
         {Object.keys(SpotTypes).map(key => {
           const type = SpotTypes[key];
@@ -380,13 +380,13 @@ const FilterPanel = ({
             </label>
           );
         })}
-      </>
+      </div>
     );
   }
 
   const renderStadsdeelCheckboxes = useMemo(() => {
     return (
-      <>
+      <div data-testid="stadsdeel-checkbox">
         <h5>Stadsdeel</h5>
         {Object.keys(Stadsdeel).map(key => {
           const type = Stadsdeel[key].name;
@@ -420,7 +420,7 @@ const FilterPanel = ({
             </label>
           );
         })}
-      </>
+      </div>
     );
   }, [stadsdeelFilter]);
 
