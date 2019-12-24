@@ -6,7 +6,7 @@ import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
-import { evaluateMarkerVisibility } from './helpers';
+import { evaluateMarkerVisibility, createFilter } from './helpers';
 import './markerStyle.css';
 import MapStyle from './MapStyle';
 import { endpoints } from '../../config';
@@ -64,28 +64,14 @@ const Map = () => {
     setShowDetailPanel(!showDetailPanel);
   }, [showDetailPanel]);
 
-  const [spotStatusTypeFilter, setSpotStatusTypeFilter] = useState({
-    [SpotStatusTypes.ONDERZOEK]: false,
-    [SpotStatusTypes.VOORBEREIDING]: false,
-    [SpotStatusTypes.GEREED]: false,
-    [SpotStatusTypes.GEEN_MAATREGEL]: false,
-    [SpotStatusTypes.UITVOERING]: false,
-    [SpotStatusTypes.ONBEKEND]: false,
-  });
-
   const [spotTypeFilter, setSpotTypeFilter] = useState({
-    [SpotTypes.BLACKSPOT]: false,
-    [SpotTypes.PROTOCOL_DODELIJK]: false,
-    [SpotTypes.PROTOCOL_ERNSTIG]: false,
-    [SpotTypes.RISICO]: false,
-    [SpotTypes.WEGVAK]: false,
+    ...createFilter(SpotTypes),
   });
-
+  const [spotStatusTypeFilter, setSpotStatusTypeFilter] = useState({
+    ...createFilter(SpotStatusTypes),
+  });
   const [stadsdeelFilter, setStadsdeelFilter] = useState({
-    ...Object.values(Stadsdeel).reduce(
-      (acc, item) => ({ ...acc, [item.name]: false }),
-      {}
-    ),
+    ...createFilter(Stadsdeel, 'name'),
   });
 
   // A filter to only show items on the 'blackspot list', which are all
