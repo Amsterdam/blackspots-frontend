@@ -15,9 +15,35 @@ export const allValuesAreFalse = object => {
 };
 
 /**
+ * Creates a filter based on an object definition with all the values false
+ * @param {object} filterType - the obiect the filter will be created from
+ * @param {string} propName - the prop name of the object value to be used for the filter option.
+ *                            When null the object value will be used
+ */
+export const createFilter = (filterType, propName = null) => {
+  return {
+    ...Object.values(filterType).reduce((acc, item) => {
+      const name = propName ? item[propName] : item;
+      return { ...acc, [name]: false };
+    }, {}),
+  };
+};
+
+/**
+ * Set all values in an object to false, effectively resetting a filter
+ */
+export const resetFilter = filter => {
+  const result = {};
+  Object.keys(filter).forEach(k => {
+    result[k] = false;
+  });
+  return result;
+};
+
+/**
  * Check if a marker should be visible based on the type filter
  * */
-function isVisibleSpotType(
+export function isVisibleSpotType(
   spotTypeFilter,
   blackspotListFilter,
   quickscanListFilter,
@@ -63,7 +89,7 @@ function isVisibleSpotType(
 /**
  * Check if a marker should be visible based on the status filter
  */
-function isVisibleStatusType(spotStatusTypeFilter, marker) {
+export function isVisibleStatusType(spotStatusTypeFilter, marker) {
   const statusType = getStatusTypeFromMarker(marker);
   return allValuesAreFalse(spotStatusTypeFilter)
     ? true
@@ -73,7 +99,7 @@ function isVisibleStatusType(spotStatusTypeFilter, marker) {
 /**
  * Check if a marker should be visible based on the blackspot year filter
  */
-function isVisibleBlackspotYear(blackspotYearFilter, marker) {
+export function isVisibleBlackspotYear(blackspotYearFilter, marker) {
   const year = getBlackspotYearFromMarker(marker);
   return allValuesAreFalse(blackspotYearFilter)
     ? true
@@ -83,7 +109,7 @@ function isVisibleBlackspotYear(blackspotYearFilter, marker) {
 /**
  * Check if a marker should be visible based on the delivery year filter
  */
-function isVisibleDeliveredYear(deliveredYearFilter, marker) {
+export function isVisibleDeliveredYear(deliveredYearFilter, marker) {
   const year = getDeliveredYearFromMarker(marker);
   return allValuesAreFalse(deliveredYearFilter)
     ? true
@@ -93,23 +119,12 @@ function isVisibleDeliveredYear(deliveredYearFilter, marker) {
 /**
  * Check if a marker should be visible based on the quickscan year filter
  */
-function isVisibleQuickscanYear(quickscanYearFilter, marker) {
+export function isVisibleQuickscanYear(quickscanYearFilter, marker) {
   const year = getQuickscanYearFromMarker(marker);
   return allValuesAreFalse(quickscanYearFilter)
     ? true
     : quickscanYearFilter[year];
 }
-
-/**
- * Set all values in an object to false, effectively resetting a filter
- */
-export const resetFilter = filter => {
-  const result = {};
-  Object.keys(filter).forEach(k => {
-    result[k] = false;
-  });
-  return result;
-};
 
 /**
  * Loop through markers and set its visibility based on the filters
