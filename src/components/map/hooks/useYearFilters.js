@@ -37,7 +37,6 @@ const useYearFilters = features => {
           quickscanYears.push(jaar_ongeval_quickscan);
         }
       });
-
     // Add the year values to the filter as false (default filter value)
     const blackspotFilter = blackspotYears.reduce((acc, y) => {
       return { ...acc, [y]: false };

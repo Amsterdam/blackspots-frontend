@@ -1,4 +1,5 @@
 import { Stadsdeel, SpotStatusTypes, SpotTypes } from 'config';
+import { createTestMarker } from 'test/utils';
 import {
   allValuesAreFalse,
   resetFilter,
@@ -59,27 +60,6 @@ describe('Marker filter utilities', () => {
   let quickscanYearFilter;
   let deliveredYearFilter;
   let marker;
-
-  const createTestMarker = (
-    spot_type = SpotTypes.BLACKSPOT,
-    status = SpotStatusTypes.ONDERZOEK,
-    jaar_oplevering = null,
-    jaar_ongeval_quickscan = null
-  ) => {
-    return {
-      _icon: {
-        style: { visibility: 'unset' },
-      },
-      feature: {
-        properties: {
-          spot_type,
-          status,
-          jaar_oplevering,
-          jaar_ongeval_quickscan,
-        },
-      },
-    };
-  };
 
   beforeEach(() => {
     spotTypeFilter = createFilter(SpotTypes);
@@ -169,6 +149,7 @@ describe('Marker filter utilities', () => {
         quickscanListFilter,
         stadsdeelFilter
       );
+      // eslint-disable-next-line no-underscore-dangle
       expect(marker._icon.style.visibility).toEqual('hidden');
     });
   });
