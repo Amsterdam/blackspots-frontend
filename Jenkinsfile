@@ -23,7 +23,6 @@ pipeline {
                     docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
                         image = docker.build("${CONTAINERNAME}",
                             "--shm-size 1G " +
-                            "--build-arg BUILD_ENV=acc " +
                             "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
                             ". ")
                         image.push()
@@ -55,7 +54,7 @@ pipeline {
                     steps {
                         script {
                             docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
-                            image.push("acceptance")
+                                image.push("acceptance")
                             }
                             build job: 'Subtask_Openstack_Playbook', parameters: [
                                 string(name: 'PLAYBOOK', value: PLAYBOOK),

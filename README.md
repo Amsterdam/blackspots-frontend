@@ -23,7 +23,7 @@
 
 ## Development
 
-- configure the environment variables in the .env file, examples can be found in .env.dev, .env.acc en .env.prod
+- configure the environment variables in the .env file, examples can be found in .env.dev.
 
 ```bash
   npm start
