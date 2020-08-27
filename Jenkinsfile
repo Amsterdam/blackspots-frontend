@@ -18,14 +18,16 @@ pipeline {
     }
     stages {
         stage('Build') {
-            tryStep "build", {
-                docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
-                    image = docker.build("${CONTAINERNAME}",
-                        "--shm-size 1G " +
-                        "--build-arg BUILD_ENV=acc " +
-                        "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
-                        ". ")
-                    image.push()
+            steps {
+                script {
+                    docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
+                        image = docker.build("${CONTAINERNAME}",
+                            "--shm-size 1G " +
+                            "--build-arg BUILD_ENV=acc " +
+                            "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
+                            ". ")
+                        image.push()
+                    }
                 }
             }
         }
@@ -49,14 +51,16 @@ pipeline {
                         }
                     }
                     steps {
-                        docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
-                           image.push("acceptance")
+                        script {
+                            docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
+                            image.push("acceptance")
+                            }
+                            build job: 'Subtask_Openstack_Playbook', parameters: [
+                                string(name: 'PLAYBOOK', value: PLAYBOOK),
+                                string(name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_blackspots-frontend"),
+                                string(name: 'INVENTORY', value: "acceptance")
+                            ], wait: true
                         }
-                        build job: 'Subtask_Openstack_Playbook', parameters: [
-                            string(name: 'PLAYBOOK', value: PLAYBOOK),
-                            string(name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_blackspots-frontend"),
-                            string(name: 'INVENTORY', value: "acceptance")
-                        ], wait: true
                     }
                 }
                 stage('Waiting for approval') {
@@ -66,15 +70,18 @@ pipeline {
                             tag pattern: "\\d+\\.\\d+\\.\\d+\\.*", comparator: "REGEXP"
                         }
                     }
-                    slackSend(channel: SLACK_CHANNEL, attachments: [SLACK_MESSAGE <<
+                    steps {
+                        slackSend(channel: SLACK_CHANNEL, attachments: [SLACK_MESSAGE <<
                             [
                                 "color": "#36a64f",
                                 "title": "blackspots-frontend is waiting for Production Release - please confirm",
                             ]
                         ])
-                    timeout(10) {
-                       input "Deploy to Production?"
+                        timeout(10) {
+                            input "Deploy to Production?"
+                        }
                     }
+
                 }
                 stage('Deploy to production') {
                     when {
@@ -84,20 +91,22 @@ pipeline {
                         }
                     }
                     steps {
-                        docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
-                           image.push("production")
+                        script {
+                            docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
+                            image.push("production")
+                            }
+                            build job: 'Subtask_Openstack_Playbook', parameters: [
+                                string(name: 'PLAYBOOK', value: PLAYBOOK),
+                                string(name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_blackspots-frontend"),
+                                string(name: 'INVENTORY', value: "production")
+                            ], wait: true
+                            slackSend(channel: SLACK_CHANNEL, attachments: [SLACK_MESSAGE <<
+                                [
+                                    "color": "#36a64f",
+                                    "title": "Deploy to production succeeded :rocket:",
+                                ]
+                            ])
                         }
-                        build job: 'Subtask_Openstack_Playbook', parameters: [
-                            string(name: 'PLAYBOOK', value: PLAYBOOK),
-                            string(name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_blackspots-frontend"),
-                            string(name: 'INVENTORY', value: "production")
-                        ], wait: true
-                        slackSend(channel: SLACK_CHANNEL, attachments: [SLACK_MESSAGE <<
-                            [
-                                "color": "#36a64f",
-                                "title": "Deploy to production succeeded :rocket:",
-                            ]
-                        ])
                     }
                 }
             }
