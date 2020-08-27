@@ -36,6 +36,7 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'development'
+                    changeRequest()
                     buildingTag()
                     environment name: 'IS_PRE_RELEASE_BRANCH', value: 'true'
                 }
@@ -67,6 +68,7 @@ pipeline {
                     when {
                          anyOf {
                             branch 'master'
+                            changeRequest()
                             tag pattern: "\\d+\\.\\d+\\.\\d+\\.*", comparator: "REGEXP"
                         }
                     }
@@ -87,6 +89,7 @@ pipeline {
                     when {
                          anyOf {
                             branch 'master'
+                            changeRequest()
                             tag pattern: "\\d+\\.\\d+\\.\\d+\\.*", comparator: "REGEXP"
                         }
                     }
