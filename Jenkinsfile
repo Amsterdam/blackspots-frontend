@@ -17,20 +17,6 @@ pipeline {
         IS_PRE_RELEASE_BRANCH = "${env.BRANCH_NAME ==~ "release/.*"}"
     }
     stages {
-        stage('Build') {
-            steps {
-                script {
-                    docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
-                        image = docker.build("${CONTAINERNAME}",
-                            "--shm-size 1G " +
-                            "--build-arg BUILD_ENV=acc " +
-                            "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
-                            ". ")
-                        image.push()
-                    }
-                }
-            }
-        }
         stage('Push and deploy') {
             when {
                 anyOf {
@@ -55,8 +41,14 @@ pipeline {
                     steps {
                         script {
                             docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
-                            image.push("acceptance")
+                                image = docker.build("${CONTAINERNAME}",
+                                    "--shm-size 1G " +
+                                    "--build-arg BUILD_ENV=acc " +
+                                    "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
+                                    ". ")
+                                image.push("acceptance")
                             }
+
                             build job: 'Subtask_Openstack_Playbook', parameters: [
                                 string(name: 'PLAYBOOK', value: PLAYBOOK),
                                 string(name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_blackspots-frontend"),
@@ -97,7 +89,12 @@ pipeline {
                     steps {
                         script {
                             docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
-                            image.push("production")
+                                image = docker.build("${CONTAINERNAME}",
+                                    "--shm-size 1G " +
+                                    "--build-arg BUILD_ENV=prod " +
+                                    "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
+                                    ". ")
+                                image.push("production")
                             }
                             build job: 'Subtask_Openstack_Playbook', parameters: [
                                 string(name: 'PLAYBOOK', value: PLAYBOOK),
