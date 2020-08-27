@@ -61,7 +61,6 @@ pipeline {
                     when {
                          anyOf {
                             branch 'master'
-                            changeRequest()
                             tag pattern: "\\d+\\.\\d+\\.\\d+\\.*", comparator: "REGEXP"
                         }
                     }
@@ -82,7 +81,6 @@ pipeline {
                     when {
                          anyOf {
                             branch 'master'
-                            changeRequest()
                             tag pattern: "\\d+\\.\\d+\\.\\d+\\.*", comparator: "REGEXP"
                         }
                     }
