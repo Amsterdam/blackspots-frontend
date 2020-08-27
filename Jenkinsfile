@@ -47,6 +47,7 @@ pipeline {
                         anyOf {
                             branch 'master'
                             branch 'development'
+                            changeRequest()
                             buildingTag()
                             environment name: 'IS_PRE_RELEASE_BRANCH', value: 'true'
                         }
