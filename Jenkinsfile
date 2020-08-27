@@ -1,154 +1,116 @@
 #!groovy
-
-def tryStep(String message, Closure block, Closure tearDown = null) {
-    try {
-        block()
+def PROJECT_NAME = "blackspots-frontend"
+def SLACK_CHANNEL = '#opdrachten-deployments'
+def PLAYBOOK = 'deploy.yml'
+def CONTAINERNAME = "ois/blackspots-frontend:${env.BUILD_NUMBER}"
+def SLACK_MESSAGE = [
+    "title_link": BUILD_URL,
+    "fields": [
+        ["title": "Project","value": PROJECT_NAME],
+        ["title":"Branch", "value": BRANCH_NAME, "short":true],
+        ["title":"Build number", "value": BUILD_NUMBER, "short":true]
+    ]
+]
+pipeline {
+    agent any
+    environment {
+        IS_PRE_RELEASE_BRANCH = "${env.BRANCH_NAME ==~ "release/.*"}"
     }
-    catch (Throwable t) {
-        slackSend message: "${env.JOB_NAME}: ${message} failure ${env.BUILD_URL}", channel: '#ci-channel', color: 'danger'
-
-        throw t
-    }
-    finally {
-        if (tearDown) {
-            tearDown()
-        }
-    }
-}
-
-node {
-    stage("Checkout") {
-        checkout scm
-    }
-}
-
-node {
-    stage("Build acceptance image") {
-        tryStep "build", {
-            def image = docker.build("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}",
-                "--shm-size 1G " +
-                "--build-arg BUILD_ENV=acc " +
-                "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
-                ". ")
-            image.push()
-        }
-    }
-}
-
-
-String BRANCH = "${env.BRANCH_NAME}"
-
-if (BRANCH == "master") {
-
-    node {
-        stage('Push acceptance image') {
-            tryStep "image tagging", {
-                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}")
-                image.pull()
-                image.push("acceptance")
-            }
-        }
-    }
-
-    node {
-        stage("Deploy to ACC") {
-            tryStep "deployment", {
-                build job: 'Subtask_Openstack_Playbook',
-                parameters: [
-                    [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-                    [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-blackspots-frontend.yml'],
-                ]
-            }
-        }
-    }
-
-    stage('Waiting for approval') {
-        slackSend channel: '#ci-channel', color: 'warning', message: 'blackspots-frontend is waiting for Production Release - please confirm'
-        timeout(10) {
-            input "Deploy to Production?"
-        }
-    }
-
-    node {
-        stage("Build and Push Production image") {
+    stages {
+        stage('Build') {
             tryStep "build", {
-                def image = docker.build("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}",
-                    "--shm-size 1G " +
-                    "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
-                    ".")
-                image.push("production")
-                image.push("latest")
+                docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
+                    image = docker.build("${CONTAINERNAME}",
+                        "--shm-size 1G " +
+                        "--build-arg BUILD_ENV=acc " +
+                        "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
+                        ". ")
+                    image.push()
+                }
+            }
+        }
+        stage('Push and deploy') {
+            when {
+                anyOf {
+                    branch 'master'
+                    branch 'development'
+                    buildingTag()
+                    environment name: 'IS_PRE_RELEASE_BRANCH', value: 'true'
+                }
+            }
+            stages {
+                stage('Deploy to acceptance') {
+                    when {
+                        anyOf {
+                            branch 'master'
+                            branch 'development'
+                            buildingTag()
+                            environment name: 'IS_PRE_RELEASE_BRANCH', value: 'true'
+                        }
+                    }
+                    steps {
+                        docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
+                           image.push("acceptance")
+                        }
+                        build job: 'Subtask_Openstack_Playbook', parameters: [
+                            string(name: 'PLAYBOOK', value: PLAYBOOK),
+                            string(name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_blackspots-frontend"),
+                            string(name: 'INVENTORY', value: "acceptance")
+                        ], wait: true
+                    }
+                }
+                stage('Waiting for approval') {
+                    when {
+                         anyOf {
+                            branch 'master'
+                            tag pattern: "\\d+\\.\\d+\\.\\d+\\.*", comparator: "REGEXP"
+                        }
+                    }
+                    slackSend(channel: SLACK_CHANNEL, attachments: [SLACK_MESSAGE <<
+                            [
+                                "color": "#36a64f",
+                                "title": "blackspots-frontend is waiting for Production Release - please confirm",
+                            ]
+                        ])
+                    timeout(10) {
+                       input "Deploy to Production?"
+                    }
+                }
+                stage('Deploy to production') {
+                    when {
+                         anyOf {
+                            branch 'master'
+                            tag pattern: "\\d+\\.\\d+\\.\\d+\\.*", comparator: "REGEXP"
+                        }
+                    }
+                    steps {
+                        docker.withRegistry("${DOCKER_REGISTRY_HOST}",'docker_registry_auth') {
+                           image.push("production")
+                        }
+                        build job: 'Subtask_Openstack_Playbook', parameters: [
+                            string(name: 'PLAYBOOK', value: PLAYBOOK),
+                            string(name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_blackspots-frontend"),
+                            string(name: 'INVENTORY', value: "production")
+                        ], wait: true
+                        slackSend(channel: SLACK_CHANNEL, attachments: [SLACK_MESSAGE <<
+                            [
+                                "color": "#36a64f",
+                                "title": "Deploy to production succeeded :rocket:",
+                            ]
+                        ])
+                    }
+                }
             }
         }
     }
-
-    node {
-        stage("Deploy") {
-            tryStep "deployment", {
-                build job: 'Subtask_Openstack_Playbook',
-                parameters: [
-                    [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-                    [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-blackspots-frontend.yml'],
+    post {
+        failure {
+            slackSend(channel: SLACK_CHANNEL, attachments: [SLACK_MESSAGE <<
+                [
+                    "color": "#D53030",
+                    "title": "Build failed :fire:",
                 ]
-            }
-        }
-    }
-}
-
-
-if (BRANCH == "develop") {
-
-    node {
-        stage('Push acceptance image') {
-            tryStep "image tagging", {
-                def image = docker.image("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}")
-                image.pull()
-                image.push("acceptance")
-            }
-        }
-    }
-
-    node {
-        stage("Deploy to ACC") {
-            tryStep "deployment", {
-                build job: 'Subtask_Openstack_Playbook',
-                parameters: [
-                    [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-                    [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-blackspots-frontend.yml'],
-                ]
-            }
-        }
-    }
-
-    stage('Waiting for approval') {
-        slackSend channel: '#ci-channel', color: 'warning', message: 'blackspots-frontend is waiting for Production Release - please confirm'
-        timeout(10) {
-            input "Deploy to Production?"
-        }
-    }
-
-    node {
-        stage("Build and Push Production image") {
-            tryStep "build", {
-                def image = docker.build("build.app.amsterdam.nl:5000/blackspots-frontend:${env.BUILD_NUMBER}",
-                    "--shm-size 1G " +
-                    "--build-arg BUILD_NUMBER=${env.BUILD_NUMBER} " +
-                    ".")
-                image.push("production")
-                image.push("latest")
-            }
-        }
-    }
-
-    node {
-        stage("Deploy") {
-            tryStep "deployment", {
-                build job: 'Subtask_Openstack_Playbook',
-                parameters: [
-                    [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-                    [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-blackspots-frontend.yml'],
-                ]
-            }
+            ])
         }
     }
 }
