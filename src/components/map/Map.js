@@ -48,7 +48,7 @@ const Map = () => {
 
   const onMarkerClick = useCallback(feature => {
     actions.selectLocation({ payload: feature });
-  }, []);
+  }, [actions]);
 
   const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
   const { setLocation, layerRef } = useMarkerLayer(mapRef);

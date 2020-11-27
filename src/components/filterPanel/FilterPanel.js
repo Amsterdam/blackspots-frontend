@@ -76,7 +76,7 @@ const FilterPanel = ({
       downloadUrl,
       `wbakaart-export-${new Date().toLocaleDateString('nl-NL')}.csv`
     );
-  }, [downloadUrl]);
+  }, [downloadUrl, downloadFile]);
 
   useEffect(() => {
     setDownloadUrl(`${exportUrl}${getExportFilter(stadsdeelFilter)}`);
@@ -86,7 +86,7 @@ const FilterPanel = ({
         Object.values(spotStatusTypeFilter).filter(e => e).length === 0 &&
         optionValue === ContextMenuOptions.ALL
     );
-  }, [stadsdeelFilter, spotTypeFilter, spotStatusTypeFilter]);
+  }, [stadsdeelFilter, spotTypeFilter, spotStatusTypeFilter, optionValue]);
 
   const trackFilter = useCallback(
     name => {
@@ -422,7 +422,7 @@ const FilterPanel = ({
         })}
       </>
     );
-  }, [stadsdeelFilter]);
+  }, [stadsdeelFilter, blackspotYearFilter, deliveredYearFilter, quickscanYearFilter, spotStatusTypeFilter, spotTypeFilter, trackFilter, updateFilters]);
 
   const togglePanel = () => setShowPanel(!showPanel);
   const handleKeyPress = event => {
