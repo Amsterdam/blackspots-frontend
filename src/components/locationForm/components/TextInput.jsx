@@ -1,5 +1,5 @@
-import styled, { css } from '@datapunt/asc-core';
-import { Input } from '@datapunt/asc-ui';
+import styled, { css } from '@amsterdam/asc-core';
+import { Input } from '@amsterdam/asc-ui';
 import PropTypes from 'prop-types';
 import React from 'react';
 

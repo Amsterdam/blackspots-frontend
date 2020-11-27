@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { themeColor, themeSpacing, Heading } from '@datapunt/asc-ui';
+import { themeColor, themeSpacing, Heading } from '@amsterdam/asc-ui';
 import { ContentBoxStyle } from '../../styles/SharedStyles';
 
 const ContactPageStyle = styled.div`

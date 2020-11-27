@@ -1,6 +1,6 @@
 import React from 'react';
-import styled, { css } from '@datapunt/asc-core';
-import { Label, themeSpacing, themeColor } from '@datapunt/asc-ui';
+import styled, { css } from 'styled-components';
+import { Label, themeSpacing, themeColor } from '@amsterdam/asc-ui';
 
 const LabelInput = styled(Label)`
   display: ${({ hidden }) => (hidden ? 'none' : 'flex')};

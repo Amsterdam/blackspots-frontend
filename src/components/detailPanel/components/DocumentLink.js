@@ -1,8 +1,8 @@
 import React from 'react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import styled from 'styled-components';
-import { Icon } from '@datapunt/asc-ui';
-import { Download } from '@datapunt/asc-assets';
+import { Icon } from '@amsterdam/asc-ui';
+import { Download } from '@amsterdam/asc-assets';
 import { ExternalLinkStyle } from '../DetailPanelStyle';
 import TextWithOverflow from './TextWithOverflow';
 

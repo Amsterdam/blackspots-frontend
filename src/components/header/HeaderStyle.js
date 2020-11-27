@@ -1,4 +1,4 @@
-import { Link, themeSpacing, Button, themeColor } from '@datapunt/asc-ui';
+import { Link, themeSpacing, Button, themeColor } from '@amsterdam/asc-ui';
 import styled from 'styled-components';
 
 export const HeaderLink = styled(Link)`

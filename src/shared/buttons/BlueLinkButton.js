@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-left.svg';
 import classNames from 'classnames';
-import { Link } from '@datapunt/asc-ui';
+import { Link } from '@amsterdam/asc-ui';
 import styles from './BlueLinkButton.module.scss';
 
 const LinkContent = ({ text, chevronDirection }) => {

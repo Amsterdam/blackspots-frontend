@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { themeColor, themeSpacing } from '@datapunt/asc-ui';
+import { themeColor, themeSpacing } from '@amsterdam/asc-ui';
 
 const FORM_WIDTH = 1280;
 

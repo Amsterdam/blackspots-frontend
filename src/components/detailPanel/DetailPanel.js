@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Heading, Button, Link, Icon } from '@datapunt/asc-ui';
+import { Heading, Button, Link, Icon } from '@amsterdam/asc-ui';
 
 import { NavLink } from 'react-router-dom';
 
-import { ExternalLink, Close } from '@datapunt/asc-assets';
+import { ExternalLink, Close } from '@amsterdam/asc-assets';
 
 import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'config';
 import classNames from 'classnames';
