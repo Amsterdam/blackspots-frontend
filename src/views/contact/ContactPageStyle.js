@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core';
+import styled from 'styled-components';
 import { themeColor, themeSpacing, Heading } from '@datapunt/asc-ui';
 import { ContentBoxStyle } from '../../styles/SharedStyles';
 

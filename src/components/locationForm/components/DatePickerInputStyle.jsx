@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core';
+import styled from 'styled-components';
 import 'react-datepicker/dist/react-datepicker.css';
 import { styles, themeColor } from '@datapunt/asc-ui';
 

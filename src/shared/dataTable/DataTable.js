@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@datapunt/asc-core';
+import styled from 'styled-components';
 import { themeColor, themeSpacing } from '@datapunt/asc-ui';
 
 const DataTableStyle = styled.table`

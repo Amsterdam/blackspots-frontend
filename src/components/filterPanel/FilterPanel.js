@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
 import { Button, themeSpacing } from '@datapunt/asc-ui';
-import styled from '@datapunt/asc-core';
+import styled from 'styled-components';
 import useDownload from 'shared/hooks/useDownload';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import { StatusDisplayNames, SpotTypeDisplayNames } from '../../config';

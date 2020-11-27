@@ -1,6 +1,6 @@
 import React from 'react';
 import { Label, List, ListItem, themeSpacing } from '@datapunt/asc-ui';
-import styled from '@datapunt/asc-core';
+import styled from 'styled-components';
 
 const RadioLabelStyle = styled(Label)`
   font-weight: normal;

@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core';
+import styled from 'styled-components';
 import { themeSpacing, styles, themeColor, Link } from '@datapunt/asc-ui';
 
 export const HeaderStyle = styled.div`
