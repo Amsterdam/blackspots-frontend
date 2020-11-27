@@ -1,4 +1,4 @@
-import styled, { css } from '@amsterdam/asc-core';
+import styled, { css } from 'styled-components';
 import { Input } from '@amsterdam/asc-ui';
 import PropTypes from 'prop-types';
 import React from 'react';
