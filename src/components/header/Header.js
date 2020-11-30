@@ -49,7 +49,6 @@ const Header = () => {
           </MenuItem>
           <MenuItem>
             <LogoutLink
-              $as={Link}
               variant="textButton"
               iconSize={16}
               iconLeft={<Logout />}
