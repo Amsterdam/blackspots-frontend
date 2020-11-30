@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import styled from 'styled-components';
-import { Icon } from '@amsterdam/asc-ui';
+import { Icon, themeColor } from '@amsterdam/asc-ui';
 import { Download } from '@amsterdam/asc-assets';
 import { ExternalLinkStyle } from '../DetailPanelStyle';
 import TextWithOverflow from './TextWithOverflow';
@@ -24,7 +24,8 @@ const DocumentLink = ({ document: documentData }) => {
         download
         variant="inline"
       >
-        <Icon size={14} color="primary">
+        <Icon size={14} color={`${themeColor('primary', 'main')}`}>
+          >
           <Download />
         </Icon>
         <TextWithOverflow>{documentData.filename}</TextWithOverflow>

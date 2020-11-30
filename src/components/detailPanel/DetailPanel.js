@@ -74,7 +74,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       )}
     >
       <HeaderStyle>
-        <Heading forwardedAs="h3" color="secondary">
+        <Heading forwardedAs="h3" color={`${themeColor('secondary', 'main')}`}>
           {locatie_id}
         </Heading>
         {canEdit && (
@@ -159,7 +159,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             rel="noopener noreferrer"
             variant="inline"
           >
-            <Icon size={14} color="primary">
+            <Icon size={14} color={`${themeColor('primary', 'main')}`}>
               <ExternalLink />
             </Icon>
             Panoramabeeld
@@ -197,8 +197,11 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
           </tbody>
         </DataTable>
         {documents.length > 0 && (
-          <Heading forwardedAs="h4" color="secondary">
-            Documenten
+          <Heading
+            forwardedAs="h4"
+            color={`${themeColor('secondary', 'main')}`}
+          >
+            > Documenten
           </Heading>
         )}
 
