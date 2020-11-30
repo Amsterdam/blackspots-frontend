@@ -174,7 +174,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <Heading $as="h3" color="secondary">
+            <Heading forwardedAs="h3" color="secondary">
               Locatie
             </Heading>
             {FormFields.filter(({ column }) => column === 1).map(
@@ -194,7 +194,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <Heading $as="h3" color="secondary">
+            <Heading forwardedAs="h3" color="secondary">
               Maatregelen
             </Heading>
             {FormFields.filter(({ column }) => column === 2).map(
@@ -214,7 +214,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <Heading $as="h3" color="secondary">
+            <Heading forwardedAs="h3" color="secondary">
               Documenten
             </Heading>
             {FormFields.filter(({ column }) => column === 3).map(

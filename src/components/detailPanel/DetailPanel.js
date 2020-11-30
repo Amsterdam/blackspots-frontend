@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Heading, Button, Link, Icon } from '@amsterdam/asc-ui';
+import { Heading, Button, Link, Icon, themeColor } from '@amsterdam/asc-ui';
 
 import { NavLink } from 'react-router-dom';
 
@@ -74,7 +74,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       )}
     >
       <HeaderStyle>
-        <Heading $as="h3" color="secondary">
+        <Heading forwardedAs="h3" color="secondary">
           {locatie_id}
         </Heading>
         {canEdit && (
@@ -97,7 +97,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       </HeaderStyle>
       <ContentStyle>
         <TitleStyle>
-          <Heading $as="h2">{description}</Heading>
+          <Heading forwardedAs="h2">{description}</Heading>
         </TitleStyle>
         <DataTable bottom={2}>
           <tbody>
@@ -166,7 +166,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             Panoramabeeld
           </ExternalLinkStyle>
         </ExternalLinkContainerStyle>
-        <Heading $as="h4" color="secondary">
+        <Heading forwardedAs="h4" color="secondary">
           Maatregelen
         </Heading>
         <DataTable>
@@ -198,7 +198,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
           </tbody>
         </DataTable>
         {documents.length > 0 && (
-          <Heading $as="h4" color="secondary">
+          <Heading forwardedAs="h4" color="secondary">
             Documenten
           </Heading>
         )}
