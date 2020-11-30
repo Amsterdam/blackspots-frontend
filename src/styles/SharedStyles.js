@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Heading, themeSpacing } from '@amsterdam/asc-ui';
+import { Heading, themeSpacing, themeColor } from '@amsterdam/asc-ui';
 
 const CONTENT_WIDTH = 1280;
 
@@ -15,4 +15,8 @@ export const IntroTextStyle = styled.p`
 
 export const AscH1 = styled(Heading)`
   margin: ${themeSpacing(5)} 0;
+`;
+
+export const AscHeaderSecondary = styled(Heading)`
+  color: ${themeColor('secondary', 'main')};
 `;

@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Heading, Button, Link, Icon, themeColor } from '@amsterdam/asc-ui';
 
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 
 import { ExternalLink, Close } from '@amsterdam/asc-assets';
 
@@ -19,6 +19,7 @@ import styles from './DetailPanel.module.scss';
 import { SpotTypeDisplayNames } from '../../config';
 
 import UserContext from '../../shared/user/UserContext';
+import { AscHeaderSecondary } from '../../styles/SharedStyles';
 
 import {
   HeaderStyle,
@@ -74,9 +75,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       )}
     >
       <HeaderStyle>
-        <Heading forwardedAs="h3" color={`${themeColor('secondary', 'main')}`}>
-          {locatie_id}
-        </Heading>
+        <AscHeaderSecondary forwardedAs="h3">{locatie_id}</AscHeaderSecondary>
         {canEdit && (
           <Link
             href={`/edit/${feature.id}`}
@@ -165,9 +164,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             Panoramabeeld
           </ExternalLinkStyle>
         </ExternalLinkContainerStyle>
-        <Heading forwardedAs="h4" color="secondary">
-          Maatregelen
-        </Heading>
+        <AscHeaderSecondary forwardedAs="h4">Maatregelen</AscHeaderSecondary>
         <DataTable>
           <tbody>
             <tr>
@@ -197,12 +194,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
           </tbody>
         </DataTable>
         {documents.length > 0 && (
-          <Heading
-            forwardedAs="h4"
-            color={`${themeColor('secondary', 'main')}`}
-          >
-            Documenten
-          </Heading>
+          <AscHeaderSecondary forwardedAs="h4">Documenten</AscHeaderSecondary>
         )}
 
         {reportDocument || designDocument ? (

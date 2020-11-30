@@ -19,6 +19,7 @@ import {
   locationToFeature,
 } from './services/normalize';
 import { appRoutes, SpotTypes, endpoints } from '../../config';
+import { AscHeaderSecondary } from '../../styles/SharedStyles';
 
 const isBlackspotType = spotType =>
   spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
@@ -174,12 +175,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <Heading
-              forwardedAs="h3"
-              color={`${themeColor('secondary', 'main')}`}
-            >
-              > Locatie
-            </Heading>
+            <AscHeaderSecondary forwardedAs="h3">> Locatie</AscHeaderSecondary>
             {FormFields.filter(({ column }) => column === 1).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (
@@ -197,12 +193,9 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <Heading
-              forwardedAs="h3"
-              color={`${themeColor('secondary', 'main')}`}
-            >
+            <AscHeaderSecondary forwardedAs="h3">
               Maatregelen
-            </Heading>
+            </AscHeaderSecondary>
             {FormFields.filter(({ column }) => column === 2).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (
@@ -220,12 +213,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <Heading
-              forwardedAs="h3"
-              color={`${themeColor('secondary', 'main')}`}
-            >
-              Documenten
-            </Heading>
+            <AscHeaderSecondary forwardedAs="h3">Documenten</AscHeaderSecondary>
             {FormFields.filter(({ column }) => column === 3).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (
