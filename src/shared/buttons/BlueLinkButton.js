@@ -19,13 +19,18 @@ const LinkContent = ({ text, chevronDirection }) => {
   );
 };
 
-const BlueLinkButton = ({ to, text, external, chevronDirection }) => {
+const BlueLinkButton = ({ href, text, external, chevronDirection }) => {
   return external ? (
-    <Link href={to} target="_blank" rel="noopener noreferrer" variant="inline">
+    <Link
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      variant="inline"
+    >
       <LinkContent text={text} chevronDirection={chevronDirection} />
     </Link>
   ) : (
-    <Link $as={RouterLink} className={styles.Container} to={to}>
+    <Link $as={RouterLink} className={styles.Container} href={href}>
       <LinkContent text={text} chevronDirection={chevronDirection} />
     </Link>
   );
@@ -35,7 +40,7 @@ BlueLinkButton.propTypes = {
   chevronDirection: PropTypes.oneOf(['left', 'right']),
   text: PropTypes.string.isRequired,
   external: PropTypes.bool,
-  to: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
 };
 
 BlueLinkButton.defaultProps = {

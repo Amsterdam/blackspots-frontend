@@ -13,7 +13,7 @@ const ConceptPage = () => {
     <ConceptPageStyle>
       <ContentStyle>
         <BlueLinkButton
-          to={appRoutes.HOME}
+          href={appRoutes.HOME}
           text="Terug naar kaart"
           chevronDirection="left"
         />
