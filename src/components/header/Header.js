@@ -6,7 +6,6 @@ import auth from 'shared/auth/auth';
 import UserContext from 'shared/user/UserContext';
 import {
   Header as HeaderComponent,
-  Link,
   MenuItem,
   MenuButton,
 } from '@amsterdam/asc-ui';
