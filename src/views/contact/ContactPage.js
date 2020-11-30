@@ -8,9 +8,8 @@ import Footer from '../../components/footer/Footer';
 import ContactPageStyle, {
   ContentStyle,
   EmailLinkStyle,
-  HeadingStyle,
 } from './ContactPageStyle';
-import { IntroTextStyle } from '../../styles/SharedStyles';
+import { IntroTextStyle, AscH1 } from '../../styles/SharedStyles';
 
 const ContactPage = () => {
   return (
@@ -21,7 +20,7 @@ const ContactPage = () => {
           text="Terug naar kaart"
           chevronDirection="left"
         />
-        <HeadingStyle>Contact</HeadingStyle>
+        <AscH1>Contact</AscH1>
 
         <IntroTextStyle>
           Voor vragen of meer informatie over locaties op deze kaart of voor

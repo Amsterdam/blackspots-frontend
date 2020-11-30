@@ -6,7 +6,7 @@ import { Link } from '@amsterdam/asc-ui';
 import Accordion from '../../shared/accordion/Accordion';
 import Footer from '../../components/footer/Footer';
 import ConceptPageStyle, { ContentStyle } from './ConceptPageStyle';
-import { IntroTextStyle } from '../../styles/SharedStyles';
+import { AscH1, IntroTextStyle } from '../../styles/SharedStyles';
 
 const ConceptPage = () => {
   return (
@@ -17,7 +17,7 @@ const ConceptPage = () => {
           text="Terug naar kaart"
           chevronDirection="left"
         />
-        <h1>Begrippenlijst</h1>
+        <AscH1>Begrippenlijst</AscH1>
         <IntroTextStyle>
           Op de WBA kaart staan alle locaties die Werkgroep Blackspots in
           onderzoek en/of uitvoering heeft. Naar aanleiding van onderzoek wordt

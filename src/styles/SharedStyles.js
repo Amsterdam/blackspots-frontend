@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { themeSpacing } from '@amsterdam/asc-ui';
+import { Heading, themeSpacing } from '@amsterdam/asc-ui';
 
 const CONTENT_WIDTH = 1280;
 
@@ -11,4 +11,8 @@ export const ContentBoxStyle = styled.div`
 export const IntroTextStyle = styled.p`
   font-size: 19px;
   line-height: 26px;
+`;
+
+export const AscH1 = styled(Heading)`
+  margin: ${themeSpacing(5)} 0;
 `;
