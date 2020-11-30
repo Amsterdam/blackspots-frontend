@@ -201,7 +201,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             forwardedAs="h4"
             color={`${themeColor('secondary', 'main')}`}
           >
-            > Documenten
+            Documenten
           </Heading>
         )}
 
