@@ -40,7 +40,7 @@ const LocationForm = ({ id: locationId }) => {
     if (locationId && !selectedLocation) {
       history.push(appRoutes.HOME);
     }
-  }, [locationId, selectedLocation]);
+  }, [history, locationId, selectedLocation]);
 
   const defaultValues = useMemo(
     () =>
@@ -52,7 +52,7 @@ const LocationForm = ({ id: locationId }) => {
         : {
             ...initalValues,
           },
-    [location, initalValues]
+    [location, locationId]
   );
 
   const {
@@ -93,7 +93,7 @@ const LocationForm = ({ id: locationId }) => {
       setValue('jaar_blackspotlijst', '');
       setValue('jaar_ongeval_quickscan', '');
     }
-  }, [spotType]);
+  }, [spotType, setValue, values.jaar_blackspotlijst, values.jaar_ongeval_quickscan]);
 
   const coordinaten = watch('coordinaten');
   useEffect(() => {
@@ -105,7 +105,7 @@ const LocationForm = ({ id: locationId }) => {
       setValue('stadsdeel', '', true);
       unregister('stadsdeel');
     })();
-  }, [coordinaten]);
+  }, [coordinaten, setValue, unregister]);
 
   const handleServerValidation = async reason => {
     if (reason.point && reason.point.length) {
@@ -165,7 +165,7 @@ const LocationForm = ({ id: locationId }) => {
       register({ name, type: 'custom' }, validation);
       setValue(name, defaultValues[name]);
     });
-  }, [register, locationId]);
+  }, [register, locationId, defaultValues, setValue]);
 
   return (
     <>
