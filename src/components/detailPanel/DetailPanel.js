@@ -19,7 +19,7 @@ import styles from './DetailPanel.module.scss';
 import { SpotTypeDisplayNames } from '../../config';
 
 import UserContext from '../../shared/user/UserContext';
-import { AscHeaderSecondary } from '../../styles/SharedStyles';
+import { HeaderSecondary } from '../../styles/SharedStyles';
 
 import {
   HeaderStyle,
@@ -75,7 +75,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       )}
     >
       <HeaderStyle>
-        <AscHeaderSecondary forwardedAs="h3">{locatie_id}</AscHeaderSecondary>
+        <HeaderSecondary forwardedAs="h3">{locatie_id}</HeaderSecondary>
         {canEdit && (
           <Link
             href={`/edit/${feature.id}`}
@@ -164,7 +164,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             Panoramabeeld
           </ExternalLinkStyle>
         </ExternalLinkContainerStyle>
-        <AscHeaderSecondary forwardedAs="h4">Maatregelen</AscHeaderSecondary>
+        <HeaderSecondary forwardedAs="h4">Maatregelen</HeaderSecondary>
         <DataTable>
           <tbody>
             <tr>
@@ -194,9 +194,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
           </tbody>
         </DataTable>
         {documents.length > 0 && (
-          <AscHeaderSecondary forwardedAs="h4">
-            &gt; Documenten
-          </AscHeaderSecondary>
+          <HeaderSecondary forwardedAs="h4">&gt; Documenten</HeaderSecondary>
         )}
 
         {reportDocument || designDocument ? (

@@ -13,10 +13,10 @@ export const IntroTextStyle = styled.p`
   line-height: 26px;
 `;
 
-export const AscH1 = styled(Heading)`
+export const H1 = styled(Heading)`
   margin: ${themeSpacing(5)} 0;
 `;
 
-export const AscHeaderSecondary = styled(Heading)`
+export const HeaderSecondary = styled(Heading)`
   color: ${themeColor('secondary', 'main')};
 `;

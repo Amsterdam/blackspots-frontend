@@ -4,7 +4,7 @@ import logo from 'assets/media/amsterdam-logo.svg';
 import headerImage from 'assets/media/main-header-blur.jpg';
 import styles from './LandingPage.module.scss';
 import Footer from '../../components/footer/Footer';
-import { IntroTextStyle, AscH1 } from '../../styles/SharedStyles';
+import { IntroTextStyle, H1 } from '../../styles/SharedStyles';
 
 const LandingPage = () => {
   const login = async () => {
@@ -23,7 +23,7 @@ const LandingPage = () => {
           <img alt="Hero" src={headerImage} className={styles.Hero} />
         </div>
         <div className={styles.Section}>
-          <AscH1> Welkom bij Werkgroep Blackspots</AscH1>
+          <H1> Welkom bij Werkgroep Blackspots</H1>
           <IntroTextStyle>
             De kaart bevat een overzicht van de Blackspots, Red Routes
             (wegvakken), Protocol locaties (ernstig en dodelijk) en

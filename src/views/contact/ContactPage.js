@@ -9,7 +9,7 @@ import ContactPageStyle, {
   ContentStyle,
   EmailLinkStyle,
 } from './ContactPageStyle';
-import { IntroTextStyle, AscH1 } from '../../styles/SharedStyles';
+import { IntroTextStyle, H1 } from '../../styles/SharedStyles';
 
 const ContactPage = () => {
   return (
@@ -20,7 +20,7 @@ const ContactPage = () => {
           text="Terug naar kaart"
           chevronDirection="left"
         />
-        <AscH1>Contact</AscH1>
+        <H1>Contact</H1>
 
         <IntroTextStyle>
           Voor vragen of meer informatie over locaties op deze kaart of voor

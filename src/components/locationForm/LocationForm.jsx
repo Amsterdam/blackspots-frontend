@@ -19,7 +19,7 @@ import {
   locationToFeature,
 } from './services/normalize';
 import { appRoutes, SpotTypes, endpoints } from '../../config';
-import { AscHeaderSecondary } from '../../styles/SharedStyles';
+import { HeaderSecondary } from '../../styles/SharedStyles';
 
 const isBlackspotType = spotType =>
   spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
@@ -175,7 +175,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <AscHeaderSecondary forwardedAs="h3">> Locatie</AscHeaderSecondary>
+            <HeaderSecondary forwardedAs="h3">> Locatie</HeaderSecondary>
             {FormFields.filter(({ column }) => column === 1).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (
@@ -193,9 +193,9 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <AscHeaderSecondary forwardedAs="h3">
+            <HeaderSecondary forwardedAs="h3">
               Maatregelen
-            </AscHeaderSecondary>
+            </HeaderSecondary>
             {FormFields.filter(({ column }) => column === 2).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (
@@ -213,7 +213,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <AscHeaderSecondary forwardedAs="h3">Documenten</AscHeaderSecondary>
+            <HeaderSecondary forwardedAs="h3">Documenten</HeaderSecondary>
             {FormFields.filter(({ column }) => column === 3).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (
