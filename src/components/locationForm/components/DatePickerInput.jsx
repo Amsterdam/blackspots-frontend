@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Calendar } from '@datapunt/asc-assets';
-import { Icon } from '@datapunt/asc-ui';
+import { Calendar } from '@amsterdam/asc-assets';
+import { Icon } from '@amsterdam/asc-ui';
 import { dateToString, stringToDate } from '../services/dateUtil';
 import DatePickerInputStyle from './DatePickerInputStyle';
 

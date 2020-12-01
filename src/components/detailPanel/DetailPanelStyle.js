@@ -1,5 +1,5 @@
-import styled from '@datapunt/asc-core';
-import { themeSpacing, styles, themeColor, Link } from '@datapunt/asc-ui';
+import styled from 'styled-components';
+import { themeSpacing, styles, themeColor, Link } from '@amsterdam/asc-ui';
 
 export const HeaderStyle = styled.div`
   display: flex;

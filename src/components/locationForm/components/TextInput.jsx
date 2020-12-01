@@ -1,5 +1,5 @@
-import styled, { css } from '@datapunt/asc-core';
-import { Input } from '@datapunt/asc-ui';
+import styled, { css } from 'styled-components';
+import { Input } from '@amsterdam/asc-ui';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -20,6 +20,7 @@ const TextInput = ({ name, value, onChange, ...otherProps }) => {
   return (
     <StyledInput
       name={name}
+      type="text"
       value={value || ''}
       data-testid={`${name}-test-id`}
       {...otherProps}

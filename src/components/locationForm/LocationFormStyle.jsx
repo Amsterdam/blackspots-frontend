@@ -1,11 +1,11 @@
-import styled from '@datapunt/asc-core';
+import styled from 'styled-components';
 import {
   Column,
   themeSpacing,
   styles,
   Row,
   themeColor,
-} from '@datapunt/asc-ui';
+} from '@amsterdam/asc-ui';
 
 export const ControlsColumn = styled(Column)`
   flex-direction: column;

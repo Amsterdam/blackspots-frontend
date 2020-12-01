@@ -11,8 +11,9 @@ describe('Header', () => {
     const { container, queryByText } = render(
       withUserContext(<Header />, user)
     );
+
     expect(queryByText(regex)).toBeNull();
-    expect(container.querySelectorAll('nav > a')).toHaveLength(4);
+    expect(container.querySelectorAll('nav a')).toHaveLength(3);
   });
 
   it('should render the add link when the user has add rights', () => {
@@ -21,6 +22,6 @@ describe('Header', () => {
       withUserContext(<Header />, user)
     );
     expect(queryByText(regex)).not.toBeNull();
-    expect(container.querySelectorAll('nav > a')).toHaveLength(5);
+    expect(container.querySelectorAll('nav a')).toHaveLength(4);
   });
 });
