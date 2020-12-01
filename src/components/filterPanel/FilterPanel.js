@@ -76,7 +76,7 @@ const FilterPanel = ({
       downloadUrl,
       `wbakaart-export-${new Date().toLocaleDateString('nl-NL')}.csv`
     );
-  }, [downloadUrl]);
+  }, [downloadUrl, downloadFile]);
 
   useEffect(() => {
     setDownloadUrl(`${exportUrl}${getExportFilter(stadsdeelFilter)}`);
@@ -86,7 +86,7 @@ const FilterPanel = ({
         Object.values(spotStatusTypeFilter).filter(e => e).length === 0 &&
         optionValue === ContextMenuOptions.ALL
     );
-  }, [stadsdeelFilter, spotTypeFilter, spotStatusTypeFilter]);
+  }, [stadsdeelFilter, spotTypeFilter, spotStatusTypeFilter, optionValue]);
 
   const trackFilter = useCallback(
     name => {
@@ -98,26 +98,37 @@ const FilterPanel = ({
   /**
    * Update the filters of the actual map
    */
-  function updateFilters(
-    updatedSpotTypeFilter = false,
-    updatedSpotStatusTypeFilter = false,
-    updatedBlackspotYearFilter = false,
-    updatedDeliveredYearFilter = false,
-    updatedQuickscanYearFilter = false,
-    updatedStadsdeelFilter = false
-  ) {
-    // For every filter, if it has an actual filter object, pass it along to
-    // the setFilter function received from the map, else, pass a resetted
-    // filter.
-    setFilters(
-      updatedSpotTypeFilter || resetFilter(spotTypeFilter),
-      updatedSpotStatusTypeFilter || resetFilter(spotStatusTypeFilter),
-      updatedBlackspotYearFilter || resetFilter(blackspotYearFilter),
-      updatedDeliveredYearFilter || resetFilter(deliveredYearFilter),
-      updatedQuickscanYearFilter || resetFilter(quickscanYearFilter),
-      updatedStadsdeelFilter || resetFilter(stadsdeelFilter)
-    );
-  }
+  const updateFilters = useCallback(
+    (
+      updatedSpotTypeFilter = false,
+      updatedSpotStatusTypeFilter = false,
+      updatedBlackspotYearFilter = false,
+      updatedDeliveredYearFilter = false,
+      updatedQuickscanYearFilter = false,
+      updatedStadsdeelFilter = false
+    ) => {
+      // For every filter, if it has an actual filter object, pass it along to
+      // the setFilter function received from the map, else, pass a resetted
+      // filter.
+      setFilters(
+        updatedSpotTypeFilter || resetFilter(spotTypeFilter),
+        updatedSpotStatusTypeFilter || resetFilter(spotStatusTypeFilter),
+        updatedBlackspotYearFilter || resetFilter(blackspotYearFilter),
+        updatedDeliveredYearFilter || resetFilter(deliveredYearFilter),
+        updatedQuickscanYearFilter || resetFilter(quickscanYearFilter),
+        updatedStadsdeelFilter || resetFilter(stadsdeelFilter)
+      );
+    },
+    [
+      spotTypeFilter,
+      spotStatusTypeFilter,
+      blackspotYearFilter,
+      deliveredYearFilter,
+      quickscanYearFilter,
+      stadsdeelFilter,
+      setFilters,
+    ]
+  );
 
   function processOptionChange(value) {
     // Changing options should reset the filters
@@ -422,7 +433,16 @@ const FilterPanel = ({
         })}
       </>
     );
-  }, [stadsdeelFilter]);
+  }, [
+    stadsdeelFilter,
+    blackspotYearFilter,
+    deliveredYearFilter,
+    quickscanYearFilter,
+    spotStatusTypeFilter,
+    spotTypeFilter,
+    trackFilter,
+    updateFilters,
+  ]);
 
   const togglePanel = () => setShowPanel(!showPanel);
   const handleKeyPress = event => {
