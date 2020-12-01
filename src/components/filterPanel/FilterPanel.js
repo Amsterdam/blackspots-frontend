@@ -422,7 +422,16 @@ const FilterPanel = ({
         })}
       </>
     );
-  }, [stadsdeelFilter, blackspotYearFilter, deliveredYearFilter, quickscanYearFilter, spotStatusTypeFilter, spotTypeFilter, trackFilter, updateFilters]);
+  }, [
+    stadsdeelFilter,
+    blackspotYearFilter,
+    deliveredYearFilter,
+    quickscanYearFilter,
+    spotStatusTypeFilter,
+    spotTypeFilter,
+    trackFilter,
+    updateFilters,
+  ]);
 
   const togglePanel = () => setShowPanel(!showPanel);
   const handleKeyPress = event => {
