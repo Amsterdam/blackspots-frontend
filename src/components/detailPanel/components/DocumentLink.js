@@ -25,6 +25,7 @@ const DocumentLink = ({ document: documentData }) => {
         variant="inline"
       >
         <Icon size={14} color={`${themeColor('primary', 'main')}`}>
+          >
           <Download />
         </Icon>
         <TextWithOverflow>{documentData.filename}</TextWithOverflow>
