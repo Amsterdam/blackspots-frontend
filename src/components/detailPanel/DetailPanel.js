@@ -194,7 +194,9 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
           </tbody>
         </DataTable>
         {documents.length > 0 && (
-          <AscHeaderSecondary forwardedAs="h4">> Documenten</AscHeaderSecondary>
+          <AscHeaderSecondary forwardedAs="h4">
+            &gt; Documenten
+          </AscHeaderSecondary>
         )}
 
         {reportDocument || designDocument ? (
