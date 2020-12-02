@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import L from 'leaflet';
+import { useMapInstance } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 
@@ -33,7 +34,9 @@ export const createFeature = (feature, latlng) => {
   });
 };
 
-const useBlackspotsLayer = (mapInstance, locations, onMarkerClick) => {
+const useBlackspotsLayer = (unused, locations, onMarkerClick) => {
+  console.log('useBlackspotsLayer', unused);
+  const mapInstance = useMapInstance();
   console.log('useBlackspotsLayer', mapInstance);
   const geoLayerRef = useRef(null);
   useEffect(() => {

@@ -45,15 +45,17 @@ const Map = () => {
   const [mapInstance, setMapInstance] = useState(undefined);
 
   // const mapRef = useMap();
-  useCallback(() => {
-    console.log('1', mapInstance);
-    L.tileLayer
-      .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
-        layers: ['stadsdeel'],
-        transparent: true,
-        format: 'image/png',
-      })
-      .addTo(mapInstance);
+  useEffect(() => {
+    console.log('useEffect mapInstance', mapInstance);
+    if (mapInstance) {
+      L.tileLayer
+        .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
+          layers: ['stadsdeel'],
+          transparent: true,
+          format: 'image/png',
+        })
+        .addTo(mapInstance);
+    }
   }, [mapInstance]);
 
   useEffect(() => {

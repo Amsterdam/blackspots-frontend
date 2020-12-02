@@ -1,10 +1,12 @@
 import { useRef, useEffect, useState } from 'react';
 import L from 'leaflet';
+import { useMapInstance } from '@amsterdam/react-maps';
 
 // import icon from 'leaflet/dist/images/marker-icon.png';
 import icon from 'leaflet/dist/images/marker-icon.png';
 
-const useMarkerLayer = mapInstance => {
+const useMarkerLayer = () => {
+  const mapInstance = useMapInstance();
   const layerRef = useRef(null);
   const [location, setLocation] = useState(null);
   useEffect(() => {
