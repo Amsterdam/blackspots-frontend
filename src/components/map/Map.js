@@ -67,6 +67,7 @@ const Map = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    console.log('results', results);
     if (locations.length === 0)
       actions.addLocations({ payload: results ? [...results.features] : [] });
     // Keep the actions and locations out from the dependency array to prevent infinite loop
@@ -90,6 +91,10 @@ const Map = () => {
 
   const geoLayerRef = useBlackspotsLayer(mapInstance, locations, onMarkerClick);
   const { setLocation, layerRef } = useMarkerLayer(mapInstance);
+
+  // const geoLayerRef = { current: { getLayers: () => [] } };
+  // const setLocation = () => {};
+  // const layerRef = { current: { getLayers: () => [] } };
 
   useEffect(() => {
     if (selectedLocation) {
