@@ -42,7 +42,7 @@ const Map = () => {
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
   const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
-  const [mapInstance, setMapInstance] = useState(false);
+  const [mapInstance, setMapInstance] = useState(undefined);
 
   // const mapRef = useMap();
   useCallback(() => {
