@@ -44,20 +44,6 @@ const Map = () => {
   const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
   const [mapInstance, setMapInstance] = useState(undefined);
 
-  // const mapRef = useMap();
-  useEffect(() => {
-    console.log('useEffect mapInstance', mapInstance);
-    if (mapInstance) {
-      L.tileLayer
-        .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
-          layers: ['stadsdeel'],
-          transparent: true,
-          format: 'image/png',
-        })
-        .addTo(mapInstance);
-    }
-  }, [mapInstance]);
-
   useEffect(() => {
     if (locations.length === 0)
       (async () => {
@@ -65,6 +51,20 @@ const Map = () => {
       })();
     // Keep the dependency array empty to prevent an infinite loop
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // const mapRef = useMap();
+  // useEffect(() => {
+  //   console.log('useEffect mapInstance', mapInstance);
+  //   if (mapInstance) {
+  //     L.tileLayer
+  //       .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
+  //         layers: ['stadsdeel'],
+  //         transparent: true,
+  //         format: 'image/png',
+  //       })
+  //       .addTo(mapInstance);
+  //   }
+  // }, [mapInstance]);
 
   useEffect(() => {
     console.log('results', results);
