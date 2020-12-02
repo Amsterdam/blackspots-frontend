@@ -33,7 +33,7 @@ export const createFeature = (feature, latlng) => {
   });
 };
 
-const useBlackspotsLayer = (mapRef, locations, onMarkerClick) => {
+const useBlackspotsLayer = (mapInstance, locations, onMarkerClick) => {
   const geoLayerRef = useRef(null);
   useEffect(() => {
     geoLayerRef.current = L.geoJSON(locations, {
@@ -42,8 +42,8 @@ const useBlackspotsLayer = (mapRef, locations, onMarkerClick) => {
         handleFeature(feature, layer, onMarkerClick);
       },
       pointToLayer: createFeature,
-    }).addTo(mapRef.current);
-  }, [mapRef, locations, onMarkerClick]);
+    }).addTo(mapInstance);
+  }, [mapInstance, locations, onMarkerClick]);
 
   return geoLayerRef;
 };

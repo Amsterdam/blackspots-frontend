@@ -3,7 +3,7 @@ import L from 'leaflet';
 // import icon from 'leaflet/dist/images/marker-icon.png';
 import icon from 'leaflet/dist/images/marker-icon.png';
 
-const useMarkerLayer = mapRef => {
+const useMarkerLayer = mapInstance => {
   const layerRef = useRef(null);
   const [location, setLocation] = useState(null);
   useEffect(() => {
@@ -13,18 +13,18 @@ const useMarkerLayer = mapRef => {
       lng: location.geometry.coordinates[0],
     };
     if (layerRef.current) {
-      mapRef.current.removeLayer(layerRef.current);
+      mapInstance.removeLayer(layerRef.current);
     }
     layerRef.current = L.marker([latlng.lat, latlng.lng], {
       icon: L.icon({
         iconUrl: icon,
         iconAnchor: [18, 45],
       }),
-    }).addTo(mapRef.current);
+    }).addTo(mapInstance);
     layerRef.current.feature = location;
-    const currentZoom = mapRef.current.getZoom();
+    const currentZoom = mapInstance.getZoom();
 
-    mapRef.current.flyTo(latlng, currentZoom < 14 ? 14 : currentZoom);
+    mapInstance.flyTo(latlng, currentZoom < 14 ? 14 : currentZoom);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
