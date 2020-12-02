@@ -34,6 +34,7 @@ export const createFeature = (feature, latlng) => {
 };
 
 const useBlackspotsLayer = (mapInstance, locations, onMarkerClick) => {
+  console.log('useBlackspotsLayer', mapInstance);
   const geoLayerRef = useRef(null);
   useEffect(() => {
     geoLayerRef.current = L.geoJSON(locations, {
