@@ -101,8 +101,20 @@ const Map = () => {
     [actions]
   );
 
-  const geoLayerRef = useBlackspotsLayer(mapInstance, locations, onMarkerClick);
+  const [geoLayerRef, setGeoLayerRef] = useState(undefined);
+
+  const SetupBlackspotsLayer = () => {
+    setGeoLayerRef(useBlackspotsLayer(mapInstance, locations, onMarkerClick));
+    return null;
+  };
+
+  // const geoLayerRef = useBlackspotsLayer(mapInstance, locations, onMarkerClick);
   const { setLocation, layerRef } = useMarkerLayer(mapInstance);
+
+  // const SetupLayer = () => {
+  //   const { setLocation, layerRef } = useMarkerLayer(mapInstance);
+  //   return null;
+  // };
 
   // const geoLayerRef = { current: { getLayers: () => [] } };
   // const setLocation = () => {};
@@ -223,6 +235,7 @@ const Map = () => {
           },
         }}
       >
+        <SetupBlackspotsLayer />
         <ViewerContainer
           bottomRight={<Zoom />}
           topRight={loading && <Loader />}
