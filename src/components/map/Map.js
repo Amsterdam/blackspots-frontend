@@ -32,6 +32,7 @@ import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
 import useYearFilters from './hooks/useYearFilters';
 import useBlackspotsLayer from './hooks/useBlackspotsLayer';
+// IK KRIJG DEZE ER IN IMPORTED
 // import getCrsRd from '../../shared/services/getCrsRd';
 import { endpoints } from '../../config';
 import useMarkerLayer from './hooks/useMarkerLayer';
