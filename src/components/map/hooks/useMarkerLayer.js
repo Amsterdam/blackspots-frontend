@@ -32,7 +32,7 @@ const useMarkerLayer = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
-  return { layerRef, location, setLocation };
+  return { markerLayerRef: layerRef, location, markerSetLocation: setLocation };
 };
 
 export default useMarkerLayer;

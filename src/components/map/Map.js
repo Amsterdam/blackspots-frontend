@@ -50,6 +50,8 @@ const MAP_OPTIONS = {
   ],
 };
 
+let setLocation;
+
 const Map = () => {
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
@@ -109,12 +111,15 @@ const Map = () => {
   };
 
   // const geoLayerRef = useBlackspotsLayer(mapInstance, locations, onMarkerClick);
-  const { setLocation, layerRef } = useMarkerLayer(mapInstance);
+  // const { setLocation, layerRef } = useMarkerLayer(mapInstance);
 
-  // const SetupLayer = () => {
-  //   const { setLocation, layerRef } = useMarkerLayer(mapInstance);
-  //   return null;
-  // };
+  const [layerRef, setLayerRef] = useState(undefined);
+  const SetupLayer = () => {
+    const { markerSetLocation, markerLayerRef } = useMarkerLayer(mapInstance);
+    setLayerRef(markerLayerRef);
+    setLocation = markerSetLocation;
+    return null;
+  };
 
   // const geoLayerRef = { current: { getLayers: () => [] } };
   // const setLocation = () => {};
@@ -236,6 +241,7 @@ const Map = () => {
         }}
       >
         <SetupBlackspotsLayer />
+        <SetupLayer />
         <ViewerContainer
           bottomRight={<Zoom />}
           topRight={loading && <Loader />}
