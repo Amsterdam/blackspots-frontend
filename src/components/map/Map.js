@@ -1,3 +1,15 @@
+/* 
+solution from  Tim and Jon
+
+import { BaseLayer, Map } from '@amsterdam/arm-core';
+function BlackSpotsLayer() {
+  useBlackspotsLayer();
+  return null;
+}
+function MyMap() {
+  return <Map><BlackSpotsLayer/></Map>
+} */
+
 import React, { useState, useEffect, useCallback } from 'react';
 import L from 'leaflet';
 
