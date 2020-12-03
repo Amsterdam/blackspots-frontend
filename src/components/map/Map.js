@@ -32,7 +32,6 @@ import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
 import useYearFilters from './hooks/useYearFilters';
 import useBlackspotsLayer from './hooks/useBlackspotsLayer';
-// import useMap from './hooks/useMap';
 // import getCrsRd from '../../shared/services/getCrsRd';
 import { endpoints } from '../../config';
 import useMarkerLayer from './hooks/useMarkerLayer';
@@ -64,19 +63,19 @@ const Map = () => {
     // Keep the dependency array empty to prevent an infinite loop
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // const mapRef = useMap();
-  // useEffect(() => {
-  //   console.log('useEffect mapInstance', mapInstance);
-  //   if (mapInstance) {
-  //     L.tileLayer
-  //       .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
-  //         layers: ['stadsdeel'],
-  //         transparent: true,
-  //         format: 'image/png',
-  //       })
-  //       .addTo(mapInstance);
-  //   }
-  // }, [mapInstance]);
+  // Add the stadsdelen WMS
+  useEffect(() => {
+    console.log('useEffect mapInstance', mapInstance);
+    if (mapInstance) {
+      L.tileLayer
+        .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
+          layers: ['stadsdeel'],
+          transparent: true,
+          format: 'image/png',
+        })
+        .addTo(mapInstance);
+    }
+  }, [mapInstance]);
 
   useEffect(() => {
     console.log('results', results);
