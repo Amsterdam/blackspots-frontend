@@ -52,18 +52,18 @@ const Map = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    console.log('GLOBAL', mapInstance);
+    console.log('mapInstance', mapInstance);
     // Add the stadsdelen WMS
     if (mapInstance) {
-      console.log('GET FROM GLOBAL');
+      console.log('GET FROM GLOBAL ---------------------------------------');
       // setGeoLayerRef(global.geoLayerRef);
       // setlLayerRef(global.layerRef);
       // setSetLocation(global.setLocation);
 
       setTimeout(() => {
         console.log(
-          'settimeout GET FROM GLOBAL ========================',
-          global.setLocation
+          'settimeout GET FROM GLOBAL ===============================',
+          global.layerRef
         );
         setGeoLayerRef(global.geoLayerRef);
         setlLayerRef(global.layerRef);
