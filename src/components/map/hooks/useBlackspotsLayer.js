@@ -34,7 +34,7 @@ export const createFeature = (feature, latlng) => {
   });
 };
 
-const useBlackspotsLayer = (unused, locations, onMarkerClick) => {
+const useBlackspotsLayer = (locations, onMarkerClick) => {
   console.log('useBlackspotsLayer');
   const mapInstance = useMapInstance();
   console.log('useBlackspotsLayer', mapInstance);
@@ -50,6 +50,14 @@ const useBlackspotsLayer = (unused, locations, onMarkerClick) => {
   }, [mapInstance, locations, onMarkerClick]);
 
   return geoLayerRef;
+};
+
+export const BlackspotsLayer = ({ locations, onMarkerClick }) => {
+  console.log('BlackspotsLayer', locations, onMarkerClick);
+  const geoLayerRef = useBlackspotsLayer(locations, onMarkerClick);
+  global.geoLayerRef = geoLayerRef;
+
+  return null;
 };
 
 export default useBlackspotsLayer;

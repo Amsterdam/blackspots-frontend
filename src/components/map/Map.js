@@ -31,7 +31,7 @@ import { evaluateMarkerVisibility } from './helpers';
 import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
 import useYearFilters from './hooks/useYearFilters';
-import useBlackspotsLayer from './hooks/useBlackspotsLayer';
+import { BlackspotsLayer } from './hooks/useBlackspotsLayer';
 // IK KRIJG DEZE ER IN IMPORTED
 // import getCrsRd from '../../shared/services/getCrsRd';
 import { endpoints } from '../../config';
@@ -55,6 +55,7 @@ const Map = () => {
   const [showDetailPanel, setShowDetailPanel] = useState(false);
   const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
   const [mapInstance, setMapInstance] = useState(undefined);
+  const [geoLayerRef, setGeoLayerRef] = useState(undefined);
 
   useEffect(() => {
     if (locations.length === 0)
@@ -64,17 +65,18 @@ const Map = () => {
     // Keep the dependency array empty to prevent an infinite loop
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Add the stadsdelen WMS
   useEffect(() => {
     console.log('useEffect mapInstance', mapInstance);
+    // Add the stadsdelen WMS
     if (mapInstance) {
-      L.tileLayer
-        .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
-          layers: ['stadsdeel'],
-          transparent: true,
-          format: 'image/png',
-        })
-        .addTo(mapInstance);
+      setGeoLayerRef(global.geoLayerRef);
+      // L.tileLayer
+      //   .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
+      //     layers: ['stadsdeel'],
+      //     transparent: true,
+      //     format: 'image/png',
+      //   })
+      //   .addTo(mapInstance);
     }
   }, [mapInstance]);
 
@@ -101,7 +103,7 @@ const Map = () => {
     [actions]
   );
 
-  const geoLayerRef = useBlackspotsLayer(mapInstance, locations, onMarkerClick);
+  // const geoLayerRef = useBlackspotsLayer(mapInstance, locations, onMarkerClick);
   const { setLocation, layerRef } = useMarkerLayer(mapInstance);
 
   // const geoLayerRef = { current: { getLayers: () => [] } };
@@ -223,6 +225,7 @@ const Map = () => {
           },
         }}
       >
+        <BlackspotsLayer locations={locations} onMarkerClick={onMarkerClick} />
         <ViewerContainer
           bottomRight={<Zoom />}
           topRight={loading && <Loader />}
