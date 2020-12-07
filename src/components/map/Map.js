@@ -25,16 +25,13 @@ import { endpoints } from '../../config';
 import { MarkerLayer } from './hooks/useMarkerLayer';
 
 const MAP_OPTIONS = {
-  zoom: 10,
+  center: [52.36988741057662, 4.8966407775878915],
+  zoom: 13,
   maxZoom: 21,
   minZoom: 12,
   zoomControl: false,
   attributionControl: true,
   crs: getCrsRd(),
-  maxBounds: [
-    [52.25168, 4.64034],
-    [52.50536, 5.10737],
-  ],
 };
 
 const Map = () => {
@@ -56,8 +53,8 @@ const Map = () => {
 
   useEffect(() => {
     console.log(
-      'useEffect ===============================================',
-      mapInstance
+      'GLOBAL ===============================================',
+      geoLayerRef
     );
     // Add the stadsdelen WMS
     if (mapInstance && geoLayerRef) {
