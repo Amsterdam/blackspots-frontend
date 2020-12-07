@@ -1,16 +1,5 @@
-/* 
-solution from  Tim and Jon
-
-import { BaseLayer, Map } from '@amsterdam/arm-core';
-function BlackSpotsLayer() {
-  useBlackspotsLayer();
-  return null;
-}
-function MyMap() {
-  return <Map><BlackSpotsLayer/></Map>
-} */
-
 import React, { useState, useEffect, useCallback } from 'react';
+import { getCrsRd } from '@datapunt/amsterdam-react-maps/lib/utils';
 // import L from 'leaflet';
 
 import {
@@ -32,8 +21,6 @@ import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
 import useYearFilters from './hooks/useYearFilters';
 import { BlackspotsLayer } from './hooks/useBlackspotsLayer';
-// IK KRIJG DEZE ER IN IMPORTED
-// import getCrsRd from '../../shared/services/getCrsRd';
 import { endpoints } from '../../config';
 import { MarkerLayer } from './hooks/useMarkerLayer';
 
@@ -43,7 +30,7 @@ const MAP_OPTIONS = {
   minZoom: 12,
   zoomControl: false,
   attributionControl: true,
-  // crs: getCrsRd(),
+  crs: getCrsRd(),
   maxBounds: [
     [52.25168, 4.64034],
     [52.50536, 5.10737],
