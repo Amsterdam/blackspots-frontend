@@ -56,6 +56,7 @@ export const BlackspotsLayer = ({ locations, onMarkerClick }) => {
   console.log('BlackspotsLayer', locations, onMarkerClick);
   const geoLayerRef = useBlackspotsLayer(locations, onMarkerClick);
   global.geoLayerRef = geoLayerRef;
+  console.log('set black GLOBAL', geoLayerRef);
 
   return null;
 };

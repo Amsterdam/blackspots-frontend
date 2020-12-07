@@ -11,7 +11,7 @@ function MyMap() {
 } */
 
 import React, { useState, useEffect, useCallback } from 'react';
-import L from 'leaflet';
+// import L from 'leaflet';
 
 import {
   Map as ArmMap,
@@ -35,7 +35,7 @@ import { BlackspotsLayer } from './hooks/useBlackspotsLayer';
 // IK KRIJG DEZE ER IN IMPORTED
 // import getCrsRd from '../../shared/services/getCrsRd';
 import { endpoints } from '../../config';
-import useMarkerLayer from './hooks/useMarkerLayer';
+import { MarkerLayer } from './hooks/useMarkerLayer';
 
 const MAP_OPTIONS = {
   zoom: 10,
@@ -56,6 +56,8 @@ const Map = () => {
   const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
   const [mapInstance, setMapInstance] = useState(undefined);
   const [geoLayerRef, setGeoLayerRef] = useState(undefined);
+  const [layerRef, setlLayerRef] = useState(undefined);
+  const [setLocation, setSetLocation] = useState(undefined);
 
   useEffect(() => {
     if (locations.length === 0)
@@ -66,10 +68,17 @@ const Map = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    console.log('useEffect mapInstance', mapInstance);
+    console.log(
+      'useEffect ===============================================',
+      mapInstance
+    );
     // Add the stadsdelen WMS
-    if (mapInstance) {
+    if (mapInstance && geoLayerRef) {
+      console.log('GET FROM GLOBAL');
       setGeoLayerRef(global.geoLayerRef);
+      setlLayerRef(global.layerRef);
+      setSetLocation(global.setLocation);
+
       // L.tileLayer
       //   .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
       //     layers: ['stadsdeel'],
@@ -78,7 +87,7 @@ const Map = () => {
       //   })
       //   .addTo(mapInstance);
     }
-  }, [mapInstance]);
+  }, [mapInstance, geoLayerRef, layerRef]);
 
   useEffect(() => {
     console.log('results', results);
@@ -104,7 +113,7 @@ const Map = () => {
   );
 
   // const geoLayerRef = useBlackspotsLayer(mapInstance, locations, onMarkerClick);
-  const { setLocation, layerRef } = useMarkerLayer(mapInstance);
+  // const { setLocation, layerRef } = useMarkerLayer(mapInstance);
 
   // const geoLayerRef = { current: { getLayers: () => [] } };
   // const setLocation = () => {};
@@ -157,6 +166,9 @@ const Map = () => {
   const [deliveredListFilter, setDeliveredListFilter] = useState(false);
 
   useEffect(() => {
+    if (!mapInstance || !layerRef?.current || !geoLayerRef?.current) {
+      return;
+    }
     evaluateMarkerVisibility(
       [...geoLayerRef.current.getLayers()],
       spotTypeFilter,
@@ -184,6 +196,7 @@ const Map = () => {
       );
     }
   }, [
+    mapInstance,
     geoLayerRef,
     layerRef,
     spotTypeFilter,
@@ -226,6 +239,7 @@ const Map = () => {
         }}
       >
         <BlackspotsLayer locations={locations} onMarkerClick={onMarkerClick} />
+        <MarkerLayer />
         <ViewerContainer
           bottomRight={<Zoom />}
           topRight={loading && <Loader />}

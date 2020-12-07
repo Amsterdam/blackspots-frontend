@@ -7,10 +7,12 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 
 const useMarkerLayer = () => {
   const mapInstance = useMapInstance();
+  console.log('marker layer', mapInstance);
   const layerRef = useRef(null);
   const [location, setLocation] = useState(null);
   useEffect(() => {
-    if (location === null) return;
+    console.log('marker layer loc', location);
+    if (!location?.geometry) return;
     const latlng = {
       lat: location.geometry.coordinates[1],
       lng: location.geometry.coordinates[0],
@@ -33,6 +35,15 @@ const useMarkerLayer = () => {
   }, [location]);
 
   return { layerRef, location, setLocation };
+};
+
+export const MarkerLayer = () => {
+  const { setLocation, layerRef } = useMarkerLayer();
+  global.setLocation = setLocation;
+  global.layerRef = layerRef;
+  console.log('set GLOBAL', layerRef);
+
+  return null;
 };
 
 export default useMarkerLayer;
