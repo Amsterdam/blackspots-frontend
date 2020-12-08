@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import L from 'leaflet';
 import { useMapInstance } from '@amsterdam/react-maps';
@@ -53,12 +53,13 @@ const useBlackspotsLayer = (locations, onMarkerClick) => {
 };
 
 export const BlackspotsLayer = ({ locations, onMarkerClick }) => {
+  // const { locations } = useContext(FiltersContext);
   console.log('BlackspotsLayer', locations, onMarkerClick);
   const geoLayerRef = useBlackspotsLayer(locations, onMarkerClick);
   global.geoLayerRef = geoLayerRef;
   console.log('set black GLOBAL', geoLayerRef);
 
-  return null;
+  return locations ? <GeoJSON args={[locations]} options={options} /> : null;
 };
 
 export default useBlackspotsLayer;
