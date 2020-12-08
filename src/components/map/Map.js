@@ -53,7 +53,6 @@ const Map = () => {
 
   useEffect(() => {
     console.log('mapInstance', mapInstance);
-    // Add the stadsdelen WMS
     if (mapInstance) {
       console.log('GET FROM GLOBAL ---------------------------------------');
       // setGeoLayerRef(global.geoLayerRef);
@@ -63,13 +62,14 @@ const Map = () => {
       setTimeout(() => {
         console.log(
           'settimeout GET FROM GLOBAL ===============================',
-          global.layerRef
+          global.setLocation
         );
         setGeoLayerRef(global.geoLayerRef);
         setlLayerRef(global.layerRef);
         setSetLocation(global.setLocation);
       }, 10000);
 
+      // Add the stadsdelen WMS
       // L.tileLayer
       //   .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
       //     layers: ['stadsdeel'],
@@ -112,7 +112,7 @@ const Map = () => {
 
   useEffect(() => {
     if (selectedLocation) {
-      setLocation(selectedLocation);
+      global.setLocation(selectedLocation);
 
       setShowDetailPanel(true);
     }
