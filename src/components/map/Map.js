@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getCrsRd } from '@datapunt/amsterdam-react-maps/lib/utils';
-// import L from 'leaflet';
+import L from 'leaflet';
 
 import {
   Map as ArmMap,
@@ -70,13 +70,13 @@ const Map = () => {
       }, 10000);
 
       // Add the stadsdelen WMS
-      // L.tileLayer
-      //   .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
-      //     layers: ['stadsdeel'],
-      //     transparent: true,
-      //     format: 'image/png',
-      //   })
-      //   .addTo(mapInstance);
+      L.tileLayer
+        .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
+          layers: ['stadsdeel'],
+          transparent: true,
+          format: 'image/png',
+        })
+        .addTo(mapInstance);
     }
   }, [mapInstance]);
 
@@ -261,27 +261,3 @@ const Map = () => {
   );
 };
 export default Map;
-
-/*
-
-<div>
-{loading && <Loader />}
-{!errorMessage && !loading && (
-  <FilterPanel
-    spotTypeFilter={spotTypeFilter}
-    spotStatusTypeFilter={spotStatusTypeFilter}
-    blackspotYearFilter={blackspotYearFilter}
-    deliveredYearFilter={deliveredYearFilter}
-    quickscanYearFilter={quickscanYearFilter}
-    stadsdeelFilter={stadsdeelFilter}
-    setFilters={setFilters}
-    setBlackspotListFilter={value => setBlackspotListFilter(value)}
-    setQuickscanListFilter={setQuickscanListFilter}
-    setDeliveredListFilter={setDeliveredListFilter}
-    setStadsdeelFilter={setStadsdeelFilter}
-  />
-)}
-
-</div>
-
-*/
