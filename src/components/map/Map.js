@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getCrsRd } from '@datapunt/amsterdam-react-maps/lib/utils';
-// import L from 'leaflet';
+import L from 'leaflet';
 
 import {
   Map as ArmMap,
@@ -13,6 +13,7 @@ import Loader from 'shared/loader/Loader';
 import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
+import { FilterBoxStyle } from '@amsterdam/asc-ui/lib/components/FilterBox';
 import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
@@ -70,13 +71,13 @@ const Map = () => {
       }, 10000);
 
       // Add the stadsdelen WMS
-      // L.tileLayer
-      //   .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
-      //     layers: ['stadsdeel'],
-      //     transparent: true,
-      //     format: 'image/png',
-      //   })
-      //   .addTo(mapInstance);
+      L.tileLayer
+        .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
+          layers: ['stadsdeel'],
+          transparent: true,
+          format: 'image/png',
+        })
+        .addTo(mapInstance);
     }
   }, [mapInstance]);
 
@@ -219,6 +220,7 @@ const Map = () => {
 
   return (
     <MapStyle>
+      {/* <FiltersProvider value={ {locations, setFilters} } zie UserContext voorbeerld */}
       <ArmMap
         data-testid="map"
         setInstance={instance => setMapInstance(instance)}
@@ -229,7 +231,7 @@ const Map = () => {
           },
         }}
       >
-        <BlackspotsLayer locations={locations} onMarkerClick={onMarkerClick} />
+        <BlackspotsLayer onMarkerClick={onMarkerClick} />
         <MarkerLayer />
         <ViewerContainer
           bottomRight={<Zoom />}
@@ -261,27 +263,3 @@ const Map = () => {
   );
 };
 export default Map;
-
-/*
-
-<div>
-{loading && <Loader />}
-{!errorMessage && !loading && (
-  <FilterPanel
-    spotTypeFilter={spotTypeFilter}
-    spotStatusTypeFilter={spotStatusTypeFilter}
-    blackspotYearFilter={blackspotYearFilter}
-    deliveredYearFilter={deliveredYearFilter}
-    quickscanYearFilter={quickscanYearFilter}
-    stadsdeelFilter={stadsdeelFilter}
-    setFilters={setFilters}
-    setBlackspotListFilter={value => setBlackspotListFilter(value)}
-    setQuickscanListFilter={setQuickscanListFilter}
-    setDeliveredListFilter={setDeliveredListFilter}
-    setStadsdeelFilter={setStadsdeelFilter}
-  />
-)}
-
-</div>
-
-*/
