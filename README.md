@@ -21,12 +21,6 @@
   npm install
 ```
 
-## Copy the acc environment for local development
-
-```
-  cp .env.acc .env
-```
-
 ## Development
 
 - configure the environment variables in the .env file, examples can be found in .env.dev, .env.acc en .env.prod
