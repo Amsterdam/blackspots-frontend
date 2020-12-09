@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { getCrsRd } from '@datapunt/amsterdam-react-maps/lib/utils';
 import L from 'leaflet';
 
@@ -13,7 +13,8 @@ import Loader from 'shared/loader/Loader';
 import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
-import { FilterBoxStyle } from '@amsterdam/asc-ui/lib/components/FilterBox';
+// import { FilterBoxStyle } from '@amsterdam/asc-ui/lib/components/FilterBox';
+import FilterContext, { FilterContextProvider } from './FilterContext';
 import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
@@ -40,10 +41,9 @@ const Map = () => {
   const [showDetailPanel, setShowDetailPanel] = useState(false);
   const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
   const [mapInstance, setMapInstance] = useState(undefined);
-  const [geoLayerRef, setGeoLayerRef] = useState(undefined);
-  const [layerRef, setlLayerRef] = useState(undefined);
-  const [setLocation, setSetLocation] = useState(undefined);
+  const { layerRef, geoLayerRef, setLocation } = useContext(FilterContext);
 
+  console.log('context layerRef', layerRef);
   useEffect(() => {
     if (locations.length === 0)
       (async () => {
@@ -60,15 +60,15 @@ const Map = () => {
       // setlLayerRef(global.layerRef);
       // setSetLocation(global.setLocation);
 
-      setTimeout(() => {
-        console.log(
-          'settimeout GET FROM GLOBAL ===============================',
-          global.setLocation
-        );
-        setGeoLayerRef(global.geoLayerRef);
-        setlLayerRef(global.layerRef);
-        setSetLocation(global.setLocation);
-      }, 10000);
+      // setTimeout(() => {
+      //   console.log(
+      //     'settimeout GET FROM GLOBAL ===============================',
+      //     global.setLocation
+      //   );
+      //   setGeoLayerRef(global.geoLayerRef);
+      //   setlLayerRef(global.layerRef);
+      //   setSetLocation(global.setLocation);
+      // }, 10000);
 
       // Add the stadsdelen WMS
       L.tileLayer
@@ -220,45 +220,46 @@ const Map = () => {
 
   return (
     <MapStyle>
-      {/* <FiltersProvider value={ {locations, setFilters} } zie UserContext voorbeerld */}
-      <ArmMap
-        data-testid="map"
-        setInstance={instance => setMapInstance(instance)}
-        options={MAP_OPTIONS}
-        events={{
-          click: e => {
-            console.log('onMapClick', e);
-          },
-        }}
-      >
-        <BlackspotsLayer onMarkerClick={onMarkerClick} />
-        <MarkerLayer />
-        <ViewerContainer
-          bottomRight={<Zoom />}
-          topRight={loading && <Loader />}
-          bottomLeft={
-            <FilterPanel
-              spotTypeFilter={spotTypeFilter}
-              spotStatusTypeFilter={spotStatusTypeFilter}
-              blackspotYearFilter={blackspotYearFilter}
-              deliveredYearFilter={deliveredYearFilter}
-              quickscanYearFilter={quickscanYearFilter}
-              stadsdeelFilter={stadsdeelFilter}
-              setFilters={setFilters}
-              setBlackspotListFilter={value => setBlackspotListFilter(value)}
-              setQuickscanListFilter={setQuickscanListFilter}
-              setDeliveredListFilter={setDeliveredListFilter}
-              setStadsdeelFilter={setStadsdeelFilter}
-            />
-          }
+      <FilterContextProvider value={{ layerRef, setLocation, geoLayerRef }}>
+        <ArmMap
+          data-testid="map"
+          setInstance={instance => setMapInstance(instance)}
+          options={MAP_OPTIONS}
+          events={{
+            click: e => {
+              console.log('onMapClick', e);
+            },
+          }}
+        >
+          <BlackspotsLayer onMarkerClick={onMarkerClick} />
+          <MarkerLayer />
+          <ViewerContainer
+            bottomRight={<Zoom />}
+            topRight={loading && <Loader />}
+            bottomLeft={
+              <FilterPanel
+                spotTypeFilter={spotTypeFilter}
+                spotStatusTypeFilter={spotStatusTypeFilter}
+                blackspotYearFilter={blackspotYearFilter}
+                deliveredYearFilter={deliveredYearFilter}
+                quickscanYearFilter={quickscanYearFilter}
+                stadsdeelFilter={stadsdeelFilter}
+                setFilters={setFilters}
+                setBlackspotListFilter={value => setBlackspotListFilter(value)}
+                setQuickscanListFilter={setQuickscanListFilter}
+                setDeliveredListFilter={setDeliveredListFilter}
+                setStadsdeelFilter={setStadsdeelFilter}
+              />
+            }
+          />
+          <BaseLayer />
+        </ArmMap>
+        <DetailPanel
+          feature={selectedLocation}
+          isOpen={showDetailPanel}
+          togglePanel={toggleDetailPanel}
         />
-        <BaseLayer />
-      </ArmMap>
-      <DetailPanel
-        feature={selectedLocation}
-        isOpen={showDetailPanel}
-        togglePanel={toggleDetailPanel}
-      />
+      </FilterContextProvider>
     </MapStyle>
   );
 };

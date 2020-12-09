@@ -5,6 +5,8 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 
+import FilterContext from '../FilterContext';
+
 export const handleFeature = (feature, layer, onClick) => {
   layer.on('click', ({ latlng }) => {
     onClick(feature, latlng);
@@ -37,7 +39,6 @@ export const createFeature = (feature, latlng) => {
 const useBlackspotsLayer = (locations, onMarkerClick) => {
   console.log('useBlackspotsLayer');
   const mapInstance = useMapInstance();
-  console.log('useBlackspotsLayer', mapInstance);
   const geoLayerRef = useRef(null);
   useEffect(() => {
     geoLayerRef.current = L.geoJSON(locations, {
@@ -54,12 +55,15 @@ const useBlackspotsLayer = (locations, onMarkerClick) => {
 
 export const BlackspotsLayer = ({ locations, onMarkerClick }) => {
   // const { locations } = useContext(FiltersContext);
-  console.log('BlackspotsLayer', locations, onMarkerClick);
+  // SET
+  // const [layerRef, setLayerRef] = useContext(FilterContext);
+  console.log('BlackspotsLayer');
   const geoLayerRef = useBlackspotsLayer(locations, onMarkerClick);
   global.geoLayerRef = geoLayerRef;
   console.log('set black GLOBAL', geoLayerRef);
+  return null;
 
-  return locations ? <GeoJSON args={[locations]} options={options} /> : null;
+  // return locations ? <GeoJSON args={[locations]} options={options} /> : null;
 };
 
 export default useBlackspotsLayer;
