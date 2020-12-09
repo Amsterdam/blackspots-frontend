@@ -44,9 +44,8 @@ const Map = () => {
   const [showDetailPanel, setShowDetailPanel] = useState(false);
   const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
   const [mapInstance, setMapInstance] = useState(undefined);
-  // const allVals = useContext(FilterContext);
 
-  console.log('context layerRef', state, dispatch);
+  console.log('context layerRef', state.layerRef);
   useEffect(() => {
     if (locations.length === 0)
       (async () => {
