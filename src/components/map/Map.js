@@ -46,9 +46,12 @@ const Map = () => {
     setQuickscanYearFilter,
   ] = useYearFilters(locations);
 
-  const onMarkerClick = useCallback(feature => {
-    actions.selectLocation({ payload: feature });
-  }, []);
+  const onMarkerClick = useCallback(
+    feature => {
+      actions.selectLocation({ payload: feature });
+    },
+    [actions]
+  );
 
   const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
   const { setLocation, layerRef } = useMarkerLayer(mapRef);

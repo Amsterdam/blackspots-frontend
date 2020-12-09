@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { Heading, Button, Row } from '@datapunt/asc-ui';
+import { Button, Row } from '@amsterdam/asc-ui';
 import useForm from 'react-hook-form';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
@@ -19,6 +19,7 @@ import {
   locationToFeature,
 } from './services/normalize';
 import { appRoutes, SpotTypes, endpoints } from '../../config';
+import { HeaderSecondary } from '../../styles/SharedStyles';
 
 const isBlackspotType = spotType =>
   spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
@@ -40,7 +41,7 @@ const LocationForm = ({ id: locationId }) => {
     if (locationId && !selectedLocation) {
       history.push(appRoutes.HOME);
     }
-  }, [locationId, selectedLocation]);
+  }, [history, locationId, selectedLocation]);
 
   const defaultValues = useMemo(
     () =>
@@ -52,7 +53,7 @@ const LocationForm = ({ id: locationId }) => {
         : {
             ...initalValues,
           },
-    [location, initalValues]
+    [location, locationId]
   );
 
   const {
@@ -93,7 +94,7 @@ const LocationForm = ({ id: locationId }) => {
       setValue('jaar_blackspotlijst', '');
       setValue('jaar_ongeval_quickscan', '');
     }
-  }, [spotType]);
+  }, [spotType, setValue, values.jaar_blackspotlijst, values.jaar_ongeval_quickscan]);
 
   const coordinaten = watch('coordinaten');
   useEffect(() => {
@@ -105,7 +106,7 @@ const LocationForm = ({ id: locationId }) => {
       setValue('stadsdeel', '', true);
       unregister('stadsdeel');
     })();
-  }, [coordinaten]);
+  }, [coordinaten, setValue, unregister]);
 
   const handleServerValidation = async reason => {
     if (reason.point && reason.point.length) {
@@ -165,7 +166,7 @@ const LocationForm = ({ id: locationId }) => {
       register({ name, type: 'custom' }, validation);
       setValue(name, defaultValues[name]);
     });
-  }, [register, locationId]);
+  }, [register, locationId, defaultValues, setValue]);
 
   return (
     <>
@@ -174,9 +175,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <Heading $as="h3" color="secondary">
-              Locatie
-            </Heading>
+            <HeaderSecondary forwardedAs="h3">> Locatie</HeaderSecondary>
             {FormFields.filter(({ column }) => column === 1).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (
@@ -194,9 +193,9 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <Heading $as="h3" color="secondary">
+            <HeaderSecondary forwardedAs="h3">
               Maatregelen
-            </Heading>
+            </HeaderSecondary>
             {FormFields.filter(({ column }) => column === 2).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (
@@ -214,9 +213,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <Heading $as="h3" color="secondary">
-              Documenten
-            </Heading>
+            <HeaderSecondary forwardedAs="h3">Documenten</HeaderSecondary>
             {FormFields.filter(({ column }) => column === 3).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (

@@ -1,6 +1,6 @@
-import styled from '@datapunt/asc-core';
+import styled from 'styled-components';
 import 'react-datepicker/dist/react-datepicker.css';
-import { styles, themeColor } from '@datapunt/asc-ui';
+import { styles, themeColor } from '@amsterdam/asc-ui';
 
 const DatePickerInputStyle = styled.div`
   position: relative;

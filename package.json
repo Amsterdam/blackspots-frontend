@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@amsterdam/asc-assets": "^0.26.1",
+    "@amsterdam/asc-ui": "^0.26.1",
     "@babel/polyfill": "^7.7.0",
-    "@datapunt/asc-assets": "^0.17.7",
-    "@datapunt/asc-core": "^0.17.7",
-    "@datapunt/asc-ui": "^0.17.7",
     "@datapunt/matomo-tracker-react": "0.0.15",
     "@sentry/browser": "^5.10.2",
     "@types/jest": "^24.0.23",
@@ -35,6 +34,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.4",
     "regenerator-runtime": "^0.13.3",
+    "styled-components": "^4.4.1",
     "typescript": "^3.7.3"
   },
   "scripts": {

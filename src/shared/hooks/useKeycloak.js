@@ -12,7 +12,7 @@ const useKeycloak = () => {
       setCanAdd(await auth.canAdd());
       setCanEdit(await auth.canEdit());
     })();
-  }, [auth]);
+  }, []);
 
   return { authenticated, canAdd, canEdit };
 };

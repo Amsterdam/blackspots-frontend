@@ -2,26 +2,25 @@ import React from 'react';
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
 import { appRoutes } from 'config';
 import { ReactComponent as Chevron } from 'assets/icons/chevron-left.svg';
-import { Link } from '@datapunt/asc-ui';
+import { Link } from '@amsterdam/asc-ui';
 import DataTable from '../../shared/dataTable/DataTable';
 import Footer from '../../components/footer/Footer';
 import ContactPageStyle, {
   ContentStyle,
   EmailLinkStyle,
-  HeadingStyle,
 } from './ContactPageStyle';
-import { IntroTextStyle } from '../../styles/SharedStyles';
+import { IntroTextStyle, H1 } from '../../styles/SharedStyles';
 
 const ContactPage = () => {
   return (
     <ContactPageStyle>
       <ContentStyle>
         <BlueLinkButton
-          to={appRoutes.HOME}
+          href={appRoutes.HOME}
           text="Terug naar kaart"
           chevronDirection="left"
         />
-        <HeadingStyle>Contact</HeadingStyle>
+        <H1>Contact</H1>
 
         <IntroTextStyle>
           Voor vragen of meer informatie over locaties op deze kaart of voor

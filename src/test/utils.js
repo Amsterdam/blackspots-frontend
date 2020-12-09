@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
-import { ThemeProvider } from '@datapunt/asc-ui';
+import { ThemeProvider } from '@amsterdam/asc-ui';
 import { UserContextProvider } from 'shared/user/UserContext';
 
 export const history = createMemoryHistory();
