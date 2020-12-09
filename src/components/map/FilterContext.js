@@ -1,19 +1,13 @@
-import React from 'react';
+import React, { useReducer } from 'react';
+import reducer, { initialState } from './reducer';
 
-const initialState = {
-  // locations: [],
-  // selectedLocation: {},
+const Context = React.createContext(initialState);
 
-  layerRef: 'foo',
-  geoLayerRef: undefined,
-  setLocation: undefined,
-};
+const FilterContext = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-const FilterContext = React.createContext(initialState);
-
-export const FilterContextProvider = ({ filter, children }) => {
   return (
-    <FilterContext.Provider value={filter}>{children}</FilterContext.Provider>
+    <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
   );
 };
 

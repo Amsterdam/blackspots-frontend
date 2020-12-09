@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+  useReducer,
+} from 'react';
 import { getCrsRd } from '@datapunt/amsterdam-react-maps/lib/utils';
 import L from 'leaflet';
 
@@ -14,7 +20,7 @@ import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 // import { FilterBoxStyle } from '@amsterdam/asc-ui/lib/components/FilterBox';
-import FilterContext, { FilterContextProvider } from './FilterContext';
+import FilterContext from './FilterContext';
 import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
@@ -25,6 +31,7 @@ import useYearFilters from './hooks/useYearFilters';
 import { BlackspotsLayer } from './hooks/useBlackspotsLayer';
 import { endpoints } from '../../config';
 import { MarkerLayer } from './hooks/useMarkerLayer';
+import reducer, { initialState } from './reducer';
 
 const MAP_OPTIONS = {
   center: [52.36988741057662, 4.8966407775878915],
@@ -37,13 +44,15 @@ const MAP_OPTIONS = {
 };
 
 const Map = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
   const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
   const [mapInstance, setMapInstance] = useState(undefined);
-  const { layerRef, geoLayerRef, setLocation } = useContext(FilterContext);
+  // const allVals = useContext(FilterContext);
 
-  console.log('context layerRef', layerRef);
+  console.log('context layerRef', state.re);
   useEffect(() => {
     if (locations.length === 0)
       (async () => {
@@ -107,9 +116,9 @@ const Map = () => {
   // const geoLayerRef = useBlackspotsLayer(mapInstance, locations, onMarkerClick);
   // const { setLocation, layerRef } = useMarkerLayer(mapInstance);
 
-  // const geoLayerRef = { current: { getLayers: () => [] } };
-  // const setLocation = () => {};
-  // const layerRef = { current: { getLayers: () => [] } };
+  const geoLayerRef = { current: { getLayers: () => [] } };
+  const setLocation = () => {};
+  const layerRef = { current: { getLayers: () => [] } };
 
   useEffect(() => {
     if (selectedLocation) {
@@ -220,7 +229,7 @@ const Map = () => {
 
   return (
     <MapStyle>
-      <FilterContextProvider value={{ layerRef, setLocation, geoLayerRef }}>
+      <FilterContext.Provider value={{ layerRef: state.layerRef }}>
         <ArmMap
           data-testid="map"
           setInstance={instance => setMapInstance(instance)}
@@ -259,7 +268,7 @@ const Map = () => {
           isOpen={showDetailPanel}
           togglePanel={toggleDetailPanel}
         />
-      </FilterContextProvider>
+      </FilterContext.Provider>
     </MapStyle>
   );
 };
