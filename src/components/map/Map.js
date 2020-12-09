@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useContext,
-  useReducer,
-} from 'react';
+import React, { useState, useEffect, useCallback, useReducer } from 'react';
 import { getCrsRd } from '@datapunt/amsterdam-react-maps/lib/utils';
 import L from 'leaflet';
 
@@ -52,7 +46,7 @@ const Map = () => {
   const [mapInstance, setMapInstance] = useState(undefined);
   // const allVals = useContext(FilterContext);
 
-  console.log('context layerRef', state.re);
+  console.log('context layerRef', state, dispatch);
   useEffect(() => {
     if (locations.length === 0)
       (async () => {
@@ -122,7 +116,7 @@ const Map = () => {
 
   useEffect(() => {
     if (selectedLocation) {
-      global.setLocation(selectedLocation);
+      setLocation(selectedLocation);
 
       setShowDetailPanel(true);
     }
@@ -236,7 +230,7 @@ const Map = () => {
           options={MAP_OPTIONS}
           events={{
             click: e => {
-              console.log('onMapClick', e);
+              console.log('onMapClick', e, state.layerRef);
             },
           }}
         >
@@ -272,4 +266,5 @@ const Map = () => {
     </MapStyle>
   );
 };
+
 export default Map;
