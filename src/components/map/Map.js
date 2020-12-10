@@ -164,7 +164,7 @@ const Map = () => {
       return;
     }
     evaluateMarkerVisibility(
-      [...geoLayerRef.current.getLayers()],
+      [],
       spotTypeFilter,
       spotStatusTypeFilter,
       blackspotYearFilter,
@@ -177,7 +177,7 @@ const Map = () => {
     );
     if (layerRef.current) {
       evaluateMarkerVisibility(
-        [layerRef.current],
+        [],
         spotTypeFilter,
         spotStatusTypeFilter,
         blackspotYearFilter,
