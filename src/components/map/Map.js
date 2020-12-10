@@ -14,6 +14,11 @@ import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 // import { FilterBoxStyle } from '@amsterdam/asc-ui/lib/components/FilterBox';
+import filterReducer, {
+  initialState,
+  SET_LOCATIONS,
+  SELECT_LOCATION,
+} from 'shared/reducers/filter';
 import FilterContext from '../../shared/reducers/FilterContext';
 import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
@@ -25,11 +30,6 @@ import useYearFilters from './hooks/useYearFilters';
 import { BlackspotsLayer } from './hooks/useBlackspotsLayer';
 import { endpoints } from '../../config';
 import { MarkerLayer } from './hooks/useMarkerLayer';
-import filterReducer, {
-  initialState,
-  SET_LOCATIONS,
-  SELECT_LOCATION,
-} from '../../shared/reducers/filter';
 
 const MAP_OPTIONS = {
   center: [52.36988741057662, 4.8966407775878915],
@@ -241,7 +241,10 @@ const Map = () => {
             },
           }}
         >
-          <BlackspotsLayer onMarkerClick={onMarkerClick} />
+          <BlackspotsLayer
+            locations={state.locations}
+            onMarkerClick={onMarkerClick}
+          />
           <MarkerLayer />
           <ViewerContainer
             bottomRight={<Zoom />}
