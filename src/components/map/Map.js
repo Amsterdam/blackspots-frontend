@@ -222,7 +222,7 @@ const Map = () => {
 
   return (
     <MapStyle>
-      <FilterContext.Provider value={{ layerRef: state.layerRef }}>
+      <FilterContext>
         <ArmMap
           data-testid="map"
           setInstance={instance => setMapInstance(instance)}
@@ -261,7 +261,7 @@ const Map = () => {
           isOpen={showDetailPanel}
           togglePanel={toggleDetailPanel}
         />
-      </FilterContext.Provider>
+      </FilterContext>
     </MapStyle>
   );
 };
