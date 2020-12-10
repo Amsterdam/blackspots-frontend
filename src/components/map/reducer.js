@@ -1,7 +1,5 @@
 export const initialState = {
-  layerRef: 'foo',
-  geoLayerRef: 'bar',
-  setLocation: undefined,
+  test: 'foo',
   locations: [],
 };
 
@@ -14,9 +12,9 @@ export default (state, action) => {
     //   };
 
     // case SET_LOCATION:
-    //   return {
     //     ...state,
     //     location: action.payload,
+    //   return {
     //   };
 
     // case SET_ADDRESS:

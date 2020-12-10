@@ -45,7 +45,7 @@ const Map = () => {
   const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
   const [mapInstance, setMapInstance] = useState(undefined);
 
-  console.log('context layerRef', state.layerRef);
+  console.log('context test', state.test);
   useEffect(() => {
     if (locations.length === 0)
       (async () => {
