@@ -1,11 +1,11 @@
-import React, { useRef, useEffect, useContext } from 'react';
+import React, { useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import L from 'leaflet';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 
-import FilterContext from '../FilterContext';
+// import FilterContext from '../../../shared/reducers/FilterContext';
 
 export const handleFeature = (feature, layer, onClick) => {
   layer.on('click', ({ latlng }) => {

@@ -14,7 +14,7 @@ import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 // import { FilterBoxStyle } from '@amsterdam/asc-ui/lib/components/FilterBox';
-import FilterContext from './FilterContext';
+import FilterContext from '../../shared/reducers/FilterContext';
 import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
@@ -25,7 +25,10 @@ import useYearFilters from './hooks/useYearFilters';
 import { BlackspotsLayer } from './hooks/useBlackspotsLayer';
 import { endpoints } from '../../config';
 import { MarkerLayer } from './hooks/useMarkerLayer';
-import reducer, { initialState } from './reducer';
+import filterReducer, {
+  initialState,
+  // actions,
+} from '../../shared/reducers/filter';
 
 const MAP_OPTIONS = {
   center: [52.36988741057662, 4.8966407775878915],
@@ -38,7 +41,7 @@ const MAP_OPTIONS = {
 };
 
 const Map = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(filterReducer, initialState);
 
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);

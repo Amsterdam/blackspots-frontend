@@ -1,7 +1,7 @@
 /* eslint-disable no-case-declarations */
 export const REDUCER_KEY = 'filter';
 export const SELECT_LOCATION = `${REDUCER_KEY}/SELECT_LOCATION`;
-export const ADD_LOCATIONS = `${REDUCER_KEY}/ADD_LOCATIONS`;
+export const SET_LOCATIONS = `${REDUCER_KEY}/SET_LOCATIONS`;
 export const SET_FILTER = `${REDUCER_KEY}/SET_FILTER`;
 
 export const initialState = {
@@ -12,15 +12,15 @@ export const initialState = {
 };
 
 const filterReducer = (state = initialState, action) => {
+  console.log('filterReducer', action.type, action.payload);
   switch (action.type) {
     case SELECT_LOCATION:
       return {
         ...state,
         selectedLocation: { ...action.payload },
       };
-    case ADD_LOCATIONS:
+    case SET_LOCATIONS:
       return {
-        ...state,
         locations: [...action.payload],
       };
     case SET_FILTER:
@@ -38,7 +38,7 @@ const filterReducer = (state = initialState, action) => {
 
 export const actions = {
   selectLocation: SELECT_LOCATION,
-  addLocations: ADD_LOCATIONS,
+  SETLocations: SET_LOCATIONS,
   setFilter: SET_FILTER,
 };
 
