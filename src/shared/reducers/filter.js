@@ -38,7 +38,7 @@ const filterReducer = (state = initialState, action) => {
 
 export const actions = {
   selectLocation: SELECT_LOCATION,
-  SETLocations: SET_LOCATIONS,
+  setLocations: SET_LOCATIONS,
   setFilter: SET_FILTER,
 };
 

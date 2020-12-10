@@ -27,7 +27,8 @@ import { endpoints } from '../../config';
 import { MarkerLayer } from './hooks/useMarkerLayer';
 import filterReducer, {
   initialState,
-  // actions,
+  SET_LOCATIONS,
+  SELECT_LOCATION,
 } from '../../shared/reducers/filter';
 
 const MAP_OPTIONS = {
@@ -45,7 +46,7 @@ const Map = () => {
 
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
-  const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
+  const [{ selectedLocation, locations }] = useAppReducer(LOCATION);
   const [mapInstance, setMapInstance] = useState(undefined);
 
   console.log('context test', state.test);
@@ -88,8 +89,12 @@ const Map = () => {
 
   useEffect(() => {
     console.log('results', results);
-    if (locations.length === 0)
-      actions.addLocations({ payload: results ? [...results.features] : [] });
+    if (results) {
+      dispatch({
+        type: SET_LOCATIONS,
+        payload: results ? [...results.features] : [],
+      });
+    }
     // Keep the actions and locations out from the dependency array to prevent infinite loop
   }, [results]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -104,9 +109,9 @@ const Map = () => {
 
   const onMarkerClick = useCallback(
     feature => {
-      actions.selectLocation({ payload: feature });
+      dispatch({ type: SELECT_LOCATION, payload: feature });
     },
-    [actions]
+    [dispatch]
   );
 
   // const geoLayerRef = useBlackspotsLayer(mapInstance, locations, onMarkerClick);
