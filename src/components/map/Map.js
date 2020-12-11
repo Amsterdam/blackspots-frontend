@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useContext } from 'react';
 // import L from 'leaflet';
 
 import {
-  Map as ArmMap,
+  Map,
   BaseLayer,
   ViewerContainer,
   Zoom,
@@ -38,7 +38,7 @@ const MAP_OPTIONS = {
   crs: getCrsRd(),
 };
 
-const Map = () => {
+const MapComponent = () => {
   const { state, dispatch } = useContext(FilterContext);
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
@@ -226,7 +226,7 @@ const Map = () => {
 
   return (
     <MapStyle>
-      <ArmMap
+      <Map
         data-testid="map"
         setInstance={instance => setMapInstance(instance)}
         options={MAP_OPTIONS}
@@ -238,7 +238,7 @@ const Map = () => {
           topRight={loading && <Loader />}
         />
         <BaseLayer />
-      </ArmMap>
+      </Map>
       <DetailPanel
         feature={state.selectedLocation}
         isOpen={showDetailPanel}
@@ -248,4 +248,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default MapComponent;
