@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
-import { getCrsRd } from '@datapunt/amsterdam-react-maps/lib/utils';
 // import L from 'leaflet';
 
 import {
@@ -7,8 +6,8 @@ import {
   BaseLayer,
   ViewerContainer,
   Zoom,
+  getCrsRd,
 } from '@amsterdam/arm-core';
-
 import 'leaflet/dist/leaflet.css';
 import Loader from 'shared/loader/Loader';
 // import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
@@ -44,7 +43,6 @@ const Map = () => {
   const [showDetailPanel, setShowDetailPanel] = useState(false);
   // const [{ selectedLocation, locations }] = useAppReducer(LOCATION);
   const [mapInstance, setMapInstance] = useState(undefined);
-  console.log('context', state, dispatch);
 
   useEffect(() => {
     if (state.locations.length === 0)
