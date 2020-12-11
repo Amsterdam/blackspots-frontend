@@ -38,7 +38,7 @@ const filterReducer = (state = initialState, action) => {
 export const actions = {
   selectLocation: payload => ({ type: SELECT_LOCATION, payload }),
   setLocations: payload => ({ type: SET_LOCATIONS, payload }),
-  setFilter: SET_FILTER,
+  setFilter: payload => ({ type: SET_FILTER, payload }),
 };
 
 export default filterReducer;

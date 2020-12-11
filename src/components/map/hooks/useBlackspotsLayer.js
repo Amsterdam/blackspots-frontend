@@ -58,7 +58,6 @@ export const BlackspotsLayer = ({ onMarkerClick }) => {
   const { state } = useContext(FilterContext);
   console.log('BlackspotsLayer', state.locations);
 
-  // return <FilterContext.Consumer></FilterContext.Consumer>;
   // const mapInstance = useMapInstance();
   // if (!mapInstance) {
   //   return null;
