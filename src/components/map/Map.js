@@ -15,21 +15,15 @@ import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 // import { FilterBoxStyle } from '@amsterdam/asc-ui/lib/components/FilterBox';
-import filterReducer, {
-  initialState,
-  SET_LOCATIONS,
-  SELECT_LOCATION,
-} from 'shared/reducers/filter';
-import FilterContextProvider, {
-  FilterContext,
-} from 'shared/reducers/FilterContext';
+import filterReducer, { actions } from 'shared/reducers/filter';
+import { FilterContext } from 'shared/reducers/FilterContext';
 import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
-import FilterPanel from '../filterPanel/FilterPanel';
-import { evaluateMarkerVisibility } from './helpers';
+// import FilterPanel from '../filterPanel/FilterPanel';
+// import { evaluateMarkerVisibility } from './helpers';
 import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
-import useYearFilters from './hooks/useYearFilters';
+// import useYearFilters from './hooks/useYearFilters';
 import { BlackspotsLayer } from './hooks/useBlackspotsLayer';
 import { endpoints } from '../../config';
 import { MarkerLayer } from './hooks/useMarkerLayer';
@@ -50,8 +44,8 @@ const Map = () => {
   const [showDetailPanel, setShowDetailPanel] = useState(false);
   const [{ selectedLocation, locations }] = useAppReducer(LOCATION);
   const [mapInstance, setMapInstance] = useState(undefined);
+  console.log('context', state, dispatch);
 
-  console.log('context test', state.test);
   useEffect(() => {
     if (locations.length === 0)
       (async () => {
@@ -90,28 +84,25 @@ const Map = () => {
   }, [mapInstance]);
 
   useEffect(() => {
-    console.log('results', results);
+    console.log('results  ', results);
     if (results) {
-      dispatch({
-        type: SET_LOCATIONS,
-        payload: results ? [...results.features] : [],
-      });
+      actions.setLocations(results ? [...results.features] : []);
     }
     // Keep the actions and locations out from the dependency array to prevent infinite loop
   }, [results]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const [
-    blackspotYearFilter,
-    deliveredYearFilter,
-    quickscanYearFilter,
-    setBlackspotYearFilter,
-    setDeliveredYearFilter,
-    setQuickscanYearFilter,
-  ] = useYearFilters(locations);
+  // const [
+  //   blackspotYearFilter,
+  //   deliveredYearFilter,
+  //   quickscanYearFilter,
+  //   setBlackspotYearFilter,
+  //   setDeliveredYearFilter,
+  //   setQuickscanYearFilter,
+  // ] = useYearFilters(locations);
 
   const onMarkerClick = useCallback(
     feature => {
-      dispatch({ type: SELECT_LOCATION, payload: feature });
+      actions.selectLocation(feature);
     },
     [dispatch]
   );
@@ -119,9 +110,9 @@ const Map = () => {
   // const geoLayerRef = useBlackspotsLayer(mapInstance, locations, onMarkerClick);
   // const { setLocation, layerRef } = useMarkerLayer(mapInstance);
 
-  const geoLayerRef = { current: { getLayers: () => [] } };
+  // const geoLayerRef = { current: { getLayers: () => [] } };
   const setLocation = () => {};
-  const layerRef = { current: { getLayers: () => [] } };
+  // const layerRef = { current: { getLayers: () => [] } };
 
   useEffect(() => {
     if (selectedLocation) {
@@ -135,27 +126,27 @@ const Map = () => {
     setShowDetailPanel(!showDetailPanel);
   }, [showDetailPanel]);
 
-  const [spotStatusTypeFilter, setSpotStatusTypeFilter] = useState({
-    [SpotStatusTypes.ONDERZOEK]: false,
-    [SpotStatusTypes.VOORBEREIDING]: false,
-    [SpotStatusTypes.GEREED]: false,
-    [SpotStatusTypes.GEEN_MAATREGEL]: false,
-    [SpotStatusTypes.UITVOERING]: false,
-    [SpotStatusTypes.ONBEKEND]: false,
-  });
-  const [spotTypeFilter, setSpotTypeFilter] = useState({
-    [SpotTypes.BLACKSPOT]: false,
-    [SpotTypes.PROTOCOL_DODELIJK]: false,
-    [SpotTypes.PROTOCOL_ERNSTIG]: false,
-    [SpotTypes.RISICO]: false,
-    [SpotTypes.WEGVAK]: false,
-  });
-  const [stadsdeelFilter, setStadsdeelFilter] = useState({
-    ...Object.values(Stadsdeel).reduce(
-      (acc, item) => ({ ...acc, [item.name]: false }),
-      {}
-    ),
-  });
+  // const [spotStatusTypeFilter, setSpotStatusTypeFilter] = useState({
+  //   [SpotStatusTypes.ONDERZOEK]: false,
+  //   [SpotStatusTypes.VOORBEREIDING]: false,
+  //   [SpotStatusTypes.GEREED]: false,
+  //   [SpotStatusTypes.GEEN_MAATREGEL]: false,
+  //   [SpotStatusTypes.UITVOERING]: false,
+  //   [SpotStatusTypes.ONBEKEND]: false,
+  // });
+  // const [spotTypeFilter, setSpotTypeFilter] = useState({
+  //   [SpotTypes.BLACKSPOT]: false,
+  //   [SpotTypes.PROTOCOL_DODELIJK]: false,
+  //   [SpotTypes.PROTOCOL_ERNSTIG]: false,
+  //   [SpotTypes.RISICO]: false,
+  //   [SpotTypes.WEGVAK]: false,
+  // });
+  // const [stadsdeelFilter, setStadsdeelFilter] = useState({
+  //   ...Object.values(Stadsdeel).reduce(
+  //     (acc, item) => ({ ...acc, [item.name]: false }),
+  //     {}
+  //   ),
+  // });
 
   // A filter to only show items on the 'blackspot list', which are all
   // spots with type BLACKSPOT or WEGVAk
@@ -169,112 +160,87 @@ const Map = () => {
   // A filter that only shows spots that have the status DELIVERED
   const [deliveredListFilter, setDeliveredListFilter] = useState(false);
 
-  useEffect(() => {
-    if (!mapInstance || !layerRef?.current || !geoLayerRef?.current) {
-      return;
-    }
-    evaluateMarkerVisibility(
-      [],
-      spotTypeFilter,
-      spotStatusTypeFilter,
-      blackspotYearFilter,
-      deliveredYearFilter,
-      quickscanYearFilter,
-      blackspotListFilter,
-      quickscanListFilter,
-      deliveredListFilter,
-      stadsdeelFilter
-    );
-    if (layerRef.current) {
-      evaluateMarkerVisibility(
-        [],
-        spotTypeFilter,
-        spotStatusTypeFilter,
-        blackspotYearFilter,
-        deliveredYearFilter,
-        quickscanYearFilter,
-        blackspotListFilter,
-        quickscanListFilter,
-        deliveredListFilter,
-        stadsdeelFilter
-      );
-    }
-  }, [
-    mapInstance,
-    geoLayerRef,
-    layerRef,
-    spotTypeFilter,
-    spotStatusTypeFilter,
-    blackspotYearFilter,
-    deliveredYearFilter,
-    quickscanYearFilter,
-    blackspotListFilter,
-    quickscanListFilter,
-    deliveredListFilter,
-    stadsdeelFilter,
-  ]);
+  // useEffect(() => {
+  //   if (!mapInstance || !layerRef?.current || !geoLayerRef?.current) {
+  //     return;
+  //   }
+  //   evaluateMarkerVisibility(
+  //     [],
+  //     spotTypeFilter,
+  //     spotStatusTypeFilter,
+  //     blackspotYearFilter,
+  //     deliveredYearFilter,
+  //     quickscanYearFilter,
+  //     blackspotListFilter,
+  //     quickscanListFilter,
+  //     deliveredListFilter,
+  //     stadsdeelFilter
+  //   );
+  //   if (layerRef.current) {
+  //     evaluateMarkerVisibility(
+  //       [],
+  //       spotTypeFilter,
+  //       spotStatusTypeFilter,
+  //       blackspotYearFilter,
+  //       deliveredYearFilter,
+  //       quickscanYearFilter,
+  //       blackspotListFilter,
+  //       quickscanListFilter,
+  //       deliveredListFilter,
+  //       stadsdeelFilter
+  //     );
+  //   }
+  // }, [
+  //   mapInstance,
+  //   geoLayerRef,
+  //   layerRef,
+  //   spotTypeFilter,
+  //   spotStatusTypeFilter,
+  //   blackspotYearFilter,
+  //   deliveredYearFilter,
+  //   quickscanYearFilter,
+  //   blackspotListFilter,
+  //   quickscanListFilter,
+  //   deliveredListFilter,
+  //   stadsdeelFilter,
+  // ]);
 
-  const setFilters = (
-    spotTypeFilterValue,
-    spotStatusTypeFilterValue,
-    blackspotYearFilterValue,
-    deliveredYearFilterValue,
-    quickscanYearFilterValue,
-    stadsdeelFilterValue
-  ) => {
-    setSpotTypeFilter(spotTypeFilterValue);
-    setSpotStatusTypeFilter(spotStatusTypeFilterValue);
-    setBlackspotYearFilter(blackspotYearFilterValue);
-    setDeliveredYearFilter(deliveredYearFilterValue);
-    setQuickscanYearFilter(quickscanYearFilterValue);
-    setStadsdeelFilter(stadsdeelFilterValue);
-  };
+  // const setFilters = (
+  //   spotTypeFilterValue,
+  //   spotStatusTypeFilterValue,
+  //   blackspotYearFilterValue,
+  //   deliveredYearFilterValue,
+  //   quickscanYearFilterValue,
+  //   stadsdeelFilterValue
+  // ) => {
+  //   setSpotTypeFilter(spotTypeFilterValue);
+  //   setSpotStatusTypeFilter(spotStatusTypeFilterValue);
+  //   setBlackspotYearFilter(blackspotYearFilterValue);
+  //   setDeliveredYearFilter(deliveredYearFilterValue);
+  //   setQuickscanYearFilter(quickscanYearFilterValue);
+  //   setStadsdeelFilter(stadsdeelFilterValu=e);
+  // };
 
   return (
     <MapStyle>
-      <FilterContextProvider>
-        <ArmMap
-          data-testid="map"
-          setInstance={instance => setMapInstance(instance)}
-          options={MAP_OPTIONS}
-          events={{
-            click: e => {
-              console.log('onMapClick', e, state.layerRef);
-            },
-          }}
-        >
-          <BlackspotsLayer
-            locations={state.locations}
-            onMarkerClick={onMarkerClick}
-          />
-          <MarkerLayer />
-          <ViewerContainer
-            bottomRight={<Zoom />}
-            topRight={loading && <Loader />}
-            bottomLeft={
-              <FilterPanel
-                spotTypeFilter={spotTypeFilter}
-                spotStatusTypeFilter={spotStatusTypeFilter}
-                blackspotYearFilter={blackspotYearFilter}
-                deliveredYearFilter={deliveredYearFilter}
-                quickscanYearFilter={quickscanYearFilter}
-                stadsdeelFilter={stadsdeelFilter}
-                setFilters={setFilters}
-                setBlackspotListFilter={value => setBlackspotListFilter(value)}
-                setQuickscanListFilter={setQuickscanListFilter}
-                setDeliveredListFilter={setDeliveredListFilter}
-                setStadsdeelFilter={setStadsdeelFilter}
-              />
-            }
-          />
-          <BaseLayer />
-        </ArmMap>
-        <DetailPanel
-          feature={selectedLocation}
-          isOpen={showDetailPanel}
-          togglePanel={toggleDetailPanel}
+      <ArmMap
+        data-testid="map"
+        setInstance={instance => setMapInstance(instance)}
+        options={MAP_OPTIONS}
+      >
+        <BlackspotsLayer onMarkerClick={onMarkerClick} />
+        <MarkerLayer />
+        <ViewerContainer
+          bottomRight={<Zoom />}
+          topRight={loading && <Loader />}
         />
-      </FilterContextProvider>
+        <BaseLayer />
+      </ArmMap>
+      <DetailPanel
+        feature={selectedLocation}
+        isOpen={showDetailPanel}
+        togglePanel={toggleDetailPanel}
+      />
     </MapStyle>
   );
 };
