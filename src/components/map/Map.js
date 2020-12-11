@@ -53,9 +53,8 @@ const Map = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    console.log('mapInstance', mapInstance);
     if (mapInstance) {
-      console.log('GET FROM GLOBAL ---------------------------------------');
+      console.log('mapInstance', mapInstance);
       // setGeoLayerRef(global.geoLayerRef);
       // setlLayerRef(global.layerRef);
       // setSetLocation(global.setLocation);
@@ -82,7 +81,7 @@ const Map = () => {
   }, [mapInstance]);
 
   useEffect(() => {
-    console.log('results  ', results);
+    console.log('results', results);
     if (results) {
       actions.setLocations(results ? [...results.features] : []);
     }
