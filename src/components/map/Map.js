@@ -11,11 +11,11 @@ import {
 
 import 'leaflet/dist/leaflet.css';
 import Loader from 'shared/loader/Loader';
-import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
+// import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
 import useAppReducer from 'shared/hooks/useAppReducer';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 // import { FilterBoxStyle } from '@amsterdam/asc-ui/lib/components/FilterBox';
-import filterReducer, { actions } from 'shared/reducers/filter';
+import { actions } from 'shared/reducers/filter';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
@@ -150,15 +150,15 @@ const Map = () => {
 
   // A filter to only show items on the 'blackspot list', which are all
   // spots with type BLACKSPOT or WEGVAk
-  const [blackspotListFilter, setBlackspotListFilter] = useState(false);
+  // const [blackspotListFilter, setBlackspotListFilter] = useState(false);
 
   // A filter to only show items on the 'protocol list', which are all spots
   // with type PROTOCOL_ERNSTIG or PROTOCOL_DODELIJK
   // Note: quickscan === protocol
-  const [quickscanListFilter, setQuickscanListFilter] = useState(false);
+  // const [quickscanListFilter, setQuickscanListFilter] = useState(false);
 
   // A filter that only shows spots that have the status DELIVERED
-  const [deliveredListFilter, setDeliveredListFilter] = useState(false);
+  // const [deliveredListFilter, setDeliveredListFilter] = useState(false);
 
   // useEffect(() => {
   //   if (!mapInstance || !layerRef?.current || !geoLayerRef?.current) {
