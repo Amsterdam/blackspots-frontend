@@ -5,7 +5,6 @@ export const SET_LOCATIONS = `${REDUCER_KEY}/SET_LOCATIONS`;
 export const SET_FILTER = `${REDUCER_KEY}/SET_FILTER`;
 
 export const initialState = {
-  test: 'foo',
   selectedLocation: null,
   locations: [],
   filter: {},
@@ -37,8 +36,8 @@ const filterReducer = (state = initialState, action) => {
 };
 
 export const actions = {
-  selectLocation: SELECT_LOCATION,
-  setLocations: SET_LOCATIONS,
+  selectLocation: payload => ({ type: SELECT_LOCATION, payload }),
+  setLocations: payload => ({ type: SET_LOCATIONS, payload }),
   setFilter: SET_FILTER,
 };
 

@@ -4,7 +4,6 @@ import L from 'leaflet';
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
 import { FilterContext } from 'shared/reducers/FilterContext';
-import { valueFromObject } from '@amsterdam/asc-ui/lib/utils';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 
 // import FilterContext from '../../../shared/reducers/FilterContext';
