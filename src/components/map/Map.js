@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useReducer } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { getCrsRd } from '@datapunt/amsterdam-react-maps/lib/utils';
 // import L from 'leaflet';
 
@@ -20,7 +20,9 @@ import filterReducer, {
   SET_LOCATIONS,
   SELECT_LOCATION,
 } from 'shared/reducers/filter';
-import FilterContextProvider from 'shared/reducers/FilterContext';
+import FilterContextProvider, {
+  FilterContext,
+} from 'shared/reducers/FilterContext';
 import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
@@ -43,8 +45,7 @@ const MAP_OPTIONS = {
 };
 
 const Map = () => {
-  const [state, dispatch] = useReducer(filterReducer, initialState);
-
+  const { state, dispatch } = useContext(FilterContext);
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
   const [{ selectedLocation, locations }] = useAppReducer(LOCATION);
