@@ -14,8 +14,9 @@ import Loader from 'shared/loader/Loader';
 // import useAppReducer from 'shared/hooks/useAppReducer';
 // import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 // import { FilterBoxStyle } from '@amsterdam/asc-ui/lib/components/FilterBox';
-import { actions } from 'shared/reducers/filter';
+import { SET_LOCATIONS } from 'shared/reducers/filter';
 import { FilterContext } from 'shared/reducers/FilterContext';
+import { SELECT_LOCATION } from 'shared/reducers/location';
 import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
 // import FilterPanel from '../filterPanel/FilterPanel';
@@ -81,12 +82,15 @@ const Map = () => {
   }, [mapInstance]);
 
   useEffect(() => {
-    console.log('results', results);
     if (results) {
-      actions.setLocations(results ? [...results.features] : []);
+      console.log('results', results);
+      dispatch({
+        type: SET_LOCATIONS,
+        payload: results ? [...results.features] : [],
+      });
     }
     // Keep the actions and locations out from the dependency array to prevent infinite loop
-  }, [results]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [results, dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // const [
   //   blackspotYearFilter,
@@ -99,7 +103,11 @@ const Map = () => {
 
   const onMarkerClick = useCallback(
     feature => {
-      actions.selectLocation(feature);
+      console.log('onMarkerClick', feature);
+      dispatch({
+        type: SELECT_LOCATION,
+        payload: feature,
+      });
     },
     [dispatch]
   );
@@ -108,16 +116,14 @@ const Map = () => {
   // const { setLocation, layerRef } = useMarkerLayer(mapInstance);
 
   // const geoLayerRef = { current: { getLayers: () => [] } };
-  const setLocation = () => {};
+  // const setLocation = () => {};
   // const layerRef = { current: { getLayers: () => [] } };
 
   useEffect(() => {
     if (state.selectedLocation) {
-      actions.setLocation(state.selectedLocation);
-
       setShowDetailPanel(true);
     }
-  }, [state.selectedLocation, actions.setLocation]);
+  }, [state.selectedLocation]);
 
   const toggleDetailPanel = useCallback(() => {
     setShowDetailPanel(!showDetailPanel);

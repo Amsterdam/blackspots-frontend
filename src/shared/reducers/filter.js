@@ -11,6 +11,7 @@ export const initialState = {
 };
 
 const filterReducer = (state = initialState, action) => {
+  console.log('filterReducer', action.type, action.payload);
   switch (action.type) {
     case SELECT_LOCATION:
       return {
