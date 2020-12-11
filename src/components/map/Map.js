@@ -12,8 +12,8 @@ import {
 import 'leaflet/dist/leaflet.css';
 import Loader from 'shared/loader/Loader';
 // import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
-import useAppReducer from 'shared/hooks/useAppReducer';
-import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
+// import useAppReducer from 'shared/hooks/useAppReducer';
+// import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 // import { FilterBoxStyle } from '@amsterdam/asc-ui/lib/components/FilterBox';
 import { actions } from 'shared/reducers/filter';
 import { FilterContext } from 'shared/reducers/FilterContext';
@@ -42,12 +42,12 @@ const Map = () => {
   const { state, dispatch } = useContext(FilterContext);
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
-  const [{ selectedLocation, locations }] = useAppReducer(LOCATION);
+  // const [{ selectedLocation, locations }] = useAppReducer(LOCATION);
   const [mapInstance, setMapInstance] = useState(undefined);
   console.log('context', state, dispatch);
 
   useEffect(() => {
-    if (locations.length === 0)
+    if (state.locations.length === 0)
       (async () => {
         fetchData(`${endpoints.blackspots}?format=geojson`);
       })();
@@ -115,12 +115,12 @@ const Map = () => {
   // const layerRef = { current: { getLayers: () => [] } };
 
   useEffect(() => {
-    if (selectedLocation) {
-      setLocation(selectedLocation);
+    if (state.selectedLocation) {
+      actions.setLocation(state.selectedLocation);
 
       setShowDetailPanel(true);
     }
-  }, [selectedLocation, setLocation]);
+  }, [state.selectedLocation, actions.setLocation]);
 
   const toggleDetailPanel = useCallback(() => {
     setShowDetailPanel(!showDetailPanel);
@@ -237,7 +237,7 @@ const Map = () => {
         <BaseLayer />
       </ArmMap>
       <DetailPanel
-        feature={selectedLocation}
+        feature={state.selectedLocation}
         isOpen={showDetailPanel}
         togglePanel={toggleDetailPanel}
       />
