@@ -20,7 +20,7 @@ import filterReducer, {
   SET_LOCATIONS,
   SELECT_LOCATION,
 } from 'shared/reducers/filter';
-import FilterContext from 'shared/reducers/FilterContext';
+import FilterContextProvider from 'shared/reducers/FilterContext';
 import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
@@ -231,7 +231,7 @@ const Map = () => {
 
   return (
     <MapStyle>
-      <FilterContext>
+      <FilterContextProvider>
         <ArmMap
           data-testid="map"
           setInstance={instance => setMapInstance(instance)}
@@ -273,7 +273,7 @@ const Map = () => {
           isOpen={showDetailPanel}
           togglePanel={toggleDetailPanel}
         />
-      </FilterContext>
+      </FilterContextProvider>
     </MapStyle>
   );
 };

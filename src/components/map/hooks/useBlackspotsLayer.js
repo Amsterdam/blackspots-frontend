@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import L from 'leaflet';
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
-import FilterContext from 'shared/reducers/FilterContext';
+import { FilterContext } from 'shared/reducers/FilterContext';
 import { valueFromObject } from '@amsterdam/asc-ui/lib/utils';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 
@@ -55,9 +55,9 @@ const useBlackspotsLayer = (locations, onMarkerClick) => {
   return geoLayerRef;
 };
 
-export const BlackspotsLayer = ({ locations, onMarkerClick }) => {
-  const value = useContext(FilterContext);
-  console.log('BlackspotsLayer', value);
+export const BlackspotsLayer = ({ onMarkerClick }) => {
+  const { state } = useContext(FilterContext);
+  console.log('BlackspotsLayer', state.locations);
 
   // return <FilterContext.Consumer></FilterContext.Consumer>;
   // const mapInstance = useMapInstance();
