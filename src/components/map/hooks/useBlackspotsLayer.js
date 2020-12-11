@@ -1,8 +1,10 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import L from 'leaflet';
-import { useMapInstance } from '@amsterdam/react-maps';
+import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
+import FilterContext from 'shared/reducers/FilterContext';
+import { valueFromObject } from '@amsterdam/asc-ui/lib/utils';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 
 // import FilterContext from '../../../shared/reducers/FilterContext';
@@ -54,16 +56,36 @@ const useBlackspotsLayer = (locations, onMarkerClick) => {
 };
 
 export const BlackspotsLayer = ({ locations, onMarkerClick }) => {
-  // const { locations } = useContext(FiltersContext);
-  // SET
-  // const [layerRef, setLayerRef] = useContext(FilterContext);
-  console.log('BlackspotsLayer');
-  const geoLayerRef = useBlackspotsLayer(locations, onMarkerClick);
-  global.geoLayerRef = geoLayerRef;
-  console.log('set black GLOBAL', geoLayerRef);
-  return null;
+  const value = useContext(FilterContext);
+  console.log('BlackspotsLayer', value);
 
-  // return locations ? <GeoJSON args={[locations]} options={options} /> : null;
+  // return <FilterContext.Consumer></FilterContext.Consumer>;
+  // const mapInstance = useMapInstance();
+  // if (!mapInstance) {
+  //   return null;
+  // }
+  // const [json, setJson] = useState();
+  // // const geoLayerRef = useBlackspotsLayer(locations, onMarkerClick);
+  // const features = locations.reduce(
+  //   (acc, { layer: l }) => [...acc, ...l.features],
+  //   []
+  // );
+  // const layerData = {
+  //   type: 'FeatureCollection',
+  //   name: CATEGORY_NAMES.CAMERA_TOEZICHTSGEBIED,
+  //   crs: {
+  //     type: 'name',
+  //     properties: {
+  //       name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
+  //     },
+  //   },
+  //   features,
+  // };
+  // setJson(layerData);
+  // layerName.current = layerData.name;
+
+  // return locations ? <GeoJSON args={[json]} options={options} /> : null;
+  return null;
 };
 
 export default useBlackspotsLayer;

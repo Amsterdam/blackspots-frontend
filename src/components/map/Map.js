@@ -20,7 +20,7 @@ import filterReducer, {
   SET_LOCATIONS,
   SELECT_LOCATION,
 } from 'shared/reducers/filter';
-import FilterContext from '../../shared/reducers/FilterContext';
+import FilterContext from 'shared/reducers/FilterContext';
 import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
