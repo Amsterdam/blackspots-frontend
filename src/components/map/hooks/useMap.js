@@ -4,9 +4,9 @@ import { useRef, useEffect } from 'react';
 // import amaps from 'amsterdam-amaps/dist/amaps';
 
 // Imports needed for amaps
-import 'leaflet/dist/leaflet.css';
-import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
-import 'amsterdam-stijl/dist/css/ams-map.css';
+// import 'leaflet/dist/leaflet.css';
+// import 'amsterdam-amaps/dist/nlmaps/dist/assets/css/nlmaps.css';
+// import 'amsterdam-stijl/dist/css/ams-map.css';
 
 const useMap = () => {
   const mapRef = useRef(null);

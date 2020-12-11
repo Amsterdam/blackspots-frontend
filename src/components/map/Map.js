@@ -9,6 +9,7 @@ import {
   Zoom,
 } from '@amsterdam/arm-core';
 
+import 'leaflet/dist/leaflet.css';
 import Loader from 'shared/loader/Loader';
 import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
 import useAppReducer from 'shared/hooks/useAppReducer';
