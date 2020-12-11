@@ -228,6 +228,7 @@ const MapComponent = () => {
     <MapStyle>
       <Map
         data-testid="map"
+        fullScreen
         setInstance={instance => setMapInstance(instance)}
         options={MAP_OPTIONS}
       >
