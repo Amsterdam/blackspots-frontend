@@ -60,7 +60,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   const mapInstance = useMapInstance();
 
   const geojsonMarkerOptions = {
-    radius: 8,
+    radius: 16,
     fillColor: '#ff7800',
     color: '#000',
     weight: 1,
@@ -68,9 +68,21 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
     fillOpacity: 0.8,
   };
 
+  const myStyle = {
+    color: '#ff7800',
+    weight: 5,
+    opacity: 0.65,
+  };
+
   const options = {
+    style: myStyle,
     pointToLayer(feature, latlng) {
+      console.log('pointToLayer', feature, latlng);
       return L.circleMarker(latlng, geojsonMarkerOptions);
+    },
+    onEachFeature: (feature, layer) => {
+      console.log('onEachFeature', feature, layer);
+      layer.bindPopup('bar');
     },
   };
 
