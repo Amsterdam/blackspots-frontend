@@ -77,11 +77,11 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   const options = {
     style: myStyle,
     pointToLayer(feature, latlng) {
-      console.log('pointToLayer', feature, latlng);
+      // console.log('pointToLayer', feature, latlng);
       return L.circleMarker(latlng, geojsonMarkerOptions);
     },
     onEachFeature: (feature, layer) => {
-      console.log('onEachFeature', feature, layer);
+      // console.log('onEachFeature', feature, layer);
       layer.bindPopup('bar');
     },
   };
@@ -107,12 +107,12 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
           //   feature.geometry.coordinates[0],
           // ];
 
-          console.log('map', feature);
+          // console.log('map', feature);
 
           return feature;
         }),
       };
-      console.log('BlackspotsLayer layerData)', layerData);
+      // console.log('BlackspotsLayer layerData)', layerData);
 
       setJson(layerData);
     }
