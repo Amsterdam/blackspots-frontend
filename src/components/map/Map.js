@@ -25,6 +25,7 @@ import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
 // import useYearFilters from './hooks/useYearFilters';
 import { BlackspotsLayer } from './hooks/useBlackspotsLayer';
+import StadsdelenLayer from './components/StadsdelenLayer';
 import { endpoints } from '../../config';
 import { MarkerLayer } from './hooks/useMarkerLayer';
 
@@ -56,28 +57,6 @@ const MapComponent = () => {
   useEffect(() => {
     if (mapInstance) {
       console.log('mapInstance', mapInstance);
-      // setGeoLayerRef(global.geoLayerRef);
-      // setlLayerRef(global.layerRef);
-      // setSetLocation(global.setLocation);
-
-      // setTimeout(() => {
-      //   console.log(
-      //     'settimeout GET FROM GLOBAL ===============================',
-      //     global.setLocation
-      //   );
-      //   setGeoLayerRef(global.geoLayerRef);
-      //   setlLayerRef(global.layerRef);
-      //   setSetLocation(global.setLocation);
-      // }, 10000);
-
-      // Add the stadsdelen WMS
-      // L.tileLayer
-      //   .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
-      //     layers: ['stadsdeel'],
-      //     transparent: true,
-      //     format: 'image/png',
-      //   })
-      //   .addTo(mapInstance);
     }
   }, [mapInstance]);
 
@@ -232,6 +211,7 @@ const MapComponent = () => {
         setInstance={instance => setMapInstance(instance)}
         options={MAP_OPTIONS}
       >
+        <StadsdelenLayer />
         <BlackspotsLayer onMarkerClick={onMarkerClick} />
         <MarkerLayer />
         <ViewerContainer
