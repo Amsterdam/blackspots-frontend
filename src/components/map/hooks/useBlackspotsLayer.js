@@ -53,7 +53,9 @@ import { FilterContext } from 'shared/reducers/FilterContext';
 // };
 
 const BlackspotsLayer = ({ onMarkerClick }) => {
-  const { state } = useContext(FilterContext);
+  const {
+    state: { locations },
+  } = useContext(FilterContext);
   const [json, setJson] = useState('');
   const mapInstance = useMapInstance();
 
@@ -73,13 +75,13 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   };
 
   useEffect(() => {
-    if (mapInstance && state.locations.length) {
+    if (mapInstance && locations.length) {
       // const features = state.locations.reduce(
       //   (acc, { layer: l }) => [...acc, ...l.features],
       //   []
       // );
 
-      const features = [...state.locations];
+      const features = [...locations];
       const layerData = {
         type: 'FeatureCollection',
         name: 'Black spots',
@@ -95,9 +97,9 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
 
       setJson(layerData);
     }
-  }, [state.locations]);
+  }, [locations]);
 
-  return state.locations ? <GeoJSON args={[json]} options={options} /> : null;
+  return locations ? <GeoJSON args={[json]} options={options} /> : null;
 };
 
 export default BlackspotsLayer;
