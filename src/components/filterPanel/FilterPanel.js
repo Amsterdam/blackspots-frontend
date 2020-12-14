@@ -140,6 +140,11 @@ const FilterPanel = ({
     ]
   );
 
+  useEffect(() => {
+    console.log('================================== updateFilters');
+    updateFilters();
+  }, []);
+
   function processOptionChange(value) {
     // Changing options should reset the filters
     updateFilters(
