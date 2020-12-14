@@ -88,12 +88,8 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
 
   useEffect(() => {
     if (mapInstance && locations.length) {
-      // const features = state.locations.reduce(
-      //   (acc, { layer: l }) => [...acc, ...l.features],
-      //   []
-      // );
-
       const features = [...locations];
+
       const layerData = {
         type: 'FeatureCollection',
         name: 'Black spots',
@@ -103,7 +99,18 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
             name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
           },
         },
-        features,
+        features: features.map(feature => {
+          // eslint-disable-next-line no-param-reassign
+          // verwissel cooordinaten
+          // feature.geometry.coordinates = [
+          //   feature.geometry.coordinates[1],
+          //   feature.geometry.coordinates[0],
+          // ];
+
+          console.log('map', feature);
+
+          return feature;
+        }),
       };
       console.log('BlackspotsLayer layerData)', layerData);
 
