@@ -1,10 +1,9 @@
-import React, { useRef, useEffect, useContext, useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect, useContext, useState } from 'react';
 import L from 'leaflet';
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
-import { SpotTypes, SpotStatusTypes } from 'config';
+// import { SpotTypes, SpotStatusTypes } from 'config';
 import { FilterContext } from 'shared/reducers/FilterContext';
-import SVGIcon from '../../SVGIcon/SVGIcon';
+// import SVGIcon from '../../SVGIcon/SVGIcon';
 
 // import FilterContext from '../../../shared/reducers/FilterContext';
 
@@ -57,7 +56,21 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   const { state } = useContext(FilterContext);
   const [json, setJson] = useState('');
   const mapInstance = useMapInstance();
-  const options = {};
+
+  const geojsonMarkerOptions = {
+    radius: 8,
+    fillColor: '#ff7800',
+    color: '#000',
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8,
+  };
+
+  const options = {
+    pointToLayer(feature, latlng) {
+      return L.circleMarker(latlng, geojsonMarkerOptions);
+    },
+  };
 
   useEffect(() => {
     if (mapInstance && state.locations.length) {
@@ -71,7 +84,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
         type: 'FeatureCollection',
         name: 'foo',
         crs: {
-          type: 'name',
+          type: 'bag of points',
           properties: {
             name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
           },
@@ -85,7 +98,6 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   }, [state.locations]);
 
   return state.locations ? <GeoJSON args={[json]} options={options} /> : null;
-  // return null;
 };
 
 export default BlackspotsLayer;
