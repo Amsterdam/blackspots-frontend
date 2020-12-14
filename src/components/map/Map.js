@@ -24,7 +24,7 @@ import DetailPanel from '../detailPanel/DetailPanel';
 import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
 // import useYearFilters from './hooks/useYearFilters';
-import { BlackspotsLayer } from './hooks/useBlackspotsLayer';
+import BlackspotsLayer from './hooks/useBlackspotsLayer';
 import StadsdelenLayer from './components/StadsdelenLayer';
 import { endpoints } from '../../config';
 import { MarkerLayer } from './hooks/useMarkerLayer';

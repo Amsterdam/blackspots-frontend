@@ -53,7 +53,7 @@ const useBlackspotsLayer = (locations, onMarkerClick) => {
   return geoLayerRef;
 };
 
-export const BlackspotsLayer = ({ onMarkerClick }) => {
+const BlackspotsLayer = ({ onMarkerClick }) => {
   const { state } = useContext(FilterContext);
   console.log('BlackspotsLayer', state.locations);
 
@@ -85,4 +85,4 @@ export const BlackspotsLayer = ({ onMarkerClick }) => {
   return null;
 };
 
-export default useBlackspotsLayer;
+export default BlackspotsLayer;
