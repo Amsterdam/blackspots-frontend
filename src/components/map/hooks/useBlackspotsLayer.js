@@ -82,9 +82,9 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
       const features = [...state.locations];
       const layerData = {
         type: 'FeatureCollection',
-        name: 'foo',
+        name: 'Black spots',
         crs: {
-          type: 'bag of points',
+          type: 'name',
           properties: {
             name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
           },
