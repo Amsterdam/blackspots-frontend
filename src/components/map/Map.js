@@ -14,9 +14,9 @@ import Loader from 'shared/loader/Loader';
 // import useAppReducer from 'shared/hooks/useAppReducer';
 // import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 // import { FilterBoxStyle } from '@amsterdam/asc-ui/lib/components/FilterBox';
-import { SET_LOCATIONS } from 'shared/reducers/filter';
+import { actions } from 'shared/reducers/filter';
 import { FilterContext } from 'shared/reducers/FilterContext';
-import { SELECT_LOCATION } from 'shared/reducers/location';
+// import { SELECT_LOCATION } from 'shared/reducers/location';
 import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
 // import FilterPanel from '../filterPanel/FilterPanel';
@@ -63,10 +63,7 @@ const MapComponent = () => {
   useEffect(() => {
     if (results) {
       console.log('results', results);
-      dispatch({
-        type: SET_LOCATIONS,
-        payload: results ? [...results.features] : [],
-      });
+      dispatch(actions.setLocations(results ? [...results.features] : []));
     }
     // Keep the actions and locations out from the dependency array to prevent infinite loop
   }, [results, dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -83,10 +80,7 @@ const MapComponent = () => {
   const onMarkerClick = useCallback(
     feature => {
       console.log('onMarkerClick', feature);
-      dispatch({
-        type: SELECT_LOCATION,
-        payload: feature,
-      });
+      dispatch(actions.selectLocation(feature));
     },
     [dispatch]
   );
