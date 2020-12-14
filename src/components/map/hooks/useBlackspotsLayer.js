@@ -91,7 +91,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
         },
         features,
       };
-      console.log('BlackspotsLayer', layerData);
+      console.log('BlackspotsLayer layerData)', layerData);
 
       setJson(layerData);
     }
