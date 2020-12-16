@@ -14,7 +14,6 @@ import { actions } from 'shared/reducers/filter';
 import { FilterContext } from 'shared/reducers/FilterContext';
 
 import MapStyle from './MapStyle';
-
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
 import { evaluateMarkerVisibility } from './helpers';
@@ -55,7 +54,14 @@ const MapComponent = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    if (mapInstance) {
+      console.log('mapInstance', mapInstance);
+    }
+  }, [mapInstance]);
+
+  useEffect(() => {
     if (results) {
+      console.log('results', results);
       dispatch(actions.setLocations(results ? [...results.features] : []));
     }
     // Keep the actions and locations out from the dependency array to prevent infinite loop
@@ -72,6 +78,7 @@ const MapComponent = () => {
 
   const onMarkerClick = useCallback(
     feature => {
+      console.log('onMarkerClick', feature);
       dispatch(actions.selectLocation(feature));
     },
     [dispatch]
@@ -153,6 +160,8 @@ const MapComponent = () => {
     // }
   }, [
     mapInstance,
+    [],
+    [],
     spotTypeFilter,
     spotStatusTypeFilter,
     blackspotYearFilter,
@@ -165,12 +174,12 @@ const MapComponent = () => {
   ]);
 
   const setFilters = (
-    spotTypeFilterValue = {},
-    spotStatusTypeFilterValue = {},
-    blackspotYearFilterValue = {},
-    deliveredYearFilterValue = {},
-    quickscanYearFilterValue = {},
-    stadsdeelFilterValue = {}
+    spotTypeFilterValue,
+    spotStatusTypeFilterValue,
+    blackspotYearFilterValue,
+    deliveredYearFilterValue,
+    quickscanYearFilterValue,
+    stadsdeelFilterValue
   ) => {
     const filter = {
       spotTypeFilter: spotTypeFilterValue,

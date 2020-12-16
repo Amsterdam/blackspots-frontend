@@ -36,6 +36,11 @@ const useMarkerLayer = () => {
 };
 
 export const MarkerLayer = () => {
+  // const { setLocation, layerRef } = useMarkerLayer();
+  // global.setLocation = setLocation;
+  // global.layerRef = layerRef;
+  console.log('MarkerLayer');
+
   return null;
 };
 
