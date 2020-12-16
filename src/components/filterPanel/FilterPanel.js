@@ -110,16 +110,6 @@ const FilterPanel = ({
       // For every filter, if it has an actual filter object, pass it along to
       // the setFilter function received from the map, else, pass a resetted
       // filter.
-      console.log(
-        'updateFilters',
-        updatedSpotTypeFilter,
-        updatedSpotStatusTypeFilter,
-        updatedBlackspotYearFilter,
-        updatedDeliveredYearFilter,
-        updatedQuickscanYearFilter,
-        updatedStadsdeelFilter
-      );
-
       setFilters(
         updatedSpotTypeFilter || resetFilter(spotTypeFilter),
         updatedSpotStatusTypeFilter || resetFilter(spotStatusTypeFilter),
@@ -141,7 +131,6 @@ const FilterPanel = ({
   );
 
   useEffect(() => {
-    console.log('================================== updateFilters');
     updateFilters();
   }, []);
 
