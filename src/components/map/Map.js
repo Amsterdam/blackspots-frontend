@@ -32,7 +32,7 @@ const MAP_OPTIONS = {
   center: [52.36988741057662, 4.8966407775878915],
   zoom: 9,
   maxZoom: 16,
-  minZoom: 8,
+  minZoom: 1, // ,8
   zoomControl: false,
   attributionControl: true,
   crs: getCrsRd(),

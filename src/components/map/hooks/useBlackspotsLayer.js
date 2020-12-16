@@ -77,7 +77,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   const options = {
     style: myStyle,
     pointToLayer(feature, latlng) {
-      // console.log('pointToLayer', feature, latlng);
+      console.log('pointToLayer', feature, latlng);
       return L.circleMarker(latlng, geojsonMarkerOptions);
     },
     onEachFeature: (feature, layer) => {
@@ -88,7 +88,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
 
   useEffect(() => {
     if (mapInstance && locations.length) {
-      const features = [...locations];
+      // const features = [...locations];
 
       const layerData = {
         type: 'FeatureCollection',
@@ -99,20 +99,20 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
             name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
           },
         },
-        features: features.map(feature => {
-          // eslint-disable-next-line no-param-reassign
-          // verwissel cooordinaten
-          // feature.geometry.coordinates = [
-          //   feature.geometry.coordinates[1],
-          //   feature.geometry.coordinates[0],
-          // ];
-
-          // console.log('map', feature);
-
-          return feature;
-        }),
+        features: [
+          {
+            geometry: {
+              type: 'Point',
+              coordinates: [4.91939, 52.36346],
+            },
+            properties: {
+              name: 'slimme apparaat id 100',
+            },
+            type: 'Feature',
+          },
+        ],
       };
-      // console.log('BlackspotsLayer layerData)', layerData);
+      console.log('BlackspotsLayer layerData)', layerData);
 
       setJson(layerData);
     }
