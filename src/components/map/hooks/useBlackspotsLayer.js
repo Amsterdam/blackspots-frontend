@@ -48,6 +48,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
     onEachFeature: (feature, layer) => {
       console.log('onEachFeature', feature, layer);
       // layer.on('click', onMarkerClick(feature));
+      // @TODO fix endless loop
     },
   };
 

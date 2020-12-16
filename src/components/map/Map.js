@@ -10,12 +10,9 @@ import {
 import 'leaflet/dist/leaflet.css';
 import Loader from 'shared/loader/Loader';
 import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
-// import useAppReducer from 'shared/hooks/useAppReducer';
-// import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
-// import { FilterBoxStyle } from '@amsterdam/asc-ui/lib/components/FilterBox';
 import { actions } from 'shared/reducers/filter';
 import { FilterContext } from 'shared/reducers/FilterContext';
-// import { SELECT_LOCATION } from 'shared/reducers/location';
+
 import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
@@ -86,13 +83,6 @@ const MapComponent = () => {
     },
     [dispatch]
   );
-
-  // const geoLayerRef = useBlackspotsLayer(mapInstance, locations, onMarkerClick);
-  // const { setLocation, layerRef } = useMarkerLayer(mapInstance);
-
-  // const geoLayerRef = { current: { getLayers: () => [] } };
-  // const setLocation = () => {};
-  // const layerRef = { current: { getLayers: () => [] } };
 
   useEffect(() => {
     if (selectedLocation) {
