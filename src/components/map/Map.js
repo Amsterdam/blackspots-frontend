@@ -160,8 +160,6 @@ const MapComponent = () => {
     // }
   }, [
     mapInstance,
-    [],
-    [],
     spotTypeFilter,
     spotStatusTypeFilter,
     blackspotYearFilter,

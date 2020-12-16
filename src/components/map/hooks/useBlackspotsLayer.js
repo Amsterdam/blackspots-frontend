@@ -74,7 +74,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
 
       setJson(layerData);
     }
-  }, [locations]);
+  }, [locations, mapInstance]);
 
   return json ? <GeoJSON args={[json]} options={options} /> : null;
 };
