@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import ReactDOM from 'react-dom';
-import L from 'leaflet';
+import L, { DomEvent } from 'leaflet';
 
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
@@ -47,7 +47,11 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
     },
     onEachFeature: (feature, layer) => {
       // console.log('onEachFeature', feature, layer);
-      // layer.on('click', onMarkerClick(feature));
+
+      layer.on('click', e => {
+        DomEvent.stopPropagation(e);
+        onMarkerClick(feature);
+      });
       // @TODO fix endless loop
     },
   };
