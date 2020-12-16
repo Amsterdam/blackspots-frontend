@@ -1,56 +1,29 @@
 import React, { useEffect, useContext, useState } from 'react';
+import ReactDOM from 'react-dom';
 import L from 'leaflet';
+
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
-// import { SpotTypes, SpotStatusTypes } from 'config';
+import { SpotTypes, SpotStatusTypes } from 'config';
 import { FilterContext } from 'shared/reducers/FilterContext';
-// import SVGIcon from '../../SVGIcon/SVGIcon';
+import SVGIcon from '../../SVGIcon/SVGIcon';
 
-// import FilterContext from '../../../shared/reducers/FilterContext';
+const createFeatureIcon = feature => {
+  // Leaflet only accepts HTML elements for custom markers so we need to
+  // create one from the SVGIcon
+  const { status, spot_type: spotType } = feature.properties;
+  const iconDiv = document.createElement('div');
 
-// export const handleFeature = (feature, layer, onClick) => {
-//   layer.on('click', ({ latlng }) => {
-//     onClick(feature, latlng);
-//   });
-// };
+  ReactDOM.render(<SVGIcon type={spotType} status={status} />, iconDiv);
 
-// const createFeatureIcon = feature => {
-//   // Leaflet only accepts HTML elements for custom markers so we need to
-//   // create one from the SVGIcon
-//   const { status, spot_type: spotType } = feature.properties;
-//   const iconDiv = document.createElement('div');
-//   ReactDOM.render(<SVGIcon type={spotType} status={status} />, iconDiv);
-//   return {
-//     // Add the correct classname based on type
-//     // Risico types have a bigger icon therefore need more margin
-//     className: `marker-div-icon ${
-//       spotType === SpotTypes.RISICO ? 'large' : ''
-//     } ${status === SpotStatusTypes.GEEN_MAATREGEL ? 'extra-opacity' : ''}`,
-//     html: iconDiv,
-//   };
-// };
-
-// export const createFeature = (feature, latlng) => {
-//   // Create a marker with the correct icon and onClick method
-//   return L.marker(latlng, {
-//     icon: L.divIcon(createFeatureIcon(feature)),
-//   });
-// };
-
-// const useBlackspotsLayer = (locations, onMarkerClick) => {
-//   const mapInstance = useMapInstance();
-//   const geoLayerRef = useRef(null);
-//   useEffect(() => {
-//     geoLayerRef.current = L.geoJSON(locations, {
-//       // Add custom markers
-//       onEachFeature(feature, layer) {
-//         handleFeature(feature, layer, onMarkerClick);
-//       },
-//       pointToLayer: createFeature,
-//     }).addTo(mapInstance);
-//   }, [mapInstance, locations, onMarkerClick]);
-
-//   return geoLayerRef;
-// };
+  return {
+    // Add the correct classname based on type
+    // Risico types have a bigger icon therefore need more margin
+    className: `marker-div-icon ${
+      spotType === SpotTypes.RISICO ? 'large' : ''
+    } ${status === SpotStatusTypes.GEEN_MAATREGEL ? 'extra-opacity' : ''}`,
+    html: iconDiv,
+  };
+};
 
 const BlackspotsLayer = ({ onMarkerClick }) => {
   const {
@@ -58,15 +31,6 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   } = useContext(FilterContext);
   const [json, setJson] = useState('');
   const mapInstance = useMapInstance();
-
-  const geojsonMarkerOptions = {
-    radius: 16,
-    fillColor: '#ff7800',
-    color: '#000',
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0.8,
-  };
 
   const myStyle = {
     color: '#ff7800',
@@ -77,18 +41,19 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   const options = {
     style: myStyle,
     pointToLayer(feature, latlng) {
-      console.log('pointToLayer', feature, latlng);
-      return L.circleMarker(latlng, geojsonMarkerOptions);
+      return L.marker(latlng, {
+        icon: L.divIcon(createFeatureIcon(feature)),
+      });
     },
     onEachFeature: (feature, layer) => {
-      // console.log('onEachFeature', feature, layer);
-      layer.bindPopup('bar');
+      console.log('onEachFeature', feature, layer);
+      // layer.on('click', onMarkerClick(feature));
     },
   };
 
   useEffect(() => {
     if (mapInstance && locations.length) {
-      // const features = [...locations];
+      const features = [...locations];
 
       const layerData = {
         type: 'FeatureCollection',
@@ -99,26 +64,14 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
             name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
           },
         },
-        features: [
-          {
-            geometry: {
-              type: 'Point',
-              coordinates: [4.91939, 52.36346],
-            },
-            properties: {
-              name: 'slimme apparaat id 100',
-            },
-            type: 'Feature',
-          },
-        ],
+        features,
       };
-      console.log('BlackspotsLayer layerData)', layerData);
 
       setJson(layerData);
     }
   }, [locations]);
 
-  return locations ? <GeoJSON args={[json]} options={options} /> : null;
+  return json ? <GeoJSON args={[json]} options={options} /> : null;
 };
 
 export default BlackspotsLayer;
