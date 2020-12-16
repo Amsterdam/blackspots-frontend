@@ -3,7 +3,6 @@ const proxy = require('http-proxy-middleware');
 
 module.exports = function setup(app) {
   // eslint-disable-next-line no-console
-  console.log('registering location api ...');
   app.use(
     '/api',
     proxy({

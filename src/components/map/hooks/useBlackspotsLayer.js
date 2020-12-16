@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import ReactDOM from 'react-dom';
-import L from 'leaflet';
+import L, { DomEvent } from 'leaflet';
 
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
@@ -32,22 +32,17 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   const [json, setJson] = useState('');
   const mapInstance = useMapInstance();
 
-  const myStyle = {
-    color: '#ff7800',
-    weight: 5,
-    opacity: 0.65,
-  };
-
   const options = {
-    style: myStyle,
     pointToLayer(feature, latlng) {
       return L.marker(latlng, {
         icon: L.divIcon(createFeatureIcon(feature)),
       });
     },
     onEachFeature: (feature, layer) => {
-      // console.log('onEachFeature', feature, layer);
-      // layer.on('click', onMarkerClick(feature));
+      layer.on('click', e => {
+        DomEvent.stopPropagation(e);
+        onMarkerClick(feature);
+      });
       // @TODO fix endless loop
     },
   };
@@ -70,7 +65,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
 
       setJson(layerData);
     }
-  }, [locations]);
+  }, [locations, mapInstance]);
 
   return json ? <GeoJSON args={[json]} options={options} /> : null;
 };
