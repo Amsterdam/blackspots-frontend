@@ -23,7 +23,6 @@ import useYearFilters from './hooks/useYearFilters';
 import BlackspotsLayer from './hooks/useBlackspotsLayer';
 import StadsdelenLayer from './components/StadsdelenLayer';
 import { endpoints } from '../../config';
-import { MarkerLayer } from './hooks/useMarkerLayer';
 
 const MAP_OPTIONS = {
   center: [52.36988741057662, 4.8966407775878915],
@@ -199,7 +198,6 @@ const MapComponent = () => {
       >
         <StadsdelenLayer />
         <BlackspotsLayer onMarkerClick={onMarkerClick} />
-        <MarkerLayer />
         <ViewerContainer
           bottomLeft={
             <FilterPanel
