@@ -4,6 +4,7 @@ import L from 'leaflet';
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
 import { FilterContext } from 'shared/reducers/FilterContext';
+import MarkerIcon from 'leaflet/dist/images/marker-icon.png';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 
 const createFeatureIcon = feature => {
@@ -39,11 +40,20 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
     },
     onEachFeature: (feature, layer) => {
       layer.on('click', e => {
+        e.originalEvent.stopPropagation();
         const latlng = {
           lat: feature.geometry.coordinates[1],
           lng: feature.geometry.coordinates[0],
         };
-        e.originalEvent.stopPropagation();
+
+        // show marker
+        L.marker([latlng.lat, latlng.lng], {
+          icon: L.icon({
+            iconUrl: MarkerIcon,
+            iconAnchor: [18, 45],
+          }),
+        }).addTo(mapInstance);
+
         const currentZoom = mapInstance.getZoom();
         mapInstance.flyTo(latlng, currentZoom < 11 ? 11 : currentZoom);
         onMarkerClick(feature);
