@@ -47,12 +47,13 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
         };
 
         // show marker
-        L.marker([latlng.lat, latlng.lng], {
-          icon: L.icon({
-            iconUrl: MarkerIcon,
-            iconAnchor: [18, 45],
-          }),
-        }).addTo(mapInstance);
+        // @TODO fix removing marker when clicking a new location
+        // L.marker([latlng.lat, latlng.lng], {
+        //   icon: L.icon({
+        //     iconUrl: MarkerIcon,
+        //     iconAnchor: [18, 45],
+        //   }),
+        // }).addTo(mapInstance);
 
         const currentZoom = mapInstance.getZoom();
         mapInstance.flyTo(latlng, currentZoom < 11 ? 11 : currentZoom);
