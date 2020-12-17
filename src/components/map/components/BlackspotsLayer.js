@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import ReactDOM from 'react-dom';
 import L from 'leaflet';
-
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
 import { FilterContext } from 'shared/reducers/FilterContext';

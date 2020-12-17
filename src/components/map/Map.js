@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
-
 import {
   Map,
   BaseLayer,
