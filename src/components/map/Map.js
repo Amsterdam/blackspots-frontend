@@ -20,7 +20,7 @@ import { evaluateMarkerVisibility } from './helpers';
 import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
 import useYearFilters from './hooks/useYearFilters';
-import BlackspotsLayer from './hooks/useBlackspotsLayer';
+import BlackspotsLayer from './components/BlackspotsLayer';
 import StadsdelenLayer from './components/StadsdelenLayer';
 import { endpoints } from '../../config';
 
