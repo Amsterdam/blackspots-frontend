@@ -12,7 +12,6 @@ import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
 import { actions } from 'shared/reducers/filter';
 import { FilterContext } from 'shared/reducers/FilterContext';
 
-import MapStyle from './MapStyle';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
 import { evaluateMarkerVisibility } from './helpers';
@@ -188,7 +187,7 @@ const MapComponent = () => {
   };
 
   return (
-    <MapStyle>
+    <>
       <Map
         data-testid="map"
         fullScreen
@@ -223,7 +222,7 @@ const MapComponent = () => {
         isOpen={showDetailPanel}
         togglePanel={toggleDetailPanel}
       />
-    </MapStyle>
+    </>
   );
 };
 
