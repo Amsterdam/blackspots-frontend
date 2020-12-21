@@ -4,6 +4,7 @@ import {
   BaseLayer,
   ViewerContainer,
   Zoom,
+  Marker,
   getCrsRd,
 } from '@amsterdam/arm-core';
 import 'leaflet/dist/leaflet.css';
@@ -194,6 +195,14 @@ const MapComponent = () => {
         setInstance={instance => setMapInstance(instance)}
         options={MAP_OPTIONS}
       >
+        {selectedLocation?.geometry?.coordinates && (
+          <Marker
+            latLng={{
+              lat: selectedLocation?.geometry?.coordinates[1],
+              lng: selectedLocation?.geometry?.coordinates[0],
+            }}
+          />
+        )}
         <StadsdelenLayer />
         <BlackspotsLayer onMarkerClick={onMarkerClick} />
         <ViewerContainer
