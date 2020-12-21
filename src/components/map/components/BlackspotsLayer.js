@@ -34,6 +34,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   const [json, setJson] = useState('');
   const mapInstance = useMapInstance();
   // const markerRef = useRef(null);
+
   const options = {
     pointToLayer(feature, latlng) {
       return L.marker(latlng, {
@@ -42,8 +43,6 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
     },
     onEachFeature: (feature, layer) => {
       layer.on('click', e => {
-        // console.log('init', marker);
-
         e.originalEvent.stopPropagation();
 
         const latlng = {
@@ -51,23 +50,23 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
           lng: feature?.geometry.coordinates[0],
         };
 
-        console.log('marker', marker);
-        // if (marker?.current) {
-        //   mapInstance.removeLayer(marker.current);
-        // } else {
-        //   // marker= markerRef;
-        // }
+        console.log('===========================', marker);
+        if (marker?.current) {
+          mapInstance.removeLayer(marker.current);
+        } else {
+          // marker= markerRef;
+        }
 
-        // // show marker
-        // // @TODO fix removing marker when clicking a new location
-        // const mrkr = L.marker(latlng, {
-        //   icon: L.icon({
-        //     iconUrl: MarkerIcon,
-        //     iconAnchor: [18, 45],
-        //   }),
-        // }).addTo(mapInstance);
+        // show marker
+        // @TODO fix removing marker when clicking a new location
+        const mrkr = L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: MarkerIcon,
+            iconAnchor: [18, 45],
+          }),
+        }).addTo(mapInstance);
 
-        // dispatch(actions.setMarker({ current: mrkr }));
+        dispatch(actions.setMarker({ current: mrkr }));
 
         const currentZoom = mapInstance.getZoom();
         mapInstance.flyTo(latlng, currentZoom < 11 ? 11 : currentZoom);
