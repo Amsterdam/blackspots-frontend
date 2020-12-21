@@ -1,6 +1,7 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import L from 'leaflet';
+import { actions } from 'shared/reducers/filter';
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
 import { FilterContext } from 'shared/reducers/FilterContext';
@@ -27,10 +28,12 @@ const createFeatureIcon = feature => {
 
 const BlackspotsLayer = ({ onMarkerClick }) => {
   const {
-    state: { locations },
+    state: { locations, marker },
+    dispatch,
   } = useContext(FilterContext);
   const [json, setJson] = useState('');
   const mapInstance = useMapInstance();
+  // const markerRef = useRef(null);
 
   const options = {
     pointToLayer(feature, latlng) {
@@ -41,19 +44,29 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
     onEachFeature: (feature, layer) => {
       layer.on('click', e => {
         e.originalEvent.stopPropagation();
+
         const latlng = {
-          lat: feature.geometry.coordinates[1],
-          lng: feature.geometry.coordinates[0],
+          lat: feature?.geometry?.coordinates[1],
+          lng: feature?.geometry.coordinates[0],
         };
+
+        console.log('===========================', marker);
+        if (marker?.current) {
+          mapInstance.removeLayer(marker.current);
+        } else {
+          // marker= markerRef;
+        }
 
         // show marker
         // @TODO fix removing marker when clicking a new location
-        // L.marker([latlng.lat, latlng.lng], {
-        //   icon: L.icon({
-        //     iconUrl: MarkerIcon,
-        //     iconAnchor: [18, 45],
-        //   }),
-        // }).addTo(mapInstance);
+        const mrkr = L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: MarkerIcon,
+            iconAnchor: [18, 45],
+          }),
+        }).addTo(mapInstance);
+
+        dispatch(actions.setMarker({ current: mrkr }));
 
         const currentZoom = mapInstance.getZoom();
         mapInstance.flyTo(latlng, currentZoom < 11 ? 11 : currentZoom);
@@ -63,7 +76,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   };
 
   useEffect(() => {
-    if (mapInstance && locations.length) {
+    if (mapInstance && locations && locations.length) {
       const features = [...locations];
 
       const layerData = {
@@ -80,7 +93,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
 
       setJson(layerData);
     }
-  }, [locations, mapInstance]);
+  }, [locations, mapInstance, marker]);
 
   return json ? <GeoJSON args={[json]} options={options} /> : null;
 };

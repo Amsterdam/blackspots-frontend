@@ -1,13 +1,17 @@
 /* eslint-disable no-case-declarations */
+import React, { useRef } from 'react';
+
 export const REDUCER_KEY = 'filter';
 export const SELECT_LOCATION = `${REDUCER_KEY}/SELECT_LOCATION`;
 export const SET_LOCATIONS = `${REDUCER_KEY}/SET_LOCATIONS`;
 export const SET_FILTER = `${REDUCER_KEY}/SET_FILTER`;
+export const SET_MARKER = `${REDUCER_KEY}/SET_MARKER`;
 
 export const initialState = {
   selectedLocation: null,
   locations: [],
   filter: {},
+  marker: React.createRef(null),
 };
 
 const filterReducer = (state = initialState, action) => {
@@ -30,6 +34,10 @@ const filterReducer = (state = initialState, action) => {
           ...action.payload,
         },
       };
+    case SET_MARKER:
+      return {
+        marker: { ...action.payload },
+      };
     default:
       return state;
   }
@@ -39,6 +47,7 @@ export const actions = {
   selectLocation: payload => ({ type: SELECT_LOCATION, payload }),
   setLocations: payload => ({ type: SET_LOCATIONS, payload }),
   setFilter: payload => ({ type: SET_FILTER, payload }),
+  setMarker: payload => ({ type: SET_MARKER, payload }),
 };
 
 export default filterReducer;
