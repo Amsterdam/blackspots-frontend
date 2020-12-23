@@ -224,7 +224,9 @@ const MapComponent = () => {
           bottomRight={<Zoom />}
           topRight={loading && <Loader />}
         />
-        <BaseLayer />
+        <BaseLayer
+          baseLayer={`https://{s}.data.amsterdam.nl/topo_rd_zw/{z}/{x}/{y}.png`}
+        />
       </Map>
       <DetailPanel
         feature={selectedLocation}
