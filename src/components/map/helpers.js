@@ -1,17 +1,22 @@
-import { getSpotTypeFromMarker } from 'helpers';
-import { SpotTypes, SpotStatusTypes } from 'config';
 import {
+  getSpotTypeFromMarker,
   getStatusTypeFromMarker,
   getBlackspotYearFromMarker,
   getDeliveredYearFromMarker,
   getQuickscanYearFromMarker,
-} from '../../helpers';
+} from 'helpers';
+import { SpotTypes, SpotStatusTypes } from 'config';
+import { marker } from 'leaflet';
 
 /**
  * Check if all values of an object are falsy
  */
 export const allValuesAreFalse = object => {
-  return Object.values(object).every(v => !v);
+  const values = Object.values(object);
+  if (values.length === 0) {
+    return true;
+  }
+  return values.every(v => !v);
 };
 
 /**
@@ -27,7 +32,7 @@ function isVisibleSpotType(
 ) {
   const spotType = getSpotTypeFromMarker(marker);
   const spotStatus = getStatusTypeFromMarker(marker);
-  const { stadsdeel } = marker.feature.properties;
+  const { stadsdeel } = marker.properties;
 
   // Check if the spot should be visible based on the spotTypeFilter
   const showBasedOnTypeFilter = allValuesAreFalse(spotTypeFilter)
@@ -116,37 +121,91 @@ export const resetFilter = filter => {
  */
 export const evaluateMarkerVisibility = (
   markers,
-  spotTypeFilter,
-  spotStatusTypeFilter,
-  blackspotYearFilter,
-  deliveredYearFilter,
-  quickscanYearFilter,
-  blackspotListFilter,
-  quickscanListFilter,
-  deliveredListFilter,
-  stadsdeelFilter
+  filter
+  // spotTypeFilter,
+  // spotStatusTypeFilter,
+  // blackspotYearFilter,
+  // deliveredYearFilter,
+  // quickscanYearFilter,
+  // blackspotListFilter,
+  // quickscanListFilter,
+  // deliveredListFilter,
+  // stadsdeelFilter
 ) => {
   if (markers)
     markers.forEach(marker => {
       if (
         isVisibleSpotType(
-          spotTypeFilter,
-          blackspotListFilter,
-          quickscanListFilter,
-          deliveredListFilter,
-          stadsdeelFilter,
+          filter?.spotTypeFilter || {},
+          filter?.blackspotListFilter || {},
+          filter?.quickscanListFilter || {},
+          filter?.deliveredListFilter || {},
+          filter?.stadsdeelFilter || {},
           marker
         ) &&
-        isVisibleStatusType(spotStatusTypeFilter, marker) &&
-        isVisibleBlackspotYear(blackspotYearFilter, marker) &&
-        isVisibleDeliveredYear(deliveredYearFilter, marker) &&
-        isVisibleQuickscanYear(quickscanYearFilter, marker)
+        isVisibleStatusType(filter?.sspotStatusTypeFilter || {}, marker) &&
+        isVisibleBlackspotYear(filter?.sblackspotYearFilter || {}, marker) &&
+        isVisibleDeliveredYear(filter?.sdeliveredYearFilter || {}, marker) &&
+        isVisibleQuickscanYear(filter?.squickscanYearFilter || {}, marker)
       ) {
-        // eslint-disable-next-line no-param-reassign
-        marker._icon.style.visibility = 'visible'; // eslint-disable-line no-underscore-dangle
-      } else {
-        // eslint-disable-next-line no-param-reassign
-        marker._icon.style.visibility = 'hidden'; // eslint-disable-line no-underscore-dangle
+        return true;
       }
+      return false;
     });
+};
+
+const evaluateSingleMarkerVisibility = (
+  marker,
+  filter
+  // spotTypeFilter,
+  // spotStatusTypeFilter,
+  // blackspotYearFilter,
+  // deliveredYearFilter,
+  // quickscanYearFilter,
+  // blackspotListFilter,
+  // quickscanListFilter,
+  // deliveredListFilter,
+  // stadsdeelFilter
+) => {
+  // console.log('evaluateSingleMarkerVisibility');
+  if (
+    isVisibleSpotType(
+      filter?.spotTypeFilter || {},
+      filter?.blackspotListFilter || {},
+      filter?.quickscanListFilter || {},
+      filter?.deliveredListFilter || {},
+      filter?.stadsdeelFilter || {},
+      marker
+    ) &&
+    isVisibleStatusType(filter?.spotStatusTypeFilter || {}, marker) &&
+    isVisibleBlackspotYear(filter?.blackspotYearFilter || {}, marker) &&
+    isVisibleDeliveredYear(filter?.deliveredYearFilter || {}, marker) &&
+    isVisibleQuickscanYear(filter?.quickscanYearFilter || {}, marker)
+  ) {
+    return true;
+  }
+  return false;
+};
+
+export const getGeoJson = (locations, filter) => {
+  const markers =
+    locations.filter(location => {
+      if (evaluateSingleMarkerVisibility(location, filter)) {
+        return location;
+      }
+    }) || [];
+
+  if (markers.length) {
+    return {
+      type: 'FeatureCollection',
+      name: 'Black spots',
+      crs: {
+        type: 'name',
+        properties: {
+          name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
+        },
+      },
+      features: [...markers],
+    };
+  }
 };

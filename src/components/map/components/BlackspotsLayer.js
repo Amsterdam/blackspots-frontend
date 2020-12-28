@@ -4,8 +4,9 @@ import L from 'leaflet';
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
 import { FilterContext } from 'shared/reducers/FilterContext';
-import MarkerIcon from 'leaflet/dist/images/marker-icon.png';
+// import MarkerIcon from 'leaflet/dist/images/marker-icon.png';
 import SVGIcon from '../../SVGIcon/SVGIcon';
+import { getGeoJson } from '../helpers';
 
 const createFeatureIcon = feature => {
   // Leaflet only accepts HTML elements for custom markers so we need to
@@ -27,7 +28,7 @@ const createFeatureIcon = feature => {
 
 const BlackspotsLayer = ({ onMarkerClick }) => {
   const {
-    state: { locations },
+    state: { locations, filter },
   } = useContext(FilterContext);
   const [json, setJson] = useState('');
   const mapInstance = useMapInstance();
@@ -39,6 +40,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
       });
     },
     onEachFeature: (feature, layer) => {
+      // console.log('onEachFeature');
       layer.on('click', e => {
         e.originalEvent.stopPropagation();
         const latlng = {
@@ -55,21 +57,8 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
 
   useEffect(() => {
     if (mapInstance && locations.length) {
-      const features = [...locations];
-
-      const layerData = {
-        type: 'FeatureCollection',
-        name: 'Black spots',
-        crs: {
-          type: 'name',
-          properties: {
-            name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
-          },
-        },
-        features,
-      };
-
-      setJson(layerData);
+      console.log('locations #', locations.length);
+      setJson(getGeoJson(locations, filter));
     }
   }, [locations, mapInstance]);
 

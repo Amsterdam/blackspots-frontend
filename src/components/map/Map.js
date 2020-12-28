@@ -123,7 +123,7 @@ const MapComponent = () => {
       return;
     }
     evaluateMarkerVisibility(
-      [],
+      null,
       spotTypeFilter,
       spotStatusTypeFilter,
       blackspotYearFilter,
