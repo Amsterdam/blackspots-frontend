@@ -7,7 +7,60 @@ export const SET_FILTER = `${REDUCER_KEY}/SET_FILTER`;
 export const initialState = {
   selectedLocation: null,
   locations: [],
-  filter: {},
+  filter: {
+    spotTypeFilter: {
+      blackspot: true,
+      'protocol dodelijk': false,
+      'protocol ernstig': false,
+      risico: false,
+      wegvak: false,
+    },
+    spotStatusTypeFilter: {
+      'onderzoek ontwerp': false,
+      voorbereiding: false,
+      gereed: false,
+      'geen maatregel': false,
+      uitvoering: false,
+      undefined: false,
+    },
+    blackspotYearFilter: {
+      '2014': false,
+      '2015': false,
+      '2016': false,
+      '2017': false,
+      '2018': false,
+      '2019': false,
+      '2020': false,
+    },
+    deliveredYearFilter: {
+      '2015': false,
+      '2016': false,
+      '2017': false,
+      '2018': false,
+      '2019': false,
+      '2020': false,
+    },
+    quickscanYearFilter: {
+      '2013': false,
+      '2014': false,
+      '2015': false,
+      '2016': false,
+      '2017': false,
+      '2018': false,
+      '2019': false,
+      '2020': false,
+    },
+    stadsdeelFilter: {
+      Centrum: false,
+      'Nieuw West': false,
+      Noord: false,
+      Oost: false,
+      West: false,
+      Westpoort: false,
+      Zuid: false,
+      Zuidoost: false,
+    },
+  },
 };
 
 const filterReducer = (state = initialState, action) => {
