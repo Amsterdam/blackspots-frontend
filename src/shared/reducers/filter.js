@@ -9,7 +9,7 @@ export const initialState = {
   locations: [],
   filter: {
     spotTypeFilter: {
-      blackspot: true,
+      blackspot: false,
       'protocol dodelijk': false,
       'protocol ernstig': false,
       risico: false,

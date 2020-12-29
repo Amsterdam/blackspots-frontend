@@ -188,13 +188,13 @@ const evaluateSingleMarkerVisibility = (
 };
 
 export const getGeoJson = (locations, filter) => {
-  const markers =
-    locations.filter(location => {
-      if (evaluateSingleMarkerVisibility(location, filter)) {
-        return location;
-      }
-    }) || [];
+  const markers = locations.filter(location => {
+    if (evaluateSingleMarkerVisibility(location, filter)) {
+      return location;
+    }
+  });
 
+  console.log('================', markers.length);
   if (markers.length) {
     return {
       type: 'FeatureCollection',

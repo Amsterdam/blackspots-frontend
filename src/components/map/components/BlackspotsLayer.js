@@ -1,10 +1,11 @@
 import React, { useEffect, useContext, useState } from 'react';
 import ReactDOM from 'react-dom';
-import L from 'leaflet';
+import L, { map } from 'leaflet';
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
 import { FilterContext } from 'shared/reducers/FilterContext';
 // import MarkerIcon from 'leaflet/dist/images/marker-icon.png';
+import { formVisibility } from 'components/locationForm/definitions/FormFields';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 import { getGeoJson } from '../helpers';
 
@@ -57,10 +58,27 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
 
   useEffect(() => {
     if (mapInstance && locations.length) {
-      console.log('locations #', locations.length);
       setJson(getGeoJson(locations, filter));
     }
-  }, [locations, mapInstance]);
+  }, [mapInstance, locations]);
+
+  useEffect(() => {
+    console.log('render filter');
+    if (filter) {
+      // mapInstance.eachLayer(layer => {
+      //   // console.log('layer', layer);
+      //   if (layer?.options?.interactive) {
+      //     layer.remove();
+      //   }
+
+      //   // console.log('id', layer?.options?.interactive);
+      // });
+
+      const data = getGeoJson(locations, filter);
+      console.log('change data ------------------------', data);
+      setJson(data);
+    }
+  }, [filter]);
 
   return json ? <GeoJSON args={[json]} options={options} /> : null;
 };
