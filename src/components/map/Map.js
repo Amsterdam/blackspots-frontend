@@ -70,15 +70,10 @@ const MapComponent = () => {
   const onMarkerClick = useCallback(
     feature => {
       dispatch(actions.selectLocation(feature));
+      setShowDetailPanel(true);
     },
     [dispatch]
   );
-
-  useEffect(() => {
-    if (selectedLocation) {
-      setShowDetailPanel(true);
-    }
-  }, [selectedLocation]);
 
   const toggleDetailPanel = useCallback(() => {
     setShowDetailPanel(!showDetailPanel);
