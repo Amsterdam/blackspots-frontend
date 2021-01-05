@@ -65,15 +65,6 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   useEffect(() => {
     console.log('render filter');
     if (filter) {
-      // mapInstance.eachLayer(layer => {
-      //   // console.log('layer', layer);
-      //   if (layer?.options?.interactive) {
-      //     layer.remove();
-      //   }
-
-      //   // console.log('id', layer?.options?.interactive);
-      // });
-
       const data = getGeoJson(locations, filter);
       console.log('change data ------------------------', data);
       setJson(data);
