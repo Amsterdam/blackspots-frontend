@@ -137,12 +137,6 @@ const FilterPanel = ({
         stadsdeelFilter: updatedStadsdeelFilter || resetFilter(stadsdeelFilter),
       };
       dispatch(actions.setFilter(newFilter));
-      console.log(
-        '============= set new filter',
-        updatedSpotTypeFilter,
-        updatedSpotStatusTypeFilter,
-        updatedStadsdeelFilter
-      );
 
       // setFilters(
       //   updatedSpotTypeFilter || resetFilter(spotTypeFilter),
@@ -353,7 +347,7 @@ const FilterPanel = ({
                 checked={value}
                 onChange={() => {
                   const updatedFilter = {
-                    ...spotStatusTypeFilter,
+                    ...filter?.spotStatusTypeFilter,
                     [type]: !value,
                   };
                   updateFilters(

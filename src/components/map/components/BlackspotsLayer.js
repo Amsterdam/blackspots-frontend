@@ -62,7 +62,6 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   }, [mapInstance, locations]);
 
   useEffect(() => {
-    console.log('render filter');
     if (filter) {
       if (layerInstance) {
         layerInstance.clearLayers();

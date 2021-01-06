@@ -30,7 +30,7 @@ function isVisibleSpotType(
   marker
 ) {
   const spotType = getSpotTypeFromMarker(marker);
-  const spotStatus = getStatusTypeFromMarker(marker);
+  // const spotStatus = getStatusTypeFromMarker(marker);
   const { stadsdeel } = marker.properties;
 
   // Check if the spot should be visible based on the spotTypeFilter
@@ -166,7 +166,6 @@ const evaluateSingleMarkerVisibility = (
   // deliveredListFilter,
   // stadsdeelFilter
 ) => {
-  // console.log('evaluateSingleMarkerVisibility');
   if (
     isVisibleSpotType(
       filter?.spotTypeFilter || {},
@@ -193,7 +192,7 @@ export const getGeoJson = (locations, filter) => {
     }
   });
 
-  console.log('================', markers.length);
+  console.log('#', markers.length);
   if (markers.length) {
     return {
       type: 'FeatureCollection',
