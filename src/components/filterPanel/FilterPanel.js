@@ -137,7 +137,12 @@ const FilterPanel = ({
         stadsdeelFilter: updatedStadsdeelFilter || resetFilter(stadsdeelFilter),
       };
       dispatch(actions.setFilter(newFilter));
-      console.log('============= set new filter', newFilter);
+      console.log(
+        '============= set new filter',
+        updatedSpotTypeFilter,
+        updatedSpotStatusTypeFilter,
+        updatedStadsdeelFilter
+      );
 
       // setFilters(
       //   updatedSpotTypeFilter || resetFilter(spotTypeFilter),
@@ -356,7 +361,8 @@ const FilterPanel = ({
                     updatedFilter,
                     filter?.blackspotYearFilter,
                     filter?.deliveredYearFilter,
-                    filter?.quickscanYearFilter
+                    filter?.quickscanYearFilter,
+                    filter?.stadsdeelFilter
                   );
                   if (!value) {
                     trackFilter(type);
@@ -382,6 +388,7 @@ const FilterPanel = ({
    * Render the checkboxes for the type filter
    */
   function renderTypeCheckboxes() {
+    // spotTypeFilter
     return (
       <>
         <h5>Type</h5>
@@ -407,7 +414,8 @@ const FilterPanel = ({
                     filter?.spotStatusTypeFilter,
                     filter?.blackspotYearFilter,
                     filter?.deliveredYearFilter,
-                    filter?.quickscanYearFilter
+                    filter?.quickscanYearFilter,
+                    filter?.stadsdeelFilter
                   );
                 }}
               />
