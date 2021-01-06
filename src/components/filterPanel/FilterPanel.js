@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useContext,
+} from 'react';
 import PropTypes from 'prop-types';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import SVGIcon from 'components/SVGIcon/SVGIcon';
@@ -9,7 +15,10 @@ import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
 import { Button, themeSpacing } from '@amsterdam/asc-ui';
 import styled from 'styled-components';
+import { FilterContext } from 'shared/reducers/FilterContext';
+import { actions } from 'shared/reducers/filter';
 import useDownload from 'shared/hooks/useDownload';
+import { latLng } from 'leaflet';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import { StatusDisplayNames, SpotTypeDisplayNames } from '../../config';
 import { ContextMenuOptions, MenuOptions } from './FilterPanel.constants';
@@ -63,6 +72,11 @@ const FilterPanel = ({
   setQuickscanListFilter,
   setDeliveredListFilter,
 }) => {
+  const {
+    state: { filter },
+    dispatch,
+  } = useContext(FilterContext);
+
   const [optionValue, setOptionValue] = useState(ContextMenuOptions.ALL);
   const [showPanel, setShowPanel] = useState(true);
   const { trackEvent } = useMatomo();
@@ -110,14 +124,29 @@ const FilterPanel = ({
       // For every filter, if it has an actual filter object, pass it along to
       // the setFilter function received from the map, else, pass a resetted
       // filter.
-      setFilters(
-        updatedSpotTypeFilter || resetFilter(spotTypeFilter),
-        updatedSpotStatusTypeFilter || resetFilter(spotStatusTypeFilter),
-        updatedBlackspotYearFilter || resetFilter(blackspotYearFilter),
-        updatedDeliveredYearFilter || resetFilter(deliveredYearFilter),
-        updatedQuickscanYearFilter || resetFilter(quickscanYearFilter),
-        updatedStadsdeelFilter || resetFilter(stadsdeelFilter)
-      );
+      const newFilter = {
+        spotTypeFilter: updatedSpotTypeFilter || resetFilter(spotTypeFilter),
+        spotStatusTypeFilter:
+          updatedSpotStatusTypeFilter || resetFilter(spotStatusTypeFilter),
+        blackspotYearFilter:
+          updatedBlackspotYearFilter || resetFilter(blackspotYearFilter),
+        deliveredYearFilter:
+          updatedDeliveredYearFilter || resetFilter(deliveredYearFilter),
+        quickscanYearFilter:
+          updatedQuickscanYearFilter || resetFilter(quickscanYearFilter),
+        stadsdeelFilter: updatedStadsdeelFilter || resetFilter(stadsdeelFilter),
+      };
+      dispatch(actions.setFilter(newFilter));
+      console.log('============= set new filter', newFilter);
+
+      // setFilters(
+      //   updatedSpotTypeFilter || resetFilter(spotTypeFilter),
+      //   updatedSpotStatusTypeFilter || resetFilter(spotStatusTypeFilter),
+      //   updatedBlackspotYearFilter || resetFilter(blackspotYearFilter),
+      //   updatedDeliveredYearFilter || resetFilter(deliveredYearFilter),
+      //   updatedQuickscanYearFilter || resetFilter(quickscanYearFilter),
+      //   updatedStadsdeelFilter || resetFilter(stadsdeelFilter)
+      // );
     },
     [
       spotTypeFilter,
@@ -405,7 +434,7 @@ const FilterPanel = ({
         <h5>Stadsdeel</h5>
         {Object.keys(Stadsdeel).map(key => {
           const type = Stadsdeel[key].name;
-          const value = stadsdeelFilter[type];
+          const value = filter?.stadsdeelFilter[type];
           return (
             <label key={key} htmlFor={key} className={styles.CheckboxWrapper}>
               <input
@@ -414,7 +443,7 @@ const FilterPanel = ({
                 checked={value}
                 onChange={() => {
                   const updatedFilter = {
-                    ...stadsdeelFilter,
+                    ...filter?.stadsdeelFilter,
                     [type]: !value,
                   };
                   if (!value) {

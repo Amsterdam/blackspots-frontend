@@ -164,15 +164,15 @@ const MapComponent = () => {
     quickscanYearFilterValue,
     stadsdeelFilterValue
   ) => {
-    const filter = {
-      spotTypeFilter: spotTypeFilterValue,
-      spotStatusTypeFilter: spotStatusTypeFilterValue,
-      blackspotYearFilter: blackspotYearFilterValue,
-      deliveredYearFilter: deliveredYearFilterValue,
-      quickscanYearFilter: quickscanYearFilterValue,
-      stadsdeelFilter: stadsdeelFilterValue,
-    };
-    dispatch(actions.setFilter(filter));
+    // const filter = {
+    //   spotTypeFilter: spotTypeFilterValue,
+    //   spotStatusTypeFilter: spotStatusTypeFilterValue,
+    //   blackspotYearFilter: blackspotYearFilterValue,
+    //   deliveredYearFilter: deliveredYearFilterValue,
+    //   quickscanYearFilter: quickscanYearFilterValue,
+    //   stadsdeelFilter: stadsdeelFilterValue,
+    // };
+    // dispatch(actions.setFilter(filter));
 
     setSpotTypeFilter(spotTypeFilterValue);
     setSpotStatusTypeFilter(spotStatusTypeFilterValue);
