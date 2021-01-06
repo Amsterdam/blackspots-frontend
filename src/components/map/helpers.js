@@ -6,7 +6,6 @@ import {
   getQuickscanYearFromMarker,
 } from 'helpers';
 import { SpotTypes, SpotStatusTypes } from 'config';
-import { marker } from 'leaflet';
 
 /**
  * Check if all values of an object are falsy
