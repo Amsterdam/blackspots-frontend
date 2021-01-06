@@ -387,7 +387,7 @@ const FilterPanel = ({
         <h5>Type</h5>
         {Object.keys(SpotTypes).map(key => {
           const type = SpotTypes[key];
-          const value = spotTypeFilter[type];
+          const value = filter?.spotTypeFilter[type];
           return (
             <label key={key} htmlFor={key} className={styles.CheckboxWrapper}>
               <input
@@ -396,7 +396,7 @@ const FilterPanel = ({
                 checked={value}
                 onChange={() => {
                   const updatedFilter = {
-                    ...spotTypeFilter,
+                    ...filter?.spotTypeFilter,
                     [type]: !value,
                   };
                   if (!value) {
@@ -404,10 +404,10 @@ const FilterPanel = ({
                   }
                   updateFilters(
                     updatedFilter,
-                    spotStatusTypeFilter,
-                    blackspotYearFilter,
-                    deliveredYearFilter,
-                    quickscanYearFilter
+                    filter?.spotStatusTypeFilter,
+                    filter?.blackspotYearFilter,
+                    filter?.deliveredYearFilter,
+                    filter?.quickscanYearFilter
                   );
                 }}
               />
