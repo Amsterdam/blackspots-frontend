@@ -98,13 +98,13 @@ const setupKeycloack = () => {
   const canAdd = async () => {
     await isReady;
     const { roles } = keycloak.realmAccess || { roles: [] };
-    return roles.includes('bs_all');
+    return roles.includes('bs_w');
   };
 
   const canEdit = async () => {
     await isReady;
     const { roles } = keycloak.realmAccess || { roles: [] };
-    return roles.includes('bs_all');
+    return roles.includes('bs_w');
   };
 
   return {
