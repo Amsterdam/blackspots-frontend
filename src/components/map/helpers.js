@@ -40,18 +40,18 @@ function isVisibleSpotType(
 
   // Check if the spot should be visible based on the list filters
   const showBasedOnListFilter = (() => {
-    if (blackspotListFilter) {
-      return spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
-    }
-    if (quickscanListFilter) {
-      return (
-        spotType === SpotTypes.PROTOCOL_DODELIJK ||
-        spotType === SpotTypes.PROTOCOL_ERNSTIG
-      );
-    }
-    if (deliveredListFilter) {
-      return spotStatus === SpotStatusTypes.GEREED;
-    }
+    // if (blackspotListFilter) {
+    //   return spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
+    // }
+    // if (quickscanListFilter) {
+    //   return (
+    //     spotType === SpotTypes.PROTOCOL_DODELIJK ||
+    //     spotType === SpotTypes.PROTOCOL_ERNSTIG
+    //   );
+    // }
+    // if (deliveredListFilter) {
+    //   return spotStatus === SpotStatusTypes.GEREED;
+    // }
     return true;
   })();
 
