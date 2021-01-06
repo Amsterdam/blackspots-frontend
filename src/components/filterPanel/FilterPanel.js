@@ -450,11 +450,11 @@ const FilterPanel = ({
                     trackFilter(type);
                   }
                   updateFilters(
-                    spotTypeFilter,
-                    spotStatusTypeFilter,
-                    blackspotYearFilter,
-                    deliveredYearFilter,
-                    quickscanYearFilter,
+                    filter?.spotTypeFilter,
+                    filter?.spotStatusTypeFilter,
+                    filter?.blackspotYearFilter,
+                    filter?.deliveredYearFilter,
+                    filter?.quickscanYearFilter,
                     updatedFilter
                   );
                 }}
