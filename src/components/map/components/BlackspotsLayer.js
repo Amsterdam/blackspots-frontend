@@ -33,6 +33,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   } = useContext(FilterContext);
   const [json, setJson] = useState('');
   const mapInstance = useMapInstance();
+  const [layerInstance, setLayerInstance] = useState('');
 
   const options = {
     pointToLayer(feature, latlng) {
@@ -41,7 +42,6 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
       });
     },
     onEachFeature: (feature, layer) => {
-      // console.log('onEachFeature');
       layer.on('click', e => {
         e.originalEvent.stopPropagation();
         const latlng = {
@@ -65,13 +65,19 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   useEffect(() => {
     console.log('render filter');
     if (filter) {
+      if (layerInstance) {
+        layerInstance.clearLayers();
+      }
       const data = getGeoJson(locations, filter);
-      console.log('change data ------------------------', data);
-      setJson(data);
+      if (layerInstance) {
+        layerInstance.addData(data);
+      }
     }
   }, [filter]);
 
-  return json ? <GeoJSON args={[json]} options={options} /> : null;
+  return json ? (
+    <GeoJSON setInstance={setLayerInstance} args={[json]} options={options} />
+  ) : null;
 };
 
 export default BlackspotsLayer;
