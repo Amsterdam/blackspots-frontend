@@ -5,7 +5,6 @@ import React, {
   useMemo,
   useContext,
 } from 'react';
-import PropTypes from 'prop-types';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import SVGIcon from 'components/SVGIcon/SVGIcon';
 import { SpotStatusTypes, SpotTypes, Stadsdeel, endpoints } from 'config';
@@ -113,28 +112,27 @@ const FilterPanel = ({
    */
   const updateFilters = useCallback(
     (
-      updatedSpotTypeFilter = false,
-      updatedSpotStatusTypeFilter = false,
-      updatedBlackspotYearFilter = false,
-      updatedDeliveredYearFilter = false,
-      updatedQuickscanYearFilter = false,
-      updatedStadsdeelFilter = false
+      updatedSpotTypeFilter,
+      updatedSpotStatusTypeFilter,
+      updatedBlackspotYearFilter,
+      updatedDeliveredYearFilter,
+      updatedQuickscanYearFilter,
+      updatedStadsdeelFilter
     ) => {
+      if (!updatedSpotTypeFilter) return;
+
       // For every filter, if it has an actual filter object, pass it along to
       // the setFilter function received from the map, else, pass a resetted
       // filter.
       const newFilter = {
-        spotTypeFilter: updatedSpotTypeFilter || resetFilter(spotTypeFilter),
-        spotStatusTypeFilter:
-          updatedSpotStatusTypeFilter || resetFilter(spotStatusTypeFilter),
-        blackspotYearFilter:
-          updatedBlackspotYearFilter || resetFilter(blackspotYearFilter),
-        deliveredYearFilter:
-          updatedDeliveredYearFilter || resetFilter(deliveredYearFilter),
-        quickscanYearFilter:
-          updatedQuickscanYearFilter || resetFilter(quickscanYearFilter),
-        stadsdeelFilter: updatedStadsdeelFilter || resetFilter(stadsdeelFilter),
+        spotTypeFilter: updatedSpotTypeFilter,
+        spotStatusTypeFilter: updatedSpotStatusTypeFilter,
+        blackspotYearFilter: updatedBlackspotYearFilter,
+        deliveredYearFilter: updatedDeliveredYearFilter,
+        quickscanYearFilter: updatedQuickscanYearFilter,
+        stadsdeelFilter: updatedStadsdeelFilter,
       };
+
       dispatch(actions.setFilter(newFilter));
 
       // setFilters(
@@ -146,15 +144,7 @@ const FilterPanel = ({
       //   updatedStadsdeelFilter || resetFilter(stadsdeelFilter)
       // );
     },
-    [
-      spotTypeFilter,
-      spotStatusTypeFilter,
-      blackspotYearFilter,
-      deliveredYearFilter,
-      quickscanYearFilter,
-      stadsdeelFilter,
-      setFilters,
-    ]
+    [filter, dispatch, actions.setFilter]
   );
 
   useEffect(() => {
@@ -467,16 +457,7 @@ const FilterPanel = ({
         })}
       </>
     );
-  }, [
-    stadsdeelFilter,
-    blackspotYearFilter,
-    deliveredYearFilter,
-    quickscanYearFilter,
-    spotStatusTypeFilter,
-    spotTypeFilter,
-    trackFilter,
-    updateFilters,
-  ]);
+  }, [filter, Stadsdeel]);
 
   const togglePanel = () => setShowPanel(!showPanel);
   const handleKeyPress = event => {
@@ -534,19 +515,6 @@ const FilterPanel = ({
       </FilterWrapperStyle>
     </div>
   );
-};
-
-FilterPanel.propTypes = {
-  spotTypeFilter: PropTypes.shape({}).isRequired,
-  spotStatusTypeFilter: PropTypes.shape({}).isRequired,
-  blackspotYearFilter: PropTypes.shape({}).isRequired,
-  deliveredYearFilter: PropTypes.shape({}).isRequired,
-  quickscanYearFilter: PropTypes.shape({}).isRequired,
-  stadsdeelFilter: PropTypes.shape({}).isRequired,
-  setFilters: PropTypes.func.isRequired,
-  setBlackspotListFilter: PropTypes.func.isRequired,
-  setQuickscanListFilter: PropTypes.func.isRequired,
-  setDeliveredListFilter: PropTypes.func.isRequired,
 };
 
 export default FilterPanel;
