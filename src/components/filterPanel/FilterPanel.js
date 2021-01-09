@@ -18,7 +18,6 @@ import styled from 'styled-components';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { actions } from 'shared/reducers/filter';
 import useDownload from 'shared/hooks/useDownload';
-import { latLng } from 'leaflet';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import { StatusDisplayNames, SpotTypeDisplayNames } from '../../config';
 import { ContextMenuOptions, MenuOptions } from './FilterPanel.constants';
