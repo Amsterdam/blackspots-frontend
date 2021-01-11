@@ -151,6 +151,13 @@ const FilterPanel = () => {
 
     // Set the option value
     setOptionValue(value);
+
+    dispatch(
+      actions.setFilter({
+        ...filter,
+        show: value,
+      })
+    );
   }
 
   /**
