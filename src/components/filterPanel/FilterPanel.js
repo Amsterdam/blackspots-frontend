@@ -91,14 +91,20 @@ const FilterPanel = ({
   }, [downloadUrl, downloadFile]);
 
   useEffect(() => {
-    setDownloadUrl(`${exportUrl}${getExportFilter(stadsdeelFilter)}`);
+    setDownloadUrl(`${exportUrl}${getExportFilter(filter?.stadsdeelFilter)}`);
     setCanDownload(
-      Object.values(stadsdeelFilter).filter(e => e).length <= 1 &&
-        Object.values(spotTypeFilter).filter(e => e).length === 0 &&
-        Object.values(spotStatusTypeFilter).filter(e => e).length === 0 &&
+      Object.values(filter?.stadsdeelFilter).filter(e => e).length <= 1 &&
+        Object.values(filter?.spotTypeFilter).filter(e => e).length === 0 &&
+        Object.values(filter?.spotStatusTypeFilter).filter(e => e).length ===
+          0 &&
         optionValue === ContextMenuOptions.ALL
     );
-  }, [stadsdeelFilter, spotTypeFilter, spotStatusTypeFilter, optionValue]);
+  }, [
+    filter?.stadsdeelFilter,
+    filter?.spotTypeFilter,
+    filter?.spotStatusTypeFilter,
+    optionValue,
+  ]);
 
   const trackFilter = useCallback(
     name => {
@@ -192,7 +198,7 @@ const FilterPanel = ({
         {Object.keys(blackspotYearFilter)
           .reverse()
           .map(year => {
-            const value = blackspotYearFilter[year];
+            const value = filter?.blackspotYearFilter[year];
             return (
               <label
                 key={year}
@@ -209,8 +215,8 @@ const FilterPanel = ({
                       [year]: !value,
                     };
                     updateFilters(
-                      spotTypeFilter,
-                      spotStatusTypeFilter,
+                      filter?.spotTypeFilter,
+                      filter?.spotStatusTypeFilter,
                       updatedFilter
                     );
                     if (!value) {
@@ -236,7 +242,7 @@ const FilterPanel = ({
         {Object.keys(deliveredYearFilter)
           .reverse()
           .map(year => {
-            const value = deliveredYearFilter[year];
+            const value = filter?.deliveredYearFilter[year];
             return (
               <label
                 key={year}
