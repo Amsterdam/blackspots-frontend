@@ -58,18 +58,7 @@ export const getExportFilter = stadsdeelFilter => {
   return `stadsdeel=${stadsdeel.value}`;
 };
 
-const FilterPanel = ({
-  spotTypeFilter,
-  spotStatusTypeFilter,
-  blackspotYearFilter,
-  deliveredYearFilter,
-  quickscanYearFilter,
-  stadsdeelFilter,
-  setFilters,
-  setBlackspotListFilter,
-  setQuickscanListFilter,
-  setDeliveredListFilter,
-}) => {
+const FilterPanel = () => {
   const {
     state: { filter },
     dispatch,
@@ -140,15 +129,6 @@ const FilterPanel = ({
       };
 
       dispatch(actions.setFilter(newFilter));
-
-      // setFilters(
-      //   updatedSpotTypeFilter || resetFilter(spotTypeFilter),
-      //   updatedSpotStatusTypeFilter || resetFilter(spotStatusTypeFilter),
-      //   updatedBlackspotYearFilter || resetFilter(blackspotYearFilter),
-      //   updatedDeliveredYearFilter || resetFilter(deliveredYearFilter),
-      //   updatedQuickscanYearFilter || resetFilter(quickscanYearFilter),
-      //   updatedStadsdeelFilter || resetFilter(stadsdeelFilter)
-      // );
     },
     [filter, dispatch, actions.setFilter]
   );
@@ -161,13 +141,13 @@ const FilterPanel = ({
     // Changing options should reset the filters
     updateFilters(
       // Reset the type filter
-      resetFilter(spotTypeFilter)
+      resetFilter(filter?.spotTypeFilter)
     );
 
     // Set the list filters
-    setBlackspotListFilter(value === ContextMenuOptions.BLACKSPOTS);
-    setQuickscanListFilter(value === ContextMenuOptions.QUICKSCANS);
-    setDeliveredListFilter(value === ContextMenuOptions.DELIVERED);
+    // setBlackspotListFilter(value === ContextMenuOptions.BLACKSPOTS);
+    // setQuickscanListFilter(value === ContextMenuOptions.QUICKSCANS);
+    // setDeliveredListFilter(value === ContextMenuOptions.DELIVERED);
 
     // Set the option value
     setOptionValue(value);
@@ -195,7 +175,7 @@ const FilterPanel = ({
   function renderBlackspotYearCheckboxes() {
     return (
       <div className={styles.YearFilter}>
-        {Object.keys(blackspotYearFilter)
+        {Object.keys(filter?.blackspotYearFilter)
           .reverse()
           .map(year => {
             const value = filter?.blackspotYearFilter[year];
@@ -211,7 +191,7 @@ const FilterPanel = ({
                   checked={value}
                   onChange={() => {
                     const updatedFilter = {
-                      ...blackspotYearFilter,
+                      ...filter?.blackspotYearFilter,
                       [year]: !value,
                     };
                     updateFilters(
@@ -239,7 +219,7 @@ const FilterPanel = ({
   function renderDeliveredYearCheckboxes() {
     return (
       <div className={styles.YearFilter}>
-        {Object.keys(deliveredYearFilter)
+        {Object.keys(filter?.deliveredYearFilter)
           .reverse()
           .map(year => {
             const value = filter?.deliveredYearFilter[year];
@@ -255,12 +235,12 @@ const FilterPanel = ({
                   checked={value}
                   onChange={() => {
                     const updatedFilter = {
-                      ...deliveredYearFilter,
+                      ...filter?.deliveredYearFilter,
                       [year]: !value,
                     };
                     updateFilters(
-                      spotTypeFilter,
-                      spotStatusTypeFilter,
+                      filter?.spotTypeFilter,
+                      filter?.spotStatusTypeFilter,
                       false,
                       updatedFilter
                     );
@@ -284,10 +264,10 @@ const FilterPanel = ({
   function renderQuickscanYearCheckboxes() {
     return (
       <div className={styles.YearFilter}>
-        {Object.keys(quickscanYearFilter)
+        {Object.keys(filter?.quickscanYearFilter)
           .reverse()
           .map(year => {
-            const value = quickscanYearFilter[year];
+            const value = filter?.quickscanYearFilter[year];
             return (
               <label
                 key={year}
@@ -300,12 +280,12 @@ const FilterPanel = ({
                   checked={value}
                   onChange={() => {
                     const updatedFilter = {
-                      ...quickscanYearFilter,
+                      ...filter?.quickscanYearFilter,
                       [year]: !value,
                     };
                     updateFilters(
-                      spotTypeFilter,
-                      spotStatusTypeFilter,
+                      filter?.spotTypeFilter,
+                      filter?.spotStatusTypeFilter,
                       false,
                       false,
                       updatedFilter
