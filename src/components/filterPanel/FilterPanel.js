@@ -197,7 +197,10 @@ const FilterPanel = () => {
                     updateFilters(
                       filter?.spotTypeFilter,
                       filter?.spotStatusTypeFilter,
-                      updatedFilter
+                      updatedFilter,
+                      filter?.deliveredYearFilter,
+                      filter?.quickscanYearFilter,
+                      filter?.stadsdeelFilter
                     );
                     if (!value) {
                       trackFilter(`On blackspot list: ${year}`);
@@ -241,8 +244,10 @@ const FilterPanel = () => {
                     updateFilters(
                       filter?.spotTypeFilter,
                       filter?.spotStatusTypeFilter,
-                      false,
-                      updatedFilter
+                      filter?.deliveredYearFilter,
+                      updatedFilter,
+                      filter?.quickscanYearFilter,
+                      filter?.stadsdeelFilter
                     );
                     if (!value) {
                       trackFilter(`Delivered on: ${year}`);
@@ -286,9 +291,10 @@ const FilterPanel = () => {
                     updateFilters(
                       filter?.spotTypeFilter,
                       filter?.spotStatusTypeFilter,
-                      false,
-                      false,
-                      updatedFilter
+                      filter?.blackspotYearFilter,
+                      filter?.deliveredYearFilter,
+                      updatedFilter,
+                      filter?.stadsdeelFilter
                     );
                     if (!value) {
                       trackFilter(`On quickscan list: ${year}`);
