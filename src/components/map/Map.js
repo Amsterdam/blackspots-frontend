@@ -73,7 +73,7 @@ const MapComponent = () => {
       <Map
         data-testid="map"
         fullScreen
-        setInstance={instance => setMapInstance(instance)}
+        setInstance={setMapInstance}
         options={MAP_OPTIONS}
       >
         {selectedLocation?.geometry?.coordinates && (
