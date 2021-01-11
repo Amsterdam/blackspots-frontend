@@ -139,10 +139,10 @@ const FilterPanel = () => {
 
   function processOptionChange(value) {
     // Changing options should reset the filters
-    updateFilters(
-      // Reset the type filter
-      resetFilter(filter?.spotTypeFilter)
-    );
+    // updateFilters(
+    //   // Reset the type filter
+    //   resetFilter(filter?.spotTypeFilter)
+    // );
 
     // Set the list filters
     // setBlackspotListFilter(value === ContextMenuOptions.BLACKSPOTS);
