@@ -52,6 +52,7 @@ function isVisibleStatusType(spotStatusTypeFilter, marker) {
  */
 function isVisibleBlackspotYear(blackspotYearFilter, marker) {
   const year = getBlackspotYearFromMarker(marker);
+  if (!year) return false;
   return allValuesAreFalse(blackspotYearFilter)
     ? true
     : blackspotYearFilter[year];
@@ -85,9 +86,11 @@ const evaluateSingleMarkerVisibility = (marker, filter) => {
       marker
     ) &&
     isVisibleStatusType(filter?.spotStatusTypeFilter || {}, marker) &&
-    isVisibleBlackspotYear(filter?.blackspotYearFilter || {}, marker) &&
-    isVisibleDeliveredYear(filter?.deliveredYearFilter || {}, marker) &&
-    isVisibleQuickscanYear(filter?.quickscanYearFilter || {}, marker)
+    (filter?.show === 'ALL' ||
+      (filter?.show === 'BLACKSPOTS' &&
+        isVisibleBlackspotYear(filter?.blackspotYearFilter || {}, marker)))
+    // isVisibleDeliveredYear(filter?.deliveredYearFilter || {}, marker) && // "DELIVERED"
+    // isVisibleQuickscanYear(filter?.quickscanYearFilter || {}, marker)  // "QUICKSCANS"
   ) {
     return true;
   }
