@@ -5,7 +5,6 @@ import {
   getDeliveredYearFromMarker,
   getQuickscanYearFromMarker,
 } from 'helpers';
-import { SpotTypes, SpotStatusTypes } from 'config';
 
 /**
  * Check if all values of an object are falsy
@@ -78,68 +77,7 @@ function isVisibleQuickscanYear(quickscanYearFilter, marker) {
     : quickscanYearFilter[year];
 }
 
-/**
- * Set all values in an object to false, effectively resetting a filter
- */
-export const resetFilter = filter => {
-  const result = {};
-  Object.keys(filter).forEach(k => {
-    result[k] = false;
-  });
-  return result;
-};
-
-/**
- * Loop through markers and set its visibility based on the filters
- */
-export const evaluateMarkerVisibility = (
-  markers,
-  filter
-  // spotTypeFilter,
-  // spotStatusTypeFilter,
-  // blackspotYearFilter,
-  // deliveredYearFilter,
-  // quickscanYearFilter,
-  // blackspotListFilter,
-  // quickscanListFilter,
-  // deliveredListFilter,
-  // stadsdeelFilter
-) => {
-  if (markers)
-    markers.forEach(marker => {
-      if (
-        isVisibleSpotType(
-          filter?.spotTypeFilter || {},
-          filter?.blackspotListFilter || {},
-          filter?.quickscanListFilter || {},
-          filter?.deliveredListFilter || {},
-          filter?.stadsdeelFilter || {},
-          marker
-        ) &&
-        isVisibleStatusType(filter?.sspotStatusTypeFilter || {}, marker) &&
-        isVisibleBlackspotYear(filter?.sblackspotYearFilter || {}, marker) &&
-        isVisibleDeliveredYear(filter?.sdeliveredYearFilter || {}, marker) &&
-        isVisibleQuickscanYear(filter?.squickscanYearFilter || {}, marker)
-      ) {
-        return true;
-      }
-      return false;
-    });
-};
-
-const evaluateSingleMarkerVisibility = (
-  marker,
-  filter
-  // spotTypeFilter,
-  // spotStatusTypeFilter,
-  // blackspotYearFilter,
-  // deliveredYearFilter,
-  // quickscanYearFilter,
-  // blackspotListFilter,
-  // quickscanListFilter,
-  // deliveredListFilter,
-  // stadsdeelFilter
-) => {
+const evaluateSingleMarkerVisibility = (marker, filter) => {
   if (
     isVisibleSpotType(
       filter?.spotTypeFilter || {},
