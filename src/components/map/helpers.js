@@ -21,14 +21,7 @@ export const allValuesAreFalse = object => {
 /**
  * Check if a marker should be visible based on the type filter
  * */
-function isVisibleSpotType(
-  spotTypeFilter,
-  blackspotListFilter,
-  quickscanListFilter,
-  deliveredListFilter,
-  stadsdeelFilter,
-  marker
-) {
+function isVisibleSpotType(spotTypeFilter, stadsdeelFilter, marker) {
   const spotType = getSpotTypeFromMarker(marker);
   // const spotStatus = getStatusTypeFromMarker(marker);
   const { stadsdeel } = marker.properties;
@@ -38,30 +31,11 @@ function isVisibleSpotType(
     ? true
     : spotTypeFilter[spotType];
 
-  // Check if the spot should be visible based on the list filters
-  const showBasedOnListFilter = (() => {
-    // if (blackspotListFilter) {
-    //   return spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
-    // }
-    // if (quickscanListFilter) {
-    //   return (
-    //     spotType === SpotTypes.PROTOCOL_DODELIJK ||
-    //     spotType === SpotTypes.PROTOCOL_ERNSTIG
-    //   );
-    // }
-    // if (deliveredListFilter) {
-    //   return spotStatus === SpotStatusTypes.GEREED;
-    // }
-    return true;
-  })();
-
   const showBasedOnStadsdeelFilter = allValuesAreFalse(stadsdeelFilter)
     ? true
     : stadsdeelFilter[stadsdeel];
 
-  return (
-    showBasedOnTypeFilter && showBasedOnListFilter && showBasedOnStadsdeelFilter
-  );
+  return showBasedOnTypeFilter && showBasedOnStadsdeelFilter;
 }
 
 /**
@@ -169,9 +143,6 @@ const evaluateSingleMarkerVisibility = (
   if (
     isVisibleSpotType(
       filter?.spotTypeFilter || {},
-      filter?.blackspotListFilter || {},
-      filter?.quickscanListFilter || {},
-      filter?.deliveredListFilter || {},
       filter?.stadsdeelFilter || {},
       marker
     ) &&
