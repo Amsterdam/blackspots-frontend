@@ -8,6 +8,7 @@ export const initialState = {
   selectedLocation: null,
   locations: [],
   filter: {
+    show: 'ALL',
     spotTypeFilter: {
       blackspot: false,
       'protocol dodelijk': false,
