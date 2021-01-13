@@ -120,6 +120,7 @@ const FilterPanel = () => {
       // the setFilter function received from the map, else, pass a resetted
       // filter.
       const newFilter = {
+        show: filter.show,
         spotTypeFilter: updatedSpotTypeFilter,
         spotStatusTypeFilter: updatedSpotStatusTypeFilter,
         blackspotYearFilter: updatedBlackspotYearFilter,
