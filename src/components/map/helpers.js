@@ -93,10 +93,10 @@ const evaluateSingleMarkerVisibility = (marker, filter) => {
         isVisibleBlackspotYear(filter?.blackspotYearFilter || {}, marker)))
     // (filter?.show === 'ALL' ||
     //   (filter?.show === 'DELIVERED' &&
-    //     isVisibleDeliveredYear(filter?.deliveredYearFilter || {}, marker)))
-
-    // isVisibleDeliveredYear(filter?.deliveredYearFilter || {}, marker) && // "DELIVERED"
-    // isVisibleQuickscanYear(filter?.quickscanYearFilter || {}, marker)  // "QUICKSCANS"
+    //     isVisibleDeliveredYear(filter?.deliveredYearFilter || {}, marker))) &&
+    // (filter?.show === 'ALL' ||
+    //   (filter?.show === 'QUICKSCANS' &&
+    //     isVisibleDeliveredYear(filter?.quickscanYearFilter || {}, marker)))
   ) {
     return true;
   }
