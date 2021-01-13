@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Spinner } from '@amsterdam/asc-ui';
-import { Close } from '@amsterdam/asc-assets';
+import { Button, Spinner } from '@datapunt/asc-ui';
+import { Close } from '@datapunt/asc-assets';
 import {
   FileNameStyle,
   FileInputStyle,

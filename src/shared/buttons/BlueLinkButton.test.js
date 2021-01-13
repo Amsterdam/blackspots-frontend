@@ -5,6 +5,6 @@ import BlueLinkButton from './BlueLinkButton';
 
 describe('BlueLinkButton', () => {
   it('should render without errors', () => {
-    shallow(<BlueLinkButton text="test" href="" />);
+    shallow(<BlueLinkButton text="test" to="" />);
   });
 });

@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Heading, Button, Link, Icon, themeColor } from '@amsterdam/asc-ui';
+import { Heading, Button, Link, Icon } from '@datapunt/asc-ui';
 
-// import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import { ExternalLink, Close } from '@amsterdam/asc-assets';
+import { ExternalLink, Close } from '@datapunt/asc-assets';
 
 import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'config';
 import classNames from 'classnames';
@@ -19,7 +19,6 @@ import styles from './DetailPanel.module.scss';
 import { SpotTypeDisplayNames } from '../../config';
 
 import UserContext from '../../shared/user/UserContext';
-import { HeaderSecondary } from '../../styles/SharedStyles';
 
 import {
   HeaderStyle,
@@ -75,10 +74,13 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       )}
     >
       <HeaderStyle>
-        <HeaderSecondary forwardedAs="h3">{locatie_id}</HeaderSecondary>
+        <Heading $as="h3" color="secondary">
+          {locatie_id}
+        </Heading>
         {canEdit && (
           <Link
-            href={`/edit/${feature.id}`}
+            $as={NavLink}
+            to={`/edit/${feature.id}`}
             variant="inline"
             data-testid="editButton"
           >
@@ -95,7 +97,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       </HeaderStyle>
       <ContentStyle>
         <TitleStyle>
-          <Heading forwardedAs="h2">{description}</Heading>
+          <Heading $as="h2">{description}</Heading>
         </TitleStyle>
         <DataTable bottom={2}>
           <tbody>
@@ -158,13 +160,15 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             rel="noopener noreferrer"
             variant="inline"
           >
-            <Icon size={14} color={`${themeColor('primary', 'main')}`}>
+            <Icon size={14} color="primary">
               <ExternalLink />
             </Icon>
             Panoramabeeld
           </ExternalLinkStyle>
         </ExternalLinkContainerStyle>
-        <HeaderSecondary forwardedAs="h4">Maatregelen</HeaderSecondary>
+        <Heading $as="h4" color="secondary">
+          Maatregelen
+        </Heading>
         <DataTable>
           <tbody>
             <tr>
@@ -194,7 +198,9 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
           </tbody>
         </DataTable>
         {documents.length > 0 && (
-          <HeaderSecondary forwardedAs="h4">&gt; Documenten</HeaderSecondary>
+          <Heading $as="h4" color="secondary">
+            Documenten
+          </Heading>
         )}
 
         {reportDocument || designDocument ? (

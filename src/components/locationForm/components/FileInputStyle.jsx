@@ -1,5 +1,5 @@
-import { styles, themeColor, themeSpacing } from '@amsterdam/asc-ui';
-import styled from 'styled-components';
+import { styles, themeColor, themeSpacing } from '@datapunt/asc-ui';
+import styled from '@datapunt/asc-core';
 
 export const FileNameStyle = styled.span`
   display: inline-block;

@@ -7,8 +7,8 @@ import { resetFilter } from 'components/map/helpers';
 import classNames from 'classnames';
 import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
-import { Button, themeSpacing } from '@amsterdam/asc-ui';
-import styled from 'styled-components';
+import { Button, themeSpacing } from '@datapunt/asc-ui';
+import styled from '@datapunt/asc-core';
 import useDownload from 'shared/hooks/useDownload';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import { StatusDisplayNames, SpotTypeDisplayNames } from '../../config';
@@ -76,7 +76,7 @@ const FilterPanel = ({
       downloadUrl,
       `wbakaart-export-${new Date().toLocaleDateString('nl-NL')}.csv`
     );
-  }, [downloadUrl, downloadFile]);
+  }, [downloadUrl]);
 
   useEffect(() => {
     setDownloadUrl(`${exportUrl}${getExportFilter(stadsdeelFilter)}`);
@@ -86,7 +86,7 @@ const FilterPanel = ({
         Object.values(spotStatusTypeFilter).filter(e => e).length === 0 &&
         optionValue === ContextMenuOptions.ALL
     );
-  }, [stadsdeelFilter, spotTypeFilter, spotStatusTypeFilter, optionValue]);
+  }, [stadsdeelFilter, spotTypeFilter, spotStatusTypeFilter]);
 
   const trackFilter = useCallback(
     name => {
@@ -98,37 +98,26 @@ const FilterPanel = ({
   /**
    * Update the filters of the actual map
    */
-  const updateFilters = useCallback(
-    (
-      updatedSpotTypeFilter = false,
-      updatedSpotStatusTypeFilter = false,
-      updatedBlackspotYearFilter = false,
-      updatedDeliveredYearFilter = false,
-      updatedQuickscanYearFilter = false,
-      updatedStadsdeelFilter = false
-    ) => {
-      // For every filter, if it has an actual filter object, pass it along to
-      // the setFilter function received from the map, else, pass a resetted
-      // filter.
-      setFilters(
-        updatedSpotTypeFilter || resetFilter(spotTypeFilter),
-        updatedSpotStatusTypeFilter || resetFilter(spotStatusTypeFilter),
-        updatedBlackspotYearFilter || resetFilter(blackspotYearFilter),
-        updatedDeliveredYearFilter || resetFilter(deliveredYearFilter),
-        updatedQuickscanYearFilter || resetFilter(quickscanYearFilter),
-        updatedStadsdeelFilter || resetFilter(stadsdeelFilter)
-      );
-    },
-    [
-      spotTypeFilter,
-      spotStatusTypeFilter,
-      blackspotYearFilter,
-      deliveredYearFilter,
-      quickscanYearFilter,
-      stadsdeelFilter,
-      setFilters,
-    ]
-  );
+  function updateFilters(
+    updatedSpotTypeFilter = false,
+    updatedSpotStatusTypeFilter = false,
+    updatedBlackspotYearFilter = false,
+    updatedDeliveredYearFilter = false,
+    updatedQuickscanYearFilter = false,
+    updatedStadsdeelFilter = false
+  ) {
+    // For every filter, if it has an actual filter object, pass it along to
+    // the setFilter function received from the map, else, pass a resetted
+    // filter.
+    setFilters(
+      updatedSpotTypeFilter || resetFilter(spotTypeFilter),
+      updatedSpotStatusTypeFilter || resetFilter(spotStatusTypeFilter),
+      updatedBlackspotYearFilter || resetFilter(blackspotYearFilter),
+      updatedDeliveredYearFilter || resetFilter(deliveredYearFilter),
+      updatedQuickscanYearFilter || resetFilter(quickscanYearFilter),
+      updatedStadsdeelFilter || resetFilter(stadsdeelFilter)
+    );
+  }
 
   function processOptionChange(value) {
     // Changing options should reset the filters
@@ -433,16 +422,7 @@ const FilterPanel = ({
         })}
       </>
     );
-  }, [
-    stadsdeelFilter,
-    blackspotYearFilter,
-    deliveredYearFilter,
-    quickscanYearFilter,
-    spotStatusTypeFilter,
-    spotTypeFilter,
-    trackFilter,
-    updateFilters,
-  ]);
+  }, [stadsdeelFilter]);
 
   const togglePanel = () => setShowPanel(!showPanel);
   const handleKeyPress = event => {

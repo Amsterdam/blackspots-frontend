@@ -12,10 +12,10 @@ describe('TextInput', () => {
     onChange: jest.fn(),
   };
   it('renders correctly', () => {
-    const { queryByTestId } = render(
+    const { container } = render(
       withTheme(<TextInput className="txtInput" {...props} />)
     );
 
-    expect(queryByTestId('text-name-test-id').value).toEqual(props.value);
+    expect(container.querySelector('input[type="text"].txtInput')).toBeTruthy();
   });
 });

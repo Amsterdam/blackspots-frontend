@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import LandingPage from 'views/landing/LandingPage';
 import useKeycloak from 'shared/hooks/useKeycloak';
-import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
+import { GlobalStyle, ThemeProvider } from '@datapunt/asc-ui';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { UserContextProvider } from 'shared/user/UserContext';
 import mainReducer, { initialState } from 'shared/reducers';
