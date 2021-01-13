@@ -111,17 +111,15 @@ export const getGeoJson = (locations, filter) => {
   });
 
   console.log('#', markers.length);
-  if (markers.length) {
-    return {
-      type: 'FeatureCollection',
-      name: 'Black spots',
-      crs: {
-        type: 'name',
-        properties: {
-          name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
-        },
+  return {
+    type: 'FeatureCollection',
+    name: 'Black spots',
+    crs: {
+      type: 'name',
+      properties: {
+        name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
       },
-      features: [...markers],
-    };
-  }
+    },
+    features: [...markers],
+  };
 };
