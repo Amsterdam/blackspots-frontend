@@ -8,14 +8,13 @@ import React, {
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import SVGIcon from 'components/SVGIcon/SVGIcon';
 import { SpotStatusTypes, SpotTypes, Stadsdeel, endpoints } from 'config';
-import { resetFilter } from 'components/map/helpers';
 import classNames from 'classnames';
 import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
 import { Button, themeSpacing } from '@amsterdam/asc-ui';
 import styled from 'styled-components';
 import { FilterContext } from 'shared/reducers/FilterContext';
-import { actions } from 'shared/reducers/filter';
+import { actions, initialState } from 'shared/reducers/filter';
 import useDownload from 'shared/hooks/useDownload';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import { StatusDisplayNames, SpotTypeDisplayNames } from '../../config';
@@ -139,23 +138,13 @@ const FilterPanel = () => {
   }, []);
 
   function processOptionChange(value) {
-    // Changing options should reset the filters
-    // updateFilters(
-    //   // Reset the type filter
-    //   resetFilter(filter?.spotTypeFilter)
-    // );
-
-    // Set the list filters
-    // setBlackspotListFilter(value === ContextMenuOptions.BLACKSPOTS);
-    // setQuickscanListFilter(value === ContextMenuOptions.QUICKSCANS);
-    // setDeliveredListFilter(value === ContextMenuOptions.DELIVERED);
-
     // Set the option value
     setOptionValue(value);
 
+    // Changing options should reset the filters
     dispatch(
       actions.setFilter({
-        ...filter,
+        ...initialState.filter,
         show: value,
       })
     );
