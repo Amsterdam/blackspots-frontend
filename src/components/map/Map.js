@@ -13,6 +13,7 @@ import Loader from 'shared/loader/Loader';
 import { actions } from 'shared/reducers/filter';
 import { FilterContext } from 'shared/reducers/FilterContext';
 
+// import { Search } from '@amsterdam/asc-assets';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
 import './markerStyle.css';
@@ -20,6 +21,7 @@ import useDataFetching from '../../shared/hooks/useDataFetching';
 // import useYearFilters from './hooks/useYearFilters';
 import BlackspotsLayer from './components/BlackspotsLayer';
 import StadsdelenLayer from './components/StadsdelenLayer';
+import Search from './components/Search';
 import { endpoints } from '../../config';
 
 const MAP_OPTIONS = {
@@ -87,6 +89,7 @@ const MapComponent = () => {
         <StadsdelenLayer />
         <BlackspotsLayer onMarkerClick={onMarkerClick} />
         <ViewerContainer
+          topLeft={<Search />}
           bottomLeft={<FilterPanel />}
           bottomRight={<Zoom />}
           topRight={loading && <Loader />}
