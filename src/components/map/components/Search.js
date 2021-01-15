@@ -8,10 +8,10 @@ import {
   themeColor,
   themeSpacing,
 } from '@amsterdam/asc-ui';
+
+import useDataFetching from 'shared/hooks/useDataFetching';
 // import L from 'leaflet';
-
 import { ChevronRight } from '@amsterdam/asc-assets';
-
 import { useMapInstance } from '@amsterdam/react-maps';
 
 const StyledInput = styled(Input)`
