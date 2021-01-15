@@ -26,7 +26,7 @@ const StyledAutosuggest = styled.ul`
   list-style-type: none;
   padding: 6px 0 0 ${themeSpacing(3)};
   border: 1px solid ${themeColor('tint', 'level5')};
-  z-index: 1100;
+  border: 2px solid black;
 `;
 
 const StyledListItem = styled(ListItem)`
