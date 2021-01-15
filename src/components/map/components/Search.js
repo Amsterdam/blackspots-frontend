@@ -3,21 +3,18 @@ import styled from 'styled-components';
 import {
   Link,
   ListItem,
-  Input,
+  SearchBar,
   // Icon,
   themeColor,
   themeSpacing,
 } from '@amsterdam/asc-ui';
-
 import useDataFetching from 'shared/hooks/useDataFetching';
-// import L from 'leaflet';
 // import { ChevronRight } from '@amsterdam/asc-assets';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { getByUri } from 'shared/api/api';
 
-const StyledInput = styled(Input)`
-  width: 300px;
-  margin-bottom: -17px;
+const StyledSearchBar = styled(SearchBar)`
+  width: 394px;
 `;
 
 const StyledAutosuggest = styled.ul`
@@ -89,7 +86,7 @@ const Search = () => {
 
   return (
     <div>
-      <StyledInput
+      <StyledSearchBar
         id="search"
         ref={searchRef}
         data-testid="input"
