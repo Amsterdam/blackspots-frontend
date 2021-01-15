@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import {
   Link,
@@ -11,20 +11,22 @@ import {
 
 import useDataFetching from 'shared/hooks/useDataFetching';
 // import L from 'leaflet';
-import { ChevronRight } from '@amsterdam/asc-assets';
+// import { ChevronRight } from '@amsterdam/asc-assets';
 import { useMapInstance } from '@amsterdam/react-maps';
+import { getByUri } from 'shared/api/api';
 
 const StyledInput = styled(Input)`
-  width: 100%;
+  width: 300px;
   margin-bottom: -17px;
 `;
 
 const StyledAutosuggest = styled.ul`
-  width: 100%;
+  width: 300px;
   background-color: ${themeColor('tint', 'level1')};
   list-style-type: none;
   padding: 6px 0 0 ${themeSpacing(3)};
   border: 1px solid ${themeColor('tint', 'level5')};
+  z-index: 1100;
 `;
 
 const StyledListItem = styled(ListItem)`
@@ -35,6 +37,7 @@ const StyledListItem = styled(ListItem)`
     display: inline;
     color: ${themeColor('tint', 'level7')};
     position: relative;
+    font-size: 16px;
     top: -4px;
   }
 `;
@@ -45,6 +48,8 @@ const StyledIcon = styled(Icon)`
 `;
 
 const Search = () => {
+  const lookupUrl =
+    'https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=';
   const autosuggestUrl =
     'https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?fq=gemeentenaam:amsterdam&fq=type:adres&fl=id,weergavenaam,type,score,lat,lon&q=';
   const searchRef = useRef(null);
@@ -52,9 +57,35 @@ const Search = () => {
 
   const mapInstance = useMapInstance();
   const [showAutosuggest, setShowAutosuggest] = useState(false);
-  const [query, setQuery] = useState('');
   const [url, setUrl] = useState('');
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
+
+  const onAutosuggestClick = useCallback(
+    async (e, autoSuggestLocation) => {
+      if (e) {
+        e.preventDefault();
+      }
+
+      if (autoSuggestLocation.weergavenaam) {
+        autosuggestRef.current.value = autoSuggestLocation.weergavenaam;
+        setShowAutosuggest(false);
+      }
+
+      const response = await getByUri(`${lookupUrl}${autoSuggestLocation.id}`);
+      if (mapInstance && response.response.docs[0]) {
+        const parsedCoordinates = response.response.docs[0].centroide_ll
+          .replace(/POINT\(|\)/, '')
+          .split(' ');
+        const latLng = {
+          lat: parseFloat(parsedCoordinates[1]),
+          lng: parseFloat(parsedCoordinates[0]),
+        };
+
+        mapInstance.flyTo(latLng, 11);
+      }
+    },
+    [mapInstance]
+  );
 
   return (
     <div>
@@ -63,10 +94,11 @@ const Search = () => {
         ref={searchRef}
         data-testid="input"
         onChange={e => {
-          if (e.target.value.length < 3) return;
+          if (e.target.value.length < 2) return;
           const value = encodeURIComponent(e.target.value);
-          setQuery(e.target.value);
+          setShowAutosuggest(true);
           setUrl(`${autosuggestUrl}${value}`);
+          fetchData(url);
         }}
         onBlur={() => {
           setTimeout(() => {
@@ -74,13 +106,12 @@ const Search = () => {
           }, 150);
         }}
       />
-      {showAutosuggest && query.length && results && results.length ? (
+      {showAutosuggest &&
+      results?.response?.docs &&
+      results?.response?.docs.length ? (
         <StyledAutosuggest data-testid="autosuggest" ref={autosuggestRef}>
-          {results.map(item => (
+          {results?.response?.docs.map(item => (
             <StyledListItem key={item.id}>
-              <StyledIcon size={14}>
-                <ChevronRight />
-              </StyledIcon>
               <Link
                 href="#"
                 variant="inline"
