@@ -4,7 +4,7 @@ import {
   Link,
   ListItem,
   Input,
-  Icon,
+  // Icon,
   themeColor,
   themeSpacing,
 } from '@amsterdam/asc-ui';
@@ -42,10 +42,10 @@ const StyledListItem = styled(ListItem)`
   }
 `;
 
-const StyledIcon = styled(Icon)`
-  display: inline;
-  margin-right: 8px;
-`;
+// const StyledIcon = styled(Icon)`
+//   display: inline;
+//   margin-right: 8px;
+// `;
 
 const Search = () => {
   const lookupUrl =
@@ -58,7 +58,7 @@ const Search = () => {
   const mapInstance = useMapInstance();
   const [showAutosuggest, setShowAutosuggest] = useState(false);
   const [url, setUrl] = useState('');
-  const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
+  const { /* errorMessage, loading, */ results, fetchData } = useDataFetching();
 
   const onAutosuggestClick = useCallback(
     async (e, autoSuggestLocation) => {
