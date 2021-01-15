@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import {
   Link,
@@ -47,15 +47,20 @@ const StyledIcon = styled(Icon)`
 const Search = () => {
   const autosuggestUrl =
     'https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?fq=gemeentenaam:amsterdam&fq=type:adres&fl=id,weergavenaam,type,score,lat,lon&q=';
+  const searchRef = useRef(null);
+  const autosuggestRef = useRef(null);
+
   const mapInstance = useMapInstance();
-  [showAutosuggest, setShowAutosuggest] = useState(false);
-  [query, setQuery] = useState('');
+  const [showAutosuggest, setShowAutosuggest] = useState(false);
+  const [query, setQuery] = useState('');
+  const [url, setUrl] = useState('');
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
 
   return (
     <div>
       <StyledInput
-        id="location"
+        id="search"
+        ref={searchRef}
         data-testid="input"
         onChange={e => {
           if (e.target.value.length < 3) return;
@@ -70,7 +75,7 @@ const Search = () => {
         }}
       />
       {showAutosuggest && query.length && results && results.length ? (
-        <StyledAutosuggest data-testid="autosuggest">
+        <StyledAutosuggest data-testid="autosuggest" ref={autosuggestRef}>
           {results.map(item => (
             <StyledListItem key={item.id}>
               <StyledIcon size={14}>
