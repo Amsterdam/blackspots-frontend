@@ -21,7 +21,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'master'
-                    branch 'development'
+                    branch 'develop'
                     changeRequest()
                     buildingTag()
                     environment name: 'IS_PRE_RELEASE_BRANCH', value: 'true'
@@ -32,7 +32,7 @@ pipeline {
                     when {
                         anyOf {
                             branch 'master'
-                            branch 'development'
+                            branch 'develop'
                             changeRequest()
                             buildingTag()
                             environment name: 'IS_PRE_RELEASE_BRANCH', value: 'true'
