@@ -51,19 +51,19 @@ const MapComponent = () => {
       dispatch(actions.setLocations(results ? [...results.features] : []));
     }
     // Keep the actions and locations out from the dependency array to prevent infinite loop
-  }, [results, dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [results]);
 
   const onMarkerClick = useCallback(
     feature => {
       dispatch(actions.selectLocation(feature));
       setShowDetailPanel(true);
     },
-    [dispatch]
+    [dispatch, setShowDetailPanel, actions.selectLocation]
   );
 
   const toggleDetailPanel = useCallback(() => {
     setShowDetailPanel(!showDetailPanel);
-  }, [showDetailPanel]);
+  }, [showDetailPanel, setShowDetailPanel]);
 
   return (
     <>
