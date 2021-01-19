@@ -1,16 +1,23 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+  useRef,
+} from 'react';
 import {
   Map,
   BaseLayer,
   ViewerContainer,
   Zoom,
-  Marker,
   getCrsRd,
 } from '@amsterdam/arm-core';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Loader from 'shared/loader/Loader';
 import { actions } from 'shared/reducers/filter';
 import { FilterContext } from 'shared/reducers/FilterContext';
+import icon from 'leaflet/dist/images/marker-icon.png';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
 import './markerStyle.css';
@@ -37,6 +44,21 @@ const MapComponent = () => {
   } = useContext(FilterContext);
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
+  const [mapInstance, setMapInstance] = useState(undefined);
+  const markerRef = useRef();
+
+  const Marker = ({ latLng }) => {
+    if (markerRef.current) {
+      mapInstance.removeLayer(markerRef.current);
+    }
+    markerRef.current = L.marker(latLng, {
+      icon: L.icon({
+        iconUrl: icon,
+        iconAnchor: [18, 45],
+      }),
+    }).addTo(mapInstance);
+    return null;
+  };
 
   useEffect(() => {
     // if (locations.length === 0)
@@ -67,15 +89,19 @@ const MapComponent = () => {
 
   return (
     <>
-      <Map data-testid="map" fullScreen options={MAP_OPTIONS}>
-        {selectedLocation?.geometry?.coordinates && (
-          <Marker
-            latLng={{
-              lat: selectedLocation?.geometry?.coordinates[1],
-              lng: selectedLocation?.geometry?.coordinates[0],
-            }}
-          />
-        )}
+      <Map
+        data-testid="map"
+        fullScreen
+        options={MAP_OPTIONS}
+        setInstance={setMapInstance}
+      >
+        <Marker
+          ref={markerRef}
+          latLng={{
+            lat: selectedLocation?.geometry?.coordinates[1] || 0,
+            lng: selectedLocation?.geometry?.coordinates[0] || 0,
+          }}
+        />
         <StadsdelenLayer />
         <BlackspotsLayer onMarkerClick={onMarkerClick} />
         <ViewerContainer
