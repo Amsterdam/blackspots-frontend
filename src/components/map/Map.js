@@ -11,7 +11,6 @@ import 'leaflet/dist/leaflet.css';
 import Loader from 'shared/loader/Loader';
 import { actions } from 'shared/reducers/filter';
 import { FilterContext } from 'shared/reducers/FilterContext';
-
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
 import './markerStyle.css';
@@ -33,17 +32,17 @@ const MAP_OPTIONS = {
 
 const MapComponent = () => {
   const {
-    state: { locations, selectedLocation },
+    state: { selectedLocation },
     dispatch,
   } = useContext(FilterContext);
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
 
   useEffect(() => {
-    if (locations.length === 0)
-      (async () => {
-        fetchData(`${endpoints.blackspots}?format=geojson`);
-      })();
+    // if (locations.length === 0)
+    (async () => {
+      fetchData(`${endpoints.blackspots}?format=geojson`);
+    })();
     // Keep the dependency array empty to prevent an infinite loop
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
