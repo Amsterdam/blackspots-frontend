@@ -14,16 +14,18 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import { getByUri } from 'shared/api/api';
 
 const StyledSearchBar = styled(SearchBar)`
-  width: 394px;
+  width: 400px;
+  top: ${themeSpacing(12)};
 `;
 
 const StyledAutosuggest = styled.ul`
-  width: 300px;
+  width: 400px;
+  margin-top: 46px;
   background-color: ${themeColor('tint', 'level1')};
   list-style-type: none;
   padding: 6px 0 0 ${themeSpacing(3)};
-  border: 1px solid ${themeColor('tint', 'level5')};
-  border: 2px solid black;
+  border: 2px solid ${themeColor('tint', 'level7')};
+  border-top-style: none;
 `;
 
 const StyledListItem = styled(ListItem)`
@@ -99,7 +101,7 @@ const Search = () => {
         }}
         onBlur={() => {
           setTimeout(() => {
-            setShowAutosuggest(false);
+            // setShowAutosuggest(false);
           }, 150);
         }}
       />
