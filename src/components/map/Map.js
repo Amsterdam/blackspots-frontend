@@ -9,16 +9,13 @@ import {
 } from '@amsterdam/arm-core';
 import 'leaflet/dist/leaflet.css';
 import Loader from 'shared/loader/Loader';
-// import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
 import { actions } from 'shared/reducers/filter';
 import { FilterContext } from 'shared/reducers/FilterContext';
 
-// import { Search } from '@amsterdam/asc-assets';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
 import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
-// import useYearFilters from './hooks/useYearFilters';
 import BlackspotsLayer from './components/BlackspotsLayer';
 import StadsdelenLayer from './components/StadsdelenLayer';
 import Search from './components/Search';
@@ -41,7 +38,6 @@ const MapComponent = () => {
   } = useContext(FilterContext);
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
-  const [mapInstance, setMapInstance] = useState(undefined);
 
   useEffect(() => {
     if (locations.length === 0)
@@ -72,12 +68,7 @@ const MapComponent = () => {
 
   return (
     <>
-      <Map
-        data-testid="map"
-        fullScreen
-        setInstance={setMapInstance}
-        options={MAP_OPTIONS}
-      >
+      <Map data-testid="map" fullScreen options={MAP_OPTIONS}>
         {selectedLocation?.geometry?.coordinates && (
           <Marker
             latLng={{
