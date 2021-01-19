@@ -101,7 +101,7 @@ const Search = () => {
         }}
         onBlur={() => {
           setTimeout(() => {
-            // setShowAutosuggest(false);
+            setShowAutosuggest(false);
           }, 150);
         }}
       />
