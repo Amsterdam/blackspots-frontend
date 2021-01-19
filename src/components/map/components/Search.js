@@ -50,7 +50,6 @@ const Search = () => {
   const autosuggestUrl =
     'https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?fq=gemeentenaam:amsterdam&fq=type:adres&fl=id,weergavenaam,type,score,lat,lon&q=';
   const searchRef = useRef(null);
-  const autosuggestRef = useRef(null);
 
   const mapInstance = useMapInstance();
   const [showAutosuggest, setShowAutosuggest] = useState(false);
@@ -64,7 +63,7 @@ const Search = () => {
       }
 
       if (autoSuggestLocation.weergavenaam) {
-        autosuggestRef.current.value = autoSuggestLocation.weergavenaam;
+        // autosuggestRef.current.value = autoSuggestLocation.weergavenaam;
         setShowAutosuggest(false);
       }
 
@@ -89,6 +88,7 @@ const Search = () => {
       <StyledSearchBar
         id="search"
         ref={searchRef}
+        autocomplete={false}
         data-testid="input"
         onChange={e => {
           if (e.target.value.length < 2) return;
@@ -106,7 +106,7 @@ const Search = () => {
       {showAutosuggest &&
       results?.response?.docs &&
       results?.response?.docs.length ? (
-        <StyledAutosuggest data-testid="autosuggest" ref={autosuggestRef}>
+        <StyledAutosuggest data-testid="autosuggest">
           {results?.response?.docs.map(item => (
             <StyledListItem key={item.id}>
               <Link
