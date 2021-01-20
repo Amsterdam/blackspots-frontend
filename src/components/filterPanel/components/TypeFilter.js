@@ -6,7 +6,7 @@ import SVGIcon from 'components/SVGIcon/SVGIcon';
 import classNames from 'classnames';
 import styles from '../FilterPanel.module.scss';
 
-const StadsdeelFilter = ({ updateFilters, trackFilter }) => {
+const TypeFilter = ({ updateFilters, trackFilter }) => {
   const {
     state: { filter },
   } = useContext(FilterContext);
@@ -58,9 +58,9 @@ const StadsdeelFilter = ({ updateFilters, trackFilter }) => {
   );
 };
 
-StadsdeelFilter.propTypes = {
+TypeFilter.propTypes = {
   updateFilters: PropTypes.func.isRequired,
   trackFilter: PropTypes.func.isRequired,
 };
 
-export default StadsdeelFilter;
+export default TypeFilter;
