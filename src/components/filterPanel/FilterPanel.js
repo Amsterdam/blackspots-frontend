@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
-import { SpotStatusTypes, Stadsdeel, endpoints } from 'config';
+import { Stadsdeel, endpoints } from 'config';
 import classNames from 'classnames';
 import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
@@ -12,7 +12,8 @@ import useDownload from 'shared/hooks/useDownload';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import StadsdeelFilter from './components/StadsdeelFilter';
 import TypeFilter from './components/TypeFilter';
-import { StatusDisplayNames } from '../../config';
+import StatusFilter from './components/StatusFilter';
+// import { StatusDisplayNames } from '../../config';
 import { ContextMenuOptions, MenuOptions } from './FilterPanel.constants';
 import styles from './FilterPanel.module.scss';
 
@@ -25,19 +26,6 @@ const FilterWrapperStyle = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
 `;
-
-function getStatusClassName(status) {
-  const statusClassMapper = {
-    [SpotStatusTypes.ONDERZOEK]: styles.Onderzoek,
-    [SpotStatusTypes.VOORBEREIDING]: styles.Voorbereiding,
-    [SpotStatusTypes.GEREED]: styles.Gereed,
-    [SpotStatusTypes.GEEN_MAATREGEL]: styles.GeenMaatregel,
-    [SpotStatusTypes.UITVOERING]: styles.Uitvoering,
-    [SpotStatusTypes.ONBEKEND]: styles.Onbekend,
-  };
-
-  return statusClassMapper[status];
-}
 
 const exportUrl = `${endpoints.blackspots}export/?`;
 
@@ -302,55 +290,6 @@ const FilterPanel = () => {
     );
   }
 
-  /**
-   * Render the checkboxes for the status filter
-   */
-  function renderStatusCheckboxes() {
-    return (
-      <>
-        <h5>Status</h5>
-        {Object.keys(SpotStatusTypes).map(key => {
-          const type = SpotStatusTypes[key];
-          const value = filter?.spotStatusTypeFilter[type];
-          return (
-            <label key={key} htmlFor={key} className={styles.CheckboxWrapper}>
-              <input
-                id={key}
-                type="checkbox"
-                checked={value}
-                onChange={() => {
-                  const updatedFilter = {
-                    ...filter?.spotStatusTypeFilter,
-                    [type]: !value,
-                  };
-                  updateFilters(
-                    filter?.spotTypeFilter,
-                    updatedFilter,
-                    filter?.blackspotYearFilter,
-                    filter?.deliveredYearFilter,
-                    filter?.quickscanYearFilter,
-                    filter?.stadsdeelFilter
-                  );
-                  if (!value) {
-                    trackFilter(type);
-                  }
-                }}
-              />
-              <span />
-              <div
-                className={classNames(
-                  styles.StatusDiv,
-                  getStatusClassName(type)
-                )}
-              />
-              {StatusDisplayNames[type]}
-            </label>
-          );
-        })}
-      </>
-    );
-  }
-
   const togglePanel = () => setShowPanel(!showPanel);
   const handleKeyPress = event => {
     if (event.key === 'Enter') togglePanel();
@@ -395,8 +334,12 @@ const FilterPanel = () => {
               trackFilter={trackFilter}
             />
           )}
-          {optionValue !== ContextMenuOptions.DELIVERED &&
-            renderStatusCheckboxes()}
+          {optionValue !== ContextMenuOptions.DELIVERED && (
+            <StatusFilter
+              updateFilters={updateFilters}
+              trackFilter={trackFilter}
+            />
+          )}
           <StadsdeelFilter
             updateFilters={updateFilters}
             trackFilter={trackFilter}
