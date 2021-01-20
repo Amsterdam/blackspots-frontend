@@ -15,6 +15,7 @@ import TypeFilter from './components/TypeFilter';
 import StatusFilter from './components/StatusFilter';
 import BlackspotYearFilter from './components/BlackspotYearFilter';
 import DeliveredYearFilter from './components/DeliveredYearFilter';
+import QuickscanYearFilter from './components/QuickscanYearFilter';
 import { ContextMenuOptions, MenuOptions } from './FilterPanel.constants';
 import styles from './FilterPanel.module.scss';
 
@@ -150,53 +151,6 @@ const FilterPanel = () => {
     );
   }
 
-  /**
-   * Render the checkboxes for the quickscan year filter
-   */
-  function renderQuickscanYearCheckboxes() {
-    return (
-      <div className={styles.YearFilter}>
-        {Object.keys(filter?.quickscanYearFilter)
-          .reverse()
-          .map(year => {
-            const value = filter?.quickscanYearFilter[year];
-            return (
-              <label
-                key={year}
-                htmlFor={year}
-                className={styles.CheckboxWrapper}
-              >
-                <input
-                  id={year}
-                  type="checkbox"
-                  checked={value}
-                  onChange={() => {
-                    const updatedFilter = {
-                      ...filter?.quickscanYearFilter,
-                      [year]: !value,
-                    };
-                    updateFilters(
-                      filter?.spotTypeFilter,
-                      filter?.spotStatusTypeFilter,
-                      filter?.blackspotYearFilter,
-                      filter?.deliveredYearFilter,
-                      updatedFilter,
-                      filter?.stadsdeelFilter
-                    );
-                    if (!value) {
-                      trackFilter(`On quickscan list: ${year}`);
-                    }
-                  }}
-                />
-                <span />
-                {year}
-              </label>
-            );
-          })}
-      </div>
-    );
-  }
-
   const togglePanel = () => setShowPanel(!showPanel);
   const handleKeyPress = event => {
     if (event.key === 'Enter') togglePanel();
@@ -240,8 +194,12 @@ const FilterPanel = () => {
               trackFilter={trackFilter}
             />
           )}
-          {optionValue === ContextMenuOptions.QUICKSCANS &&
-            renderQuickscanYearCheckboxes()}
+          {optionValue === ContextMenuOptions.QUICKSCANS && (
+            <QuickscanYearFilter
+              updateFilters={updateFilters}
+              trackFilter={trackFilter}
+            />
+          )}
           {(optionValue === ContextMenuOptions.ALL ||
             optionValue === ContextMenuOptions.DELIVERED) && (
             <TypeFilter
