@@ -4,7 +4,6 @@ import L from 'leaflet';
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
 import { SpotTypes, SpotStatusTypes } from 'config';
 import { FilterContext } from 'shared/reducers/FilterContext';
-// import MarkerIcon from 'leaflet/dist/images/marker-icon.png';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 import { getGeoJson } from '../helpers';
 

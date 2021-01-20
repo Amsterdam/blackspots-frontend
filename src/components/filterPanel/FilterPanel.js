@@ -115,7 +115,7 @@ const FilterPanel = () => {
 
       dispatch(actions.setFilter(newFilter));
     },
-    [filter, dispatch, actions.setFilter]
+    [filter, dispatch]
   );
 
   useEffect(() => {
