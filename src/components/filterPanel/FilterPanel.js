@@ -14,6 +14,7 @@ import StadsdeelFilter from './components/StadsdeelFilter';
 import TypeFilter from './components/TypeFilter';
 import StatusFilter from './components/StatusFilter';
 import BlackspotYearFilter from './components/BlackspotYearFilter';
+import DeliveredYearFilter from './components/DeliveredYearFilter';
 import { ContextMenuOptions, MenuOptions } from './FilterPanel.constants';
 import styles from './FilterPanel.module.scss';
 
@@ -150,53 +151,6 @@ const FilterPanel = () => {
   }
 
   /**
-   * Render the checkboxes for the delivered year filter
-   */
-  function renderDeliveredYearCheckboxes() {
-    return (
-      <div className={styles.YearFilter}>
-        {Object.keys(filter?.deliveredYearFilter)
-          .reverse()
-          .map(year => {
-            const value = filter?.deliveredYearFilter[year];
-            return (
-              <label
-                key={year}
-                htmlFor={year}
-                className={styles.CheckboxWrapper}
-              >
-                <input
-                  id={year}
-                  type="checkbox"
-                  checked={value}
-                  onChange={() => {
-                    const updatedFilter = {
-                      ...filter?.deliveredYearFilter,
-                      [year]: !value,
-                    };
-                    updateFilters(
-                      filter?.spotTypeFilter,
-                      filter?.spotStatusTypeFilter,
-                      filter?.deliveredYearFilter,
-                      updatedFilter,
-                      filter?.quickscanYearFilter,
-                      filter?.stadsdeelFilter
-                    );
-                    if (!value) {
-                      trackFilter(`Delivered on: ${year}`);
-                    }
-                  }}
-                />
-                <span />
-                {year}
-              </label>
-            );
-          })}
-      </div>
-    );
-  }
-
-  /**
    * Render the checkboxes for the quickscan year filter
    */
   function renderQuickscanYearCheckboxes() {
@@ -280,8 +234,12 @@ const FilterPanel = () => {
               trackFilter={trackFilter}
             />
           )}
-          {optionValue === ContextMenuOptions.DELIVERED &&
-            renderDeliveredYearCheckboxes()}
+          {optionValue === ContextMenuOptions.DELIVERED && (
+            <DeliveredYearFilter
+              updateFilters={updateFilters}
+              trackFilter={trackFilter}
+            />
+          )}
           {optionValue === ContextMenuOptions.QUICKSCANS &&
             renderQuickscanYearCheckboxes()}
           {(optionValue === ContextMenuOptions.ALL ||
