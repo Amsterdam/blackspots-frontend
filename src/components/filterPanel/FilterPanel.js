@@ -13,7 +13,7 @@ import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import StadsdeelFilter from './components/StadsdeelFilter';
 import TypeFilter from './components/TypeFilter';
 import StatusFilter from './components/StatusFilter';
-// import { StatusDisplayNames } from '../../config';
+import BlackspotYearFilter from './components/BlackspotYearFilter';
 import { ContextMenuOptions, MenuOptions } from './FilterPanel.constants';
 import styles from './FilterPanel.module.scss';
 
@@ -150,53 +150,6 @@ const FilterPanel = () => {
   }
 
   /**
-   * Render the checkboxes for the blackspot year filter
-   */
-  function renderBlackspotYearCheckboxes() {
-    return (
-      <div className={styles.YearFilter}>
-        {Object.keys(filter?.blackspotYearFilter)
-          .reverse()
-          .map(year => {
-            const value = filter?.blackspotYearFilter[year];
-            return (
-              <label
-                key={year}
-                htmlFor={year}
-                className={styles.CheckboxWrapper}
-              >
-                <input
-                  id={year}
-                  type="checkbox"
-                  checked={value}
-                  onChange={() => {
-                    const updatedFilter = {
-                      ...filter?.blackspotYearFilter,
-                      [year]: !value,
-                    };
-                    updateFilters(
-                      filter?.spotTypeFilter,
-                      filter?.spotStatusTypeFilter,
-                      updatedFilter,
-                      filter?.deliveredYearFilter,
-                      filter?.quickscanYearFilter,
-                      filter?.stadsdeelFilter
-                    );
-                    if (!value) {
-                      trackFilter(`On blackspot list: ${year}`);
-                    }
-                  }}
-                />
-                <span />
-                {year}
-              </label>
-            );
-          })}
-      </div>
-    );
-  }
-
-  /**
    * Render the checkboxes for the delivered year filter
    */
   function renderDeliveredYearCheckboxes() {
@@ -321,8 +274,12 @@ const FilterPanel = () => {
         <div className={styles.FilterContainer}>
           {renderOptions()}
           {optionValue !== ContextMenuOptions.ALL && <h5>Jaar</h5>}
-          {optionValue === ContextMenuOptions.BLACKSPOTS &&
-            renderBlackspotYearCheckboxes()}
+          {optionValue === ContextMenuOptions.BLACKSPOTS && (
+            <BlackspotYearFilter
+              updateFilters={updateFilters}
+              trackFilter={trackFilter}
+            />
+          )}
           {optionValue === ContextMenuOptions.DELIVERED &&
             renderDeliveredYearCheckboxes()}
           {optionValue === ContextMenuOptions.QUICKSCANS &&
