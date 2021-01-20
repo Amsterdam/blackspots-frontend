@@ -17,6 +17,7 @@ import { FilterContext } from 'shared/reducers/FilterContext';
 import { actions, initialState } from 'shared/reducers/filter';
 import useDownload from 'shared/hooks/useDownload';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
+import StadsdeelFilter from './components/StadsdeelFilter';
 import { StatusDisplayNames, SpotTypeDisplayNames } from '../../config';
 import { ContextMenuOptions, MenuOptions } from './FilterPanel.constants';
 import styles from './FilterPanel.module.scss';
@@ -408,46 +409,6 @@ const FilterPanel = () => {
     );
   }
 
-  const renderStadsdeelCheckboxes = useMemo(() => {
-    return (
-      <>
-        <h5>Stadsdeel</h5>
-        {Object.keys(Stadsdeel).map(key => {
-          const type = Stadsdeel[key].name;
-          const value = filter?.stadsdeelFilter[type];
-          return (
-            <label key={key} htmlFor={key} className={styles.CheckboxWrapper}>
-              <input
-                id={key}
-                type="checkbox"
-                checked={value}
-                onChange={() => {
-                  const updatedFilter = {
-                    ...filter?.stadsdeelFilter,
-                    [type]: !value,
-                  };
-                  if (!value) {
-                    trackFilter(type);
-                  }
-                  updateFilters(
-                    filter?.spotTypeFilter,
-                    filter?.spotStatusTypeFilter,
-                    filter?.blackspotYearFilter,
-                    filter?.deliveredYearFilter,
-                    filter?.quickscanYearFilter,
-                    updatedFilter
-                  );
-                }}
-              />
-              <span />
-              {type}
-            </label>
-          );
-        })}
-      </>
-    );
-  }, [filter, Stadsdeel]);
-
   const togglePanel = () => setShowPanel(!showPanel);
   const handleKeyPress = event => {
     if (event.key === 'Enter') togglePanel();
@@ -490,7 +451,10 @@ const FilterPanel = () => {
             renderTypeCheckboxes()}
           {optionValue !== ContextMenuOptions.DELIVERED &&
             renderStatusCheckboxes()}
-          {renderStadsdeelCheckboxes}
+          <StadsdeelFilter
+            updateFilters={updateFilters}
+            trackFilter={trackFilter}
+          />
           <div>
             <ExportButton
               variant="application"
