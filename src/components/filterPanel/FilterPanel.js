@@ -1,13 +1,6 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-  useContext,
-} from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
-import SVGIcon from 'components/SVGIcon/SVGIcon';
-import { SpotStatusTypes, SpotTypes, Stadsdeel, endpoints } from 'config';
+import { SpotStatusTypes, Stadsdeel, endpoints } from 'config';
 import classNames from 'classnames';
 import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
@@ -18,7 +11,8 @@ import { actions, initialState } from 'shared/reducers/filter';
 import useDownload from 'shared/hooks/useDownload';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
 import StadsdeelFilter from './components/StadsdeelFilter';
-import { StatusDisplayNames, SpotTypeDisplayNames } from '../../config';
+import TypeFilter from './components/TypeFilter';
+import { StatusDisplayNames } from '../../config';
 import { ContextMenuOptions, MenuOptions } from './FilterPanel.constants';
 import styles from './FilterPanel.module.scss';
 
@@ -357,58 +351,6 @@ const FilterPanel = () => {
     );
   }
 
-  /**
-   * Render the checkboxes for the type filter
-   */
-  function renderTypeCheckboxes() {
-    // spotTypeFilter
-    return (
-      <>
-        <h5>Type</h5>
-        {Object.keys(SpotTypes).map(key => {
-          const type = SpotTypes[key];
-          const value = filter?.spotTypeFilter[type];
-          return (
-            <label key={key} htmlFor={key} className={styles.CheckboxWrapper}>
-              <input
-                id={key}
-                type="checkbox"
-                checked={value}
-                onChange={() => {
-                  const updatedFilter = {
-                    ...filter?.spotTypeFilter,
-                    [type]: !value,
-                  };
-                  if (!value) {
-                    trackFilter(type);
-                  }
-                  updateFilters(
-                    updatedFilter,
-                    filter?.spotStatusTypeFilter,
-                    filter?.blackspotYearFilter,
-                    filter?.deliveredYearFilter,
-                    filter?.quickscanYearFilter,
-                    filter?.stadsdeelFilter
-                  );
-                }}
-              />
-              <span />
-              <div
-                className={classNames(
-                  styles.IconDiv,
-                  type === SpotTypes.RISICO ? styles.RiscoIconMargin : ''
-                )}
-              >
-                <SVGIcon small type={type} />
-              </div>
-              {SpotTypeDisplayNames[type]}
-            </label>
-          );
-        })}
-      </>
-    );
-  }
-
   const togglePanel = () => setShowPanel(!showPanel);
   const handleKeyPress = event => {
     if (event.key === 'Enter') togglePanel();
@@ -447,8 +389,12 @@ const FilterPanel = () => {
           {optionValue === ContextMenuOptions.QUICKSCANS &&
             renderQuickscanYearCheckboxes()}
           {(optionValue === ContextMenuOptions.ALL ||
-            optionValue === ContextMenuOptions.DELIVERED) &&
-            renderTypeCheckboxes()}
+            optionValue === ContextMenuOptions.DELIVERED) && (
+            <TypeFilter
+              updateFilters={updateFilters}
+              trackFilter={trackFilter}
+            />
+          )}
           {optionValue !== ContextMenuOptions.DELIVERED &&
             renderStatusCheckboxes()}
           <StadsdeelFilter
