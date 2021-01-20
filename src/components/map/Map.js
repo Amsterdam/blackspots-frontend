@@ -73,14 +73,14 @@ const MapComponent = () => {
       dispatch(actions.setLocations(results ? [...results.features] : []));
     }
     // Keep the actions and locations out from the dependency array to prevent infinite loop
-  }, [results]);
+  }, [results, dispatch]);
 
   const onMarkerClick = useCallback(
     feature => {
       dispatch(actions.selectLocation(feature));
       setShowDetailPanel(true);
     },
-    [dispatch, setShowDetailPanel, actions.selectLocation]
+    [dispatch, setShowDetailPanel]
   );
 
   const toggleDetailPanel = useCallback(() => {
