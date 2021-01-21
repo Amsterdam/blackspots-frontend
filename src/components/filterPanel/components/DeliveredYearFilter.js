@@ -28,7 +28,7 @@ const DeliveredYearFilter = ({ updateFilters, trackFilter }) => {
                   updateFilters(
                     filter?.spotTypeFilter,
                     filter?.spotStatusTypeFilter,
-                    filter?.deliveredYearFilter,
+                    filter?.blackspotYearFilter,
                     updatedFilter,
                     filter?.quickscanYearFilter,
                     filter?.stadsdeelFilter
