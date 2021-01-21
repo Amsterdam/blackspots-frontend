@@ -9,6 +9,7 @@ describe('SelectMenu', () => {
       <SelectMenu
         items={[{ id: 1, label: 'test', value: 'test-value' }]}
         selectionChanged={jest.fn()}
+        defaultValue="test-value"
       />
     );
   });
