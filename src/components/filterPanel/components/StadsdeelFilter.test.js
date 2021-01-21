@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import { withTheme } from 'test/utils';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { initialState } from 'shared/reducers/filter';
@@ -14,8 +14,8 @@ describe('StadsdeelFilter', () => {
 
   afterEach(cleanup);
 
-  it('should render', () => {
-    const { queryByText, debug } = render(
+  it('should render correctly', () => {
+    const { queryByText } = render(
       withTheme(
         <FilterContext.Provider
           value={{ state: { filter: initialState.filter } }}
@@ -24,8 +24,6 @@ describe('StadsdeelFilter', () => {
         </FilterContext.Provider>
       )
     );
-
-    debug();
 
     expect(queryByText('Centrum')).toBeInTheDocument();
     expect(queryByText('Nieuw West')).toBeInTheDocument();
@@ -36,5 +34,30 @@ describe('StadsdeelFilter', () => {
     expect(queryByText('Westpoort')).toBeInTheDocument();
     expect(queryByText('Zuid')).toBeInTheDocument();
     expect(queryByText('Zuidoost')).toBeInTheDocument();
+  });
+
+  it('should click one of the checkboxes', () => {
+    const { container } = render(
+      withTheme(
+        <FilterContext.Provider
+          value={{ state: { filter: initialState.filter } }}
+        >
+          <StadsdeelFilter {...props} />
+        </FilterContext.Provider>
+      )
+    );
+
+    // click Centrum
+    fireEvent.click(container.querySelector('label:nth-child(2)'));
+
+    const { filter } = initialState;
+    expect(props.updateFilters).toHaveBeenLastCalledWith(
+      filter.spotTypeFilter,
+      filter.spotStatusTypeFilter,
+      filter.blackspotYearFilter,
+      filter.deliveredYearFilter,
+      filter.quickscanYearFilter,
+      { ...filter.stadsdeelFilter, Centrum: true }
+    );
   });
 });
