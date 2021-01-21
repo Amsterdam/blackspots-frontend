@@ -4,12 +4,10 @@ import {
   Link,
   ListItem,
   SearchBar,
-  // Icon,
   themeColor,
   themeSpacing,
 } from '@amsterdam/asc-ui';
 import useDataFetching from 'shared/hooks/useDataFetching';
-// import { ChevronRight } from '@amsterdam/asc-assets';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { getByUri } from 'shared/api/api';
 
@@ -40,11 +38,6 @@ const StyledListItem = styled(ListItem)`
     top: -4px;
   }
 `;
-
-// const StyledIcon = styled(Icon)`
-//   display: inline;
-//   margin-right: 8px;
-// `;
 
 const Search = () => {
   const lookupUrl =
