@@ -135,22 +135,6 @@ const FilterPanel = () => {
     );
   }
 
-  /**
-   * Render the context menu providing options to show different combinations
-   * of filters
-   */
-  function renderOptions() {
-    return (
-      <>
-        <h5>Toon</h5>
-        <SelectMenu
-          items={[...MenuOptions]}
-          selectionChanged={processOptionChange}
-        />
-      </>
-    );
-  }
-
   const togglePanel = () => setShowPanel(!showPanel);
   const handleKeyPress = event => {
     if (event.key === 'Enter') togglePanel();
@@ -180,34 +164,40 @@ const FilterPanel = () => {
       </div>
       <FilterWrapperStyle>
         <div className={styles.FilterContainer}>
-          {renderOptions()}
-          {optionValue !== ContextMenuOptions.ALL && <h5>Jaar</h5>}
-          {optionValue === ContextMenuOptions.BLACKSPOTS && (
+          <h5>Toon</h5>
+          <SelectMenu
+            items={[...MenuOptions]}
+            selectionChanged={processOptionChange}
+            defaultValue={filter.show}
+          />
+
+          {filter.show !== ContextMenuOptions.ALL && <h5>Jaar</h5>}
+          {filter.show === ContextMenuOptions.BLACKSPOTS && (
             <BlackspotYearFilter
               updateFilters={updateFilters}
               trackFilter={trackFilter}
             />
           )}
-          {optionValue === ContextMenuOptions.DELIVERED && (
+          {filter.show === ContextMenuOptions.DELIVERED && (
             <DeliveredYearFilter
               updateFilters={updateFilters}
               trackFilter={trackFilter}
             />
           )}
-          {optionValue === ContextMenuOptions.QUICKSCANS && (
+          {filter.show === ContextMenuOptions.QUICKSCANS && (
             <QuickscanYearFilter
               updateFilters={updateFilters}
               trackFilter={trackFilter}
             />
           )}
-          {(optionValue === ContextMenuOptions.ALL ||
-            optionValue === ContextMenuOptions.DELIVERED) && (
+          {(filter.show === ContextMenuOptions.ALL ||
+            filter.show === ContextMenuOptions.DELIVERED) && (
             <TypeFilter
               updateFilters={updateFilters}
               trackFilter={trackFilter}
             />
           )}
-          {optionValue !== ContextMenuOptions.DELIVERED && (
+          {filter.show !== ContextMenuOptions.DELIVERED && (
             <StatusFilter
               updateFilters={updateFilters}
               trackFilter={trackFilter}
