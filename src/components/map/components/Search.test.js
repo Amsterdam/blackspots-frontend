@@ -17,6 +17,7 @@ describe('Search', () => {
   afterEach(cleanup);
 
   it('should click one of the checkboxes', () => {
+    const flyToSpy = jest.spyOn(useMapInstance, 'flyTo');
     const { container } = render(
       withTheme(
         <FilterContext.Provider value={{ state: initialState }}>
@@ -30,6 +31,7 @@ describe('Search', () => {
     // click Centrum
     // fireEvent.click(container.querySelector('label:nth-child(2)'));
 
+    expect(flyToSpy).not.toBeCalled();
     expect(1).toBe(1);
   });
 });
