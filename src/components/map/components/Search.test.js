@@ -16,9 +16,10 @@ jest.mock('@amsterdam/react-maps', () => {
   return {
     __esModule: true, // Use it when dealing with esModules
     ...originalModule,
-    useMapInstance: () => {
-      return spy;
-    },
+    //  @ fix This
+    // useMapInstance: () => {
+    //   return spy;
+    // },
   };
 });
 
