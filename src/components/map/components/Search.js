@@ -47,6 +47,7 @@ const Search = () => {
   const searchRef = useRef(null);
 
   const mapInstance = useMapInstance();
+  console.log('mapInstance', mapInstance);
   const [showAutosuggest, setShowAutosuggest] = useState(false);
   const [url, setUrl] = useState('');
   const { /* errorMessage, loading, */ results, fetchData } = useDataFetching();
