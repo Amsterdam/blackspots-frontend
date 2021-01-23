@@ -1,8 +1,6 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import { withTheme } from 'test/utils';
-// import { FilterContext } from 'shared/reducers/FilterContext';
-// import { initialState } from 'shared/reducers/filter';
 
 import { Map } from '@amsterdam/arm-core';
 
@@ -18,7 +16,9 @@ jest.mock('@amsterdam/react-maps', () => {
   return {
     __esModule: true, // Use it when dealing with esModules
     ...originalModule,
-    useMapInstance: spy,
+    useMapInstance: () => {
+      return spy;
+    },
   };
 });
 
