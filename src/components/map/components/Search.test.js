@@ -1,40 +1,27 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import { withTheme } from 'test/utils';
-
-import { Map } from '@amsterdam/arm-core';
+import { useMapInstance } from '@amsterdam/react-maps';
+import { mocked } from 'ts-jest';
 
 import Search from './Search';
 
-const spy = jest.fn();
+jest.mock('@amsterdam/react-maps');
 
-jest.mock('@amsterdam/react-maps', () => {
-  // Require the original module to not be mocked...
-  const originalModule = jest.requireActual('@amsterdam/react-maps');
-  console.log('originalModule', originalModule);
-
-  return {
-    __esModule: true, // Use it when dealing with esModules
-    ...originalModule,
-    //  @ fix This
-    // useMapInstance: () => {
-    //   return spy;
-    // },
-  };
-});
+const mockedUseMapInstance = mocked(useMapInstance);
 
 describe('Search', () => {
+  const spy = jest.fn();
+
   afterEach(cleanup);
 
   it('should click one of the checkboxes', () => {
+    mockedUseMapInstance.mockImplementation(() => ({
+      flyTo: spy,
+    }));
+
     // const flyToSpy = jest.spyOn(useMapInstance, 'flyTo');
-    const { container } = render(
-      withTheme(
-        <Map>
-          <Search />
-        </Map>
-      )
-    );
+    const { container } = render(withTheme(<Search />));
 
     // click Centrum
     // fireEvent.click(container.querySelector('label:nth-child(2)'));
