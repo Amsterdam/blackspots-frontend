@@ -47,10 +47,9 @@ const Search = () => {
   const searchRef = useRef(null);
 
   const mapInstance = useMapInstance();
-  console.log('mapInstance', mapInstance);
   const [showAutosuggest, setShowAutosuggest] = useState(false);
-  const [url, setUrl] = useState('');
   const { /* errorMessage, loading, */ results, fetchData } = useDataFetching();
+  console.log('results', results);
 
   const onAutosuggestClick = useCallback(
     async (e, autoSuggestLocation) => {
@@ -90,8 +89,7 @@ const Search = () => {
           if (e.target.value.length < 2) return;
           const value = encodeURIComponent(e.target.value);
           setShowAutosuggest(true);
-          setUrl(`${autosuggestUrl}${value}`);
-          fetchData(url);
+          fetchData(`${autosuggestUrl}${value}`);
         }}
         onBlur={() => {
           setTimeout(() => {
