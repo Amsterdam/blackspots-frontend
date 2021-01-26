@@ -39,7 +39,7 @@ const MAP_OPTIONS = {
 
 const MapComponent = () => {
   const {
-    state: { selectedLocation },
+    state: { selectedLocation, locations },
     dispatch,
   } = useContext(FilterContext);
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
@@ -61,10 +61,10 @@ const MapComponent = () => {
   };
 
   useEffect(() => {
-    // if (locations.length === 0)
-    (async () => {
-      fetchData(`${endpoints.blackspots}?format=geojson`);
-    })();
+    if (locations.length === 0)
+      (async () => {
+        fetchData(`${endpoints.blackspots}?format=geojson`);
+      })();
     // Keep the dependency array empty to prevent an infinite loop
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
