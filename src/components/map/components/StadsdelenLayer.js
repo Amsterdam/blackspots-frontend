@@ -5,13 +5,16 @@ const StadsdelenLayer = () => {
   const mapInstance = useMapInstance();
 
   // Add the stadsdelen WMS
-  L.tileLayer
-    .wms('https://map.data.amsterdam.nl/maps/gebieden?', {
+  const stadsdelen = L.tileLayer.wms(
+    'https://map.data.amsterdam.nl/maps/gebieden?',
+    {
       layers: ['stadsdeel'],
       transparent: true,
       format: 'image/png',
-    })
-    .addTo(mapInstance);
+    }
+  );
+
+  mapInstance.addLayer(stadsdelen);
 
   return null;
 };
