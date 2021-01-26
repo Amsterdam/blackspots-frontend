@@ -7,7 +7,7 @@ import { initialState } from 'shared/reducers/filter';
 import Map from './Map';
 
 describe('Map', () => {
-  const mockState = {
+  const mockedState = {
     ...initialState,
     locations: [
       {
@@ -69,7 +69,7 @@ describe('Map', () => {
   it('should render correctly', () => {
     const { container, queryByTestId } = render(
       withTheme(
-        <FilterContext.Provider value={{ state: mockState }}>
+        <FilterContext.Provider value={{ state: mockedState }}>
           <Map />
         </FilterContext.Provider>
       )
@@ -77,32 +77,28 @@ describe('Map', () => {
 
     expect(queryByTestId('map')).toBeInTheDocument();
 
-    // number of merkers + 1
+    // number of markers + 1
     expect(container.querySelectorAll('.leaflet-marker-icon').length).toBe(3);
   });
 
-  // it('should click one of the markers', () => {
-  //   const { container } = render(
-  //     withTheme(
-  //       <FilterContext.Provider
-  //         value={{ state: { filter: initialState.filter } }}
-  //       >
-  //         <StadsdeelFilter {...props} />
-  //       </FilterContext.Provider>
-  //     )
-  //   );
+  it('should click one of the markers', () => {
+    const dispatchSpy = jest.fn();
+    const { container } = render(
+      withTheme(
+        <FilterContext.Provider
+          value={{ state: mockedState, dispatch: dispatchSpy }}
+        >
+          <Map />
+        </FilterContext.Provider>
+      )
+    );
 
-  //   // click Centrum
-  //   fireEvent.click(container.querySelector('label:nth-child(2)'));
+    // click marker
+    fireEvent.click(container.querySelector('.leaflet-marker-icon:last-child'));
 
-  //   const { filter } = initialState;
-  //   expect(props.updateFilters).toHaveBeenLastCalledWith(
-  //     filter.spotTypeFilter,
-  //     filter.spotStatusTypeFilter,
-  //     filter.blackspotYearFilter,
-  //     filter.deliveredYearFilter,
-  //     filter.quickscanYearFilter,
-  //     { ...filter.stadsdeelFilter, Centrum: true }
-  //   );
-  // });
+    expect(dispatchSpy).toHaveBeenCalledWith({
+      type: 'filter/SELECT_LOCATION',
+      payload: mockedState.locations[1],
+    });
+  });
 });
