@@ -26,8 +26,8 @@ describe('Search', () => {
       results: {
         response: {
           docs: [
-            { weergavenaam: 'Javastraat 1-H, 1094GX Amsterdam' },
-            { weergavenaam: 'Javastraat 3-H, 1094GX Amsterdam' },
+            { id: '1', weergavenaam: 'Javastraat 1-H, 1094GX Amsterdam' },
+            { id: '2', weergavenaam: 'Javastraat 3-H, 1094GX Amsterdam' },
           ],
         },
       },
@@ -42,13 +42,19 @@ describe('Search', () => {
 
     const inputEl = container.querySelector('input');
     fireEvent.change(inputEl, { target: { value: 'Javastraat' } });
-    // console.log('111');
 
-    debug();
     expect(fetchDataSpy).toHaveBeenCalledTimes(1);
     expect(fetchDataSpy).toHaveBeenCalledWith(
       'https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?fq=gemeentenaam:amsterdam&fq=type:adres&fl=id,weergavenaam,type,score,lat,lon&q=Javastraat'
     );
     expect(container.querySelectorAll('li').length).toBe(2);
+
+    // debug();
+
+    const anchorEl = container.querySelector('a:first-child');
+    fireEvent.click(anchorEl, { preventDefault: jest.fn() });
+
+    // expect(flyToSpy).toHaveBeenCalled();
+    console.log('111');
   });
 });

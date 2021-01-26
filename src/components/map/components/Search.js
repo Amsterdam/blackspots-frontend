@@ -57,10 +57,7 @@ const Search = () => {
         e.preventDefault();
       }
 
-      if (autoSuggestLocation.weergavenaam) {
-        // autosuggestRef.current.value = autoSuggestLocation.weergavenaam;
-        setShowAutosuggest(false);
-      }
+      setShowAutosuggest(false);
 
       const response = await getByUri(`${lookupUrl}${autoSuggestLocation.id}`);
       if (mapInstance && response.response.docs[0]) {
