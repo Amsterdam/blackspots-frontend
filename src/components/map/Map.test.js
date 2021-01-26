@@ -7,7 +7,7 @@ import { initialState } from 'shared/reducers/filter';
 import Map from './Map';
 
 describe('Map', () => {
-  const mockSTate = {
+  const mockState = {
     ...initialState,
     locations: [
       {
@@ -69,7 +69,7 @@ describe('Map', () => {
   it('should render correctly', () => {
     const { container, queryByTestId } = render(
       withTheme(
-        <FilterContext.Provider value={{ state: mockSTate }}>
+        <FilterContext.Provider value={{ state: mockState }}>
           <Map />
         </FilterContext.Provider>
       )
@@ -81,7 +81,7 @@ describe('Map', () => {
     expect(container.querySelectorAll('.leaflet-marker-icon').length).toBe(3);
   });
 
-  // it('should click one of the checkboxes', () => {
+  // it('should click one of the markers', () => {
   //   const { container } = render(
   //     withTheme(
   //       <FilterContext.Provider
@@ -94,7 +94,7 @@ describe('Map', () => {
 
   //   // click Centrum
   //   fireEvent.click(container.querySelector('label:nth-child(2)'));
-  s;
+
   //   const { filter } = initialState;
   //   expect(props.updateFilters).toHaveBeenLastCalledWith(
   //     filter.spotTypeFilter,
