@@ -3,30 +3,52 @@ import { render, cleanup, fireEvent } from '@testing-library/react';
 import { withTheme } from 'test/utils';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { mocked } from 'ts-jest';
+import useDataFetching from 'shared/hooks/useDataFetching';
 
 import Search from './Search';
 
 jest.mock('@amsterdam/react-maps');
+jest.mock('shared/hooks/useDataFetching');
 
 const mockedUseMapInstance = mocked(useMapInstance);
+const mockedDataFetching = mocked(useDataFetching);
 
 describe('Search', () => {
-  const spy = jest.fn();
+  const flyToSpy = jest.fn();
+  const fetchDataSpy = jest.fn();
+
+  beforeEach(() => {
+    mockedUseMapInstance.mockImplementation(() => ({
+      flyTo: flyToSpy,
+    }));
+
+    mockedDataFetching.mockImplementation(() => ({
+      results: {
+        response: {
+          docs: [
+            { weergavenaam: 'Javastraat 1-H, 1094GX Amsterdam' },
+            { weergavenaam: 'Javastraat 3-H, 1094GX Amsterdam' },
+          ],
+        },
+      },
+      fetchData: fetchDataSpy,
+    }));
+  });
 
   afterEach(cleanup);
 
-  it('should click one of the checkboxes', () => {
-    mockedUseMapInstance.mockImplementation(() => ({
-      flyTo: spy,
-    }));
+  it('enter search term and click on autosuggest item', () => {
+    const { container, debug } = render(withTheme(<Search />));
 
-    // const flyToSpy = jest.spyOn(useMapInstance, 'flyTo');
-    const { container } = render(withTheme(<Search />));
+    const inputEl = container.querySelector('input');
+    fireEvent.change(inputEl, { target: { value: 'Javastraat' } });
+    // console.log('111');
 
-    // click Centrum
-    // fireEvent.click(container.querySelector('label:nth-child(2)'));
-
-    // expect(mockSignOutFn).not.toBeCalled();
-    expect(1).toBe(1);
+    debug();
+    expect(fetchDataSpy).toHaveBeenCalledTimes(1);
+    expect(fetchDataSpy).toHaveBeenCalledWith(
+      'https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?fq=gemeentenaam:amsterdam&fq=type:adres&fl=id,weergavenaam,type,score,lat,lon&q=Javastraat'
+    );
+    expect(container.querySelectorAll('li').length).toBe(2);
   });
 });
