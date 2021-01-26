@@ -9,6 +9,14 @@ import Search from './Search';
 
 jest.mock('@amsterdam/react-maps');
 jest.mock('shared/hooks/useDataFetching');
+jest.mock('shared/api/api', () => {
+  return {
+    __esModule: true,
+    getByUri: jest.fn(() => ({
+      response: { docs: [{ centroide_ll: 'POINT(4.93194161 52.36328065)' }] },
+    })),
+  };
+});
 
 const mockedUseMapInstance = mocked(useMapInstance);
 const mockedDataFetching = mocked(useDataFetching);
@@ -38,7 +46,7 @@ describe('Search', () => {
   afterEach(cleanup);
 
   it('enter search term and click on autosuggest item', () => {
-    const { container, debug } = render(withTheme(<Search />));
+    const { container } = render(withTheme(<Search />));
 
     const inputEl = container.querySelector('input');
     fireEvent.change(inputEl, { target: { value: 'Javastraat' } });
@@ -49,12 +57,13 @@ describe('Search', () => {
     );
     expect(container.querySelectorAll('li').length).toBe(2);
 
-    // debug();
-
     const anchorEl = container.querySelector('a:first-child');
     fireEvent.click(anchorEl, { preventDefault: jest.fn() });
 
-    // expect(flyToSpy).toHaveBeenCalled();
-    console.log('111');
+    // @TODO not working now
+    expect(flyToSpy).toHaveBeenCalledWith(
+      { lat: 52.36328065, lng: 4.93194161 },
+      11
+    );
   });
 });

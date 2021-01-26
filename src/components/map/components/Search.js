@@ -49,7 +49,6 @@ const Search = () => {
   const mapInstance = useMapInstance();
   const [showAutosuggest, setShowAutosuggest] = useState(false);
   const { /* errorMessage, loading, */ results, fetchData } = useDataFetching();
-  console.log('results', results);
 
   const onAutosuggestClick = useCallback(
     async (e, autoSuggestLocation) => {
