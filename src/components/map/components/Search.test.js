@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react-hooks';
 import { withTheme } from 'test/utils';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { mocked } from 'ts-jest';
@@ -52,7 +53,7 @@ describe('Search', () => {
     expect(container.querySelectorAll('ul').length).toBe(0);
   });
 
-  it('enter search term and click on autosuggest item', () => {
+  it('enter search term and click on autosuggest item', async () => {
     const { container } = render(withTheme(<Search />));
 
     const inputEl = container.querySelector('input');
@@ -65,12 +66,13 @@ describe('Search', () => {
     expect(container.querySelectorAll('li').length).toBe(2);
 
     const anchorEl = container.querySelector('a:first-child');
-    fireEvent.click(anchorEl, { preventDefault: jest.fn() });
+    await act(async () => {
+      fireEvent.click(anchorEl, { preventDefault: jest.fn() });
+    });
 
-    // @TODO not working yet
-    // expect(flyToSpy).toHaveBeenCalledWith(
-    //   { lat: 52.36328065, lng: 4.93194161 },
-    //   11
-    // );
+    expect(flyToSpy).toHaveBeenCalledWith(
+      { lat: 52.36328065, lng: 4.93194161 },
+      11
+    );
   });
 });
