@@ -1,18 +1,12 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import { withTheme } from 'test/utils';
 import { Map, getCrsRd } from '@amsterdam/arm-core';
 
-import { useMapInstance } from '@amsterdam/react-maps';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { initialState } from 'shared/reducers/filter';
-// import { mocked } from 'ts-jest';
 
 import BlackspotsLayer from './BlackspotsLayer';
-
-// jest.mock('@amsterdam/react-maps');
-
-// const mockedUseMapInstance = mocked(useMapInstance);
 
 describe('BlackspotsLayer', () => {
   const MAP_OPTIONS = {
@@ -81,18 +75,11 @@ describe('BlackspotsLayer', () => {
       },
     ],
   };
-  //   const flyToSpy = jest.fn();
-
-  beforeEach(() => {
-    // mockedUseMapInstance.mockImplementation(() => ({
-    //   flyTo: flyToSpy,
-    // }));
-  });
 
   afterEach(cleanup);
 
-  it('should render correctly', () => {
-    const { debug, container } = render(
+  it('should render correctly all markers', () => {
+    const { container } = render(
       withTheme(
         <FilterContext.Provider value={{ state: mockedState }}>
           <Map fullScreen options={MAP_OPTIONS}>
@@ -101,9 +88,50 @@ describe('BlackspotsLayer', () => {
         </FilterContext.Provider>
       )
     );
-    debug();
 
     expect(container.querySelectorAll('.leaflet-marker-icon').length).toBe(2);
-    // expect(flyToSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should render correctly 1 marker when filter is applied', () => {
+    const filteredState = {
+      ...mockedState,
+      filter: {
+        ...initialState.filter,
+        stadsdeelFilter: {
+          ...initialState.filter.stadsdeelFilter,
+          Centrum: true,
+        },
+      },
+    };
+
+    const { container } = render(
+      withTheme(
+        <FilterContext.Provider value={{ state: filteredState }}>
+          <Map fullScreen options={MAP_OPTIONS}>
+            <BlackspotsLayer {...props} />
+          </Map>
+        </FilterContext.Provider>
+      )
+    );
+
+    expect(container.querySelectorAll('.leaflet-marker-icon').length).toBe(1);
+  });
+
+  it('should onMarkerClick when clicked a marker', () => {
+    const { container } = render(
+      withTheme(
+        <FilterContext.Provider value={{ state: mockedState }}>
+          <Map fullScreen options={MAP_OPTIONS}>
+            <BlackspotsLayer {...props} />
+          </Map>
+        </FilterContext.Provider>
+      )
+    );
+
+    fireEvent.click(
+      container.querySelector('.leaflet-marker-icon:first-child')
+    );
+
+    expect(props.onMarkerClick).toHaveBeenCalledTimes(1);
   });
 });
