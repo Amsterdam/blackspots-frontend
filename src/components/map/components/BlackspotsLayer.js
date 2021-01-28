@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import L from 'leaflet';
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
@@ -75,6 +76,10 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
   return json ? (
     <GeoJSON setInstance={setLayerInstance} args={[json]} options={options} />
   ) : null;
+};
+
+BlackspotsLayer.propTypes = {
+  onMarkerClick: PropTypes.func.isRequired,
 };
 
 export default BlackspotsLayer;
