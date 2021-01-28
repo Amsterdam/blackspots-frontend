@@ -108,7 +108,6 @@ export const getGeoJson = (locations, filter) => {
     }
   });
 
-  console.log('#', markers.length);
   return {
     type: 'FeatureCollection',
     name: 'Black spots',
