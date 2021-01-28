@@ -45,6 +45,13 @@ describe('Search', () => {
 
   afterEach(cleanup);
 
+  it('should render correctly by default', () => {
+    const { container } = render(withTheme(<Search />));
+
+    expect(container.querySelectorAll('input').length).toBe(1);
+    expect(container.querySelectorAll('ul').length).toBe(0);
+  });
+
   it('enter search term and click on autosuggest item', () => {
     const { container } = render(withTheme(<Search />));
 
