@@ -81,7 +81,7 @@ describe('Map', () => {
     expect(container.querySelectorAll('.leaflet-marker-icon').length).toBe(3);
   });
 
-  it('should click one of the markers', () => {
+  it('should click one of the markers and dispatch SELECT_LOCATION', () => {
     const dispatchSpy = jest.fn();
     const { container } = render(
       withTheme(
