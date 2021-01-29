@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, forwardRef } from 'react';
+import React, { useState, useCallback, forwardRef } from 'react';
 import styled from 'styled-components';
 import {
   Link,
@@ -39,7 +39,6 @@ const StyledListItem = styled(ListItem)`
   }
 `;
 
-// eslint-disable-next-line react/display-name
 const Search = forwardRef((props, searchRef) => {
   const lookupUrl =
     'https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=';
