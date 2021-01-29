@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, forwardRef } from 'react';
 import styled from 'styled-components';
 import {
   Link,
@@ -39,12 +39,12 @@ const StyledListItem = styled(ListItem)`
   }
 `;
 
-const Search = () => {
+// eslint-disable-next-line react/display-name
+const Search = forwardRef((props, searchRef) => {
   const lookupUrl =
     'https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=';
   const autosuggestUrl =
     'https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?fq=gemeentenaam:amsterdam&fq=type:adres&fl=id,weergavenaam,type,score,lat,lon&q=';
-  const searchRef = useRef(null);
 
   const mapInstance = useMapInstance();
   const [showAutosuggest, setShowAutosuggest] = useState(false);
@@ -112,6 +112,6 @@ const Search = () => {
       ) : null}
     </div>
   );
-};
+});
 
 export default Search;
