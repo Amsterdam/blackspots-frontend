@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
-import { act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 import { withTheme } from 'test/utils';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { mocked } from 'ts-jest';
@@ -54,8 +54,6 @@ describe('Search', () => {
   });
 
   it('should remove autosuggests when input field is blurred', async () => {
-    jest.useFakeTimers();
-
     const { container } = render(withTheme(<Search />));
 
     const inputEl = container.querySelector('input');
@@ -68,10 +66,8 @@ describe('Search', () => {
     act(() => {
       fireEvent.blur(inputEl);
     });
-    jest.runAllTimers();
 
     expect(container.querySelectorAll('li').length).toBe(0);
-    jest.useRealTimers();
   });
 
   it('enter search term and click on autosuggest item', async () => {
