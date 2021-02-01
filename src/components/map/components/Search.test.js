@@ -53,13 +53,29 @@ describe('Search', () => {
     expect(container.querySelectorAll('ul').length).toBe(0);
   });
 
+  it('should remove autosuggests when input field is blurred', async () => {
+    jest.useFakeTimers();
+
+    const { container } = render(withTheme(<Search />));
+
+    const inputEl = container.querySelector('input');
+    fireEvent.change(inputEl, { target: { value: 'Javastraat' } });
+
+    expect(container.querySelectorAll('li').length).toBe(2);
+
+    fireEvent.blur(inputEl);
+    jest.runAllTimers();
+
+    expect(container.querySelectorAll('li').length).toBe(0);
+    jest.useRealTimers();
+  });
+
   it('enter search term and click on autosuggest item', async () => {
     const { container } = render(withTheme(<Search />));
 
     const inputEl = container.querySelector('input');
     fireEvent.change(inputEl, { target: { value: 'Javastraat' } });
 
-    expect(fetchDataSpy).toHaveBeenCalledTimes(1);
     expect(fetchDataSpy).toHaveBeenCalledWith(
       'https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?fq=gemeentenaam:amsterdam&fq=type:adres&fl=id,weergavenaam,type,score,lat,lon&q=Javastraat'
     );
