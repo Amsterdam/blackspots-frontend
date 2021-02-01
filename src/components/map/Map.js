@@ -39,8 +39,6 @@ const MapComponent = () => {
   } = useContext(FilterContext);
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
-  // const [mapInstance, setMapInstance] = useState(undefined);
-  // const markerRef = useRef();
 
   useEffect(() => {
     if (locations.length === 0)
