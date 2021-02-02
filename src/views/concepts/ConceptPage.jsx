@@ -2,22 +2,22 @@ import React from 'react';
 
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
 import { appRoutes } from 'config';
-import { Link } from '@datapunt/asc-ui';
+import { Link } from '@amsterdam/asc-ui';
 import Accordion from '../../shared/accordion/Accordion';
 import Footer from '../../components/footer/Footer';
 import ConceptPageStyle, { ContentStyle } from './ConceptPageStyle';
-import { IntroTextStyle } from '../../styles/SharedStyles';
+import { H1, IntroTextStyle } from '../../styles/SharedStyles';
 
 const ConceptPage = () => {
   return (
     <ConceptPageStyle>
       <ContentStyle>
         <BlueLinkButton
-          to={appRoutes.HOME}
+          href={appRoutes.HOME}
           text="Terug naar kaart"
           chevronDirection="left"
         />
-        <h1>Begrippenlijst</h1>
+        <H1>Begrippenlijst</H1>
         <IntroTextStyle>
           Op de WBA kaart staan alle locaties die Werkgroep Blackspots in
           onderzoek en/of uitvoering heeft. Naar aanleiding van onderzoek wordt
