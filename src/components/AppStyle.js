@@ -1,4 +1,4 @@
-import styled from '@datapunt/asc-core';
+import styled from 'styled-components';
 
 const HEADER_HEIGHT = 52;
 

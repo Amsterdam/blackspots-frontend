@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from '@datapunt/asc-core';
-import { themeColor, themeSpacing } from '@datapunt/asc-ui';
+import styled from 'styled-components';
+import { themeColor, themeSpacing } from '@amsterdam/asc-ui';
 
 const DataTableStyle = styled.table`
   margin-bottom: ${({ bottom }) => themeSpacing(bottom || 5)};
