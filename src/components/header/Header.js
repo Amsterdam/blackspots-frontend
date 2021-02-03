@@ -1,21 +1,18 @@
 import React, { useContext } from 'react';
 
+import { Link } from 'react-router-dom';
 import { Logout } from '@amsterdam/asc-assets';
 import { appRoutes } from 'config';
 import auth from 'shared/auth/auth';
 import UserContext from 'shared/user/UserContext';
-import {
-  Header as HeaderComponent,
-  MenuItem,
-  MenuButton,
-} from '@amsterdam/asc-ui';
-import { LogoutLink } from './HeaderStyle';
+import { MenuItem } from '@amsterdam/asc-ui';
+import { StyledHeader, LogoutLink } from './HeaderStyle';
 
 const Header = () => {
   const { canAdd } = useContext(UserContext);
 
   return (
-    <HeaderComponent
+    <StyledHeader
       tall={false}
       title="Werkgroep Blackspots"
       homeLink="/"
@@ -23,28 +20,20 @@ const Header = () => {
       navigation={
         <>
           <MenuItem>
-            <MenuButton forwardedAs="a" href={appRoutes.HOME}>
-              Kaart
-            </MenuButton>
+            <Link to={appRoutes.HOME}>Kaart</Link>
           </MenuItem>
 
           {canAdd > 0 && (
             <MenuItem>
-              <MenuButton forwardedAs="a" href={appRoutes.ADD}>
-                Toevoegen
-              </MenuButton>
+              <Link to={appRoutes.ADD}>Toevoegen</Link>
             </MenuItem>
           )}
 
           <MenuItem>
-            <MenuButton forwardedAs="a" href={appRoutes.CONCEPTS}>
-              Begrippenlijst
-            </MenuButton>
+            <Link to={appRoutes.CONCEPTS}>Begrippenlijst</Link>
           </MenuItem>
           <MenuItem>
-            <MenuButton forwardedAs="a" href={appRoutes.CONTACT}>
-              Contact
-            </MenuButton>
+            <Link to={appRoutes.CONTACT}>Contact</Link>
           </MenuItem>
           <MenuItem>
             <LogoutLink
