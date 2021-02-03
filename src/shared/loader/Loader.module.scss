@@ -5,13 +5,14 @@
   align-items: center;
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 52px;
   z-index: 1011;
   background-color: $primaryWhite;
   padding: 10px;
   background-color: $primaryWhite;
   box-shadow: 2px 2px 0 0 $neutralGrey4;
   border: 1px solid $neutralGrey4;
+  white-space: nowrap;
 }
 
 .LoadingSpinner {

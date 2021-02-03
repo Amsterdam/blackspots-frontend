@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import Map from 'components/map/Map';
+import FilterContextProvider from 'shared/reducers/FilterContext';
 import ErrorMsg from '../../shared/errorMsg/ErrorMsg';
 import DashboardPageStyle from './DashboardPageStyle';
 
@@ -10,7 +11,9 @@ const DashboardPage = () => {
   return (
     <DashboardPageStyle>
       <ErrorMsg isOpen={showError} />
-      <Map setShowError={setShowError} />
+      <FilterContextProvider>
+        <Map setShowError={setShowError} />
+      </FilterContextProvider>
     </DashboardPageStyle>
   );
 };

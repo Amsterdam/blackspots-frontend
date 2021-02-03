@@ -1,12 +1,24 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import { withTheme } from 'test/utils';
+import { Map, getCrsRd } from '@amsterdam/arm-core';
+
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { initialState } from 'shared/reducers/filter';
 
-import Map from './Map';
+import BlackspotsLayer from './BlackspotsLayer';
 
-describe('Map', () => {
+describe('BlackspotsLayer', () => {
+  const MAP_OPTIONS = {
+    center: [52.36988741057662, 4.8966407775878915],
+    zoom: 9,
+    maxZoom: 16,
+    minZoom: 8,
+    zoomControl: false,
+    attributionControl: true,
+    crs: getCrsRd(),
+  };
+  const props = { onMarkerClick: jest.fn() };
   const mockedState = {
     ...initialState,
     locations: [
@@ -66,39 +78,60 @@ describe('Map', () => {
 
   afterEach(cleanup);
 
-  it('should render correctly', () => {
-    const { container, queryByTestId } = render(
-      withTheme(
-        <FilterContext.Provider value={{ state: mockedState }}>
-          <Map />
-        </FilterContext.Provider>
-      )
-    );
-
-    expect(queryByTestId('map')).toBeInTheDocument();
-
-    // number of markers + 1
-    expect(container.querySelectorAll('.leaflet-marker-icon').length).toBe(3);
-  });
-
-  it('should click one of the markers and dispatch SELECT_LOCATION', () => {
-    const dispatchSpy = jest.fn();
+  it('should render correctly all markers', () => {
     const { container } = render(
       withTheme(
-        <FilterContext.Provider
-          value={{ state: mockedState, dispatch: dispatchSpy }}
-        >
-          <Map />
+        <FilterContext.Provider value={{ state: mockedState }}>
+          <Map fullScreen options={MAP_OPTIONS}>
+            <BlackspotsLayer {...props} />
+          </Map>
         </FilterContext.Provider>
       )
     );
 
-    // click marker
-    fireEvent.click(container.querySelector('.leaflet-marker-icon:last-child'));
+    expect(container.querySelectorAll('.leaflet-marker-icon').length).toBe(2);
+  });
 
-    expect(dispatchSpy).toHaveBeenCalledWith({
-      type: 'filter/SELECT_LOCATION',
-      payload: mockedState.locations[1],
-    });
+  it('should render correctly 1 marker when filter is applied', () => {
+    const filteredState = {
+      ...mockedState,
+      filter: {
+        ...initialState.filter,
+        stadsdeelFilter: {
+          ...initialState.filter.stadsdeelFilter,
+          Centrum: true,
+        },
+      },
+    };
+
+    const { container } = render(
+      withTheme(
+        <FilterContext.Provider value={{ state: filteredState }}>
+          <Map fullScreen options={MAP_OPTIONS}>
+            <BlackspotsLayer {...props} />
+          </Map>
+        </FilterContext.Provider>
+      )
+    );
+
+    expect(container.querySelectorAll('.leaflet-marker-icon').length).toBe(1);
+  });
+
+  it('should onMarkerClick when clicked a marker', () => {
+    const { container } = render(
+      withTheme(
+        <FilterContext.Provider value={{ state: mockedState }}>
+          <Map fullScreen options={MAP_OPTIONS}>
+            <BlackspotsLayer {...props} />
+          </Map>
+        </FilterContext.Provider>
+      )
+    );
+
+    fireEvent.click(
+      container.querySelector('.leaflet-marker-icon:first-child')
+    );
+
+    expect(props.onMarkerClick).toHaveBeenCalledTimes(1);
   });
 });

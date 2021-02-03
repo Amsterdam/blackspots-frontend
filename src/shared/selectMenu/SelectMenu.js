@@ -4,8 +4,10 @@ import classNames from 'classnames';
 import { ReactComponent as Chevron } from 'assets/icons/chevron-top.svg';
 import styles from './SelectMenu.module.scss';
 
-const SelectMenu = ({ items, selectionChanged }) => {
-  const [selected, setSelected] = useState(items[0].label);
+const SelectMenu = ({ items, defaultValue, selectionChanged }) => {
+  const [selected, setSelected] = useState(
+    items.find(i => i.value === defaultValue).label
+  );
   const [showMenu, setShowMenu] = useState(false);
 
   const onClick = item => () => {
@@ -54,6 +56,7 @@ SelectMenu.propTypes = {
       value: PropTypes.string.isRequired,
     })
   ).isRequired,
+  defaultValue: PropTypes.string.isRequired,
   selectionChanged: PropTypes.func.isRequired,
 };
 
