@@ -2,7 +2,7 @@ import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import { withTheme } from 'test/utils';
 import { useMapInstance } from '@amsterdam/react-maps';
-import { mocked } from 'ts-jest';
+import { mocked } from 'ts-jest/utils';
 
 import StadsdelenLayer from './StadsdelenLayer';
 

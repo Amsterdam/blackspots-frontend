@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { act } from '@testing-library/react-hooks';
 import { withTheme } from 'test/utils';
 import { useMapInstance } from '@amsterdam/react-maps';
-import { mocked } from 'ts-jest';
+import { mocked } from 'ts-jest/utils';
 import useDataFetching from 'shared/hooks/useDataFetching';
 
 import Search from './Search';
