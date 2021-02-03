@@ -87,7 +87,9 @@ const Search = forwardRef((props, searchRef) => {
           fetchData(`${autosuggestUrl}${value}`);
         }}
         onBlur={() => {
-          setShowAutosuggest(false);
+          setTimeout(() => {
+            setShowAutosuggest(false);
+          }, 150);
         }}
       />
       {showAutosuggest &&
