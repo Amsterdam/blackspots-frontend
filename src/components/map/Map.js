@@ -76,7 +76,7 @@ const MapComponent = () => {
     <>
       <Map data-testid="map" fullScreen options={MAP_OPTIONS}>
         <Marker
-          options={{ icon }}
+          options={{ icon, zIndexOffset: 1000 }}
           latLng={{
             lat: selectedLocation?.geometry?.coordinates[1] || 0,
             lng: selectedLocation?.geometry?.coordinates[0] || 0,
