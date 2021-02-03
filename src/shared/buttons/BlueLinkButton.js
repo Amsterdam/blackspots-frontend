@@ -30,9 +30,9 @@ const BlueLinkButton = ({ href, text, external, chevronDirection }) => {
       <LinkContent text={text} chevronDirection={chevronDirection} />
     </Link>
   ) : (
-    <Link $as={RouterLink} className={styles.Container} href={href}>
+    <RouterLink to={href} className={classNames(styles.Container)}>
       <LinkContent text={text} chevronDirection={chevronDirection} />
-    </Link>
+    </RouterLink>
   );
 };
 
