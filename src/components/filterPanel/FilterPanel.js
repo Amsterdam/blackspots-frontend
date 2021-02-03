@@ -61,7 +61,7 @@ const FilterPanel = () => {
       downloadUrl,
       `wbakaart-export-${new Date().toLocaleDateString('nl-NL')}.csv`
     );
-  }, [downloadUrl, downloadFile]);
+  }, [downloadUrl]);
 
   useEffect(() => {
     setDownloadUrl(`${exportUrl}${getExportFilter(filter?.stadsdeelFilter)}`);
