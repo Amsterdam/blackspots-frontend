@@ -7,6 +7,7 @@ import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { UserContextProvider } from 'shared/user/UserContext';
 import mainReducer, { initialState } from 'shared/reducers';
 import { AppStateProvider } from 'shared/hooks/useAppReducer';
+import FilterContextProvider from 'shared/reducers/FilterContext';
 import AppRoutes from './AppRoutes';
 import AppStyle from './AppStyle';
 import Header from './header/Header';
@@ -20,19 +21,21 @@ const App = () => {
   return (
     <UserContextProvider user={user}>
       <AppStateProvider initialState={initialState} reducer={mainReducer}>
-        <ThemeProvider>
-          <GlobalStyle />
-          <AppStyle>
-            {user.authenticated ? (
-              <>
-                <Header />
-                <AppRoutes />
-              </>
-            ) : (
-              <LandingPage />
-            )}
-          </AppStyle>
-        </ThemeProvider>
+        <FilterContextProvider>
+          <ThemeProvider>
+            <GlobalStyle />
+            <AppStyle>
+              {user.authenticated ? (
+                <>
+                  <Header />
+                  <AppRoutes />
+                </>
+              ) : (
+                <LandingPage />
+              )}
+            </AppStyle>
+          </ThemeProvider>
+        </FilterContextProvider>
       </AppStateProvider>
     </UserContextProvider>
   );

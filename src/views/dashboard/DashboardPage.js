@@ -11,9 +11,7 @@ const DashboardPage = () => {
   return (
     <DashboardPageStyle>
       <ErrorMsg isOpen={showError} />
-      <FilterContextProvider>
-        <Map setShowError={setShowError} />
-      </FilterContextProvider>
+      <Map setShowError={setShowError} />
     </DashboardPageStyle>
   );
 };
