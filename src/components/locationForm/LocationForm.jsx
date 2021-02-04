@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useContext } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+
 import { Button, Row } from '@amsterdam/asc-ui';
 import useForm from 'react-hook-form';
-import useAppReducer from 'shared/hooks/useAppReducer';
+import { FilterContext } from 'shared/reducers/FilterContext';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 import { sendData } from 'shared/api/api';
 import FormFields, {
@@ -27,14 +28,22 @@ const isProtocolType = spotType =>
   spotType === SpotTypes.PROTOCOL_DODELIJK ||
   spotType === SpotTypes.PROTOCOL_ERNSTIG;
 
-const LocationForm = ({ id: locationId }) => {
+const LocationForm = () => {
+  const {
+    state: { selectedLocation },
+  } = useContext(FilterContext);
+
+  const { id } = useParams();
+  const locationId = id;
+
   const history = useHistory();
-  const [{ selectedLocation }, actions] = useAppReducer(LOCATION);
   const [visible, setVisible] = useState({ ...formVisibility });
 
   const location = useMemo(() => featureToLocation(selectedLocation), [
     selectedLocation,
   ]);
+
+  console.log('LocationForm selectedLocation', selectedLocation);
 
   // Return to home when navigating to a not selected location
   useEffect(() => {
@@ -136,7 +145,7 @@ const LocationForm = ({ id: locationId }) => {
 
       if (!result.errors) {
         const feature = locationToFeature(result);
-        actions.updateLocation({ payload: feature });
+        // actions.updateLocation({ payload: feature });
         history.push(appRoutes.HOME);
       }
     } catch (error) {
@@ -193,9 +202,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <HeaderSecondary forwardedAs="h3">
-              Maatregelen
-            </HeaderSecondary>
+            <HeaderSecondary forwardedAs="h3">Maatregelen</HeaderSecondary>
             {FormFields.filter(({ column }) => column === 2).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (

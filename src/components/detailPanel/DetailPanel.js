@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Heading, Button, Link, Icon, themeColor } from '@amsterdam/asc-ui';
-
+import { Heading, Button, Icon, themeColor } from '@amsterdam/asc-ui';
+import { Link } from 'react-router-dom';
 import { ExternalLink, Close } from '@amsterdam/asc-assets';
 
 import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'config';
@@ -74,11 +74,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       <HeaderStyle>
         <HeaderSecondary forwardedAs="h3">{locatie_id}</HeaderSecondary>
         {canEdit && (
-          <Link
-            href={`/edit/${feature.id}`}
-            variant="inline"
-            data-testid="editButton"
-          >
+          <Link to={`/edit/${feature.id}`} data-testid="editButton">
             Wijzig
           </Link>
         )}
