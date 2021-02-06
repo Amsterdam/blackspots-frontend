@@ -1,17 +1,10 @@
-import React, {
-  useEffect,
-  useState,
-  useMemo,
-  useContext,
-  useCallback,
-} from 'react';
+import React, { useEffect, useState, useMemo, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { Button, Row } from '@amsterdam/asc-ui';
 import useForm from 'react-hook-form';
 import { FilterContext } from 'shared/reducers/FilterContext';
-import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
 import { actions } from 'shared/reducers/filter';
 import { sendData } from 'shared/api/api';
 import FormFields, {
@@ -50,7 +43,6 @@ const LocationForm = () => {
   const location = useMemo(() => featureToLocation(selectedLocation), [
     selectedLocation,
   ]);
-  console.log('location', location);
 
   const defaultValues = useMemo(
     () =>
@@ -64,7 +56,6 @@ const LocationForm = () => {
           },
     [location, initalValues]
   );
-  console.log('defaultValues', defaultValues);
 
   const {
     register,
@@ -79,13 +70,8 @@ const LocationForm = () => {
   });
 
   useEffect(() => {
-    console.log('UPDATE selectedLocation', locationId, initalValues);
     if (!locationId && selectedLocation) {
       dispatch(actions.selectLocation(null));
-      setValue({
-        ...initalValues,
-      });
-      triggerValidation();
     }
   }, [locationId]);
 
@@ -156,8 +142,8 @@ const LocationForm = () => {
       );
 
       if (!result.errors) {
-        // const feature = locationToFeature(result);
-        // actions.updateLocation({ payload: feature });
+        const feature = locationToFeature(result);
+        dispatch(actions.selectLocation(feature));
         history.push(appRoutes.HOME);
       }
     } catch (error) {
@@ -185,7 +171,7 @@ const LocationForm = () => {
   useEffect(() => {
     Object.entries(formValidation).forEach(([name, validation]) => {
       register({ name, type: 'custom' }, validation);
-      setValue(name, defaultValues[name]);
+      setValue(name, locationId ? defaultValues[name] : initalValues[name]);
     });
   }, [register, locationId]);
 
