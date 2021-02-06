@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useMemo, useContext } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  useContext,
+  useCallback,
+} from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -6,6 +12,7 @@ import { Button, Row } from '@amsterdam/asc-ui';
 import useForm from 'react-hook-form';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
+import { actions } from 'shared/reducers/filter';
 import { sendData } from 'shared/api/api';
 import FormFields, {
   initalValues,
@@ -31,6 +38,7 @@ const isProtocolType = spotType =>
 const LocationForm = () => {
   const {
     state: { selectedLocation },
+    dispatch,
   } = useContext(FilterContext);
 
   const { id } = useParams();
@@ -42,15 +50,7 @@ const LocationForm = () => {
   const location = useMemo(() => featureToLocation(selectedLocation), [
     selectedLocation,
   ]);
-
-  console.log('LocationForm selectedLocation', selectedLocation);
-
-  // Return to home when navigating to a not selected location
-  useEffect(() => {
-    if (locationId && !selectedLocation) {
-      history.push(appRoutes.HOME);
-    }
-  }, [locationId, selectedLocation]);
+  console.log('location', location);
 
   const defaultValues = useMemo(
     () =>
@@ -64,6 +64,7 @@ const LocationForm = () => {
           },
     [location, initalValues]
   );
+  console.log('defaultValues', defaultValues);
 
   const {
     register,
@@ -76,6 +77,17 @@ const LocationForm = () => {
   } = useForm({
     ...defaultValues,
   });
+
+  useEffect(() => {
+    console.log('UPDATE selectedLocation', locationId, initalValues);
+    if (!locationId && selectedLocation) {
+      dispatch(actions.selectLocation(null));
+      setValue({
+        ...initalValues,
+      });
+      triggerValidation();
+    }
+  }, [locationId]);
 
   const values = watch(Object.keys(defaultValues), defaultValues);
 
@@ -144,7 +156,7 @@ const LocationForm = () => {
       );
 
       if (!result.errors) {
-        const feature = locationToFeature(result);
+        // const feature = locationToFeature(result);
         // actions.updateLocation({ payload: feature });
         history.push(appRoutes.HOME);
       }
