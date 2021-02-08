@@ -25,7 +25,7 @@ const DocumentLink = ({ document: documentData }) => {
           trackDownload();
           const token = await auth.token();
           // eslint-disable-next-line no-underscore-dangle
-          const href = `${documentData._links.self.href.split('?')[0]}file`;
+          const href = `${documentData._links.self.href.split('?')[0]}file/`;
           getWithToken(href, null, null, token);
         }}
         download
