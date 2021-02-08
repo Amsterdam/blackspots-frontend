@@ -18,32 +18,6 @@ describe('LocationForm', () => {
     selectedLocation: null,
   };
 
-  const mockedLocation = {
-    id: 104,
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [4.9039965, 52.377073],
-    },
-    properties: {
-      stadsdeel: 'Centrum',
-      documents: [],
-      locatie_id: 'QD50_13',
-      spot_type: 'protocol dodelijk',
-      description: 'Ode Brug',
-      wegvak: null,
-      status: 'gereed',
-      actiehouders: 'Uitgevoerd door het IB',
-      start_uitvoering: 'Onbekend',
-      eind_uitvoering: '01/09/16',
-      tasks: '',
-      notes: '',
-      jaar_blackspotlijst: null,
-      jaar_ongeval_quickscan: 2013,
-      jaar_oplevering: 2016,
-    },
-  };
-
   const useFormMock = {
     register: jest.fn(),
     unregister: jest.fn(),
@@ -60,14 +34,14 @@ describe('LocationForm', () => {
   });
 
   it('should render the add form', () => {
-    const mockedDispatch = jest.fn();
+    const dispatchSpy = jest.fn();
     useFormMock.watch.mockReturnValue(initalValues);
     useForm.mockReturnValue({ ...useFormMock });
 
     const { container } = render(
       withTheme(
         <FilterContext.Provider
-          value={{ state: mockedState, dispatch: mockedDispatch }}
+          value={{ state: mockedState, dispatch: dispatchSpy }}
         >
           <LocationForm />
         </FilterContext.Provider>
@@ -79,18 +53,29 @@ describe('LocationForm', () => {
     expect(container.querySelector('input[type="text"]').value).toEqual('');
   });
 
-  // it('should render the edit form ', () => {
-  //   useAppReducer.mockReturnValue([{ selectedLocation: featureMock }]);
-  //   useFormMock.watch.mockReturnValue(locationMock);
-  //   useForm.mockReturnValue({ ...useFormMock });
-  //   const { container } = render(withTheme(<LocationForm id="1" />));
-  //   expect(container.firstChild.innerHTML).not.toBeUndefined();
-  //   expect(container.querySelectorAll('textarea').length).toEqual(2);
-  //   expect(container.querySelectorAll('input[type="text"]').length).toEqual(7);
-  //   expect(container.querySelector('input[type="text"]').value).toEqual(
-  //     featureMock.properties.description
-  //   );
-  // });
+  it('should render the edit form ', () => {
+    const dispatchSpy = jest.fn();
+    useFormMock.watch.mockReturnValue(locationMock);
+    useForm.mockReturnValue({ ...useFormMock });
+    const { container } = render(
+      withTheme(
+        <FilterContext.Provider
+          value={{
+            state: { ...mockedState, selectedLocation: featureMock },
+            dispatch: dispatchSpy,
+          }}
+        >
+          <LocationForm />
+        </FilterContext.Provider>
+      )
+    );
+    expect(container.firstChild.innerHTML).not.toBeUndefined();
+    expect(container.querySelectorAll('textarea').length).toEqual(2);
+    expect(container.querySelectorAll('input[type="text"]').length).toEqual(7);
+    expect(container.querySelector('input[type="text"]').value).toEqual(
+      featureMock.properties.description
+    );
+  });
 
   // it('should call handleChange when there are changes in the form', () => {
   //   const setValueMock = jest.fn();
