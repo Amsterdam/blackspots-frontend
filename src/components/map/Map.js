@@ -40,8 +40,6 @@ const MapComponent = () => {
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
 
-  console.log('reender', selectedLocation, locations, filter);
-
   useEffect(() => {
     if (locations.length === 0)
       (async () => {
