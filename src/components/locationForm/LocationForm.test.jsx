@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-// import useAppReducer from 'shared/hooks/useAppReducer';
 import useForm from 'react-hook-form';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { initialState } from 'shared/reducers/filter';
@@ -9,8 +8,8 @@ import { withTheme } from '../../test/utils';
 import { featureMock, locationMock } from './LocationForm.mock';
 import { initalValues } from './definitions/FormFields';
 
-// jest.mock('shared/hooks/useAppReducer');
 jest.mock('react-hook-form');
+jest.mock();
 
 describe('LocationForm', () => {
   const mockedState = {
@@ -77,22 +76,31 @@ describe('LocationForm', () => {
     );
   });
 
-  // it('should call handleChange when there are changes in the form', () => {
-  //   const setValueMock = jest.fn();
-  //   useAppReducer.mockReturnValue([{ selectedLocation: null }]);
-  //   useFormMock.watch.mockReturnValue(initalValues);
-  //   useForm.mockReturnValue({ ...useFormMock, setValue: setValueMock });
-  //   const { getByTestId } = render(withTheme(<LocationForm id="" />));
+  it('should call handleChange when there are changes in the form', () => {
+    const dispatchSpy = jest.fn();
+    const setValueMock = jest.fn();
+    useFormMock.watch.mockReturnValue(initalValues);
+    useForm.mockReturnValue({ ...useFormMock, setValue: setValueMock });
+    const { getByTestId } = render(
+      withTheme(
+        <FilterContext.Provider
+          value={{
+            state: { ...mockedState, selectedLocation: featureMock },
+            dispatch: dispatchSpy,
+          }}
+        >
+          <LocationForm />
+        </FilterContext.Provider>
+      )
+    );
 
-  //   const inputId = 'naam';
-  //   const inputValue = `${inputId}-value`;
-  //   const input = getByTestId(`${inputId}-test-id`);
-  //   expect(input).toBeInTheDocument();
-  //   jest.resetAllMocks();
-  //   fireEvent.change(input, { target: { value: inputValue } });
-  //   expect(setValueMock).toHaveBeenCalledTimes(1);
-  //   expect(setValueMock).toHaveBeenCalledWith(inputId, inputValue);
-  // });
-
-  // it('should call on submit when the form is submitted', () => {});
+    const inputId = 'naam';
+    const inputValue = `${inputId}-value`;
+    const input = getByTestId(`${inputId}-test-id`);
+    expect(input).toBeInTheDocument();
+    jest.resetAllMocks();
+    fireEvent.change(input, { target: { value: inputValue } });
+    expect(setValueMock).toHaveBeenCalledTimes(1);
+    expect(setValueMock).toHaveBeenCalledWith(inputId, inputValue);
+  });
 });
