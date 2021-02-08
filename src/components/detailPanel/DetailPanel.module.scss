@@ -3,10 +3,10 @@
 .Container {
   width: 0px;
   transition: width 300ms ease-in-out;
-  height: 100%;
+  height: calc(100% - 50px);
   position: absolute;
   right: 0;
-  top: 0;
+  top: 50px;
   background-color: $primaryWhite;
   z-index: 1010;
   border-left: 0;
