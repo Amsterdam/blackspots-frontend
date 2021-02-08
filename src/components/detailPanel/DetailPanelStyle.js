@@ -40,6 +40,7 @@ export const ExternalLinkStyle = styled(Link)`
   display: flex;
   font-size: 16px;
   line-height: 16px;
+  cursor: pointer;
 
   &:hover {
     & > ${styles.IconStyle} > svg > path {
