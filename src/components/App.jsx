@@ -5,8 +5,7 @@ import useKeycloak from 'shared/hooks/useKeycloak';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { UserContextProvider } from 'shared/user/UserContext';
-import mainReducer, { initialState } from 'shared/reducers';
-import { AppStateProvider } from 'shared/hooks/useAppReducer';
+import FilterContextProvider from 'shared/reducers/FilterContext';
 import AppRoutes from './AppRoutes';
 import AppStyle from './AppStyle';
 import Header from './header/Header';
@@ -19,7 +18,7 @@ const App = () => {
 
   return (
     <UserContextProvider user={user}>
-      <AppStateProvider initialState={initialState} reducer={mainReducer}>
+      <FilterContextProvider>
         <ThemeProvider>
           <GlobalStyle />
           <AppStyle>
@@ -33,7 +32,7 @@ const App = () => {
             )}
           </AppStyle>
         </ThemeProvider>
-      </AppStateProvider>
+      </FilterContextProvider>
     </UserContextProvider>
   );
 };

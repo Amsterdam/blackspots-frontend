@@ -69,7 +69,7 @@ const filterReducer = (state = initialState, action) => {
     case SELECT_LOCATION:
       return {
         ...state,
-        selectedLocation: { ...action.payload },
+        selectedLocation: action.payload,
       };
     case SET_LOCATIONS:
       return {

@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useContext } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+
 import { Button, Row } from '@amsterdam/asc-ui';
 import useForm from 'react-hook-form';
-import useAppReducer from 'shared/hooks/useAppReducer';
-import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
+import { FilterContext } from 'shared/reducers/FilterContext';
+import { actions } from 'shared/reducers/filter';
 import { sendData } from 'shared/api/api';
 import FormFields, {
   initalValues,
@@ -27,21 +28,21 @@ const isProtocolType = spotType =>
   spotType === SpotTypes.PROTOCOL_DODELIJK ||
   spotType === SpotTypes.PROTOCOL_ERNSTIG;
 
-const LocationForm = ({ id: locationId }) => {
+const LocationForm = () => {
+  const {
+    state: { selectedLocation },
+    dispatch,
+  } = useContext(FilterContext);
+
+  const { id } = useParams();
+  const locationId = id;
+
   const history = useHistory();
-  const [{ selectedLocation }, actions] = useAppReducer(LOCATION);
   const [visible, setVisible] = useState({ ...formVisibility });
 
   const location = useMemo(() => featureToLocation(selectedLocation), [
     selectedLocation,
   ]);
-
-  // Return to home when navigating to a not selected location
-  useEffect(() => {
-    if (locationId && !selectedLocation) {
-      history.push(appRoutes.HOME);
-    }
-  }, [locationId, selectedLocation]);
 
   const defaultValues = useMemo(
     () =>
@@ -67,6 +68,12 @@ const LocationForm = ({ id: locationId }) => {
   } = useForm({
     ...defaultValues,
   });
+
+  useEffect(() => {
+    if (!locationId && selectedLocation) {
+      dispatch(actions.selectLocation(null));
+    }
+  }, [locationId]);
 
   const values = watch(Object.keys(defaultValues), defaultValues);
 
@@ -136,7 +143,7 @@ const LocationForm = ({ id: locationId }) => {
 
       if (!result.errors) {
         const feature = locationToFeature(result);
-        actions.updateLocation({ payload: feature });
+        dispatch(actions.selectLocation(feature));
         history.push(appRoutes.HOME);
       }
     } catch (error) {
@@ -164,7 +171,7 @@ const LocationForm = ({ id: locationId }) => {
   useEffect(() => {
     Object.entries(formValidation).forEach(([name, validation]) => {
       register({ name, type: 'custom' }, validation);
-      setValue(name, defaultValues[name]);
+      setValue(name, locationId ? defaultValues[name] : initalValues[name]);
     });
   }, [register, locationId]);
 
@@ -193,9 +200,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <HeaderSecondary forwardedAs="h3">
-              Maatregelen
-            </HeaderSecondary>
+            <HeaderSecondary forwardedAs="h3">Maatregelen</HeaderSecondary>
             {FormFields.filter(({ column }) => column === 2).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (

@@ -34,7 +34,7 @@ const MAP_OPTIONS = {
 
 const MapComponent = () => {
   const {
-    state: { selectedLocation, locations },
+    state: { selectedLocation, locations, filter },
     dispatch,
   } = useContext(FilterContext);
   const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();

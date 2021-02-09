@@ -1,13 +1,20 @@
 /* eslint-disable camelcase */
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Heading, Button, Link, Icon, themeColor } from '@amsterdam/asc-ui';
-
+import {
+  Heading,
+  Button,
+  Icon,
+  themeColor,
+  themeSpacing,
+} from '@amsterdam/asc-ui';
+import { Link } from 'react-router-dom';
 import { ExternalLink, Close } from '@amsterdam/asc-assets';
 
 import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'config';
 import classNames from 'classnames';
 
+import styled from 'styled-components';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';
 
@@ -26,6 +33,16 @@ import {
   ExternalLinkStyle,
 } from './DetailPanelStyle';
 import DocumentLink from './components/DocumentLink';
+
+const StyledLink = styled(Link)`
+  color: ${themeColor('tint', 'level7')};
+  text-decoration: none;
+  padding: ${themeSpacing(0, 4)};
+
+  &:hover {
+    color: ${themeColor('secondary')};
+  }
+`;
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -74,13 +91,9 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       <HeaderStyle>
         <HeaderSecondary forwardedAs="h3">{locatie_id}</HeaderSecondary>
         {canEdit && (
-          <Link
-            href={`/edit/${feature.id}`}
-            variant="inline"
-            data-testid="editButton"
-          >
+          <StyledLink to={`/edit/${feature.id}`} data-testid="editButton">
             Wijzig
-          </Link>
+          </StyledLink>
         )}
         <Button
           size={24}
