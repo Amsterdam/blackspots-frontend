@@ -38,6 +38,7 @@ describe('Auth service', () => {
 
       const result = await getWithToken(
         'http://localhost/',
+        'json',
         {
           entryOne: 'foo',
           entryTwo: 'bar',
