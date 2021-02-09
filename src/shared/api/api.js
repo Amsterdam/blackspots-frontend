@@ -34,6 +34,7 @@ export const getByUri = uri => fetch(uri).then(response => response.json());
 
 export const getWithToken = (
   url,
+  type,
   params,
   cancel,
   token,
@@ -55,16 +56,29 @@ export const getWithToken = (
   }
 
   const fullUrl = `${url}${params ? `?${generateParams(params)}` : ''}`;
-  return fetch(fullUrl, options)
+
+  const data = fetch(fullUrl, options);
+  if (type === 'json') {
+    return data
+      .then(response => handleErrors(response, reloadOnUnauthorized))
+      .then(response => response.json());
+  }
+  return data
     .then(response => handleErrors(response, reloadOnUnauthorized))
-    .then(response => response.json());
+    .then(response => response.blob());
 };
 
-export const getByUrl = async (url, params, cancel, reloadOnUnauthorized) => {
+export const getByUrl = async (
+  url,
+  type,
+  params,
+  cancel,
+  reloadOnUnauthorized
+) => {
   // Ensure authenticated
   const token = await auth.token();
   return Promise.resolve(
-    getWithToken(url, params, cancel, token, reloadOnUnauthorized)
+    getWithToken(url, type, params, cancel, token, reloadOnUnauthorized)
   );
 };
 

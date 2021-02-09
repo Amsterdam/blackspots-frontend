@@ -27,7 +27,7 @@ describe('FilterPanel', () => {
   });
 
   it('should render DELIVERED', () => {
-    const { queryByText, debug } = render(
+    const { queryByText } = render(
       withTheme(
         <FilterContext.Provider
           value={{
