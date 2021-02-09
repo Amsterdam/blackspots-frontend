@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { themeSpacing, styles, themeColor, Link } from '@amsterdam/asc-ui';
+import { themeSpacing, styles, themeColor } from '@amsterdam/asc-ui';
 
 export const HeaderStyle = styled.div`
   display: flex;
@@ -36,7 +36,7 @@ export const ExternalLinkContainerStyle = styled.div`
   margin-bottom: ${themeSpacing(6)};
 `;
 
-export const ExternalLinkStyle = styled(Link)`
+export const ExternalLinkStyle = styled.a`
   display: flex;
   font-size: 16px;
   line-height: 16px;

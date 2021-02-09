@@ -1,12 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import styled from 'styled-components';
 import { Icon, themeColor } from '@amsterdam/asc-ui';
 import { Download } from '@amsterdam/asc-assets';
-import { getWithToken } from 'shared/api/api';
-import auth from 'shared/auth/auth';
 import useDataFetching from 'shared/hooks/useDataFetching';
-import { compileFunction } from 'vm';
 import { ExternalLinkStyle } from '../DetailPanelStyle';
 import TextWithOverflow from './TextWithOverflow';
 
@@ -20,6 +17,7 @@ const DocumentLink = ({ document: documentData }) => {
     trackEvent({ category: 'PDF download', action: 'download' });
   };
   const { results, fetchData } = useDataFetching('blob');
+  // eslint-disable-next-line no-underscore-dangle
   const url = `${documentData._links.self.href.split('?')[0]}file/`;
   const { filename } = documentData;
 
@@ -42,7 +40,6 @@ const DocumentLink = ({ document: documentData }) => {
   }, [results, filename]);
 
   const handleDownload = useCallback(() => {
-    console.log('-----------------', documentData);
     fetchData(url);
   }, [fetchData, url]);
 
@@ -53,9 +50,6 @@ const DocumentLink = ({ document: documentData }) => {
           e.preventDefault();
           trackDownload();
           handleDownload(e);
-
-          // eslint-disable-next-line no-underscore-dangle
-          const href = `${documentData._links.self.href.split('?')[0]}file/`;
         }}
         download
         variant="inline"
