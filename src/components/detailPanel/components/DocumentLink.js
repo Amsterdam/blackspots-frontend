@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import styled from 'styled-components';
 import { Icon, themeColor } from '@amsterdam/asc-ui';
@@ -20,9 +20,9 @@ const DocumentLink = ({ document: documentData }) => {
   // eslint-disable-next-line no-underscore-dangle
   const url = `${documentData._links.self.href.split('?')[0]}file/`;
   const { filename } = documentData;
-
+  const [isDownloading, setIsDownloading] = useState(false);
   useEffect(() => {
-    if (!results) return;
+    if (!results || !isDownloading) return;
 
     if (navigator.msSaveOrOpenBlob) {
       navigator.msSaveOrOpenBlob(results, filename);
@@ -37,9 +37,11 @@ const DocumentLink = ({ document: documentData }) => {
       global.URL.revokeObjectURL(href);
       document.body.removeChild(link);
     }
+    setIsDownloading(false);
   }, [results, filename]);
 
   const handleDownload = useCallback(() => {
+    setIsDownloading(true);
     fetchData(url);
   }, [fetchData, url]);
 
@@ -47,6 +49,7 @@ const DocumentLink = ({ document: documentData }) => {
     <DocumentContainerStyle>
       <ExternalLinkStyle
         onClick={async e => {
+          e.stopPropagation();
           e.preventDefault();
           trackDownload();
           handleDownload(e);
