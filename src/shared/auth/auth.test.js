@@ -40,7 +40,7 @@ describe('auth', () => {
   });
 
   it('should check the roles', async () => {
-    keycloakMock.realmAccess.roles.push('bs_all');
+    keycloakMock.realmAccess.roles.push('bs_w');
     const canAdd = await auth.canAdd();
     expect(canAdd).toBeTruthy();
     const canEdit = await auth.canEdit();
