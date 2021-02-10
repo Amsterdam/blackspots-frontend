@@ -59,7 +59,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
     if (mapInstance && locations.length) {
       setJson(getGeoJson(locations, filter));
     }
-  }, [mapInstance, locations]);
+  }, [mapInstance, locations, filter]);
 
   useEffect(() => {
     if (filter) {
@@ -71,7 +71,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
         layerInstance.addData(data);
       }
     }
-  }, [filter]);
+  }, [filter, layerInstance, locations]);
 
   return json ? (
     <GeoJSON setInstance={setLayerInstance} args={[json]} options={options} />

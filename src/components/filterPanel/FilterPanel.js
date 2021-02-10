@@ -61,7 +61,7 @@ const FilterPanel = () => {
       downloadUrl,
       `wbakaart-export-${new Date().toLocaleDateString('nl-NL')}.csv`
     );
-  }, [downloadUrl]);
+  }, [downloadUrl, downloadFile]);
 
   useEffect(() => {
     setDownloadUrl(`${exportUrl}${getExportFilter(filter?.stadsdeelFilter)}`);
@@ -73,9 +73,9 @@ const FilterPanel = () => {
         optionValue === ContextMenuOptions.ALL
     );
   }, [
-    filter?.stadsdeelFilter,
-    filter?.spotTypeFilter,
-    filter?.spotStatusTypeFilter,
+    filter.stadsdeelFilter,
+    filter.spotTypeFilter,
+    filter.spotStatusTypeFilter,
     optionValue,
   ]);
 

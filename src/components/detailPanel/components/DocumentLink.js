@@ -38,7 +38,7 @@ const DocumentLink = ({ document: documentData }) => {
       document.body.removeChild(link);
     }
     setIsDownloading(false);
-  }, [results, filename]);
+  }, [results, filename, isDownloading]);
 
   const handleDownload = useCallback(() => {
     setIsDownloading(true);

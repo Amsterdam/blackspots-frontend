@@ -54,7 +54,7 @@ const LocationForm = () => {
         : {
             ...initalValues,
           },
-    [location, initalValues]
+    [location, locationId]
   );
 
   const {
@@ -73,7 +73,7 @@ const LocationForm = () => {
     if (!locationId && selectedLocation) {
       dispatch(actions.selectLocation(null));
     }
-  }, [locationId]);
+  }, [locationId, dispatch, selectedLocation]);
 
   const values = watch(Object.keys(defaultValues), defaultValues);
 
@@ -101,7 +101,12 @@ const LocationForm = () => {
       setValue('jaar_blackspotlijst', '');
       setValue('jaar_ongeval_quickscan', '');
     }
-  }, [spotType]);
+  }, [
+    spotType,
+    values.jaar_blackspotlijst,
+    values.jaar_ongeval_quickscan,
+    setValue,
+  ]);
 
   const coordinaten = watch('coordinaten');
   useEffect(() => {
@@ -113,7 +118,7 @@ const LocationForm = () => {
       setValue('stadsdeel', '', true);
       unregister('stadsdeel');
     })();
-  }, [coordinaten]);
+  }, [coordinaten, setValue, unregister]);
 
   const handleServerValidation = async reason => {
     if (reason.point && reason.point.length) {
@@ -173,7 +178,7 @@ const LocationForm = () => {
       register({ name, type: 'custom' }, validation);
       setValue(name, locationId ? defaultValues[name] : initalValues[name]);
     });
-  }, [register, locationId]);
+  }, [locationId, defaultValues, setValue, register]);
 
   return (
     <>
