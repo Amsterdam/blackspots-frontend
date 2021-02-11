@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, cleanup, fireEvent, act } from '@testing-library/react';
 import { withTheme } from 'test/utils';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { initialState } from 'shared/reducers/filter';
@@ -93,8 +93,12 @@ describe('Map', () => {
       )
     );
 
-    // click marker
-    fireEvent.click(container.querySelector('.leaflet-marker-icon:last-child'));
+    act(() => {
+      // click marker
+      fireEvent.click(
+        container.querySelector('.leaflet-marker-icon:last-child')
+      );
+    });
 
     expect(dispatchSpy).toHaveBeenCalledWith({
       type: 'filter/SELECT_LOCATION',
