@@ -4,12 +4,24 @@ import { withTheme } from 'test/utils';
 
 import DataTable from './DataTable';
 
-describe('ContentBox', () => {
+describe('DataTable', () => {
   afterEach(cleanup);
 
   it('should render correctly', () => {
-    const { queryByText } = render(withTheme(<DataTable>children</DataTable>));
+    const { queryByText } = render(
+      withTheme(
+        <DataTable>
+          <tbody>
+            <tr>
+              <td>foo</td>
+              <td>bar</td>
+            </tr>
+          </tbody>
+        </DataTable>
+      )
+    );
 
-    expect(queryByText('children')).toBeInTheDocument();
+    expect(queryByText('foo')).toBeInTheDocument();
+    expect(queryByText('bar')).toBeInTheDocument();
   });
 });
