@@ -4,24 +4,23 @@ import classNames from 'classnames';
 import { ReactComponent as Chevron } from 'assets/icons/chevron-top.svg';
 import styles from './SelectMenu.module.scss';
 
-const SelectMenu = ({ items, defaultValue, selectionChanged }) => {
-  const [selected, setSelected] = useState(
-    items.find(i => i.value === defaultValue).label
-  );
+const SelectMenu = ({ items, selectionChanged }) => {
+  const [selected, setSelected] = useState(items[0].label);
   const [showMenu, setShowMenu] = useState(false);
 
-  const onClick = item => () => {
+  const onSelectMenuItem = item => () => {
     setShowMenu(false);
     setSelected(item.label);
-    if (selectionChanged) selectionChanged(item.value);
+    selectionChanged(item.value);
   };
 
   return (
-    <div className={styles.Container}>
+    <div className={styles.Container} data-testid="select-menu">
       <button
         type="button"
         className={styles.Select}
         onClick={() => setShowMenu(!showMenu)}
+        data-testid="selected-option"
       >
         {selected}
         <Chevron
@@ -39,7 +38,7 @@ const SelectMenu = ({ items, defaultValue, selectionChanged }) => {
             type="button"
             key={i.id}
             className={styles.Option}
-            onClick={onClick(i)}
+            onClick={onSelectMenuItem(i)}
           >
             {i.label}
           </button>
@@ -56,7 +55,6 @@ SelectMenu.propTypes = {
       value: PropTypes.string.isRequired,
     })
   ).isRequired,
-  defaultValue: PropTypes.string.isRequired,
   selectionChanged: PropTypes.func.isRequired,
 };
 
