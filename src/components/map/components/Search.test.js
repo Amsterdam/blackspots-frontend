@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
-import { act } from '@testing-library/react-hooks';
+import { render, cleanup, fireEvent, act } from '@testing-library/react';
 import { withTheme } from 'test/utils';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { mocked } from 'ts-jest/utils';
@@ -62,14 +61,19 @@ describe('Search', () => {
     act(() => {
       fireEvent.change(inputEl, { target: { value: 'Javastraat' } });
     });
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
 
     expect(container.querySelectorAll('li').length).toBe(2);
 
     act(() => {
       fireEvent.blur(inputEl);
     });
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
 
     expect(container.querySelectorAll('li').length).toBe(0);
 
@@ -84,7 +88,9 @@ describe('Search', () => {
     act(() => {
       fireEvent.change(inputEl, { target: { value: 'Javastraat' } });
     });
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
 
     expect(fetchDataSpy).toHaveBeenCalledWith(
       'https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?fq=gemeentenaam:amsterdam&fq=type:adres&fl=id,weergavenaam,type,score,lat,lon&q=Javastraat'
@@ -95,7 +101,9 @@ describe('Search', () => {
     await act(async () => {
       fireEvent.click(anchorEl, { preventDefault: jest.fn() });
     });
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
 
     expect(flyToSpy).toHaveBeenCalledWith(
       { lat: 52.36328065, lng: 4.93194161 },
