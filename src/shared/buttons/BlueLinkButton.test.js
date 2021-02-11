@@ -1,10 +1,16 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, cleanup } from '@testing-library/react';
+import { withTheme } from 'test/utils';
 
 import BlueLinkButton from './BlueLinkButton';
 
 describe('BlueLinkButton', () => {
-  it('should render without errors', () => {
-    shallow(<BlueLinkButton text="test" href="" />);
+  afterEach(cleanup);
+
+  it('should render correctly', () => {
+    const props = { text: 'link ergens naartoe', chevronDirection: 'left' };
+    const { queryByText } = render(withTheme(<BlueLinkButton {...props} />));
+
+    expect(queryByText(props.text)).toBeInTheDocument();
   });
 });

@@ -1,10 +1,15 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, cleanup } from '@testing-library/react';
+import { withTheme } from 'test/utils';
 
 import Footer from './Footer';
 
 describe('Footer', () => {
-  it('should render without errors', () => {
-    shallow(<Footer />);
+  afterEach(cleanup);
+
+  it('should render correctly', () => {
+    const { queryByText } = render(withTheme(<Footer />));
+
+    expect(queryByText('Disclaimer')).toBeInTheDocument();
   });
 });

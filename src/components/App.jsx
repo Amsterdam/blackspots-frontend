@@ -21,7 +21,7 @@ const App = () => {
       <FilterContextProvider>
         <ThemeProvider>
           <GlobalStyle />
-          <AppStyle>
+          <AppStyle data-testid="app">
             {user.authenticated ? (
               <>
                 <Header />
