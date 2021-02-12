@@ -8,7 +8,12 @@ describe('BlueLinkButton', () => {
   afterEach(cleanup);
 
   it('should render correctly', () => {
-    const props = { text: 'link ergens naartoe', chevronDirection: 'left' };
+    const props = {
+      href: '',
+      text: 'link ergens naartoe',
+      external: true,
+      chevronDirection: 'left',
+    };
     const { queryByText } = render(withTheme(<BlueLinkButton {...props} />));
 
     expect(queryByText(props.text)).toBeInTheDocument();

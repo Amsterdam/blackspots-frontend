@@ -4,7 +4,7 @@ import { withTheme } from 'test/utils';
 
 import DashboardPage from './DashboardPage';
 
-jest.mock('components/map/Map', () => 'BlackspotsKaart');
+jest.mock('components/map/Map', () => 'div');
 
 describe('DashboardPage', () => {
   afterEach(cleanup);
