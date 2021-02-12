@@ -1,10 +1,18 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, cleanup } from '@testing-library/react';
+import { withTheme } from 'test/utils';
 
 import ErrorMsg from './ErrorMsg';
 
 describe('ErrorMsg', () => {
-  it('should render without errors', () => {
-    shallow(<ErrorMsg isOpen />);
+  afterEach(cleanup);
+
+  it('should render correctly', () => {
+    const props = { isOpen: true };
+    const { queryByText } = render(withTheme(<ErrorMsg {...props} />));
+
+    expect(
+      queryByText('Informatie op de kaart kan niet worden geladen.')
+    ).toBeInTheDocument();
   });
 });

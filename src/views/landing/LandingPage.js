@@ -43,7 +43,12 @@ const LandingPage = () => {
             </a>
           </IntroTextStyle>
           <h2>Inloggen</h2>
-          <button type="button" onClick={login} className={styles.LoginBtn}>
+          <button
+            type="button"
+            onClick={login}
+            data-testid="login-button"
+            className={styles.LoginBtn}
+          >
             Datapunt account
           </button>
           <p>

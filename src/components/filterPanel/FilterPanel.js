@@ -120,7 +120,7 @@ const FilterPanel = () => {
 
   useEffect(() => {
     updateFilters();
-  }, []);
+  }, [updateFilters]);
 
   function processOptionChange(value) {
     // Set the option value

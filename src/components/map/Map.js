@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
+import PropTypes from 'prop-types';
 import {
   Map,
   BaseLayer,
@@ -32,12 +33,12 @@ const MAP_OPTIONS = {
   crs: getCrsRd(),
 };
 
-const MapComponent = () => {
+const MapComponent = ({ setShowError }) => {
   const {
     state: { selectedLocation, locations },
     dispatch,
   } = useContext(FilterContext);
-  const { /* errorMessage, */ loading, results, fetchData } = useDataFetching();
+  const { errorMessage, loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
 
   useEffect(() => {
@@ -62,6 +63,12 @@ const MapComponent = () => {
     },
     [dispatch, setShowDetailPanel]
   );
+
+  useEffect(() => {
+    if (errorMessage) {
+      setShowError();
+    }
+  }, [errorMessage, setShowError]);
 
   const icon = L.icon({
     iconUrl: markerIcon,
@@ -101,6 +108,10 @@ const MapComponent = () => {
       />
     </>
   );
+};
+
+MapComponent.prototypes = {
+  setShowError: PropTypes.func.isRequired,
 };
 
 export default MapComponent;
