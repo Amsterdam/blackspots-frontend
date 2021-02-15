@@ -80,6 +80,7 @@ const Search = forwardRef((props, searchRef) => {
         ref={searchRef}
         autocomplete={false}
         data-testid="input"
+        placeholder="Zoek adres..."
         onChange={e => {
           if (e.target.value.length < 2) return;
           const value = encodeURIComponent(e.target.value);
