@@ -79,9 +79,8 @@ const Search = forwardRef((props, searchRef) => {
       <StyledSearchBar
         id="search"
         ref={searchRef}
-        autocomplete={false}
         data-testid="input"
-        placeholder="Zoek adres..."
+        inputProps={{ autoComplete: 'off' }}
         onChange={e => {
           if (e.target.value.length < 2) return;
           const value = encodeURIComponent(e.target.value);
