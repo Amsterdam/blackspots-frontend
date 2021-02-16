@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useCallback, forwardRef } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import {
   Link,
@@ -40,12 +40,12 @@ const StyledListItem = styled(ListItem)`
   }
 `;
 
-const Search = forwardRef((props, searchRef) => {
+const Search = () => {
   const lookupUrl =
     'https://geodata.nationaalgeoregister.nl/locatieserver/v3/lookup?id=';
   const autosuggestUrl =
     'https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?fq=gemeentenaam:amsterdam&fq=type:adres&fl=id,weergavenaam,type,score,lat,lon&q=';
-
+  const searchRef = useRef(null);
   const mapInstance = useMapInstance();
   const [showAutosuggest, setShowAutosuggest] = useState(false);
   const { /* errorMessage, loading, */ results, fetchData } = useDataFetching();
@@ -68,6 +68,10 @@ const Search = forwardRef((props, searchRef) => {
           lng: parseFloat(parsedCoordinates[0]),
         };
 
+        if (searchRef.current) {
+          searchRef.current.value = '';
+        }
+
         mapInstance.flyTo(latLng, 11);
       }
     },
@@ -78,9 +82,8 @@ const Search = forwardRef((props, searchRef) => {
     <div>
       <StyledSearchBar
         id="search"
-        ref={searchRef}
         data-testid="input"
-        inputProps={{ autoComplete: 'off' }}
+        inputProps={{ autoComplete: 'off', ref: searchRef }}
         onChange={e => {
           if (e.target.value.length < 2) return;
           const value = encodeURIComponent(e.target.value);
@@ -112,6 +115,6 @@ const Search = forwardRef((props, searchRef) => {
       ) : null}
     </div>
   );
-});
+};
 
 export default Search;
