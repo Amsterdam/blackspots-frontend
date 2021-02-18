@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { Button, Row } from '@amsterdam/asc-ui';
-import useForm from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { actions } from 'shared/reducers/filter';
 import { sendData } from 'shared/api/api';
@@ -64,7 +64,7 @@ const LocationForm = () => {
     setValue,
     errors,
     watch,
-    triggerValidation,
+    trigger,
   } = useForm({
     ...defaultValues,
   });
@@ -132,7 +132,7 @@ const LocationForm = () => {
         { required: reason.point[0] }
       );
       setValue('stadsdeel', '', true);
-      await triggerValidation({ name: 'stadsdeel' });
+      await trigger({ name: 'stadsdeel' });
     }
   };
 
