@@ -64,7 +64,7 @@ const LocationForm = () => {
     setValue,
     errors,
     watch,
-    triggerValidation,
+    trigger,
   } = useForm({
     ...defaultValues,
   });
@@ -132,7 +132,7 @@ const LocationForm = () => {
         { required: reason.point[0] }
       );
       setValue('stadsdeel', '', true);
-      await triggerValidation({ name: 'stadsdeel' });
+      await trigger({ name: 'stadsdeel' });
     }
   };
 
