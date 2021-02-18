@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { Button, Row } from '@amsterdam/asc-ui';
-import useForm from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { actions } from 'shared/reducers/filter';
 import { sendData } from 'shared/api/api';
