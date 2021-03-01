@@ -1,16 +1,20 @@
 /* eslint-disable camelcase */
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Heading, Button, Link, Icon } from '@datapunt/asc-ui';
-
-import { NavLink } from 'react-router-dom';
-
-import { ExternalLink, Close } from '@datapunt/asc-assets';
+import {
+  Heading,
+  Button,
+  Icon,
+  themeColor,
+  themeSpacing,
+} from '@amsterdam/asc-ui';
+import { Link } from 'react-router-dom';
+import { ExternalLink, Close } from '@amsterdam/asc-assets';
 
 import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'config';
 import classNames from 'classnames';
 
-// import BlueLinkButton from 'shared/buttons/BlueLinkButton';
+import styled from 'styled-components';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';
 
@@ -19,6 +23,7 @@ import styles from './DetailPanel.module.scss';
 import { SpotTypeDisplayNames } from '../../config';
 
 import UserContext from '../../shared/user/UserContext';
+import { HeaderSecondary } from '../../styles/SharedStyles';
 
 import {
   HeaderStyle,
@@ -28,6 +33,16 @@ import {
   ExternalLinkStyle,
 } from './DetailPanelStyle';
 import DocumentLink from './components/DocumentLink';
+
+const StyledLink = styled(Link)`
+  color: ${themeColor('tint', 'level7')};
+  text-decoration: none;
+  padding: ${themeSpacing(0, 4)};
+
+  &:hover {
+    color: ${themeColor('secondary')};
+  }
+`;
 
 function getStatusClassName(status) {
   const statusClassMapper = {
@@ -74,18 +89,11 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       )}
     >
       <HeaderStyle>
-        <Heading $as="h3" color="secondary">
-          {locatie_id}
-        </Heading>
+        <HeaderSecondary forwardedAs="h3">{locatie_id}</HeaderSecondary>
         {canEdit && (
-          <Link
-            $as={NavLink}
-            to={`/edit/${feature.id}`}
-            variant="inline"
-            data-testid="editButton"
-          >
+          <StyledLink to={`/edit/${feature.id}`} data-testid="editButton">
             Wijzig
-          </Link>
+          </StyledLink>
         )}
         <Button
           size={24}
@@ -97,7 +105,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
       </HeaderStyle>
       <ContentStyle>
         <TitleStyle>
-          <Heading $as="h2">{description}</Heading>
+          <Heading forwardedAs="h2">{description}</Heading>
         </TitleStyle>
         <DataTable bottom={2}>
           <tbody>
@@ -160,15 +168,13 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             rel="noopener noreferrer"
             variant="inline"
           >
-            <Icon size={14} color="primary">
+            <Icon size={14} color={`${themeColor('primary', 'main')}`}>
               <ExternalLink />
             </Icon>
             Panoramabeeld
           </ExternalLinkStyle>
         </ExternalLinkContainerStyle>
-        <Heading $as="h4" color="secondary">
-          Maatregelen
-        </Heading>
+        <HeaderSecondary forwardedAs="h4">Maatregelen</HeaderSecondary>
         <DataTable>
           <tbody>
             <tr>
@@ -198,9 +204,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
           </tbody>
         </DataTable>
         {documents.length > 0 && (
-          <Heading $as="h4" color="secondary">
-            Documenten
-          </Heading>
+          <HeaderSecondary forwardedAs="h4">&gt; Documenten</HeaderSecondary>
         )}
 
         {reportDocument || designDocument ? (

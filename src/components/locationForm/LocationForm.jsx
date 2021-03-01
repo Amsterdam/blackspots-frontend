@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useContext } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
-import { Heading, Button, Row } from '@datapunt/asc-ui';
-import useForm from 'react-hook-form';
-import useAppReducer from 'shared/hooks/useAppReducer';
-import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
+
+import { Button, Row } from '@amsterdam/asc-ui';
+import { useForm } from 'react-hook-form';
+import { FilterContext } from 'shared/reducers/FilterContext';
+import { actions } from 'shared/reducers/filter';
 import { sendData } from 'shared/api/api';
 import FormFields, {
   initalValues,
@@ -19,6 +20,7 @@ import {
   locationToFeature,
 } from './services/normalize';
 import { appRoutes, SpotTypes, endpoints } from '../../config';
+import { HeaderSecondary } from '../../styles/SharedStyles';
 
 const isBlackspotType = spotType =>
   spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
@@ -26,21 +28,21 @@ const isProtocolType = spotType =>
   spotType === SpotTypes.PROTOCOL_DODELIJK ||
   spotType === SpotTypes.PROTOCOL_ERNSTIG;
 
-const LocationForm = ({ id: locationId }) => {
+const LocationForm = () => {
+  const {
+    state: { selectedLocation },
+    dispatch,
+  } = useContext(FilterContext);
+
+  const { id } = useParams();
+  const locationId = id;
+
   const history = useHistory();
-  const [{ selectedLocation }, actions] = useAppReducer(LOCATION);
   const [visible, setVisible] = useState({ ...formVisibility });
 
   const location = useMemo(() => featureToLocation(selectedLocation), [
     selectedLocation,
   ]);
-
-  // Return to home when navigating to a not selected location
-  useEffect(() => {
-    if (locationId && !selectedLocation) {
-      history.push(appRoutes.HOME);
-    }
-  }, [locationId, selectedLocation]);
 
   const defaultValues = useMemo(
     () =>
@@ -52,7 +54,7 @@ const LocationForm = ({ id: locationId }) => {
         : {
             ...initalValues,
           },
-    [location, initalValues]
+    [location, locationId]
   );
 
   const {
@@ -62,10 +64,16 @@ const LocationForm = ({ id: locationId }) => {
     setValue,
     errors,
     watch,
-    triggerValidation,
+    trigger,
   } = useForm({
     ...defaultValues,
   });
+
+  useEffect(() => {
+    if (!locationId && selectedLocation) {
+      dispatch(actions.selectLocation(null));
+    }
+  }, [locationId, dispatch, selectedLocation]);
 
   const values = watch(Object.keys(defaultValues), defaultValues);
 
@@ -93,7 +101,12 @@ const LocationForm = ({ id: locationId }) => {
       setValue('jaar_blackspotlijst', '');
       setValue('jaar_ongeval_quickscan', '');
     }
-  }, [spotType]);
+  }, [
+    spotType,
+    values.jaar_blackspotlijst,
+    values.jaar_ongeval_quickscan,
+    setValue,
+  ]);
 
   const coordinaten = watch('coordinaten');
   useEffect(() => {
@@ -105,7 +118,7 @@ const LocationForm = ({ id: locationId }) => {
       setValue('stadsdeel', '', true);
       unregister('stadsdeel');
     })();
-  }, [coordinaten]);
+  }, [coordinaten, setValue, unregister]);
 
   const handleServerValidation = async reason => {
     if (reason.point && reason.point.length) {
@@ -119,7 +132,7 @@ const LocationForm = ({ id: locationId }) => {
         { required: reason.point[0] }
       );
       setValue('stadsdeel', '', true);
-      await triggerValidation({ name: 'stadsdeel' });
+      await trigger({ name: 'stadsdeel' });
     }
   };
 
@@ -135,7 +148,7 @@ const LocationForm = ({ id: locationId }) => {
 
       if (!result.errors) {
         const feature = locationToFeature(result);
-        actions.updateLocation({ payload: feature });
+        dispatch(actions.selectLocation(feature));
         history.push(appRoutes.HOME);
       }
     } catch (error) {
@@ -163,9 +176,9 @@ const LocationForm = ({ id: locationId }) => {
   useEffect(() => {
     Object.entries(formValidation).forEach(([name, validation]) => {
       register({ name, type: 'custom' }, validation);
-      setValue(name, defaultValues[name]);
+      setValue(name, locationId ? defaultValues[name] : initalValues[name]);
     });
-  }, [register, locationId]);
+  }, [locationId, defaultValues, setValue, register]);
 
   return (
     <>
@@ -174,9 +187,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <Heading $as="h3" color="secondary">
-              Locatie
-            </Heading>
+            <HeaderSecondary forwardedAs="h3">> Locatie</HeaderSecondary>
             {FormFields.filter(({ column }) => column === 1).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (
@@ -194,9 +205,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <Heading $as="h3" color="secondary">
-              Maatregelen
-            </Heading>
+            <HeaderSecondary forwardedAs="h3">Maatregelen</HeaderSecondary>
             {FormFields.filter(({ column }) => column === 2).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (
@@ -214,9 +223,7 @@ const LocationForm = ({ id: locationId }) => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <Heading $as="h3" color="secondary">
-              Documenten
-            </Heading>
+            <HeaderSecondary forwardedAs="h3">Documenten</HeaderSecondary>
             {FormFields.filter(({ column }) => column === 3).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (

@@ -8,7 +8,7 @@ const DashboardPage = () => {
   const [showError, setShowError] = useState(false);
 
   return (
-    <DashboardPageStyle>
+    <DashboardPageStyle data-testid="dashboard">
       <ErrorMsg isOpen={showError} />
       <Map setShowError={setShowError} />
     </DashboardPageStyle>

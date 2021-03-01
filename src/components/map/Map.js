@@ -1,27 +1,45 @@
-import React, { useState, useEffect, useCallback } from 'react';
-
+import React, { useState, useEffect, useCallback, useContext } from 'react';
+import PropTypes from 'prop-types';
+import {
+  Map,
+  BaseLayer,
+  ViewerContainer,
+  Zoom,
+  Marker,
+  getCrsRd,
+} from '@amsterdam/arm-core';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import Loader from 'shared/loader/Loader';
-import { SpotTypes, SpotStatusTypes, Stadsdeel } from 'config';
-import useAppReducer from 'shared/hooks/useAppReducer';
-import { REDUCER_KEY as LOCATION } from 'shared/reducers/location';
+import { actions } from 'shared/reducers/filter';
+import { FilterContext } from 'shared/reducers/FilterContext';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
-import { evaluateMarkerVisibility } from './helpers';
 import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
-import useYearFilters from './hooks/useYearFilters';
-import useBlackspotsLayer from './hooks/useBlackspotsLayer';
-import useMap from './hooks/useMap';
-import MapStyle from './MapStyle';
+import BlackspotsLayer from './components/BlackspotsLayer';
+import StadsdelenLayer from './components/StadsdelenLayer';
+import Search from './components/Search';
 import { endpoints } from '../../config';
-import useMarkerLayer from './hooks/useMarkerLayer';
 
-const Map = () => {
+const MAP_OPTIONS = {
+  center: [52.36988741057662, 4.8966407775878915],
+  zoom: 9,
+  maxZoom: 16,
+  minZoom: 8,
+  zoomControl: false,
+  attributionControl: true,
+  crs: getCrsRd(),
+};
+
+const MapComponent = ({ setShowError }) => {
+  const {
+    state: { selectedLocation, locations },
+    dispatch,
+  } = useContext(FilterContext);
   const { errorMessage, loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
-  const [{ selectedLocation, locations }, actions] = useAppReducer(LOCATION);
-
-  const mapRef = useMap();
 
   useEffect(() => {
     if (locations.length === 0)
@@ -32,157 +50,68 @@ const Map = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (locations.length === 0)
-      actions.addLocations({ payload: results ? [...results.features] : [] });
+    if (results) {
+      dispatch(actions.setLocations(results ? [...results.features] : []));
+    }
     // Keep the actions and locations out from the dependency array to prevent infinite loop
-  }, [results]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [results, dispatch]);
 
-  const [
-    blackspotYearFilter,
-    deliveredYearFilter,
-    quickscanYearFilter,
-    setBlackspotYearFilter,
-    setDeliveredYearFilter,
-    setQuickscanYearFilter,
-  ] = useYearFilters(locations);
-
-  const onMarkerClick = useCallback(feature => {
-    actions.selectLocation({ payload: feature });
-  }, []);
-
-  const geoLayerRef = useBlackspotsLayer(mapRef, locations, onMarkerClick);
-  const { setLocation, layerRef } = useMarkerLayer(mapRef);
+  const onMarkerClick = useCallback(
+    feature => {
+      dispatch(actions.selectLocation(feature));
+      setShowDetailPanel(true);
+    },
+    [dispatch, setShowDetailPanel]
+  );
 
   useEffect(() => {
-    if (selectedLocation) {
-      setLocation(selectedLocation);
-
-      setShowDetailPanel(true);
+    if (errorMessage) {
+      setShowError();
     }
-  }, [selectedLocation, setLocation]);
+  }, [errorMessage, setShowError]);
+
+  const icon = L.icon({
+    iconUrl: markerIcon,
+    iconAnchor: [18, 45],
+  });
 
   const toggleDetailPanel = useCallback(() => {
     setShowDetailPanel(!showDetailPanel);
-  }, [showDetailPanel]);
-
-  const [spotStatusTypeFilter, setSpotStatusTypeFilter] = useState({
-    [SpotStatusTypes.ONDERZOEK]: false,
-    [SpotStatusTypes.VOORBEREIDING]: false,
-    [SpotStatusTypes.GEREED]: false,
-    [SpotStatusTypes.GEEN_MAATREGEL]: false,
-    [SpotStatusTypes.UITVOERING]: false,
-    [SpotStatusTypes.ONBEKEND]: false,
-  });
-  const [spotTypeFilter, setSpotTypeFilter] = useState({
-    [SpotTypes.BLACKSPOT]: false,
-    [SpotTypes.PROTOCOL_DODELIJK]: false,
-    [SpotTypes.PROTOCOL_ERNSTIG]: false,
-    [SpotTypes.RISICO]: false,
-    [SpotTypes.WEGVAK]: false,
-  });
-  const [stadsdeelFilter, setStadsdeelFilter] = useState({
-    ...Object.values(Stadsdeel).reduce(
-      (acc, item) => ({ ...acc, [item.name]: false }),
-      {}
-    ),
-  });
-
-  // A filter to only show items on the 'blackspot list', which are all
-  // spots with type BLACKSPOT or WEGVAk
-  const [blackspotListFilter, setBlackspotListFilter] = useState(false);
-
-  // A filter to only show items on the 'protocol list', which are all spots
-  // with type PROTOCOL_ERNSTIG or PROTOCOL_DODELIJK
-  // Note: quickscan === protocol
-  const [quickscanListFilter, setQuickscanListFilter] = useState(false);
-
-  // A filter that only shows spots that have the status DELIVERED
-  const [deliveredListFilter, setDeliveredListFilter] = useState(false);
-
-  useEffect(() => {
-    evaluateMarkerVisibility(
-      [...geoLayerRef.current.getLayers()],
-      spotTypeFilter,
-      spotStatusTypeFilter,
-      blackspotYearFilter,
-      deliveredYearFilter,
-      quickscanYearFilter,
-      blackspotListFilter,
-      quickscanListFilter,
-      deliveredListFilter,
-      stadsdeelFilter
-    );
-    if (layerRef.current) {
-      evaluateMarkerVisibility(
-        [layerRef.current],
-        spotTypeFilter,
-        spotStatusTypeFilter,
-        blackspotYearFilter,
-        deliveredYearFilter,
-        quickscanYearFilter,
-        blackspotListFilter,
-        quickscanListFilter,
-        deliveredListFilter,
-        stadsdeelFilter
-      );
-    }
-  }, [
-    geoLayerRef,
-    layerRef,
-    spotTypeFilter,
-    spotStatusTypeFilter,
-    blackspotYearFilter,
-    deliveredYearFilter,
-    quickscanYearFilter,
-    blackspotListFilter,
-    quickscanListFilter,
-    deliveredListFilter,
-    stadsdeelFilter,
-  ]);
-
-  const setFilters = (
-    spotTypeFilterValue,
-    spotStatusTypeFilterValue,
-    blackspotYearFilterValue,
-    deliveredYearFilterValue,
-    quickscanYearFilterValue,
-    stadsdeelFilterValue
-  ) => {
-    setSpotTypeFilter(spotTypeFilterValue);
-    setSpotStatusTypeFilter(spotStatusTypeFilterValue);
-    setBlackspotYearFilter(blackspotYearFilterValue);
-    setDeliveredYearFilter(deliveredYearFilterValue);
-    setQuickscanYearFilter(quickscanYearFilterValue);
-    setStadsdeelFilter(stadsdeelFilterValue);
-  };
+  }, [showDetailPanel, setShowDetailPanel]);
 
   return (
-    <MapStyle>
-      <div id="mapdiv">
-        {loading && <Loader />}
-        {!errorMessage && !loading && (
-          <FilterPanel
-            spotTypeFilter={spotTypeFilter}
-            spotStatusTypeFilter={spotStatusTypeFilter}
-            blackspotYearFilter={blackspotYearFilter}
-            deliveredYearFilter={deliveredYearFilter}
-            quickscanYearFilter={quickscanYearFilter}
-            stadsdeelFilter={stadsdeelFilter}
-            setFilters={setFilters}
-            setBlackspotListFilter={value => setBlackspotListFilter(value)}
-            setQuickscanListFilter={setQuickscanListFilter}
-            setDeliveredListFilter={setDeliveredListFilter}
-            setStadsdeelFilter={setStadsdeelFilter}
-          />
-        )}
-
-        <DetailPanel
-          feature={selectedLocation}
-          isOpen={showDetailPanel}
-          togglePanel={toggleDetailPanel}
+    <>
+      <Map data-testid="map" fullScreen options={MAP_OPTIONS}>
+        <Marker
+          options={{ icon, zIndexOffset: 1000 }}
+          latLng={{
+            lat: selectedLocation?.geometry?.coordinates[1] || 0,
+            lng: selectedLocation?.geometry?.coordinates[0] || 0,
+          }}
         />
-      </div>
-    </MapStyle>
+        <StadsdelenLayer />
+        <BlackspotsLayer onMarkerClick={onMarkerClick} />
+        <ViewerContainer
+          topLeft={<Search />}
+          bottomLeft={<FilterPanel />}
+          bottomRight={<Zoom />}
+          topRight={loading && <Loader />}
+        />
+        <BaseLayer
+          baseLayer={`https://{s}.data.amsterdam.nl/topo_rd_zw/{z}/{x}/{y}.png`}
+        />
+      </Map>
+      <DetailPanel
+        feature={selectedLocation}
+        isOpen={showDetailPanel}
+        togglePanel={toggleDetailPanel}
+      />
+    </>
   );
 };
-export default Map;
+
+MapComponent.prototypes = {
+  setShowError: PropTypes.func.isRequired,
+};
+
+export default MapComponent;

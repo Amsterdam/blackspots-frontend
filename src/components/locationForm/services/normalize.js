@@ -21,7 +21,7 @@ export const cleanUndefined = item => {
  *
  */
 export const featureToLocation = feature => {
-  if (!feature) return initalValues;
+  if (!feature || Object.keys(feature).length === 0) return initalValues;
 
   const {
     id,

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
-import styled from '@datapunt/asc-core';
-import { Icon } from '@datapunt/asc-ui';
-import { Download } from '@datapunt/asc-assets';
+import styled from 'styled-components';
+import { Icon, themeColor } from '@amsterdam/asc-ui';
+import { Download } from '@amsterdam/asc-assets';
+import useDataFetching from 'shared/hooks/useDataFetching';
 import { ExternalLinkStyle } from '../DetailPanelStyle';
 import TextWithOverflow from './TextWithOverflow';
 
@@ -15,16 +16,49 @@ const DocumentLink = ({ document: documentData }) => {
   const trackDownload = () => {
     trackEvent({ category: 'PDF download', action: 'download' });
   };
+  const { results, fetchData } = useDataFetching('blob');
+  // eslint-disable-next-line no-underscore-dangle
+  const url = `${documentData._links.self.href.split('?')[0]}file/`;
+  const { filename } = documentData;
+  const [isDownloading, setIsDownloading] = useState(false);
+  useEffect(() => {
+    if (!results || !isDownloading) return;
+
+    if (navigator.msSaveOrOpenBlob) {
+      navigator.msSaveOrOpenBlob(results, filename);
+    } else {
+      const href = global.URL.createObjectURL(results);
+      const link = document.createElement('a');
+      link.href = href;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+
+      global.URL.revokeObjectURL(href);
+      document.body.removeChild(link);
+    }
+    setIsDownloading(false);
+  }, [results, filename, isDownloading]);
+
+  const handleDownload = useCallback(() => {
+    setIsDownloading(true);
+    fetchData(url);
+  }, [fetchData, url]);
+
   return (
     <DocumentContainerStyle>
       <ExternalLinkStyle
-        onClick={trackDownload}
-        // eslint-disable-next-line no-underscore-dangle
-        href={`${documentData._links.self.href.split('?')[0]}file`}
+        onClick={async e => {
+          e.stopPropagation();
+          e.preventDefault();
+          trackDownload();
+          handleDownload(e);
+        }}
         download
         variant="inline"
       >
-        <Icon size={14} color="primary">
+        <Icon size={14} color={`${themeColor('primary', 'main')}`}>
+          &gt;
           <Download />
         </Icon>
         <TextWithOverflow>{documentData.filename}</TextWithOverflow>
