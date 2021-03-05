@@ -49,8 +49,8 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
         };
 
         const currentZoom = mapInstance.getZoom();
-        mapInstance.flyTo(latlng, currentZoom < 11 ? 11 : currentZoom);
         onMarkerClick(feature);
+        if (currentZoom < 11) mapInstance.flyTo(latlng, 11);
       });
     },
   };
