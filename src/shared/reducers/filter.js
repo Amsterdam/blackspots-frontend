@@ -3,6 +3,8 @@ export const REDUCER_KEY = 'filter';
 export const SELECT_LOCATION = `${REDUCER_KEY}/SELECT_LOCATION`;
 export const SET_LOCATIONS = `${REDUCER_KEY}/SET_LOCATIONS`;
 export const SET_FILTER = `${REDUCER_KEY}/SET_FILTER`;
+export const UPDATE_LOCATION = `${REDUCER_KEY}/UPDATE_LOCATION`;
+export const ADD_LOCATION = `${REDUCER_KEY}/ADD_LOCATION`;
 
 export const initialState = {
   selectedLocation: null,
@@ -84,6 +86,22 @@ const filterReducer = (state = initialState, action) => {
           ...action.payload,
         },
       };
+    case UPDATE_LOCATION:
+      return {
+        ...state,
+        locations: [
+          ...state.locations.map(location => {
+            return location.id === action.payload.id
+              ? action.payload
+              : location;
+          }),
+        ],
+      };
+    case ADD_LOCATION:
+      return {
+        ...state,
+        locations: [...state.locations, action.payload],
+      };
     default:
       return state;
   }
@@ -93,6 +111,8 @@ export const actions = {
   selectLocation: payload => ({ type: SELECT_LOCATION, payload }),
   setLocations: payload => ({ type: SET_LOCATIONS, payload }),
   setFilter: payload => ({ type: SET_FILTER, payload }),
+  updateLocation: payload => ({ type: UPDATE_LOCATION, payload }),
+  addLocation: payload => ({ type: ADD_LOCATION, payload }),
 };
 
 export default filterReducer;
