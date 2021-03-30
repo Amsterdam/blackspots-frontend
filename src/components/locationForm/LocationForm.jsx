@@ -148,7 +148,11 @@ const LocationForm = () => {
 
       if (!result.errors) {
         const feature = locationToFeature(result);
-        dispatch(actions.selectLocation(feature));
+        if (locationId) {
+          dispatch(actions.updateLocation(feature));
+        } else {
+          dispatch(actions.addLocation(feature));
+        }
         history.push(appRoutes.HOME);
       }
     } catch (error) {
