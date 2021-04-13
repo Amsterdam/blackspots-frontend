@@ -1,4 +1,4 @@
-import { themeSpacing, Button } from '@amsterdam/asc-ui';
+import { themeSpacing, Button, Link } from '@amsterdam/asc-ui';
 import styled from 'styled-components';
 
 export const LogoutLink = styled(Button)`
@@ -11,4 +11,16 @@ export const LogoutLink = styled(Button)`
   }
   padding: 0;
   margin-right: ${themeSpacing(5)};
+`;
+
+export const MenuButton = styled(Link)`
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0 16px 0 8px;
+
+  &:hover {
+    color: red;
+    text-decoration: underline;
+  }
 `;
