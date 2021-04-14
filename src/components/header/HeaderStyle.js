@@ -1,28 +1,26 @@
-import { Header, themeSpacing, Button, themeColor } from '@amsterdam/asc-ui';
+import { themeSpacing, Button, Link } from '@amsterdam/asc-ui';
 import styled from 'styled-components';
 
-export const StyledHeader = styled(Header)`
-  li {
-    a {
-      padding: 14px ${themeSpacing(4)};
-      color: black;
-      font-weight: 700;
-      text-decoration: none;
-
-      &:hover {
-        color: ${themeColor('secondary')};
-      }
-    }
-  }
-`;
-
 export const LogoutLink = styled(Button)`
-  color: ${themeColor('tint', 'level7')};
+  color: black;
+  margin-left: 8px;
+
+  svg path {
+    fill: black;
+    stroke-width: 0;
+  }
   padding: 0;
   margin-right: ${themeSpacing(5)};
-  margin-left: ${themeSpacing(4)};
+`;
+
+export const MenuButton = styled(Link)`
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0 16px 0 8px;
 
   &:hover {
-    text-decoration: none;
+    color: red;
+    text-decoration: underline;
   }
 `;
