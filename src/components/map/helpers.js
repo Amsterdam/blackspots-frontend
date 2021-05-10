@@ -102,6 +102,7 @@ const evaluateSingleMarkerVisibility = (marker, filter) => {
 };
 
 export const getGeoJson = (locations, filter) => {
+  // eslint-disable-next-line consistent-return
   const markers = locations.filter(location => {
     if (evaluateSingleMarkerVisibility(location, filter)) {
       return location;
