@@ -17,6 +17,8 @@
 
 ## Installation
 
+use node 10
+
 ```bash
   npm install
 ```

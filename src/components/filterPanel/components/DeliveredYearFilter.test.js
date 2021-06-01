@@ -31,6 +31,7 @@ describe('DeliveredYearFilter', () => {
     expect(queryByText('2018')).toBeInTheDocument();
     expect(queryByText('2019')).toBeInTheDocument();
     expect(queryByText('2020')).toBeInTheDocument();
+    expect(queryByText('2021')).toBeInTheDocument();
   });
 
   it('should click one of the checkboxes', () => {
@@ -52,7 +53,7 @@ describe('DeliveredYearFilter', () => {
       filter.spotTypeFilter,
       filter.spotStatusTypeFilter,
       filter.blackspotYearFilter,
-      { ...filter.deliveredYearFilter, '2019': true },
+      { ...filter.deliveredYearFilter, '2020': true },
       filter.quickscanYearFilter,
       filter.stadsdeelFilter
     );
