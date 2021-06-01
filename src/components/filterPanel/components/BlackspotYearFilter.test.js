@@ -35,7 +35,7 @@ describe('BlackspotYearFilter', () => {
     expect(queryByText('2021')).toBeInTheDocument();
   });
 
-  it.only('should click one of the checkboxes', () => {
+  it('should click one of the checkboxes', () => {
     const { container } = render(
       withTheme(
         <FilterContext.Provider
