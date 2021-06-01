@@ -6,6 +6,20 @@ export const SET_FILTER = `${REDUCER_KEY}/SET_FILTER`;
 export const UPDATE_LOCATION = `${REDUCER_KEY}/UPDATE_LOCATION`;
 export const ADD_LOCATION = `${REDUCER_KEY}/ADD_LOCATION`;
 
+const currentYear = new Date().getFullYear();
+const blackspotYears = {};
+for (let y = 2014; y <= currentYear; y += 1) {
+  blackspotYears[`${y}`] = false;
+}
+const deliveredYears = {};
+for (let y = 2015; y <= currentYear; y += 1) {
+  deliveredYears[`${y}`] = false;
+}
+const quickscanYears = {};
+for (let y = 2013; y <= currentYear; y += 1) {
+  quickscanYears[`${y}`] = false;
+}
+
 export const initialState = {
   selectedLocation: null,
   locations: [],
@@ -26,33 +40,9 @@ export const initialState = {
       uitvoering: false,
       undefined: false,
     },
-    blackspotYearFilter: {
-      '2014': false,
-      '2015': false,
-      '2016': false,
-      '2017': false,
-      '2018': false,
-      '2019': false,
-      '2020': false,
-    },
-    deliveredYearFilter: {
-      '2015': false,
-      '2016': false,
-      '2017': false,
-      '2018': false,
-      '2019': false,
-      '2020': false,
-    },
-    quickscanYearFilter: {
-      '2013': false,
-      '2014': false,
-      '2015': false,
-      '2016': false,
-      '2017': false,
-      '2018': false,
-      '2019': false,
-      '2020': false,
-    },
+    blackspotYearFilter: blackspotYears,
+    deliveredYearFilter: deliveredYears,
+    quickscanYearFilter: quickscanYears,
     stadsdeelFilter: {
       Centrum: false,
       'Nieuw West': false,
