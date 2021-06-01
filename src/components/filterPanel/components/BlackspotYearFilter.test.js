@@ -32,8 +32,7 @@ describe('BlackspotYearFilter', () => {
     expect(queryByText('2018')).toBeInTheDocument();
     expect(queryByText('2019')).toBeInTheDocument();
     expect(queryByText('2020')).toBeInTheDocument();
-    expect(queryByText('2018')).toBeInTheDocument();
-    expect(queryByText('2018')).toBeInTheDocument();
+    expect(queryByText('2021')).toBeInTheDocument();
   });
 
   it('should click one of the checkboxes', () => {
@@ -54,7 +53,7 @@ describe('BlackspotYearFilter', () => {
     expect(props.updateFilters).toHaveBeenLastCalledWith(
       filter.spotTypeFilter,
       filter.spotStatusTypeFilter,
-      { ...filter.blackspotYearFilter, '2019': true },
+      { ...filter.blackspotYearFilter, '2020': true },
       filter.deliveredYearFilter,
       filter.quickscanYearFilter,
       filter.stadsdeelFilter
