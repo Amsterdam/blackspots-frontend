@@ -23,7 +23,7 @@
     "enzyme-to-json": "^3.6.2",
     "file-saver": "^2.0.2",
     "formdata-polyfill": "^4.0.6",
-    "history": "^4.10.1",
+    "history": "^5.0.0",
     "http-proxy-middleware": "^0.20.0",
     "leaflet": "^1.6.0",
     "node-sass": "^4.14.1",
