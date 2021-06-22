@@ -22,7 +22,7 @@
     "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-to-json": "^3.4.3",
     "file-saver": "^2.0.2",
-    "formdata-polyfill": "^3.0.19",
+    "formdata-polyfill": "^4.0.6",
     "history": "^4.10.1",
     "http-proxy-middleware": "^0.20.0",
     "leaflet": "^1.6.0",
