@@ -17,7 +17,7 @@
     "amsterdam-amaps": "^2.0.1",
     "amsterdam-stijl": "^3.0.5",
     "classnames": "^2.2.6",
-    "core-js": "^3.5.0",
+    "core-js": "^3.15.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-to-json": "^3.4.3",
