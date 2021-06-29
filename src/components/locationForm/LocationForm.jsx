@@ -191,7 +191,7 @@ const LocationForm = () => {
           <ControlsColumn
             span={{ small: 1, medium: 2, big: 6, large: 6, xLarge: 6 }}
           >
-            <HeaderSecondary forwardedAs="h3">> Locatie</HeaderSecondary>
+            <HeaderSecondary forwardedAs="h3">&gt; Locatie</HeaderSecondary>
             {FormFields.filter(({ column }) => column === 1).map(
               ({ id, name, ...otherProps }) =>
                 visible[name] && (

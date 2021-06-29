@@ -4,11 +4,6 @@ import '@testing-library/jest-dom/extend-expect';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import L from 'leaflet-headless';
 
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-configure({ adapter: new Adapter() });
-
 global.Keycloak = () => ({
   init: () => {},
   realmAccess: {
