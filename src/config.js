@@ -3,7 +3,6 @@ import { ReactComponent as ProtocolIcon } from 'assets/markers/icon-protocol.svg
 import { ReactComponent as ProtocolErnstigIcon } from 'assets/markers/icon-protocolErnstig.svg';
 import { ReactComponent as RisicoIcon } from 'assets/markers/icon-risico.svg';
 import { ReactComponent as WegvakIcon } from 'assets/markers/icon-wegvak.svg';
-import StatusColors from 'styles/_colors.scss';
 
 export const appRoutes = {
   HOME: '/',
@@ -65,11 +64,11 @@ export const SpotIcons = {
 };
 
 export const SpotStatusColor = {
-  [SpotStatusTypes.ONDERZOEK]: StatusColors.ONDERZOEK,
-  [SpotStatusTypes.VOORBEREIDING]: StatusColors.VOORBEREIDING,
-  [SpotStatusTypes.UITVOERING]: StatusColors.UITVOERING,
-  [SpotStatusTypes.GEREED]: StatusColors.GEREED,
-  [SpotStatusTypes.GEEN_MAATREGEL]: StatusColors.GEEN_MAATREGEL,
+  [SpotStatusTypes.ONDERZOEK]: '#ec0000',
+  [SpotStatusTypes.VOORBEREIDING]: '#ff9100',
+  [SpotStatusTypes.UITVOERING]: '#ffe600',
+  [SpotStatusTypes.GEREED]: '#00a03c',
+  [SpotStatusTypes.GEEN_MAATREGEL]: '#b4b4b4',
 };
 
 export const endpoints = {
