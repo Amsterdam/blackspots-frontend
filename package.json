@@ -7,11 +7,11 @@
     "@amsterdam/asc-assets": "^0.29.3",
     "@amsterdam/asc-ui": "^0.31.0",
     "@amsterdam/react-maps": "^0.12.0",
-    "@babel/polyfill": "^7.7.0",
+    "@babel/polyfill": "^7.12.1",
     "@datapunt/matomo-tracker-react": "0.4.0",
     "@sentry/browser": "^6.8.0",
     "@types/jest": "^26.0.23",
-    "@types/node": "^12.12.17",
+    "@types/node": "^15.12.5",
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
     "amsterdam-amaps": "^2.0.1",
@@ -23,7 +23,7 @@
     "history": "^5.0.0",
     "http-proxy-middleware": "^2.0.0",
     "leaflet": "^1.7.1",
-    "node-sass": "^4.14.1",
+    "node-sass": "^6.0.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
@@ -57,7 +57,11 @@
   ],
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
+<<<<<<< HEAD
     "@testing-library/react": "^11.2.7",
+=======
+    "@testing-library/react": "^12.0.0",
+>>>>>>> 5ca0d062e914c30d06751002ff3ee4cc0958821f
     "@testing-library/react-hooks": "^7.0.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.7.0",
