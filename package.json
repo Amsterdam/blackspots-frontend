@@ -23,7 +23,7 @@
     "history": "^5.0.0",
     "http-proxy-middleware": "^2.0.0",
     "leaflet": "^1.7.1",
-    "node-sass": "^6.0.1",
+    "node-sass": "5.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
