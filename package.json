@@ -5,7 +5,7 @@
   "dependencies": {
     "@amsterdam/arm-core": "^0.6.0",
     "@amsterdam/asc-assets": "^0.29.3",
-    "@amsterdam/asc-ui": "^0.29.3",
+    "@amsterdam/asc-ui": "^0.31.0",
     "@amsterdam/react-maps": "^0.12.0",
     "@babel/polyfill": "^7.12.1",
     "@datapunt/matomo-tracker-react": "0.4.0",
@@ -57,7 +57,11 @@
   ],
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
+<<<<<<< HEAD
+    "@testing-library/react": "^11.2.7",
+=======
     "@testing-library/react": "^12.0.0",
+>>>>>>> 5ca0d062e914c30d06751002ff3ee4cc0958821f
     "@testing-library/react-hooks": "^7.0.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.7.0",
