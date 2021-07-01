@@ -19,11 +19,11 @@ function useDownload() {
     };
 
     fetch(url, options)
-      .then(response => response.blob())
-      .then(blob => {
+      .then((response) => response.blob())
+      .then((blob) => {
         fileSaver(blob, fileName);
       })
-      .catch(e => {
+      .catch((e) => {
         setError(e);
       })
       .finally(() => setLoading(false));

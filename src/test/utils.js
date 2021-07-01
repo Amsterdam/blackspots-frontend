@@ -14,7 +14,7 @@ export const withUserContext = (Component, user) => {
   );
 };
 
-export const withTheme = Component => {
+export const withTheme = (Component) => {
   return (
     <ThemeProvider>
       <Router history={history}>{Component}</Router>

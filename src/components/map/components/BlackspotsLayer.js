@@ -8,7 +8,7 @@ import { FilterContext } from 'shared/reducers/FilterContext';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 import { getGeoJson } from '../helpers';
 
-const createFeatureIcon = feature => {
+const createFeatureIcon = (feature) => {
   // Leaflet only accepts HTML elements for custom markers so we need to
   // create one from the SVGIcon
   const { status, spot_type: spotType } = feature.properties;
@@ -41,7 +41,7 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
       });
     },
     onEachFeature: (feature, layer) => {
-      layer.on('click', e => {
+      layer.on('click', (e) => {
         e.originalEvent.stopPropagation();
         const latlng = {
           lat: feature.geometry.coordinates[1],

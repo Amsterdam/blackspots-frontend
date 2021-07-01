@@ -12,7 +12,7 @@ const BlackspotYearFilter = ({ updateFilters, trackFilter }) => {
     <div className={styles.YearFilter}>
       {Object.keys(filter?.blackspotYearFilter)
         .reverse()
-        .map(year => {
+        .map((year) => {
           const value = filter?.blackspotYearFilter[year];
           return (
             <label key={year} htmlFor={year} className={styles.CheckboxWrapper}>

@@ -55,7 +55,7 @@ const setupKeycloack = () => {
 
   let keepAlive = null;
 
-  const autoRefreshToken = turnOn => {
+  const autoRefreshToken = (turnOn) => {
     // Refresh the token automatically once the user has been authenticated
     // Turn off when the user has logged out
     const minValidity = 30; // Token should be valid for at least the next 30 seconds
@@ -73,7 +73,7 @@ const setupKeycloack = () => {
     }
   };
 
-  keycloak.onReady = authenticated => {
+  keycloak.onReady = (authenticated) => {
     // eslint-disable-next-line no-console
     console.log('Keycloak ready, authenticated', authenticated);
   };
