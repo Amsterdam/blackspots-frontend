@@ -79,8 +79,8 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
     documents,
   } = feature.properties;
   const [lng, lat] = feature.geometry.coordinates;
-  const reportDocument = documents.find(d => d.type === 'Rapportage');
-  const designDocument = documents.find(d => d.type === 'Ontwerp');
+  const reportDocument = documents.find((d) => d.type === 'Rapportage');
+  const designDocument = documents.find((d) => d.type === 'Ontwerp');
   return (
     <div
       className={classNames(

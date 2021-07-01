@@ -11,7 +11,7 @@
 const objectToFormData = (obj, form = null, namespace = null) => {
   const fd = form || new FormData();
 
-  Object.keys(obj).forEach(property => {
+  Object.keys(obj).forEach((property) => {
     if (Object.prototype.hasOwnProperty.call(obj, property)) {
       const formKey = namespace ? `${namespace}[${property}]` : property;
 

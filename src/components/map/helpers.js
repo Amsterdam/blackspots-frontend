@@ -9,12 +9,12 @@ import {
 /**
  * Check if all values of an object are falsy
  */
-export const allValuesAreFalse = object => {
+export const allValuesAreFalse = (object) => {
   const values = Object.values(object);
   if (values.length === 0) {
     return true;
   }
-  return values.every(v => !v);
+  return values.every((v) => !v);
 };
 
 /**
@@ -103,7 +103,7 @@ const evaluateSingleMarkerVisibility = (marker, filter) => {
 
 export const getGeoJson = (locations, filter) => {
   // eslint-disable-next-line consistent-return
-  const markers = locations.filter(location => {
+  const markers = locations.filter((location) => {
     if (evaluateSingleMarkerVisibility(location, filter)) {
       return location;
     }

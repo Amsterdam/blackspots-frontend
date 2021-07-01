@@ -48,7 +48,7 @@ const DocumentLink = ({ document: documentData }) => {
   return (
     <DocumentContainerStyle>
       <ExternalLinkStyle
-        onClick={async e => {
+        onClick={async (e) => {
           e.stopPropagation();
           e.preventDefault();
           trackDownload();

@@ -1,6 +1,6 @@
 import { initalValues } from '../definitions/FormFields';
 
-export const cleanUndefined = item => {
+export const cleanUndefined = (item) => {
   // Skip the undefined values when creating the formData object
   const result = Object.keys(item).reduce((acc, key) => {
     return item[key]
@@ -20,7 +20,7 @@ export const cleanUndefined = item => {
  * Converts the server geojson feature to a client location object
  *
  */
-export const featureToLocation = feature => {
+export const featureToLocation = (feature) => {
   if (!feature || Object.keys(feature).length === 0) return initalValues;
 
   const {
@@ -60,8 +60,8 @@ export const featureToLocation = feature => {
     eind_uitvoering,
     jaar_oplevering,
     opmerking: notes,
-    rapport_document: documents.filter(d => d.type === 'Rapportage')[0],
-    design_document: documents.filter(d => d.type === 'Ontwerp')[0],
+    rapport_document: documents.filter((d) => d.type === 'Rapportage')[0],
+    design_document: documents.filter((d) => d.type === 'Ontwerp')[0],
   };
 };
 
@@ -70,7 +70,7 @@ export const featureToLocation = feature => {
  * @param {object} location
  * Converts a location to the geojson feature
  */
-export const locationToFeature = location => {
+export const locationToFeature = (location) => {
   const {
     id,
     description,
@@ -119,7 +119,7 @@ export const locationToFeature = location => {
  * @param {object} location
  * Converts the location object to FormData for sendig to the server
  */
-export const locationToFormData = location => {
+export const locationToFormData = (location) => {
   const {
     id,
     naam,
@@ -147,7 +147,7 @@ export const locationToFormData = location => {
       type: 'Point',
       coordinates: coordinaten
         .split(', ')
-        .map(s => parseFloat(s))
+        .map((s) => parseFloat(s))
         .reverse(),
     },
     stadsdeel,

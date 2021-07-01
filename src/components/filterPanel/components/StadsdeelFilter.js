@@ -12,7 +12,7 @@ const StadsdeelFilter = ({ updateFilters, trackFilter }) => {
   return (
     <>
       <h5>Stadsdeel</h5>
-      {Object.keys(Stadsdeel).map(key => {
+      {Object.keys(Stadsdeel).map((key) => {
         const type = Stadsdeel[key].name;
         const value = filter?.stadsdeelFilter[type];
         return (

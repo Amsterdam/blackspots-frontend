@@ -10,7 +10,7 @@ const Accordion = ({ title, text }) => {
     setOpen(!open);
   }
 
-  const handleKeyPress = event => {
+  const handleKeyPress = (event) => {
     if (event.key === 'Enter') toggle();
   };
 

@@ -53,7 +53,7 @@ describe('BlackspotYearFilter', () => {
     expect(props.updateFilters).toHaveBeenLastCalledWith(
       filter.spotTypeFilter,
       filter.spotStatusTypeFilter,
-      { ...filter.blackspotYearFilter, '2020': true },
+      { ...filter.blackspotYearFilter, 2020: true },
       filter.deliveredYearFilter,
       filter.quickscanYearFilter,
       filter.stadsdeelFilter

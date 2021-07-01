@@ -58,7 +58,7 @@ const MapComponent = ({ setShowError }) => {
   }, [results, dispatch]);
 
   const onMarkerClick = useCallback(
-    feature => {
+    (feature) => {
       dispatch(actions.selectLocation(feature));
       setShowDetailPanel(true);
     },

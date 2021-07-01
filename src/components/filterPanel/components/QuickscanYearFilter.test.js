@@ -55,7 +55,7 @@ describe('QuickscanYearFilter', () => {
       filter.spotStatusTypeFilter,
       filter.blackspotYearFilter,
       filter.deliveredYearFilter,
-      { ...filter.quickscanYearFilter, '2020': true },
+      { ...filter.quickscanYearFilter, 2020: true },
       filter.stadsdeelFilter
     );
   });
