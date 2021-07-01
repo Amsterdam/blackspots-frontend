@@ -8,9 +8,9 @@ export const ApiException = (status, reason) => {
   };
 };
 
-export const generateParams = data =>
+export const generateParams = (data) =>
   Object.entries(data)
-    .map(pair => pair.map(encodeURIComponent).join('='))
+    .map((pair) => pair.map(encodeURIComponent).join('='))
     .join('&');
 
 const handleErrors = async (response, reloadOnUnauthorized) => {
@@ -30,7 +30,7 @@ const handleErrors = async (response, reloadOnUnauthorized) => {
   return response;
 };
 
-export const getByUri = uri => fetch(uri).then(response => response.json());
+export const getByUri = (uri) => fetch(uri).then((response) => response.json());
 
 export const getWithToken = (
   url,
@@ -60,12 +60,12 @@ export const getWithToken = (
   const data = fetch(fullUrl, options);
   if (type === 'json') {
     return data
-      .then(response => handleErrors(response, reloadOnUnauthorized))
-      .then(response => response.json());
+      .then((response) => handleErrors(response, reloadOnUnauthorized))
+      .then((response) => response.json());
   }
   return data
-    .then(response => handleErrors(response, reloadOnUnauthorized))
-    .then(response => response.blob());
+    .then((response) => handleErrors(response, reloadOnUnauthorized))
+    .then((response) => response.blob());
 };
 
 export const getByUrl = async (
@@ -95,6 +95,6 @@ export const sendData = async (url, data, method = 'POST') => {
   };
 
   return fetch(url, options)
-    .then(response => handleErrors(response))
-    .then(response => response.json());
+    .then((response) => handleErrors(response))
+    .then((response) => response.json());
 };

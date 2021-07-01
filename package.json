@@ -23,7 +23,7 @@
     "history": "^5.0.0",
     "http-proxy-middleware": "^2.0.0",
     "leaflet": "^1.7.1",
-    "node-sass": "^6.0.1",
+    "node-sass": "5.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
@@ -57,11 +57,7 @@
   ],
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
-<<<<<<< HEAD
-    "@testing-library/react": "^11.2.7",
-=======
     "@testing-library/react": "^12.0.0",
->>>>>>> 5ca0d062e914c30d06751002ff3ee4cc0958821f
     "@testing-library/react-hooks": "^7.0.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^8.3.0",

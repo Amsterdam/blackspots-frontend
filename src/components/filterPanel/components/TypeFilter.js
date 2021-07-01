@@ -14,7 +14,7 @@ const TypeFilter = ({ updateFilters, trackFilter }) => {
   return (
     <>
       <h5>Type</h5>
-      {Object.keys(SpotTypes).map(key => {
+      {Object.keys(SpotTypes).map((key) => {
         const type = SpotTypes[key];
         const value = filter?.spotTypeFilter[type];
         return (

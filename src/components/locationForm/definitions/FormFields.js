@@ -55,7 +55,7 @@ const FormFields = [
     label: 'Stadsdeel',
     Component: RadioGroupInput,
     options: [
-      ...Object.values(Stadsdeel).map(stadsdeel => ({
+      ...Object.values(Stadsdeel).map((stadsdeel) => ({
         label: stadsdeel.name,
         value: stadsdeel.value,
       })),
@@ -70,7 +70,7 @@ const FormFields = [
     initialValue: SpotTypes.BLACKSPOT,
     Component: RadioGroupInput,
     options: [
-      ...Object.keys(SpotTypeDisplayNames).map(name => ({
+      ...Object.keys(SpotTypeDisplayNames).map((name) => ({
         label: SpotTypeDisplayNames[name],
         value: name,
       })),
@@ -116,7 +116,7 @@ const FormFields = [
     initialValue: SpotStatusTypes.ONDERZOEK,
     Component: RadioGroupInput,
     options: [
-      ...Object.keys(StatusDisplayNames).map(name => ({
+      ...Object.keys(StatusDisplayNames).map((name) => ({
         label: StatusDisplayNames[name],
         value: name,
       })),

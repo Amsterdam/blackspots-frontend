@@ -80,7 +80,7 @@ const filterReducer = (state = initialState, action) => {
       return {
         ...state,
         locations: [
-          ...state.locations.map(location => {
+          ...state.locations.map((location) => {
             return location.id === action.payload.id
               ? action.payload
               : location;
@@ -98,11 +98,11 @@ const filterReducer = (state = initialState, action) => {
 };
 
 export const actions = {
-  selectLocation: payload => ({ type: SELECT_LOCATION, payload }),
-  setLocations: payload => ({ type: SET_LOCATIONS, payload }),
-  setFilter: payload => ({ type: SET_FILTER, payload }),
-  updateLocation: payload => ({ type: UPDATE_LOCATION, payload }),
-  addLocation: payload => ({ type: ADD_LOCATION, payload }),
+  selectLocation: (payload) => ({ type: SELECT_LOCATION, payload }),
+  setLocations: (payload) => ({ type: SET_LOCATIONS, payload }),
+  setFilter: (payload) => ({ type: SET_FILTER, payload }),
+  updateLocation: (payload) => ({ type: UPDATE_LOCATION, payload }),
+  addLocation: (payload) => ({ type: ADD_LOCATION, payload }),
 };
 
 export default filterReducer;

@@ -11,8 +11,7 @@ export const featureMock = {
       {
         _links: {
           self: {
-            href:
-              'https://acc.api.data.amsterdam.nl/blackspots/documents/1/?format=geojson',
+            href: 'https://acc.api.data.amsterdam.nl/blackspots/documents/1/?format=geojson',
           },
         },
         id: 1,
@@ -42,8 +41,7 @@ export const locationMock = {
   design_document: {
     _links: {
       self: {
-        href:
-          'https://acc.api.data.amsterdam.nl/blackspots/documents/1/?format=geojson',
+        href: 'https://acc.api.data.amsterdam.nl/blackspots/documents/1/?format=geojson',
       },
     },
     filename: 'B87_14_ontwerp_Johan van Hasseltweg - Meeuwenlaan 2.pdf',

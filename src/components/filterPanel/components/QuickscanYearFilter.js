@@ -12,7 +12,7 @@ const QuickscanYearFilter = ({ updateFilters, trackFilter }) => {
     <div className={styles.YearFilter}>
       {Object.keys(filter?.quickscanYearFilter)
         .reverse()
-        .map(year => {
+        .map((year) => {
           const value = filter?.quickscanYearFilter[year];
           return (
             <label key={year} htmlFor={year} className={styles.CheckboxWrapper}>

@@ -20,8 +20,9 @@ describe('LandingPage', () => {
       )
     ).toBeInTheDocument();
 
-    const element = getByText('http://amsterdam.nl/verkeersveiligheid')
-      .parentNode;
+    const element = getByText(
+      'http://amsterdam.nl/verkeersveiligheid'
+    ).parentNode;
     expect(element.tagName).toEqual('P');
 
     // Login button is renederd

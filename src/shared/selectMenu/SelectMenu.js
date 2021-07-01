@@ -8,7 +8,7 @@ const SelectMenu = ({ items, selectionChanged }) => {
   const [selected, setSelected] = useState(items[0].label);
   const [showMenu, setShowMenu] = useState(false);
 
-  const onSelectMenuItem = item => () => {
+  const onSelectMenuItem = (item) => () => {
     setShowMenu(false);
     setSelected(item.label);
     selectionChanged(item.value);
@@ -33,7 +33,7 @@ const SelectMenu = ({ items, selectionChanged }) => {
       <div
         className={classNames(styles.Menu, !showMenu ? styles.MenuHide : '')}
       >
-        {items.map(i => (
+        {items.map((i) => (
           <button
             type="button"
             key={i.id}
