@@ -12,7 +12,7 @@ const DeliveredYearFilter = ({ updateFilters, trackFilter }) => {
     <div className={styles.YearFilter}>
       {Object.keys(filter?.deliveredYearFilter)
         .reverse()
-        .map(year => {
+        .map((year) => {
           const value = filter?.deliveredYearFilter[year];
           return (
             <label key={year} htmlFor={year} className={styles.CheckboxWrapper}>

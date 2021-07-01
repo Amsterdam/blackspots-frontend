@@ -84,7 +84,7 @@ const Search = () => {
         id="search"
         data-testid="input"
         inputProps={{ autoComplete: 'off', ref: searchRef }}
-        onChange={e => {
+        onChange={(e) => {
           if (e.target.value.length < 2) return;
           const value = encodeURIComponent(e.target.value);
           setShowAutosuggest(true);
@@ -100,12 +100,12 @@ const Search = () => {
       results?.response?.docs &&
       results?.response?.docs.length ? (
         <StyledAutosuggest data-testid="autosuggest">
-          {results?.response?.docs.map(item => (
+          {results?.response?.docs.map((item) => (
             <StyledListItem key={item.id}>
               <Link
                 href="#"
                 variant="inline"
-                onClick={e => onAutosuggestClick(e, item)}
+                onClick={(e) => onAutosuggestClick(e, item)}
               >
                 {item.weergavenaam}
               </Link>

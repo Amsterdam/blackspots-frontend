@@ -53,7 +53,7 @@ describe('DeliveredYearFilter', () => {
       filter.spotTypeFilter,
       filter.spotStatusTypeFilter,
       filter.blackspotYearFilter,
-      { ...filter.deliveredYearFilter, '2020': true },
+      { ...filter.deliveredYearFilter, 2020: true },
       filter.quickscanYearFilter,
       filter.stadsdeelFilter
     );

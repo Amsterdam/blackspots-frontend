@@ -36,8 +36,8 @@ describe('SelectMenu', () => {
     expect(container.querySelectorAll('button.Option')).toHaveLength(2);
 
     // The menu options are hidden
-    const optionnsContainer = container.querySelector('button.Option')
-      .parentNode;
+    const optionnsContainer =
+      container.querySelector('button.Option').parentNode;
     expect(optionnsContainer.className.indexOf('MenuHide')).toBeTruthy();
   });
 

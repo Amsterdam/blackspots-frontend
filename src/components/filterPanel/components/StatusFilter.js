@@ -26,7 +26,7 @@ const StatusFilter = ({ updateFilters, trackFilter }) => {
   return (
     <>
       <h5>Status</h5>
-      {Object.keys(SpotStatusTypes).map(key => {
+      {Object.keys(SpotStatusTypes).map((key) => {
         const type = SpotStatusTypes[key];
         const value = filter?.spotStatusTypeFilter[type];
         return (

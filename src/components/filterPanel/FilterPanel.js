@@ -31,13 +31,13 @@ const FilterWrapperStyle = styled.div`
 
 const exportUrl = `${endpoints.blackspots}export/?`;
 
-export const getExportFilter = stadsdeelFilter => {
+export const getExportFilter = (stadsdeelFilter) => {
   if (Object.values(stadsdeelFilter).filter(Boolean).length === 0) return '';
   const stadsdeelName = Object.keys(stadsdeelFilter).find(
-    key => stadsdeelFilter[key] === true
+    (key) => stadsdeelFilter[key] === true
   );
   const stadsdeel = Object.values(Stadsdeel).find(
-    item => item.name === stadsdeelName
+    (item) => item.name === stadsdeelName
   );
   return `stadsdeel=${stadsdeel.value}`;
 };
@@ -66,9 +66,9 @@ const FilterPanel = () => {
   useEffect(() => {
     setDownloadUrl(`${exportUrl}${getExportFilter(filter?.stadsdeelFilter)}`);
     setCanDownload(
-      Object.values(filter?.stadsdeelFilter).filter(e => e).length <= 1 &&
-        Object.values(filter?.spotTypeFilter).filter(e => e).length === 0 &&
-        Object.values(filter?.spotStatusTypeFilter).filter(e => e).length ===
+      Object.values(filter?.stadsdeelFilter).filter((e) => e).length <= 1 &&
+        Object.values(filter?.spotTypeFilter).filter((e) => e).length === 0 &&
+        Object.values(filter?.spotStatusTypeFilter).filter((e) => e).length ===
           0 &&
         optionValue === ContextMenuOptions.ALL
     );
@@ -80,7 +80,7 @@ const FilterPanel = () => {
   ]);
 
   const trackFilter = useCallback(
-    name => {
+    (name) => {
       trackEvent({ category: 'Map filters', action: name });
     },
     [trackEvent]
@@ -136,7 +136,7 @@ const FilterPanel = () => {
   }
 
   const togglePanel = () => setShowPanel(!showPanel);
-  const handleKeyPress = event => {
+  const handleKeyPress = (event) => {
     if (event.key === 'Enter') togglePanel();
   };
 
