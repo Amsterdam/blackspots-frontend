@@ -23,7 +23,7 @@ export const FileNameStyle = styled.span`
     right: 3px;
     top: 3px;
     background-color: ${themeColor('tint', 'level2')};
-   }
+  }
 `;
 
 export const FileInputStyle = styled.div`
