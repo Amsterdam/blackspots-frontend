@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import styled from 'styled-components';
 import { Icon, themeColor } from '@amsterdam/asc-ui';

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import styles from '../FilterPanel.module.scss';

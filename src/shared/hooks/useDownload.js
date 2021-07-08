@@ -1,4 +1,3 @@
-import React from 'react';
 import fileSaver from 'file-saver';
 import auth from 'shared/auth/auth';
 

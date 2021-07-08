@@ -1,10 +1,10 @@
+import { initalValues } from '../definitions/FormFields';
+import { featureMock, locationMock, formDataMock } from '../LocationForm.mock';
 import {
   featureToLocation,
   locationToFormData,
   locationToFeature,
 } from './normalize';
-import { initalValues } from '../definitions/FormFields';
-import { featureMock, locationMock, formDataMock } from '../LocationForm.mock';
 
 describe('normalize', () => {
   it('should return the default form values when no feature is provided', () => {

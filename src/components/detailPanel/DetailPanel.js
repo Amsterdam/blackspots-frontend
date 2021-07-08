@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   Heading,
@@ -18,12 +18,12 @@ import styled from 'styled-components';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';
 
-import styles from './DetailPanel.module.scss';
 
 import { SpotTypeDisplayNames } from '../../config';
 
 import UserContext from '../../shared/user/UserContext';
 import { HeaderSecondary } from '../../styles/SharedStyles';
+import styles from './DetailPanel.module.scss';
 
 import {
   HeaderStyle,

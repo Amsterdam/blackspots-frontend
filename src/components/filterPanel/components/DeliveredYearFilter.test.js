@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import { withTheme } from 'test/utils';
 import { FilterContext } from 'shared/reducers/FilterContext';

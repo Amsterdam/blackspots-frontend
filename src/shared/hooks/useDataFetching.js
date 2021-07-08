@@ -1,4 +1,3 @@
-import React from 'react';
 import { getByUrl } from '../api/api';
 
 function useDataFetching(type = 'json') {
