@@ -15,7 +15,7 @@ const DatePickerInput = ({
 }) => {
   const [value, setValue] = useState(null);
 
-  const onValueChange = val => {
+  const onValueChange = (val) => {
     setValue(val);
     const e = {
       target: {

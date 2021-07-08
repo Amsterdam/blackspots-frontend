@@ -40,7 +40,7 @@ const FileInput = ({ name, value, onChange, ...otherProps }) => {
    * When deleting a file, we pass an empty file to the server, the server will remove the existing file
    * The file would remain unchanged when no value will be passed with the form.
    */
-  const handleDeleteFile = e => {
+  const handleDeleteFile = (e) => {
     e.preventDefault();
     const deletedFile = {
       ...value,
@@ -50,7 +50,7 @@ const FileInput = ({ name, value, onChange, ...otherProps }) => {
     updateValue(name, deletedFile);
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     if (e.target.files && e.target.files.length) {
       const { files } = e.target;
       setIsUploading(true);
