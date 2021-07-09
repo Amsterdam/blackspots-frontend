@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import { getByUrl } from '../api/api';
 
 function useDataFetching(type = 'json') {
-  const [results, setResults] = React.useState(null);
-  const [errorMessage, setErrorMessage] = React.useState();
-  const [loading, setLoading] = React.useState(false);
+  const [errorMessage, setErrorMessage] = useState();
+  const [results, setResults] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   async function fetchData(endpoint) {
     setLoading(true);

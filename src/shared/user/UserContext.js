@@ -1,3 +1,5 @@
+import { createContext } from 'react'
+
 
 const initialState = {
   authenticated: false,
@@ -5,7 +7,7 @@ const initialState = {
   canEdit: false,
 };
 
-const UserContext = React.createContext(initialState);
+const UserContext = createContext(initialState);
 
 export const UserContextProvider = ({ user, children }) => {
   return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
