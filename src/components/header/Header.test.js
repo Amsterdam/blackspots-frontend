@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { withUserContext } from 'test/utils';
 import Header from './Header';

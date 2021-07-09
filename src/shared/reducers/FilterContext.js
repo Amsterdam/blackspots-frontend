@@ -1,7 +1,7 @@
-import React, { useReducer } from 'react';
+import { useReducer, createContext } from 'react';
 import filterReducer, { initialState } from './filter';
 
-export const FilterContext = React.createContext(initialState);
+export const FilterContext = createContext(initialState);
 
 const FilterContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(filterReducer, initialState);

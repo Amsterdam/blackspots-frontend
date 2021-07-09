@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useDataFetching from './useDataFetching';
 import { getByUrl } from '../api/api';
+import useDataFetching from './useDataFetching';
 
 jest.mock('../api/api');
 

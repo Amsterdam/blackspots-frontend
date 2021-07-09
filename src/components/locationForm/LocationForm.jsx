@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useContext } from 'react';
+import { useEffect, useState, useMemo, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { actions } from 'shared/reducers/filter';
 import { sendData } from 'shared/api/api';
+import { appRoutes, SpotTypes, endpoints } from '../../config';
+import { HeaderSecondary } from '../../styles/SharedStyles';
 import FormFields, {
   initalValues,
   formValidation,
@@ -19,8 +21,6 @@ import {
   locationToFormData,
   locationToFeature,
 } from './services/normalize';
-import { appRoutes, SpotTypes, endpoints } from '../../config';
-import { HeaderSecondary } from '../../styles/SharedStyles';
 
 const isBlackspotType = (spotType) =>
   spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;

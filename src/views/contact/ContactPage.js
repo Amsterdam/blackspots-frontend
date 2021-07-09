@@ -1,15 +1,14 @@
-import React from 'react';
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
 import { appRoutes } from 'config';
 import { ReactComponent as Chevron } from 'assets/icons/chevron-left.svg';
 import { Link } from '@amsterdam/asc-ui';
 import DataTable from '../../shared/dataTable/DataTable';
 import Footer from '../../components/footer/Footer';
+import { IntroTextStyle, H1 } from '../../styles/SharedStyles';
 import ContactPageStyle, {
   ContentStyle,
   EmailLinkStyle,
 } from './ContactPageStyle';
-import { IntroTextStyle, H1 } from '../../styles/SharedStyles';
 
 const ContactPage = () => {
   return (

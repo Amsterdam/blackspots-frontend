@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import Map from 'components/map/Map';
 import ErrorMsg from '../../shared/errorMsg/ErrorMsg';
