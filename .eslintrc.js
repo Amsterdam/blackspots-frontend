@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright (C) 2020 - 2021 Gemeente Amsterdam
+// eslint is loaded with react-scripts
 module.exports = {
   env: {
     es6: true,
@@ -13,22 +14,26 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:promise/recommended',
-    'plugin:testing-library/react',
     'prettier',
-    'prettier/react',
   ],
   globals: {
     L: true,
   },
   overrides: [
     {
+      extends: [
+        'plugin:testing-library/react',
+      ],
       files: ['**/*.test.*'],
-      rules: {},
+      rules: {
+        'testing-library/prefer-screen-queries': 1,
+        'testing-library/no-container': 1,
+        'testing-library/no-node-access': 1
+      },
     },
     {
       extends: [
         'plugin:@typescript-eslint/recommended',
-        'prettier/@typescript-eslint',
       ],
       files: ['**/*.js', '**/*.jsx'],
       rules: {
