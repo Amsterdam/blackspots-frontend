@@ -1,4 +1,3 @@
-import React from 'react';
 import { Label, List, ListItem, themeSpacing } from '@amsterdam/asc-ui';
 import styled from 'styled-components';
 
@@ -38,7 +37,7 @@ const RadioInput = ({ name, label, value, onChange, checked }) => {
 const RadioGroupInput = ({ name, value: selectedValue, options, onChange }) => {
   return (
     <RadioGroupInputStyle>
-      {options.map(option => {
+      {options.map((option) => {
         const { label, value } = option;
         return (
           <ListItem key={value}>

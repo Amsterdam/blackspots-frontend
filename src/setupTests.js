@@ -1,7 +1,7 @@
+/* eslint-disable */
+
 /* istanbul ignore file */
-// eslint-disable-next-line import/no-extraneous-dependencies
 import '@testing-library/jest-dom/extend-expect';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import L from 'leaflet-headless';
 
 global.Keycloak = () => ({

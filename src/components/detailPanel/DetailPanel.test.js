@@ -1,9 +1,8 @@
-import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import { withUserContext } from 'test/utils';
 
-import DetailPanel from './DetailPanel';
 import SVGIcon from '../SVGIcon/SVGIcon';
+import DetailPanel from './DetailPanel';
 
 jest.mock('../SVGIcon/SVGIcon');
 

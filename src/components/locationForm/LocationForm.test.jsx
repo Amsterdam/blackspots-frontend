@@ -1,6 +1,5 @@
 // @TODO reenable unit test
-// import React from 'react';
-// import { render, fireEvent } from '@testing-library/react';
+// // import { render, fireEvent } from '@testing-library/react';
 // import useForm from 'react-hook-form';
 // import { FilterContext } from 'shared/reducers/FilterContext';
 // import { initialState } from 'shared/reducers/filter';
@@ -27,7 +26,7 @@ describe('LocationForm', () => {
   //   watch: jest.fn(),
   // };
 
-  beforeEach(() => {});
+  // beforeEach(() => {});
 
   afterEach(() => {
     jest.resetAllMocks();

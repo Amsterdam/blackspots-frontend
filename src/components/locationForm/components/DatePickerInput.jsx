@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -15,7 +15,7 @@ const DatePickerInput = ({
 }) => {
   const [value, setValue] = useState(null);
 
-  const onValueChange = val => {
+  const onValueChange = (val) => {
     setValue(val);
     const e = {
       target: {

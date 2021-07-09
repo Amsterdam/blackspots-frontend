@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useContext } from 'react';
+import { useEffect, useState, useMemo, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { actions } from 'shared/reducers/filter';
 import { sendData } from 'shared/api/api';
+import { appRoutes, SpotTypes, endpoints } from '../../config';
+import { HeaderSecondary } from '../../styles/SharedStyles';
 import FormFields, {
   initalValues,
   formValidation,
@@ -19,12 +21,10 @@ import {
   locationToFormData,
   locationToFeature,
 } from './services/normalize';
-import { appRoutes, SpotTypes, endpoints } from '../../config';
-import { HeaderSecondary } from '../../styles/SharedStyles';
 
-const isBlackspotType = spotType =>
+const isBlackspotType = (spotType) =>
   spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
-const isProtocolType = spotType =>
+const isProtocolType = (spotType) =>
   spotType === SpotTypes.PROTOCOL_DODELIJK ||
   spotType === SpotTypes.PROTOCOL_ERNSTIG;
 
@@ -34,15 +34,16 @@ const LocationForm = () => {
     dispatch,
   } = useContext(FilterContext);
 
-  const { id } = useParams();
-  const locationId = id;
+  const params = useParams();
+  const locationId = params.id;
 
   const history = useHistory();
   const [visible, setVisible] = useState({ ...formVisibility });
 
-  const location = useMemo(() => featureToLocation(selectedLocation), [
-    selectedLocation,
-  ]);
+  const location = useMemo(
+    () => featureToLocation(selectedLocation),
+    [selectedLocation]
+  );
 
   const defaultValues = useMemo(
     () =>
@@ -79,7 +80,7 @@ const LocationForm = () => {
 
   const spotType = watch('spot_type');
   useEffect(() => {
-    setVisible(v => ({
+    setVisible((v) => ({
       ...v,
       jaar_blackspotlijst: isBlackspotType(spotType),
       jaar_ongeval_quickscan: isProtocolType(spotType),
@@ -111,7 +112,7 @@ const LocationForm = () => {
   const coordinaten = watch('coordinaten');
   useEffect(() => {
     (async () => {
-      setVisible(v => ({
+      setVisible((v) => ({
         ...v,
         stadsdeel: false,
       }));
@@ -120,10 +121,10 @@ const LocationForm = () => {
     })();
   }, [coordinaten, setValue, unregister]);
 
-  const handleServerValidation = async reason => {
+  const handleServerValidation = async (reason) => {
     if (reason.point && reason.point.length) {
       // add the extra stadsdeel
-      setVisible(v => ({
+      setVisible((v) => ({
         ...v,
         stadsdeel: true,
       }));
@@ -136,7 +137,7 @@ const LocationForm = () => {
     }
   };
 
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     try {
       const route = `${(locationId && `${locationId}/`) || ''}`;
       const url = `${endpoints.blackspots}${route}`;
@@ -167,7 +168,7 @@ const LocationForm = () => {
     }
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const value =
       e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     setValue(e.target.name, value);

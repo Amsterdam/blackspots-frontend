@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useKeycloak from './useKeycloak';
 import auth from '../auth/auth';
+import useKeycloak from './useKeycloak';
 
 jest.mock('../auth/auth');
 
