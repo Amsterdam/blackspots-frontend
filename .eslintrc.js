@@ -23,11 +23,7 @@ module.exports = {
   overrides: [
     {
       files: ['**/*.test.*'],
-      rules: {
-        'no-import-assign': 'off',
-        'react/display-name': 'off',
-        'redux-saga/no-unhandled-errors': 'off',
-      },
+      rules: {},
     },
     {
       extends: [
@@ -36,20 +32,6 @@ module.exports = {
       ],
       files: ['**/*.js', '**/*.jsx'],
       rules: {
-        '@typescript-eslint/explicit-function-return-type': 'off',
-        '@typescript-eslint/explicit-member-accessibility': 'off',
-        '@typescript-eslint/indent': 'off',
-        '@typescript-eslint/member-delimiter-style': 'off',
-        '@typescript-eslint/no-empty-function': 'off',
-        '@typescript-eslint/no-explicit-any': 'off',
-        '@typescript-eslint/no-var-requires': 'off',
-        '@typescript-eslint/no-use-before-define': 'off',
-        '@typescript-eslint/no-unused-vars': [
-          'error',
-          {
-            argsIgnorePattern: '^_',
-          },
-        ],
         '@typescript-eslint/explicit-module-boundary-types': 'off',
       },
     },
