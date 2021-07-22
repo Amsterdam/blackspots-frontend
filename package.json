@@ -11,7 +11,7 @@
     "@datapunt/matomo-tracker-react": "0.4.0",
     "@sentry/browser": "^6.10.0",
     "@types/jest": "^26.0.24",
-    "@types/node": "^16.3.3",
+    "@types/node": "^16.4.0",
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
     "amsterdam-amaps": "^2.0.1",
