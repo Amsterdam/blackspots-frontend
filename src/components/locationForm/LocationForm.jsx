@@ -63,7 +63,7 @@ const LocationForm = () => {
     unregister,
     handleSubmit,
     setValue,
-    errors,
+    formState: { errors } ,
     watch,
     trigger,
   } = useForm({
@@ -128,12 +128,12 @@ const LocationForm = () => {
         ...v,
         stadsdeel: true,
       }));
-      register(
-        { name: 'stadsdeel', type: 'custom' },
+      register('stadsdeel', 
+        { type: 'custom' },
         { required: reason.point[0] }
       );
       setValue('stadsdeel', '', true);
-      await trigger({ name: 'stadsdeel' });
+      await trigger('stadsdeel');
     }
   };
 
@@ -180,7 +180,7 @@ const LocationForm = () => {
 
   useEffect(() => {
     Object.entries(formValidation).forEach(([name, validation]) => {
-      register({ name, type: 'custom' }, validation);
+      register(name, { type: 'custom' }, validation);
       setValue(name, locationId ? defaultValues[name] : initalValues[name]);
     });
   }, [locationId, defaultValues, setValue, register]);
