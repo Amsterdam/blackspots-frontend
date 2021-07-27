@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useState, useMemo, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -76,10 +75,8 @@ const LocationForm = () => {
       dispatch(actions.selectLocation(null));
     }
   }, [locationId, dispatch, selectedLocation]);
-console.log('selectedLocation', selectedLocation);
-  console.log('yo', defaultValues);
+
   const values = watch(Object.keys(defaultValues), defaultValues);
-  console.log('values', values);
   const newValues = { 
     naam: values[0], 
     nummer: values[1], 
@@ -96,7 +93,8 @@ console.log('selectedLocation', selectedLocation);
     jaar_oplevering: values[12],
     opmerking: values[13],
     rapport_document: values[14],
-    design_document: values[15]
+    design_document: values[15],
+    id: locationId
   };
   
   const spotType = watch('spot_type');
@@ -109,12 +107,12 @@ console.log('selectedLocation', selectedLocation);
 
     const year = String(new Date().getFullYear());
 
-    if (isBlackspotType(spotType) && !values.jaar_blackspotlijst) {
+    if (isBlackspotType(spotType) && !newValues.jaar_blackspotlijst) {
       setValue('jaar_blackspotlijst', year);
       setValue('jaar_ongeval_quickscan', '');
     }
 
-    if (isProtocolType(spotType) && !values.jaar_ongeval_quickscan) {
+    if (isProtocolType(spotType) && !newValues.jaar_ongeval_quickscan) {
       setValue('jaar_blackspotlijst', '');
       setValue('jaar_ongeval_quickscan', year);
     }
@@ -125,8 +123,8 @@ console.log('selectedLocation', selectedLocation);
     }
   }, [
     spotType,
-    values.jaar_blackspotlijst,
-    values.jaar_ongeval_quickscan,
+    newValues.jaar_blackspotlijst,
+    newValues.jaar_ongeval_quickscan,
     setValue,
   ]);
 
@@ -221,7 +219,7 @@ console.log('selectedLocation', selectedLocation);
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={values[name]}
+                    value={newValues[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
@@ -239,7 +237,7 @@ console.log('selectedLocation', selectedLocation);
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={values[name]}
+                    value={newValues[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
@@ -257,7 +255,7 @@ console.log('selectedLocation', selectedLocation);
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={values[name]}
+                    value={newValues[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
