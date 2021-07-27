@@ -199,7 +199,7 @@ const LocationForm = () => {
 
   useEffect(() => {
     Object.entries(formValidation).forEach(([name, validation]) => {
-      register(name, { type: 'custom' }, validation);
+      register(name, validation);
       setValue(name, locationId ? defaultValues[name] : initalValues[name]);
     });
   }, [locationId, defaultValues, setValue, register]);
