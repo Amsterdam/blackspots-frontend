@@ -63,7 +63,7 @@ const LocationForm = () => {
     unregister,
     handleSubmit,
     setValue,
-    errors,
+    formState: { errors } ,
     watch,
     trigger,
   } = useForm({
@@ -77,7 +77,26 @@ const LocationForm = () => {
   }, [locationId, dispatch, selectedLocation]);
 
   const values = watch(Object.keys(defaultValues), defaultValues);
-
+  const newValues = { 
+    naam: values[0], 
+    nummer: values[1], 
+    coordinaten: values[2], 
+    stadsdeel: values[3],
+    spot_type: values[4],
+    jaar_blackspotlijst: values[5], 
+    jaar_ongeval_quickscan: values[6],
+    status: values[7],
+    actiehouder: values[8],
+    taken: values[9],
+    start_uitvoerin: values[10],
+    eind_uitvoering: values[11],
+    jaar_oplevering: values[12],
+    opmerking: values[13],
+    rapport_document: values[14],
+    design_document: values[15],
+    id: locationId
+  };
+  
   const spotType = watch('spot_type');
   useEffect(() => {
     setVisible((v) => ({
@@ -88,12 +107,12 @@ const LocationForm = () => {
 
     const year = String(new Date().getFullYear());
 
-    if (isBlackspotType(spotType) && !values.jaar_blackspotlijst) {
+    if (isBlackspotType(spotType) && !newValues.jaar_blackspotlijst) {
       setValue('jaar_blackspotlijst', year);
       setValue('jaar_ongeval_quickscan', '');
     }
 
-    if (isProtocolType(spotType) && !values.jaar_ongeval_quickscan) {
+    if (isProtocolType(spotType) && !newValues.jaar_ongeval_quickscan) {
       setValue('jaar_blackspotlijst', '');
       setValue('jaar_ongeval_quickscan', year);
     }
@@ -104,8 +123,8 @@ const LocationForm = () => {
     }
   }, [
     spotType,
-    values.jaar_blackspotlijst,
-    values.jaar_ongeval_quickscan,
+    newValues.jaar_blackspotlijst,
+    newValues.jaar_ongeval_quickscan,
     setValue,
   ]);
 
@@ -128,12 +147,12 @@ const LocationForm = () => {
         ...v,
         stadsdeel: true,
       }));
-      register(
-        { name: 'stadsdeel', type: 'custom' },
+      register('stadsdeel', 
+        { type: 'custom' },
         { required: reason.point[0] }
       );
       setValue('stadsdeel', '', true);
-      await trigger({ name: 'stadsdeel' });
+      await trigger('stadsdeel');
     }
   };
 
@@ -180,7 +199,7 @@ const LocationForm = () => {
 
   useEffect(() => {
     Object.entries(formValidation).forEach(([name, validation]) => {
-      register({ name, type: 'custom' }, validation);
+      register(name, validation);
       setValue(name, locationId ? defaultValues[name] : initalValues[name]);
     });
   }, [locationId, defaultValues, setValue, register]);
@@ -200,7 +219,7 @@ const LocationForm = () => {
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={values[name]}
+                    value={newValues[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
@@ -218,7 +237,7 @@ const LocationForm = () => {
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={values[name]}
+                    value={newValues[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
@@ -236,7 +255,7 @@ const LocationForm = () => {
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={values[name]}
+                    value={newValues[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
