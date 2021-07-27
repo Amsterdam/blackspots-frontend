@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState, useMemo, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -75,9 +76,29 @@ const LocationForm = () => {
       dispatch(actions.selectLocation(null));
     }
   }, [locationId, dispatch, selectedLocation]);
-
+console.log('selectedLocation', selectedLocation);
+  console.log('yo', defaultValues);
   const values = watch(Object.keys(defaultValues), defaultValues);
-
+  console.log('values', values);
+  const newValues = { 
+    naam: values[0], 
+    nummer: values[1], 
+    coordinaten: values[2], 
+    stadsdeel: values[3],
+    spot_type: values[4],
+    jaar_blackspotlijst: values[5], 
+    jaar_ongeval_quickscan: values[6],
+    status: values[7],
+    actiehouder: values[8],
+    taken: values[9],
+    start_uitvoerin: values[10],
+    eind_uitvoering: values[11],
+    jaar_oplevering: values[12],
+    opmerking: values[13],
+    rapport_document: values[14],
+    design_document: values[15]
+  };
+  
   const spotType = watch('spot_type');
   useEffect(() => {
     setVisible((v) => ({
