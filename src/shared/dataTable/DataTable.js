@@ -44,7 +44,7 @@ const DataTable = ({ children, bottom, ...otherProps }) => {
 };
 
 DataTable.propTypes = {
-  bottom: PropTypes.string,
+  bottom: PropTypes.number,
   children: PropTypes.element,
 };
 

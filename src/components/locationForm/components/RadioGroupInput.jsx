@@ -67,10 +67,12 @@ const RadioGroupInput = ({ name, value: selectedValue, options, onChange }) => {
 RadioGroupInput.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
-  options: PropTypes.arrrayOf({
-    label: PropTypes.string,
-    value: PropTypes.string,
-  }),
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
+    })
+  ),
   onChange: PropTypes.func,
 };
 

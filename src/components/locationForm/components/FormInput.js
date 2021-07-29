@@ -43,7 +43,7 @@ FormInput.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
   error: PropTypes.shape({ message: PropTypes.string }),
-  Component: PropTypes.element,
+  Component: PropTypes.any,
   onChange: PropTypes.func.isRequired,
 };
 
