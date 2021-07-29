@@ -63,6 +63,7 @@ const DatePickerInput = ({
 
 DatePickerInput.propTypes = {
   name: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 

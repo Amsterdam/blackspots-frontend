@@ -29,29 +29,3 @@ export const FileNameStyle = styled.span`
 export const FileInputStyle = styled.div`
   width: 100%;
 `;
-
-export const StyledUploadButton = styled.div`
-  position: relative;
-  cursor: pointer;
-
-  & > input {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-
-  & > input:focus + label {
-    outline-color: ${themeColor('support', 'focus')};
-    outline-style: solid;
-    outline-offset: 0px;
-    outline-width: 3px;
-  }
-
-  /* TODO (WK-209) ${styles.SpinnerStyle} { */
-  .spinner {
-    margin-right: ${themeSpacing(3)};
-  }
-`;

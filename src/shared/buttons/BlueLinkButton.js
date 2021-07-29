@@ -18,6 +18,11 @@ const LinkContent = ({ text, chevronDirection }) => {
   );
 };
 
+LinkContent.propTypes = {
+  chevronDirection: PropTypes.oneOf(['left', 'right']),
+  text: PropTypes.string,
+};
+
 const BlueLinkButton = ({ href, text, external, chevronDirection }) => {
   return external ? (
     <Link
