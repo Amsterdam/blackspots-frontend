@@ -2,22 +2,8 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Spinner } from '@amsterdam/asc-ui';
 import { Close } from '@amsterdam/asc-assets';
-import {
-  FileNameStyle,
-  FileInputStyle,
-  StyledUploadButton,
-} from './FileInputStyle';
-
-const UploadButton = ({ id, onChange, children, ...otherProps }) => {
-  return (
-    <StyledUploadButton {...otherProps}>
-      <input type="file" id={id} onChange={onChange} />
-      <Button variant="primary" $as="label" htmlFor={id}>
-        {children}
-      </Button>
-    </StyledUploadButton>
-  );
-};
+import { FileNameStyle, FileInputStyle } from './FileInputStyle';
+import UploadButton from '../../../shared/buttons/UploadButton';
 
 const FileInput = ({ name, value, onChange, ...otherProps }) => {
   const [isUploading, setIsUploading] = useState(false);
@@ -106,7 +92,7 @@ FileInput.defaultProps = {
 
 FileInput.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.shape({}),
+  value: PropTypes.shape({ filename: PropTypes.string }),
   onChange: PropTypes.func.isRequired,
 };
 

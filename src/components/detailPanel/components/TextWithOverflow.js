@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const TextWithOverflowStyle = styled.span`
   white-space: nowrap;
@@ -11,5 +12,9 @@ const TextWithOverflow = ({ children, ...otherProps }) => (
     {children}
   </TextWithOverflowStyle>
 );
+
+TextWithOverflow.propTypes = {
+  children: PropTypes.node,
+};
 
 export default TextWithOverflow;

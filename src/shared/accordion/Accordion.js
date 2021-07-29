@@ -37,7 +37,7 @@ const Accordion = ({ title, text }) => {
   );
 };
 
-Accordion.propTyped = {
+Accordion.propTypes = {
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
 };

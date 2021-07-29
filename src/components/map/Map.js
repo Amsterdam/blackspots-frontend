@@ -111,7 +111,7 @@ const MapComponent = ({ setShowError }) => {
   );
 };
 
-MapComponent.prototypes = {
+MapComponent.propTypes = {
   setShowError: PropTypes.func.isRequired,
 };
 

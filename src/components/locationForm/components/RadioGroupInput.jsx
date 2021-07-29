@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Label, List, ListItem, themeSpacing } from '@amsterdam/asc-ui';
 import styled from 'styled-components';
 
@@ -34,6 +35,14 @@ const RadioInput = ({ name, label, value, onChange, checked }) => {
   );
 };
 
+RadioInput.propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.string,
+  label: PropTypes.string,
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
+};
+
 const RadioGroupInput = ({ name, value: selectedValue, options, onChange }) => {
   return (
     <RadioGroupInputStyle>
@@ -53,6 +62,18 @@ const RadioGroupInput = ({ name, value: selectedValue, options, onChange }) => {
       })}
     </RadioGroupInputStyle>
   );
+};
+
+RadioGroupInput.propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.string,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
+    })
+  ),
+  onChange: PropTypes.func,
 };
 
 export default RadioGroupInput;
