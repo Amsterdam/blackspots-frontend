@@ -14,7 +14,7 @@ const TextWithOverflow = ({ children, ...otherProps }) => (
 );
 
 TextWithOverflow.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.node,
 };
 
 export default TextWithOverflow;

@@ -6,7 +6,7 @@ const ContentBox = ({ children }) => {
 };
 
 ContentBox.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.node,
 };
 
 export default ContentBox;

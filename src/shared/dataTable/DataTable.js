@@ -45,7 +45,7 @@ const DataTable = ({ children, bottom, ...otherProps }) => {
 
 DataTable.propTypes = {
   bottom: PropTypes.number,
-  children: PropTypes.element,
+  children: PropTypes.node,
 };
 
 export default DataTable;

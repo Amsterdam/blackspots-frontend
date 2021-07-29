@@ -15,7 +15,7 @@ const FilterContextProvider = ({ children }) => {
 };
 
 FilterContextProvider.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.node,
 };
 
 export default FilterContextProvider;

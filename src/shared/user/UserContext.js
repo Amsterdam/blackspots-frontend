@@ -15,7 +15,7 @@ export const UserContextProvider = ({ user, children }) => {
 
 UserContextProvider.propTypes = {
   user: PropTypes.shape({}),
-  children: PropTypes.element,
+  children: PropTypes.node,
 };
 
 export default UserContext;

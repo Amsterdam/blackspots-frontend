@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable camelcase */
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
@@ -81,7 +80,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
   const [lng, lat] = feature.geometry.coordinates;
   const reportDocument = documents.find((d) => d.type === 'Rapportage');
   const designDocument = documents.find((d) => d.type === 'Ontwerp');
-  console.log('-', feature);
+
   return (
     <div
       className={classNames(

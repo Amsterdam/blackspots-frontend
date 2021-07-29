@@ -42,7 +42,7 @@ const UploadButton = ({ id, onChange, children, ...otherProps }) => {
 
 UploadButton.propTypes = {
   id: PropTypes.string,
-  children: PropTypes.element,
+  children: PropTypes.node,
   onChange: PropTypes.func,
 };
 

@@ -69,7 +69,7 @@ const DocumentLink = ({ document: documentData }) => {
 };
 
 DocumentLink.propTypes = {
-  document: PropTypes.node,
+  document: PropTypes.any,
 };
 
 export default DocumentLink;
