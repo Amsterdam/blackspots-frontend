@@ -33,13 +33,20 @@ module.exports = {
     },
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['import'],
   root: true,
   rules: {
     'no-console': 'error',
+    'no-redeclare': 'off',
     'promise/always-return': 'off',
     'promise/catch-or-return': 'off',
     'react/react-in-jsx-scope': 'off',
+  },
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
   settings: {
     react: {
