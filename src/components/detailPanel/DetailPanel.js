@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable camelcase */
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
@@ -17,7 +18,6 @@ import classNames from 'classnames';
 import styled from 'styled-components';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';
-
 
 import { SpotTypeDisplayNames } from '../../config';
 
@@ -81,6 +81,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
   const [lng, lat] = feature.geometry.coordinates;
   const reportDocument = documents.find((d) => d.type === 'Rapportage');
   const designDocument = documents.find((d) => d.type === 'Ontwerp');
+  console.log('-', feature);
   return (
     <div
       className={classNames(
@@ -237,7 +238,35 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
 DetailPanel.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   togglePanel: PropTypes.func.isRequired,
-  feature: PropTypes.shape({}),
+  feature: PropTypes.shape({
+    id: PropTypes.number,
+    geometry: PropTypes.shape({
+      type: PropTypes.string,
+      coordinates: PropTypes.arrayOf(PropTypes.number),
+    }),
+    properties: PropTypes.shape({
+      locatie_id: PropTypes.string,
+      description: PropTypes.string,
+      spot_type: PropTypes.string,
+      status: PropTypes.string,
+      stadsdeel: PropTypes.string,
+      start_uitvoering: PropTypes.string,
+      eind_uitvoering: PropTypes.string,
+      tasks: PropTypes.string,
+      notes: PropTypes.string,
+      jaar_blackspotlijst: PropTypes.number,
+      jaar_ongeval_quickscan: PropTypes.number,
+      jaar_oplevering: PropTypes.number,
+      actiehouders: PropTypes.string,
+      documents: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number,
+          type: PropTypes.string,
+          filename: PropTypes.string,
+        })
+      ),
+    }),
+  }),
 };
 
 DetailPanel.defaultProps = {

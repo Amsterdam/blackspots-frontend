@@ -19,6 +19,12 @@ const UploadButton = ({ id, onChange, children, ...otherProps }) => {
   );
 };
 
+UploadButton.propTypes = {
+  id: PropTypes.string,
+  children: PropTypes.element,
+  onChange: PropTypes.func,
+};
+
 const FileInput = ({ name, value, onChange, ...otherProps }) => {
   const [isUploading, setIsUploading] = useState(false);
 
@@ -106,7 +112,7 @@ FileInput.defaultProps = {
 
 FileInput.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.shape({}),
+  value: PropTypes.shape({ filename: PropTypes.string }),
   onChange: PropTypes.func.isRequired,
 };
 

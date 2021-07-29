@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import styled from 'styled-components';
 import { Icon, themeColor } from '@amsterdam/asc-ui';
@@ -65,6 +66,10 @@ const DocumentLink = ({ document: documentData }) => {
       </ExternalLinkStyle>
     </DocumentContainerStyle>
   );
+};
+
+DocumentLink.propTypes = {
+  document: PropTypes.node,
 };
 
 export default DocumentLink;

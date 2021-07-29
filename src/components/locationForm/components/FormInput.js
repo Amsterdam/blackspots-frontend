@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 import { Label, themeSpacing, themeColor } from '@amsterdam/asc-ui';
 
 const LabelInput = styled(Label)`
@@ -36,6 +37,14 @@ const FormInput = ({ name, label, error, Component, ...otherProps }) => {
       </>
     </LabelInput>
   );
+};
+
+FormInput.propTypes = {
+  name: PropTypes.string,
+  label: PropTypes.string,
+  error: PropTypes.shape({ message: PropTypes.string }),
+  Component: PropTypes.element,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default FormInput;

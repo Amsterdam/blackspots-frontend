@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useReducer, createContext } from 'react';
 import filterReducer, { initialState } from './filter';
 
@@ -11,6 +12,10 @@ const FilterContextProvider = ({ children }) => {
       {children}
     </FilterContext.Provider>
   );
+};
+
+FilterContextProvider.propTypes = {
+  children: PropTypes.element,
 };
 
 export default FilterContextProvider;
