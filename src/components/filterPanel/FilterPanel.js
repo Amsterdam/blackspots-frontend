@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { Stadsdeel, endpoints } from 'config';
 import classNames from 'classnames';

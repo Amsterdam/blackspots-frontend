@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-curly-brace-presence */
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   Map,
@@ -19,10 +19,10 @@ import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
 import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
+import { endpoints } from '../../config';
 import BlackspotsLayer from './components/BlackspotsLayer';
 import StadsdelenLayer from './components/StadsdelenLayer';
 import Search from './components/Search';
-import { endpoints } from '../../config';
 
 const MAP_OPTIONS = {
   center: [52.36988741057662, 4.8966407775878915],
@@ -111,7 +111,7 @@ const MapComponent = ({ setShowError }) => {
   );
 };
 
-MapComponent.prototypes = {
+MapComponent.propTypes = {
   setShowError: PropTypes.func.isRequired,
 };
 

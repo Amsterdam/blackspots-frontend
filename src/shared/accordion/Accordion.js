@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './Accordion.module.scss';
@@ -37,7 +37,7 @@ const Accordion = ({ title, text }) => {
   );
 };
 
-Accordion.propTyped = {
+Accordion.propTypes = {
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
 };

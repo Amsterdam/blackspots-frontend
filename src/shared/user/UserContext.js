@@ -1,4 +1,5 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import { createContext } from 'react';
 
 const initialState = {
   authenticated: false,
@@ -6,10 +7,15 @@ const initialState = {
   canEdit: false,
 };
 
-const UserContext = React.createContext(initialState);
+const UserContext = createContext(initialState);
 
 export const UserContextProvider = ({ user, children }) => {
   return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+};
+
+UserContextProvider.propTypes = {
+  user: PropTypes.shape({}),
+  children: PropTypes.node,
 };
 
 export default UserContext;

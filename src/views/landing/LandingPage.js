@@ -1,10 +1,9 @@
-import React from 'react';
 import auth from 'shared/auth/auth';
 import logo from 'assets/media/amsterdam-logo.svg';
 import headerImage from 'assets/media/main-header-blur.jpg';
-import styles from './LandingPage.module.scss';
 import Footer from '../../components/footer/Footer';
 import { IntroTextStyle, H1 } from '../../styles/SharedStyles';
+import styles from './LandingPage.module.scss';
 
 const LandingPage = () => {
   const login = async () => {

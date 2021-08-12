@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import LandingPage from 'views/landing/LandingPage';
 import useKeycloak from 'shared/hooks/useKeycloak';

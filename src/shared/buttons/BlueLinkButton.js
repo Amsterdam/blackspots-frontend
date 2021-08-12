@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-left.svg';
@@ -17,6 +16,11 @@ const LinkContent = ({ text, chevronDirection }) => {
       {text}
     </>
   );
+};
+
+LinkContent.propTypes = {
+  chevronDirection: PropTypes.oneOf(['left', 'right']),
+  text: PropTypes.string,
 };
 
 const BlueLinkButton = ({ href, text, external, chevronDirection }) => {

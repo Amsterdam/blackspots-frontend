@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { withUserContext, history } from 'test/utils';
 import DashboardPage from 'views/dashboard/DashboardPage';

@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { themeColor, themeSpacing } from '@amsterdam/asc-ui';
 
@@ -41,6 +41,11 @@ const DataTable = ({ children, bottom, ...otherProps }) => {
       {children}
     </DataTableStyle>
   );
+};
+
+DataTable.propTypes = {
+  bottom: PropTypes.number,
+  children: PropTypes.node,
 };
 
 export default DataTable;

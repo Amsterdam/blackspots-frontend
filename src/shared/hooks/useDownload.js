@@ -1,10 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
 import fileSaver from 'file-saver';
 import auth from 'shared/auth/auth';
 
 function useDownload() {
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
 
   async function downloadFile(url, name) {
     setLoading(true);

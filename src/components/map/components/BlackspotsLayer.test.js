@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import { withTheme } from 'test/utils';
 import { Map, getCrsRd } from '@amsterdam/arm-core';

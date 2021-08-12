@@ -1,12 +1,11 @@
-import React from 'react';
 
 import BlueLinkButton from 'shared/buttons/BlueLinkButton';
 import { appRoutes } from 'config';
 import { Link } from '@amsterdam/asc-ui';
 import Accordion from '../../shared/accordion/Accordion';
 import Footer from '../../components/footer/Footer';
-import ConceptPageStyle, { ContentStyle } from './ConceptPageStyle';
 import { H1, IntroTextStyle } from '../../styles/SharedStyles';
+import ConceptPageStyle, { ContentStyle } from './ConceptPageStyle';
 
 const ConceptPage = () => {
   return (

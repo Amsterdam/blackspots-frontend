@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useContext } from 'react';
+import { useEffect, useState, useMemo, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { actions } from 'shared/reducers/filter';
 import { sendData } from 'shared/api/api';
+import { appRoutes, SpotTypes, endpoints } from '../../config';
+import { HeaderSecondary } from '../../styles/SharedStyles';
 import FormFields, {
   initalValues,
   formValidation,
@@ -19,12 +21,10 @@ import {
   locationToFormData,
   locationToFeature,
 } from './services/normalize';
-import { appRoutes, SpotTypes, endpoints } from '../../config';
-import { HeaderSecondary } from '../../styles/SharedStyles';
 
-const isBlackspotType = spotType =>
+const isBlackspotType = (spotType) =>
   spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
-const isProtocolType = spotType =>
+const isProtocolType = (spotType) =>
   spotType === SpotTypes.PROTOCOL_DODELIJK ||
   spotType === SpotTypes.PROTOCOL_ERNSTIG;
 
@@ -34,15 +34,16 @@ const LocationForm = () => {
     dispatch,
   } = useContext(FilterContext);
 
-  const { id } = useParams();
-  const locationId = id;
+  const params = useParams();
+  const locationId = params.id;
 
   const history = useHistory();
   const [visible, setVisible] = useState({ ...formVisibility });
 
-  const location = useMemo(() => featureToLocation(selectedLocation), [
-    selectedLocation,
-  ]);
+  const location = useMemo(
+    () => featureToLocation(selectedLocation),
+    [selectedLocation]
+  );
 
   const defaultValues = useMemo(
     () =>
@@ -62,7 +63,7 @@ const LocationForm = () => {
     unregister,
     handleSubmit,
     setValue,
-    errors,
+    formState: { errors } ,
     watch,
     trigger,
   } = useForm({
@@ -76,10 +77,29 @@ const LocationForm = () => {
   }, [locationId, dispatch, selectedLocation]);
 
   const values = watch(Object.keys(defaultValues), defaultValues);
-
+  const newValues = { 
+    naam: values[0], 
+    nummer: values[1], 
+    coordinaten: values[2], 
+    stadsdeel: values[3],
+    spot_type: values[4],
+    jaar_blackspotlijst: values[5], 
+    jaar_ongeval_quickscan: values[6],
+    status: values[7],
+    actiehouder: values[8],
+    taken: values[9],
+    start_uitvoerin: values[10],
+    eind_uitvoering: values[11],
+    jaar_oplevering: values[12],
+    opmerking: values[13],
+    rapport_document: values[14],
+    design_document: values[15],
+    id: locationId
+  };
+  
   const spotType = watch('spot_type');
   useEffect(() => {
-    setVisible(v => ({
+    setVisible((v) => ({
       ...v,
       jaar_blackspotlijst: isBlackspotType(spotType),
       jaar_ongeval_quickscan: isProtocolType(spotType),
@@ -87,12 +107,12 @@ const LocationForm = () => {
 
     const year = String(new Date().getFullYear());
 
-    if (isBlackspotType(spotType) && !values.jaar_blackspotlijst) {
+    if (isBlackspotType(spotType) && !newValues.jaar_blackspotlijst) {
       setValue('jaar_blackspotlijst', year);
       setValue('jaar_ongeval_quickscan', '');
     }
 
-    if (isProtocolType(spotType) && !values.jaar_ongeval_quickscan) {
+    if (isProtocolType(spotType) && !newValues.jaar_ongeval_quickscan) {
       setValue('jaar_blackspotlijst', '');
       setValue('jaar_ongeval_quickscan', year);
     }
@@ -103,15 +123,15 @@ const LocationForm = () => {
     }
   }, [
     spotType,
-    values.jaar_blackspotlijst,
-    values.jaar_ongeval_quickscan,
+    newValues.jaar_blackspotlijst,
+    newValues.jaar_ongeval_quickscan,
     setValue,
   ]);
 
   const coordinaten = watch('coordinaten');
   useEffect(() => {
     (async () => {
-      setVisible(v => ({
+      setVisible((v) => ({
         ...v,
         stadsdeel: false,
       }));
@@ -120,23 +140,23 @@ const LocationForm = () => {
     })();
   }, [coordinaten, setValue, unregister]);
 
-  const handleServerValidation = async reason => {
+  const handleServerValidation = async (reason) => {
     if (reason.point && reason.point.length) {
       // add the extra stadsdeel
-      setVisible(v => ({
+      setVisible((v) => ({
         ...v,
         stadsdeel: true,
       }));
-      register(
-        { name: 'stadsdeel', type: 'custom' },
+      register('stadsdeel', 
+        { type: 'custom' },
         { required: reason.point[0] }
       );
       setValue('stadsdeel', '', true);
-      await trigger({ name: 'stadsdeel' });
+      await trigger('stadsdeel');
     }
   };
 
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     try {
       const route = `${(locationId && `${locationId}/`) || ''}`;
       const url = `${endpoints.blackspots}${route}`;
@@ -167,7 +187,7 @@ const LocationForm = () => {
     }
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const value =
       e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     setValue(e.target.name, value);
@@ -179,7 +199,7 @@ const LocationForm = () => {
 
   useEffect(() => {
     Object.entries(formValidation).forEach(([name, validation]) => {
-      register({ name, type: 'custom' }, validation);
+      register(name, validation);
       setValue(name, locationId ? defaultValues[name] : initalValues[name]);
     });
   }, [locationId, defaultValues, setValue, register]);
@@ -199,7 +219,7 @@ const LocationForm = () => {
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={values[name]}
+                    value={newValues[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
@@ -217,7 +237,7 @@ const LocationForm = () => {
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={values[name]}
+                    value={newValues[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
@@ -235,7 +255,7 @@ const LocationForm = () => {
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={values[name]}
+                    value={newValues[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
