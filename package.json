@@ -19,7 +19,7 @@
     "classnames": "^2.3.1",
     "core-js": "^3.18.0",
     "file-saver": "^2.0.5",
-    "formdata-polyfill": "^4.0.6",
+    "formdata-polyfill": "^4.0.7",
     "history": "^5.0.1",
     "http-proxy-middleware": "^2.0.1",
     "leaflet": "^1.7.1",
