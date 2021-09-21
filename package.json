@@ -17,7 +17,7 @@
     "amsterdam-amaps": "^2.0.1",
     "amsterdam-stijl": "^3.0.5",
     "classnames": "^2.3.1",
-    "core-js": "^3.16.4",
+    "core-js": "^3.18.0",
     "file-saver": "^2.0.5",
     "formdata-polyfill": "^4.0.6",
     "history": "^5.0.1",
