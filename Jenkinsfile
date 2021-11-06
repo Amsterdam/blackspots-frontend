@@ -28,6 +28,19 @@ pipeline {
                 }
             }
             stages {
+                stage("Unit tests") {
+                    String  PROJECT = "wba-unittests-${env.BUILD_NUMBER}"
+
+                    tryStep "unittests start", {
+                        sh "docker-compose -p ${PROJECT} up --build --exit-code-from unittest"
+                    }
+                        always {
+                            tryStep "unittests stop", {
+                            sh "docker-compose -p ${PROJECT} down -v || true"
+                        }
+                    }
+                }
+
                 stage('Deploy to acceptance') {
                     when {
                         anyOf {
