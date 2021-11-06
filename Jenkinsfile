@@ -29,7 +29,7 @@ pipeline {
             }
             stages {
                 stage("Unit tests") {
-                    String  PROJECT = "wba-unittests-${env.BUILD_NUMBER}"
+                    def  PROJECT = "wba-unittests-${env.BUILD_NUMBER}"
 
                     tryStep "unittests start", {
                         sh "docker-compose -p ${PROJECT} up --build --exit-code-from unittest"
