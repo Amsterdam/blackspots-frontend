@@ -15,15 +15,15 @@ const AppRoutes = () => {
   return (
     <ContentStyle>
       <Routes>
-        <Route exact path={appRoutes.CONCEPTS} element={ConceptPage} />
-        <Route exact path={appRoutes.CONTACT} element={ContactPage} />
+        <Route exact path={appRoutes.CONCEPTS} element={<ConceptPage />} />
+        <Route exact path={appRoutes.CONTACT} element={<ContactPage />} />
         {canAdd && (
-          <Route exact path={appRoutes.ADD} element={LocationForm} />
+          <Route exact path={appRoutes.ADD} element={<LocationForm />} />
         )}
         {canEdit && (
-          <Route exact path={appRoutes.EDIT} element={LocationForm} />
+          <Route exact path={appRoutes.EDIT} element={<LocationForm />} />
         )}
-        <Route path={appRoutes.HOME} element={DashboardPage} />
+        <Route path={appRoutes.HOME} element={<DashboardPage />} />
       </Routes>
     </ContentStyle>
   );
