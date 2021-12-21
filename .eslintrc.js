@@ -35,7 +35,8 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   root: true,
   rules: {
-    'no-console': 'error',
+    'no-debugger': 1,
+    'no-console': 1,
     'no-redeclare': 'off',
     'promise/always-return': 'off',
     'promise/catch-or-return': 'off',
