@@ -1,22 +1,21 @@
 import { createMemoryHistory } from 'history';
-import { MemoryRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import { UserContextProvider } from 'shared/user/UserContext';
 
 export const history = createMemoryHistory();
-
 export const withUserContext = (Component, user) => {
   return (
-    <MemoryRouter history={history}>
+    <Router history={history}>
       <UserContextProvider user={user}>{Component}</UserContextProvider>;
-    </MemoryRouter>
+    </Router>
   );
 };
 
 export const withTheme = (Component) => {
   return (
     <ThemeProvider>
-      <MemoryRouter history={history}>{Component}</MemoryRouter>
+      <Router history={history}>{Component}</Router>
     </ThemeProvider>
   );
 };
