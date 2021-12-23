@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useContext } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { Button, Row } from '@amsterdam/asc-ui';
@@ -37,9 +37,8 @@ const LocationForm = () => {
   const params = useParams();
   const locationId = params.id;
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const [visible, setVisible] = useState({ ...formVisibility });
-
   const location = useMemo(
     () => featureToLocation(selectedLocation),
     [selectedLocation]
@@ -173,7 +172,7 @@ const LocationForm = () => {
         } else {
           dispatch(actions.addLocation(feature));
         }
-        history.push(appRoutes.HOME);
+        navigate(appRoutes.HOME);
       }
     } catch (error) {
       const { status, reason } = error;
@@ -194,7 +193,7 @@ const LocationForm = () => {
   };
 
   const onReset = () => {
-    history.push(appRoutes.HOME);
+    navigate(appRoutes.HOME);
   };
 
   useEffect(() => {

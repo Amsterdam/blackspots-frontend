@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import DashboardPage from 'views/dashboard/DashboardPage';
 import ConceptPage from 'views/concepts/ConceptPage';
@@ -14,17 +14,17 @@ const AppRoutes = () => {
 
   return (
     <ContentStyle>
-      <Switch>
-        <Route exact path={appRoutes.CONCEPTS} component={ConceptPage} />
-        <Route exact path={appRoutes.CONTACT} component={ContactPage} />
+      <Routes>
+        <Route exact path={appRoutes.CONCEPTS} element={<ConceptPage />} />
+        <Route exact path={appRoutes.CONTACT} element={<ContactPage />} />
         {canAdd && (
-          <Route exact path={appRoutes.ADD} component={LocationForm} />
+          <Route exact path={appRoutes.ADD} element={<LocationForm />} />
         )}
         {canEdit && (
-          <Route exact path={appRoutes.EDIT} component={LocationForm} />
+          <Route exact path={appRoutes.EDIT} element={<LocationForm />} />
         )}
-        <Route path={appRoutes.HOME} component={DashboardPage} />
-      </Switch>
+        <Route path={appRoutes.HOME} element={<DashboardPage />} />
+      </Routes>
     </ContentStyle>
   );
 };
