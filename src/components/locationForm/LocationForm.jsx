@@ -37,9 +37,8 @@ const LocationForm = () => {
   const params = useParams();
   const locationId = params.id;
 
-  const history = useNavigate();
+  const navigate = useNavigate();
   const [visible, setVisible] = useState({ ...formVisibility });
-
   const location = useMemo(
     () => featureToLocation(selectedLocation),
     [selectedLocation]
@@ -173,7 +172,7 @@ const LocationForm = () => {
         } else {
           dispatch(actions.addLocation(feature));
         }
-        history.push(appRoutes.HOME);
+        navigate(appRoutes.HOME);
       }
     } catch (error) {
       const { status, reason } = error;
@@ -194,7 +193,7 @@ const LocationForm = () => {
   };
 
   const onReset = () => {
-    history.push(appRoutes.HOME);
+    navigate(appRoutes.HOME);
   };
 
   useEffect(() => {
