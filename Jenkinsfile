@@ -30,7 +30,7 @@ pipeline {
             }
             stages {
                 stage('Test') {
-                    String PROJECT = "blackspots-unittests-${env.GIT_COMMIT}"
+                    def PROJECT = "blackspots-unittests-${env.GIT_COMMIT}"
 
                     tryStep "unittests start", {
                         sh "docker-compose -p ${PROJECT} up --build --exit-code-from unittest unittest"
