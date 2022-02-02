@@ -23,7 +23,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh "docker-compose -p ${PROJECT} up --build --exit-code-from unittest unittest"
+                    sh "docker-compose -p ${PROJECT} up --build --exit-code-from unittest"
                 }
             }
         }
