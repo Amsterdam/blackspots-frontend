@@ -4,6 +4,8 @@ def PROJECT_NAME = "blackspots-frontend"
 def SLACK_CHANNEL = '#opdrachten-deployments'
 def PLAYBOOK = 'deploy.yml'
 def CONTAINERNAME = "ois/blackspots-frontend:${env.BUILD_NUMBER}"
+def PROJECT = "blackspots-unittests-${env.GIT_COMMIT}"
+
 def SLACK_MESSAGE = [
     "title_link": BUILD_URL,
     "fields": [
@@ -18,6 +20,11 @@ pipeline {
         IS_PRE_RELEASE_BRANCH = "${env.BRANCH_NAME ==~ "release/.*"}"
     }
     stages {
+        stage('Test') {
+          scripts {
+              sh "docker-compose -p ${PROJECT} up --build --exit-code-from unittest unittest"
+          }
+        }
         stage('Push and deploy') {
             when {
                 anyOf {
@@ -29,19 +36,6 @@ pipeline {
                 }
             }
             stages {
-                stage('Test') {
-                    def PROJECT = "blackspots-unittests-${env.GIT_COMMIT}"
-
-                    tryStep "unittests start", {
-                        sh "docker-compose -p ${PROJECT} up --build --exit-code-from unittest unittest"
-                    }
-                    always {
-                        tryStep "unittests stop", {
-                        sh "docker-compose -p ${PROJECT} down -v || true"
-                        }
-                    }
-                }
-
                 stage('Deploy to acceptance') {
                     when {
                         anyOf {
