@@ -19,6 +19,7 @@ const QuickscanYearFilter = ({ updateFilters, trackFilter }) => {
               <input
                 id={year}
                 type="checkbox"
+                data-testid={year}
                 checked={value}
                 onChange={() => {
                   const updatedFilter = {
