@@ -21,8 +21,10 @@ pipeline {
     }
     stages {
         stage('Test') {
-          scripts {
-              sh "docker-compose -p ${PROJECT} up --build --exit-code-from unittest unittest"
+          steps {
+            scripts {
+                sh "docker-compose -p ${PROJECT} up --build --exit-code-from unittest unittest"
+            }
           }
         }
 
