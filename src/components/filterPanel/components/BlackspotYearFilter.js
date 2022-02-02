@@ -20,6 +20,7 @@ const BlackspotYearFilter = ({ updateFilters, trackFilter }) => {
                 id={year}
                 type="checkbox"
                 checked={value}
+                data-testid={year}
                 onChange={() => {
                   const updatedFilter = {
                     ...filter?.blackspotYearFilter,

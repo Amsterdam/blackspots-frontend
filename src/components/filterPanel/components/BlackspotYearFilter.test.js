@@ -1,4 +1,4 @@
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, cleanup, fireEvent, screen } from '@testing-library/react';
 import { withTheme } from 'test/utils';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { initialState } from 'shared/reducers/filter';
@@ -35,7 +35,7 @@ describe('BlackspotYearFilter', () => {
   });
 
   it('should click one of the checkboxes', () => {
-    const { container } = render(
+    render(
       withTheme(
         <FilterContext.Provider
           value={{ state: { filter: initialState.filter } }}
@@ -46,7 +46,7 @@ describe('BlackspotYearFilter', () => {
     );
 
     // click Centrum
-    fireEvent.click(container.querySelector('label:nth-child(2)'));
+    fireEvent.click(screen.getByTestId('2020'));
 
     const { filter } = initialState;
     expect(props.updateFilters).toHaveBeenLastCalledWith(
