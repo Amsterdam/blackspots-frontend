@@ -4,7 +4,6 @@ def PROJECT_NAME = "blackspots-frontend"
 def SLACK_CHANNEL = '#opdrachten-deployments'
 def PLAYBOOK = 'deploy.yml'
 def CONTAINERNAME = "ois/blackspots-frontend:${env.BUILD_NUMBER}"
-def PROJECT = "blackspots-unittests-${env.GIT_COMMIT}"
 
 def SLACK_MESSAGE = [
     "title_link": BUILD_URL,
@@ -23,7 +22,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh "docker-compose -p ${PROJECT} up --build --exit-code-from unittest"
+                    sh "docker-compose up --build --exit-code-from unittest"
                 }
             }
         }
