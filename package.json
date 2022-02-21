@@ -15,7 +15,7 @@
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
     "classnames": "^2.3.1",
-    "core-js": "^3.21.0",
+    "core-js": "^3.21.1",
     "file-saver": "^2.0.5",
     "formdata-polyfill": "^4.0.10",
     "history": "^5.2.0",
