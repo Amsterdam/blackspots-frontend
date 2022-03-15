@@ -25,6 +25,7 @@ export const Stadsdeel = {
   NIEUW_WEST: { name: 'Nieuw West', value: 'F' },
   NOORD: { name: 'Noord', value: 'N' },
   OOST: { name: 'Oost', value: 'M' },
+  WEESP: { name: 'Weesp', value: 'S' },
   WEST: { name: 'West', value: 'E' },
   WESTPOORT: { name: 'Westpoort', value: 'B' },
   ZUID: { name: 'Zuid', value: 'K' },
