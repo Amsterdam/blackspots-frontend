@@ -15,7 +15,7 @@
     "@types/react": "^17.0.40",
     "@types/react-dom": "^17.0.13",
     "classnames": "^2.3.1",
-    "core-js": "^3.21.1",
+    "core-js": "^3.22.0",
     "file-saver": "^2.0.5",
     "formdata-polyfill": "^4.0.10",
     "history": "^5.3.0",
@@ -55,7 +55,7 @@
     "not op_mini all "
   ],
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.4",
     "@testing-library/react-hooks": "^7.0.2",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
