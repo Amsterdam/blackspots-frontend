@@ -1,13 +1,22 @@
-import { render, cleanup, fireEvent, act } from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import { withTheme } from 'test/utils';
-import { useMapInstance } from '@amsterdam/react-maps';
-import { mocked } from 'ts-jest/utils';
-import useDataFetching from 'shared/hooks/useDataFetching';
-
+import { flyToSpy } from '@amsterdam/react-maps';
+import { fetchDataSpy } from 'shared/hooks/useDataFetching';
 import Search from './Search';
 
 jest.mock('@amsterdam/react-maps');
-jest.mock('shared/hooks/useDataFetching');
+jest.mock('@amsterdam/react-maps', () => {
+  const flyToSpy = jest.fn();
+
+  return {
+    __esModule: true,
+    useMapInstance: () => ({
+      flyTo: flyToSpy,
+    }),
+    flyToSpy,
+    default: () => <></>,
+  };
+});
 jest.mock('shared/api/api', () => {
   return {
     __esModule: true,
@@ -17,19 +26,12 @@ jest.mock('shared/api/api', () => {
   };
 });
 
-const mockedUseMapInstance = mocked(useMapInstance);
-const mockedDataFetching = mocked(useDataFetching);
+jest.mock('shared/hooks/useDataFetching', () => {
+  const fetchData = jest.fn();
 
-describe('Search', () => {
-  const flyToSpy = jest.fn();
-  const fetchDataSpy = jest.fn();
-
-  beforeEach(() => {
-    mockedUseMapInstance.mockImplementation(() => ({
-      flyTo: flyToSpy,
-    }));
-
-    mockedDataFetching.mockImplementation(() => ({
+  return {
+    __esModule: true,
+    default: () => ({
       results: {
         response: {
           docs: [
@@ -38,12 +40,13 @@ describe('Search', () => {
           ],
         },
       },
-      fetchData: fetchDataSpy,
-    }));
-  });
+      fetchData,
+    }),
+    fetchDataSpy: fetchData,
+  };
+});
 
-  afterEach(cleanup);
-
+describe('Search', () => {
   it('should render correctly by default', () => {
     const { container } = render(withTheme(<Search />));
 
