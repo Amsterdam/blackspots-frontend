@@ -1,7 +1,5 @@
 /* istanbul ignore file */
 import ReactDOM from 'react-dom';
-import 'react-app-polyfill/ie11';
-import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import * as Sentry from '@sentry/browser';
 import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
@@ -10,7 +8,7 @@ import App from './components/App';
 import './styles/styles.scss';
 import './styles/fonts.scss';
 
-require('formdata-polyfill');
+// require('formdata-polyfill');
 
 const environment = process.env.NODE_ENV;
 
