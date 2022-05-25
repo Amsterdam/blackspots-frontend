@@ -7,10 +7,8 @@ import App from './components/App';
 import './styles/styles.scss';
 import './styles/fonts.scss';
 
-const environment = process.env.NODE_ENV;
-
 Sentry.init({
-  environment,
+  environment: process.env.NODE_ENV,
   dsn: 'https://45be21450b804b1e85ad7462a529b0f8@sentry.data.amsterdam.nl/24',
 });
 
