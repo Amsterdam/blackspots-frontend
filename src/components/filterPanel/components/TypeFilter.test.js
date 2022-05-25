@@ -28,7 +28,7 @@ describe('TypeFilter', () => {
     expect(queryByText('Red route')).toBeInTheDocument();
     expect(queryByText('Protocol dodelijk ongeval')).toBeInTheDocument();
     expect(queryByText('Protocol ernstig ongeval')).toBeInTheDocument();
-    expect(queryByText('Risico')).toBeInTheDocument();
+    expect(queryByText('Risicolocatie IVM')).toBeInTheDocument();
   });
 
   it('should click one of the checkboxes', () => {
