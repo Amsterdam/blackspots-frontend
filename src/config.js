@@ -37,7 +37,7 @@ export const SpotTypeDisplayNames = {
   [SpotTypes.WEGVAK]: 'Red route',
   [SpotTypes.PROTOCOL_DODELIJK]: 'Protocol dodelijk ongeval',
   [SpotTypes.PROTOCOL_ERNSTIG]: 'Protocol ernstig ongeval',
-  [SpotTypes.RISICO]: 'Risico',
+  [SpotTypes.RISICO]: 'Risicolocatie IVM',
 };
 
 export const SpotStatusTypes = {
