@@ -1,8 +1,11 @@
-import { ReactComponent as BlackSpotIcon } from 'assets/markers/icon-blackspot.svg';
-import { ReactComponent as ProtocolIcon } from 'assets/markers/icon-protocol.svg';
-import { ReactComponent as ProtocolErnstigIcon } from 'assets/markers/icon-protocolErnstig.svg';
-import { ReactComponent as RisicoIcon } from 'assets/markers/icon-risico.svg';
-import { ReactComponent as WegvakIcon } from 'assets/markers/icon-wegvak.svg';
+import BlackSpotIcon from 'assets/markers/IconBlackSpot';
+import IconGebiedslocatieIVM from 'assets/markers/IconGebiedslocatieIVM';
+import ProtocolIcon from 'assets/markers/IconProtocol';
+import ProtocolErnstigIcon from 'assets/markers/IconProtocolErnstig';
+import RisicoIcon from 'assets/markers/IconRisico';
+import IconSchoolstraat from 'assets/markers/IconSchoolstraat';
+import IconVSO from 'assets/markers/IconVSO';
+import WegvakIcon from 'assets/markers/IconWegvak';
 
 export const appRoutes = {
   HOME: '/',
@@ -18,6 +21,9 @@ export const SpotTypes = {
   PROTOCOL_DODELIJK: 'protocol dodelijk',
   PROTOCOL_ERNSTIG: 'protocol ernstig',
   RISICO: 'risico',
+  SCHOOLSTRAAT: 'schoolstraat',
+  VSO: 'vso',
+  GEBIEDSLOCATIE_IVM: 'gebiedslocatie IVM',
 };
 
 export const Stadsdeel = {
@@ -38,6 +44,9 @@ export const SpotTypeDisplayNames = {
   [SpotTypes.PROTOCOL_DODELIJK]: 'Protocol dodelijk ongeval',
   [SpotTypes.PROTOCOL_ERNSTIG]: 'Protocol ernstig ongeval',
   [SpotTypes.RISICO]: 'Risicolocatie IVM',
+  [SpotTypes.SCHOOLSTRAAT]: 'Schoolstraat',
+  [SpotTypes.VSO]: 'VSO',
+  [SpotTypes.GEBIEDSLOCATIE_IVM]: 'Gebiedslocatie IVM',
 };
 
 export const SpotStatusTypes = {
@@ -62,6 +71,9 @@ export const SpotIcons = {
   [SpotTypes.PROTOCOL_ERNSTIG]: ProtocolErnstigIcon,
   [SpotTypes.RISICO]: RisicoIcon,
   [SpotTypes.WEGVAK]: WegvakIcon,
+  [SpotTypes.SCHOOLSTRAAT]: IconSchoolstraat,
+  [SpotTypes.VSO]: IconVSO,
+  [SpotTypes.GEBIEDSLOCATIE_IVM]: IconGebiedslocatieIVM,
 };
 
 export const SpotStatusColor = {
@@ -73,5 +85,5 @@ export const SpotStatusColor = {
 };
 
 export const endpoints = {
-  blackspots: `${process.env.REACT_APP_API_ROOT}blackspots/spots/`,
+  blackspots: `${process.env.REACT_APP_API_ROOT}blackspots/`,
 };

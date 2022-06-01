@@ -24,9 +24,13 @@ import {
 
 const isBlackspotType = (spotType) =>
   spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
+
 const isProtocolType = (spotType) =>
   spotType === SpotTypes.PROTOCOL_DODELIJK ||
   spotType === SpotTypes.PROTOCOL_ERNSTIG;
+
+const isIvmType = (spotType) =>
+  spotType === SpotTypes.GEBIEDSLOCATIE_IVM || spotType === SpotTypes.RISICO;
 
 const LocationForm = () => {
   const {
@@ -62,7 +66,7 @@ const LocationForm = () => {
     unregister,
     handleSubmit,
     setValue,
-    formState: { errors } ,
+    formState: { errors },
     watch,
     trigger,
   } = useForm({
@@ -76,32 +80,34 @@ const LocationForm = () => {
   }, [locationId, dispatch, selectedLocation]);
 
   const values = watch(Object.keys(defaultValues), defaultValues);
-  const newValues = { 
-    naam: values[0], 
-    nummer: values[1], 
-    coordinaten: values[2], 
+  const newValues = {
+    naam: values[0],
+    nummer: values[1],
+    coordinaten: values[2],
     stadsdeel: values[3],
     spot_type: values[4],
-    jaar_blackspotlijst: values[5], 
+    jaar_blackspotlijst: values[5],
     jaar_ongeval_quickscan: values[6],
-    status: values[7],
-    actiehouder: values[8],
-    taken: values[9],
-    start_uitvoerin: values[10],
-    eind_uitvoering: values[11],
-    jaar_oplevering: values[12],
-    opmerking: values[13],
-    rapport_document: values[14],
-    design_document: values[15],
-    id: locationId
+    jaar_opgenomen_in_ivm_lijst: values[7],
+    status: values[8],
+    actiehouder: values[9],
+    taken: values[10],
+    start_uitvoerin: values[11],
+    eind_uitvoering: values[12],
+    jaar_oplevering: values[13],
+    opmerking: values[14],
+    rapport_document: values[15],
+    design_document: values[16],
+    id: locationId,
   };
-  
+
   const spotType = watch('spot_type');
   useEffect(() => {
     setVisible((v) => ({
       ...v,
       jaar_blackspotlijst: isBlackspotType(spotType),
       jaar_ongeval_quickscan: isProtocolType(spotType),
+      jaar_opgenomen_in_ivm_lijst: isIvmType(spotType),
     }));
 
     const year = String(new Date().getFullYear());
@@ -109,21 +115,35 @@ const LocationForm = () => {
     if (isBlackspotType(spotType) && !newValues.jaar_blackspotlijst) {
       setValue('jaar_blackspotlijst', year);
       setValue('jaar_ongeval_quickscan', '');
+      setValue('jaar_opgenomen_in_ivm_lijst', '');
     }
 
     if (isProtocolType(spotType) && !newValues.jaar_ongeval_quickscan) {
-      setValue('jaar_blackspotlijst', '');
       setValue('jaar_ongeval_quickscan', year);
+      setValue('jaar_blackspotlijst', '');
+      setValue('jaar_opgenomen_in_ivm_lijst', '');
     }
 
-    if (!isBlackspotType(spotType) && !isProtocolType(spotType)) {
+    if (isIvmType(spotType) && !newValues.jaar_opgenomen_in_ivm_lijst) {
+      setValue('jaar_opgenomen_in_ivm_lijst', year);
       setValue('jaar_blackspotlijst', '');
       setValue('jaar_ongeval_quickscan', '');
+    }
+
+    if (
+      !isBlackspotType(spotType) &&
+      !isProtocolType(spotType) &&
+      !isIvmType(spotType)
+    ) {
+      setValue('jaar_blackspotlijst', '');
+      setValue('jaar_ongeval_quickscan', '');
+      setValue('jaar_opgenomen_in_ivm_lijst', '');
     }
   }, [
     spotType,
     newValues.jaar_blackspotlijst,
     newValues.jaar_ongeval_quickscan,
+    newValues.jaar_opgenomen_in_ivm_lijst,
     setValue,
   ]);
 
@@ -146,10 +166,7 @@ const LocationForm = () => {
         ...v,
         stadsdeel: true,
       }));
-      register('stadsdeel', 
-        { type: 'custom' },
-        { required: reason.point[0] }
-      );
+      register('stadsdeel', { type: 'custom' }, { required: reason.point[0] });
       setValue('stadsdeel', '', true);
       await trigger('stadsdeel');
     }

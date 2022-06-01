@@ -52,6 +52,7 @@ export const locationMock = {
   id: 1,
   jaar_blackspotlijst: 2014,
   jaar_ongeval_quickscan: 2015,
+  jaar_opgenomen_in_ivm_lijst: '2022',
   jaar_oplevering: 2016,
   naam: 'Johan van Hasseltweg - Meeuwenlaan 2',
   nummer: 'B87_14',
@@ -78,4 +79,5 @@ export const formDataMock = {
   start_uitvoering: '03/10/16',
   eind_uitvoering: '10/10/16',
   jaar_oplevering: 2016,
+  jaar_opgenomen_in_ivm_lijst: '2022',
 };

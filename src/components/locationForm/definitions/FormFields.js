@@ -111,6 +111,21 @@ const FormFields = [
   },
   {
     column: 1,
+    name: 'jaar_opgenomen_in_ivm_lijst',
+    label: 'Jaar opgenomen in IVM lijst',
+    initialValue: String(new Date().getFullYear()),
+    visible: false,
+    Component: TextInput,
+    width: '30%',
+    validation: {
+      pattern: {
+        value: /^(\d{4})?$/,
+        message: 'Het jaar is niet in het correcte format `jjjj`',
+      },
+    },
+  },
+  {
+    column: 1,
     name: 'status',
     label: 'Status',
     initialValue: SpotStatusTypes.ONDERZOEK,
