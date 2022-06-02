@@ -21,9 +21,9 @@ export const SpotTypes = {
   PROTOCOL_DODELIJK: 'protocol dodelijk',
   PROTOCOL_ERNSTIG: 'protocol ernstig',
   RISICO: 'risico',
+  GEBIEDSLOCATIE_IVM: 'gebiedslocatie IVM',
   SCHOOLSTRAAT: 'schoolstraat',
   VSO: 'vso',
-  GEBIEDSLOCATIE_IVM: 'gebiedslocatie IVM',
 };
 
 export const Stadsdeel = {
