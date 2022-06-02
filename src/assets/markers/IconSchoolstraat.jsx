@@ -1,6 +1,6 @@
 import { string } from 'prop-types';
 
-export default function IconSchoolstraat({ className }) {
+export default function IconSchoolstraat({ className, fill }) {
   return (
     <svg
       width="28px"
@@ -9,6 +9,7 @@ export default function IconSchoolstraat({ className }) {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       style={{ transform: 'rotate(45deg)' }}
+      fill={fill}
     >
       <rect className="icon-status" width="28" height="28"></rect>
       <rect fill="#FFFFFF" x="6" y="6" width="16" height="16"></rect>
@@ -19,4 +20,5 @@ export default function IconSchoolstraat({ className }) {
 
 IconSchoolstraat.propTypes = {
   className: string,
+  fill: string,
 };

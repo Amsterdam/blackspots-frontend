@@ -1,6 +1,6 @@
 import { string } from 'prop-types';
 
-export default function IconGebiedslocatieIVM({ className }) {
+export default function IconGebiedslocatieIVM({ className, fill }) {
   return (
     <svg
       width="28px"
@@ -9,6 +9,7 @@ export default function IconGebiedslocatieIVM({ className }) {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       style={{ transform: 'rotate(90deg)' }}
+      fill={fill}
     >
       <circle className="icon-status" cx="14" cy="14" r="14"></circle>
       <circle fill="#FFFFFF" cx="14" cy="14" r="8"></circle>
@@ -31,4 +32,5 @@ export default function IconGebiedslocatieIVM({ className }) {
 
 IconGebiedslocatieIVM.propTypes = {
   className: string,
+  fill: string,
 };

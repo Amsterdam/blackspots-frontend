@@ -52,7 +52,11 @@ const MapComponent = ({ setShowError }) => {
 
   useEffect(() => {
     if (results) {
-      dispatch(actions.setLocations(results ? [...results.features] : []));
+      dispatch(
+        actions.setLocations(
+          results && results.features ? [...results.features] : []
+        )
+      );
     }
     // Keep the actions and locations out from the dependency array to prevent infinite loop
   }, [results, dispatch]);

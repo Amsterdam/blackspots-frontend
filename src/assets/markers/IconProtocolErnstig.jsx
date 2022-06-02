@@ -1,6 +1,6 @@
 import { string } from 'prop-types';
 
-export default function IconProtocolErnstig({ className }) {
+export default function IconProtocolErnstig({ className, fill }) {
   return (
     <svg
       width="28px"
@@ -8,6 +8,7 @@ export default function IconProtocolErnstig({ className }) {
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      fill={fill}
     >
       <rect className="icon-status" width="28" height="28"></rect>
       <rect fill="#FFFFFF" x="6" y="6" width="16" height="16"></rect>
@@ -27,4 +28,5 @@ export default function IconProtocolErnstig({ className }) {
 
 IconProtocolErnstig.propTypes = {
   className: string,
+  fill: string,
 };

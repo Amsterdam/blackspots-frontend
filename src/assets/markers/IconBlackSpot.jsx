@@ -1,6 +1,6 @@
 import { string } from 'prop-types';
 
-export default function IconBlackSpot({ className }) {
+export default function IconBlackSpot({ className, fill }) {
   return (
     <svg
       width="28px"
@@ -8,6 +8,7 @@ export default function IconBlackSpot({ className }) {
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      fill={fill}
     >
       <circle className="icon-status" cx="14" cy="14" r="14"></circle>
       <circle fill="#FFFFFF" cx="14" cy="14" r="8"></circle>
@@ -18,4 +19,5 @@ export default function IconBlackSpot({ className }) {
 
 IconBlackSpot.propTypes = {
   className: string,
+  fill: string,
 };

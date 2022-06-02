@@ -1,6 +1,6 @@
 import { string } from 'prop-types';
 
-export default function IconVSO({ className }) {
+export default function IconVSO({ className, fill }) {
   return (
     <svg
       width="40px"
@@ -13,6 +13,7 @@ export default function IconVSO({ className }) {
         marginLeft: '-11px',
         marginRight: '-4px',
       }}
+      fill={fill}
     >
       <polygon className="icon-status" points="20,0 40,34 0,34"></polygon>
       <polygon fill="#FFFFFF" points="20,11 31,29 9,29"></polygon>
@@ -23,4 +24,5 @@ export default function IconVSO({ className }) {
 
 IconVSO.propTypes = {
   className: string,
+  fill: string,
 };
