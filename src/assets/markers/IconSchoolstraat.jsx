@@ -8,12 +8,43 @@ export default function IconSchoolstraat({ className, fill }) {
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      style={{ transform: 'rotate(45deg)' }}
       fill={fill}
     >
-      <rect className="icon-status" width="28" height="28"></rect>
-      <rect fill="#FFFFFF" x="6" y="6" width="16" height="16"></rect>
-      <rect fill="#000000" x="7" y="7" width="14" height="14"></rect>
+      <rect
+        className="icon-status"
+        transform="rotate(225)"
+        x="-33.799"
+        y="-14"
+        width="28"
+        height="28"
+      />
+      <rect
+        transform="rotate(45)"
+        x="11.799"
+        y="-8"
+        width="16"
+        height="16"
+        fill="#fff"
+      />
+      <rect
+        transform="rotate(225)"
+        x="-26.883"
+        y="-7.0839"
+        width="14"
+        height="14"
+        fill="#000"
+      />
+      <text
+        transform="rotate(-3.4553)"
+        x="9.0327959"
+        y="19.092388"
+        fill="#ffffff"
+        xmlSpace="preserve"
+      >
+        <tspan x="9.0327959" y="20.602388">
+          S
+        </tspan>
+      </text>
     </svg>
   );
 }
