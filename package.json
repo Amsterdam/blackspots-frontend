@@ -15,7 +15,7 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
     "classnames": "^2.3.1",
-    "core-js": "^3.22.8",
+    "core-js": "^3.23.1",
     "file-saver": "^2.0.5",
     "formdata-polyfill": "^4.0.10",
     "history": "^5.3.0",
@@ -57,7 +57,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.5",
-    "@testing-library/react-hooks": "^8.0.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "eslint-config-prettier": "^8.5.0",
@@ -67,9 +67,9 @@
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-hooks": "^4.5.0",
     "jest-fetch-mock": "^3.0.3",
-    "jsdom": "^19.0.0",
+    "jsdom": "^20.0.0",
     "leaflet-headless": "^0.2.6",
-    "prettier": "^2.6.2",
+    "prettier": "^2.7.1",
     "react-test-renderer": "^17.0.2"
   },
   "jest": {
