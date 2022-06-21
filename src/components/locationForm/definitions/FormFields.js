@@ -51,6 +51,22 @@ const FormFields = [
   },
   {
     column: 1,
+    name: 'polygoon',
+    label: 'Polygoon',
+    Component: TextAreaInput,
+    width: '80%',
+    height: '125px',
+    validation: {
+      required: REQUIRED_MESSAGE,
+      // pattern: {
+      //   value: /^\d{1,2}\.\d{2,7}, \d{1,2}\.\d{2,7}$/,
+      //   message:
+      //     'De coördinaten zijn niet in het correcte format `xx.xxxxxxx, xx.xxxxxxx`',
+      // },
+    },
+  },
+  {
+    column: 1,
     name: 'stadsdeel',
     label: 'Stadsdeel',
     Component: RadioGroupInput,
@@ -62,7 +78,6 @@ const FormFields = [
     ],
     visible: false,
   },
-
   {
     column: 1,
     name: 'spot_type',

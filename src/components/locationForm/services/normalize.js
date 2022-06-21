@@ -140,17 +140,22 @@ export const locationToFormData = (location) => {
     rapport_document,
     design_document,
   } = location;
+
+  // TODO: sort out how API receives this
+
   const item = {
     id,
     description: naam,
     locatie_id: nummer,
-    point: {
-      type: 'Point',
-      coordinates: coordinaten
-        .split(', ')
-        .map((s) => parseFloat(s))
-        .reverse(),
-    },
+    point: coordinaten
+      ? {
+          type: 'Point',
+          coordinates: coordinaten
+            .split(', ')
+            .map((s) => parseFloat(s))
+            .reverse(),
+        }
+      : {},
     stadsdeel,
     spot_type,
     jaar_blackspotlijst,

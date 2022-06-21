@@ -32,6 +32,18 @@ const isProtocolType = (spotType) =>
 const isIvmType = (spotType) =>
   spotType === SpotTypes.GEBIEDSLOCATIE_IVM || spotType === SpotTypes.RISICO;
 
+const isPolygoonType = (spotType) =>
+  spotType === SpotTypes.WEGVAK ||
+  isIvmType(spotType) ||
+  spotType === SpotTypes.VSO ||
+  spotType === SpotTypes.SCHOOLSTRAAT;
+
+const isCoordinaatType = (spotType) =>
+  spotType === SpotTypes.BLACKSPOT ||
+  isIvmType(spotType) ||
+  spotType === SpotTypes.VSO ||
+  spotType === SpotTypes.SCHOOLSTRAAT;
+
 const LocationForm = () => {
   const {
     state: { selectedLocation },
@@ -66,7 +78,7 @@ const LocationForm = () => {
     unregister,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
     trigger,
   } = useForm({
@@ -79,27 +91,32 @@ const LocationForm = () => {
     }
   }, [locationId, dispatch, selectedLocation]);
 
+  // TODO: can we improve this so we dont need the indexes?
   const values = watch(Object.keys(defaultValues), defaultValues);
+
   const newValues = {
     naam: values[0],
     nummer: values[1],
     coordinaten: values[2],
-    stadsdeel: values[3],
-    spot_type: values[4],
-    jaar_blackspotlijst: values[5],
-    jaar_ongeval_quickscan: values[6],
-    jaar_opgenomen_in_ivm_lijst: values[7],
-    status: values[8],
-    actiehouder: values[9],
-    taken: values[10],
-    start_uitvoerin: values[11],
-    eind_uitvoering: values[12],
-    jaar_oplevering: values[13],
-    opmerking: values[14],
-    rapport_document: values[15],
-    design_document: values[16],
+    polygoon: values[3],
+    stadsdeel: values[4],
+    spot_type: values[5],
+    jaar_blackspotlijst: values[6],
+    jaar_ongeval_quickscan: values[7],
+    jaar_opgenomen_in_ivm_lijst: values[8],
+    status: values[9],
+    actiehouder: values[10],
+    taken: values[11],
+    start_uitvoering: values[12],
+    eind_uitvoering: values[13],
+    jaar_oplevering: values[14],
+    opmerking: values[15],
+    rapport_document: values[16],
+    design_document: values[17],
     id: locationId,
   };
+
+  // console.log(defaultValues, newValues);
 
   const spotType = watch('spot_type');
   useEffect(() => {
@@ -108,23 +125,25 @@ const LocationForm = () => {
       jaar_blackspotlijst: isBlackspotType(spotType),
       jaar_ongeval_quickscan: isProtocolType(spotType),
       jaar_opgenomen_in_ivm_lijst: isIvmType(spotType),
+      polygoon: isPolygoonType(spotType),
+      coordinaten: isCoordinaatType(spotType),
     }));
 
     const year = String(new Date().getFullYear());
 
-    if (isBlackspotType(spotType) && !newValues.jaar_blackspotlijst) {
+    if (isBlackspotType(spotType) && !defaultValues.jaar_blackspotlijst) {
       setValue('jaar_blackspotlijst', year);
       setValue('jaar_ongeval_quickscan', '');
       setValue('jaar_opgenomen_in_ivm_lijst', '');
     }
 
-    if (isProtocolType(spotType) && !newValues.jaar_ongeval_quickscan) {
+    if (isProtocolType(spotType) && !defaultValues.jaar_ongeval_quickscan) {
       setValue('jaar_ongeval_quickscan', year);
       setValue('jaar_blackspotlijst', '');
       setValue('jaar_opgenomen_in_ivm_lijst', '');
     }
 
-    if (isIvmType(spotType) && !newValues.jaar_opgenomen_in_ivm_lijst) {
+    if (isIvmType(spotType) && !defaultValues.jaar_opgenomen_in_ivm_lijst) {
       setValue('jaar_opgenomen_in_ivm_lijst', year);
       setValue('jaar_blackspotlijst', '');
       setValue('jaar_ongeval_quickscan', '');
@@ -141,23 +160,33 @@ const LocationForm = () => {
     }
   }, [
     spotType,
-    newValues.jaar_blackspotlijst,
-    newValues.jaar_ongeval_quickscan,
-    newValues.jaar_opgenomen_in_ivm_lijst,
+    defaultValues.jaar_blackspotlijst,
+    defaultValues.jaar_ongeval_quickscan,
+    defaultValues.jaar_opgenomen_in_ivm_lijst,
     setValue,
   ]);
 
   const coordinaten = watch('coordinaten');
   useEffect(() => {
-    (async () => {
+    if (coordinaten) {
+      console.log('Unregister polygoon', coordinaten);
       setVisible((v) => ({
         ...v,
         stadsdeel: false,
       }));
       setValue('stadsdeel', '', true);
       unregister('stadsdeel');
-    })();
+      unregister('polygoon');
+    }
   }, [coordinaten, setValue, unregister]);
+
+  const polygoon = watch('polygoon');
+  useEffect(() => {
+    if (polygoon) {
+      console.log('Unregister coordinaten', polygoon);
+      unregister('coordinaten');
+    }
+  }, [polygoon, unregister]);
 
   const handleServerValidation = async (reason) => {
     if (reason.point && reason.point.length) {
@@ -219,6 +248,8 @@ const LocationForm = () => {
       setValue(name, locationId ? defaultValues[name] : initalValues[name]);
     });
   }, [locationId, defaultValues, setValue, register]);
+
+  console.log('isValid', isValid);
 
   return (
     <>
