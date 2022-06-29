@@ -41,6 +41,7 @@ const isPolygoonType = (spotType) =>
 const isCoordinaatType = (spotType) =>
   spotType === SpotTypes.BLACKSPOT ||
   isIvmType(spotType) ||
+  isProtocolType(spotType) ||
   spotType === SpotTypes.VSO ||
   spotType === SpotTypes.SCHOOLSTRAAT;
 
@@ -78,7 +79,7 @@ const LocationForm = () => {
     unregister,
     handleSubmit,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors },
     watch,
     trigger,
   } = useForm({
@@ -115,8 +116,6 @@ const LocationForm = () => {
     design_document: values[17],
     id: locationId,
   };
-
-  // console.log(defaultValues, newValues);
 
   const spotType = watch('spot_type');
   useEffect(() => {
@@ -248,8 +247,6 @@ const LocationForm = () => {
       setValue(name, locationId ? defaultValues[name] : initalValues[name]);
     });
   }, [locationId, defaultValues, setValue, register]);
-
-  console.log('isValid', isValid);
 
   return (
     <>

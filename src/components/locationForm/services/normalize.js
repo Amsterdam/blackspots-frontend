@@ -139,9 +139,8 @@ export const locationToFormData = (location) => {
     opmerking,
     rapport_document,
     design_document,
+    polygoon,
   } = location;
-
-  // TODO: sort out how API receives this
 
   const item = {
     id,
@@ -155,7 +154,15 @@ export const locationToFormData = (location) => {
             .map((s) => parseFloat(s))
             .reverse(),
         }
-      : {},
+      : null,
+    polygoon: polygoon
+      ? {
+          type: 'LineString',
+          coordinates: JSON.parse(
+            `[${polygoon.replaceAll('(', '[').replaceAll(')', ']')}]`
+          ),
+        }
+      : null,
     stadsdeel,
     spot_type,
     jaar_blackspotlijst,

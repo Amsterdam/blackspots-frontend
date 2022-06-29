@@ -58,11 +58,11 @@ const FormFields = [
     height: '125px',
     validation: {
       required: REQUIRED_MESSAGE,
-      // pattern: {
-      //   value: /^\d{1,2}\.\d{2,7}, \d{1,2}\.\d{2,7}$/,
-      //   message:
-      //     'De coördinaten zijn niet in het correcte format `xx.xxxxxxx, xx.xxxxxxx`',
-      // },
+      pattern: {
+        value: /^(((\((\d+\.?)+,\s?\d+\.?\d+\))+),?\s?)+$/,
+        message:
+          'De polygoon is niet in het correcte format `(xx,xxxx, xx,xxxxx), (xx,xxxx), xxx.xxxx`',
+      },
     },
   },
   {
