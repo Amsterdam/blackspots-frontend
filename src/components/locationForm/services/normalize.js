@@ -76,6 +76,7 @@ export const locationToFeature = (location) => {
     description,
     locatie_id,
     point,
+    polygoon,
     stadsdeel,
     spot_type,
     jaar_blackspotlijst,
@@ -110,7 +111,7 @@ export const locationToFeature = (location) => {
       documents,
       wegvak,
     },
-    geometry: point,
+    geometry: point ?? polygoon,
   };
 };
 
@@ -157,10 +158,12 @@ export const locationToFormData = (location) => {
       : null,
     polygoon: polygoon
       ? {
-          type: 'LineString',
-          coordinates: JSON.parse(
-            `[${polygoon.replaceAll('(', '[').replaceAll(')', ']')}]`
-          ),
+          type: 'Polygon',
+          coordinates: [
+            JSON.parse(
+              `[${polygoon.replaceAll('(', '[').replaceAll(')', ']')}]`
+            )?.map((set) => set.reverse()),
+          ],
         }
       : null,
     stadsdeel,

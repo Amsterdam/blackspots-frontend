@@ -168,7 +168,6 @@ const LocationForm = () => {
   const coordinaten = watch('coordinaten');
   useEffect(() => {
     if (coordinaten) {
-      console.log('Unregister polygoon', coordinaten);
       setVisible((v) => ({
         ...v,
         stadsdeel: false,
@@ -182,7 +181,6 @@ const LocationForm = () => {
   const polygoon = watch('polygoon');
   useEffect(() => {
     if (polygoon) {
-      console.log('Unregister coordinaten', polygoon);
       unregister('coordinaten');
     }
   }, [polygoon, unregister]);
