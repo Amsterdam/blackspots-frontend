@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import L from 'leaflet';
 import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
-import { SpotTypes, SpotStatusTypes } from 'config';
+import { SpotTypes, SpotStatusTypes, SpotStatusColor } from 'config';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 import { getGeoJson } from '../helpers';
@@ -52,6 +52,13 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
         onMarkerClick(feature);
         if (currentZoom < 11) mapInstance.flyTo(latlng, 11);
       });
+    },
+    style: (feature) => {
+      // console.log(feature, SpotStatusColor[feature.properties.status]);
+      return {
+        fill: true,
+        color: SpotStatusColor[feature.properties.status],
+      };
     },
   };
 

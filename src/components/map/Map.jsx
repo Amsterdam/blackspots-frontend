@@ -90,8 +90,14 @@ const MapComponent = ({ setShowError }) => {
         <Marker
           options={{ icon, zIndexOffset: 1000 }}
           latLng={{
-            lat: selectedLocation?.geometry?.coordinates[1] || 0,
-            lng: selectedLocation?.geometry?.coordinates[0] || 0,
+            lat:
+              selectedLocation?.geometry?.type === 'Point'
+                ? selectedLocation?.geometry?.coordinates[1]
+                : 0,
+            lng:
+              selectedLocation?.geometry?.type === 'Point'
+                ? selectedLocation?.geometry?.coordinates[0]
+                : 0,
           }}
         />
         <StadsdelenLayer />

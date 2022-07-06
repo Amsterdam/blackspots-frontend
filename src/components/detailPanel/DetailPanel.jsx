@@ -56,6 +56,31 @@ function getStatusClassName(status) {
   return statusClassMapper[status];
 }
 
+function getDisplayCoordinates(geometry) {
+  if (geometry.type === 'Polygoon') {
+    return geometry.coordinates[0]
+      .map((set) => set.reverse().join(', '))
+      .join(', ');
+  }
+
+  if (geometry.type === 'Point') {
+    return geometry.coordinates.reverse().join(', ');
+  }
+}
+
+function getLatLng(geometry) {
+  console.log(geometry.coordinates[0][0]);
+  if (geometry.type === 'Polygon') {
+    return geometry.coordinates[0][0];
+  }
+
+  if (geometry.type === 'Point') {
+    return geometry.coordinates[0];
+  }
+
+  return [];
+}
+
 const DetailPanel = ({ isOpen, togglePanel, feature }) => {
   const { canEdit } = useContext(UserContext);
   if (!feature) {
@@ -77,7 +102,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
     actiehouders,
     documents,
   } = feature.properties;
-  const [lng, lat] = feature.geometry.coordinates;
+  const [lng, lat] = getLatLng(feature.geometry);
   const reportDocument = documents.find((d) => d.type === 'Rapportage');
   const designDocument = documents.find((d) => d.type === 'Ontwerp');
 
@@ -143,9 +168,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             </tr>
             <tr>
               <td>Coördinaten</td>
-              <td>
-                {lat}, {lng}
-              </td>
+              <td>{getDisplayCoordinates(feature.geometry)}</td>
             </tr>
             {jaar_blackspotlijst && (
               <tr>
