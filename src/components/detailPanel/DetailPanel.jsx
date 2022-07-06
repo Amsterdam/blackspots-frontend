@@ -1,6 +1,13 @@
-/* eslint-disable camelcase */
 import { useContext } from 'react';
-import PropTypes from 'prop-types';
+import {
+  bool,
+  func,
+  shape,
+  number,
+  string,
+  arrayOf,
+  oneOfType,
+} from 'prop-types';
 import {
   Heading,
   Button,
@@ -258,33 +265,36 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
 };
 
 DetailPanel.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  togglePanel: PropTypes.func.isRequired,
-  feature: PropTypes.shape({
-    id: PropTypes.number,
-    geometry: PropTypes.shape({
-      type: PropTypes.string,
-      coordinates: PropTypes.arrayOf(PropTypes.number),
+  isOpen: bool.isRequired,
+  togglePanel: func.isRequired,
+  feature: shape({
+    id: number,
+    geometry: shape({
+      type: string,
+      coordinates: oneOfType([
+        arrayOf(number),
+        arrayOf(arrayOf(arrayOf(number))),
+      ]),
     }),
-    properties: PropTypes.shape({
-      locatie_id: PropTypes.string,
-      description: PropTypes.string,
-      spot_type: PropTypes.string,
-      status: PropTypes.string,
-      stadsdeel: PropTypes.string,
-      start_uitvoering: PropTypes.string,
-      eind_uitvoering: PropTypes.string,
-      tasks: PropTypes.string,
-      notes: PropTypes.string,
-      jaar_blackspotlijst: PropTypes.number,
-      jaar_ongeval_quickscan: PropTypes.number,
-      jaar_oplevering: PropTypes.number,
-      actiehouders: PropTypes.string,
-      documents: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.number,
-          type: PropTypes.string,
-          filename: PropTypes.string,
+    properties: shape({
+      locatie_id: string,
+      description: string,
+      spot_type: string,
+      status: string,
+      stadsdeel: string,
+      start_uitvoering: string,
+      eind_uitvoering: string,
+      tasks: string,
+      notes: string,
+      jaar_blackspotlijst: number,
+      jaar_ongeval_quickscan: number,
+      jaar_oplevering: number,
+      actiehouders: string,
+      documents: arrayOf(
+        shape({
+          id: number,
+          type: string,
+          filename: string,
         })
       ),
     }),

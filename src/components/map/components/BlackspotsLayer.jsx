@@ -54,10 +54,11 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
       });
     },
     style: (feature) => {
-      // console.log(feature, SpotStatusColor[feature.properties.status]);
+      console.log(feature, SpotStatusColor[feature.properties.status]);
       return {
         fill: true,
         color: SpotStatusColor[feature.properties.status],
+        fillColor: SpotStatusColor[feature.properties.status],
       };
     },
   };
