@@ -1,6 +1,5 @@
-/* eslint-disable react/jsx-curly-brace-presence */
 import { useState, useEffect, useCallback, useContext } from 'react';
-import PropTypes from 'prop-types';
+import { func } from 'prop-types';
 import {
   Map,
   BaseLayer,
@@ -122,7 +121,7 @@ const MapComponent = ({ setShowError }) => {
 };
 
 MapComponent.propTypes = {
-  setShowError: PropTypes.func.isRequired,
+  setShowError: func.isRequired,
 };
 
 export default MapComponent;
