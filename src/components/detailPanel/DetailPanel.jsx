@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import {
   bool,
   func,
@@ -8,6 +9,8 @@ import {
   arrayOf,
   oneOfType,
 } from 'prop-types';
+import classNames from 'classnames';
+import styled from 'styled-components';
 import {
   Heading,
   Button,
@@ -15,22 +18,19 @@ import {
   themeColor,
   themeSpacing,
 } from '@amsterdam/asc-ui';
-import { Link } from 'react-router-dom';
 import { ExternalLink, Close } from '@amsterdam/asc-assets';
-
-import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'config';
-import classNames from 'classnames';
-
-import styled from 'styled-components';
+import {
+  SpotTypes,
+  StatusDisplayNames,
+  SpotStatusTypes,
+  GeometryTypes,
+  SpotTypeDisplayNames,
+} from 'config';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';
-
-import { SpotTypeDisplayNames } from '../../config';
-
 import UserContext from '../../shared/user/UserContext';
 import { HeaderSecondary } from '../../styles/SharedStyles';
 import styles from './DetailPanel.module.scss';
-
 import {
   HeaderStyle,
   ContentStyle,
@@ -64,24 +64,23 @@ function getStatusClassName(status) {
 }
 
 function getDisplayCoordinates(geometry) {
-  if (geometry.type === 'Polygoon') {
+  if (geometry.type === GeometryTypes.POLYGON) {
     return geometry.coordinates[0]
       .map((set) => set.reverse().join(', '))
       .join(', ');
   }
 
-  if (geometry.type === 'Point') {
+  if (geometry.type === GeometryTypes.POINT) {
     return geometry.coordinates.reverse().join(', ');
   }
 }
 
 function getLatLng(geometry) {
-  console.log(geometry.coordinates[0][0]);
-  if (geometry.type === 'Polygon') {
+  if (geometry.type === GeometryTypes.POLYGON) {
     return geometry.coordinates[0][0];
   }
 
-  if (geometry.type === 'Point') {
+  if (geometry.type === GeometryTypes.POINT) {
     return geometry.coordinates[0];
   }
 

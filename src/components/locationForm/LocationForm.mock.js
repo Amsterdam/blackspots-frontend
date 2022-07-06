@@ -63,6 +63,7 @@ export const locationMock = {
   start_uitvoering: '03/10/16',
   status: 'gereed',
   taken: '',
+  polygoon: '',
 };
 
 export const formDataMock = {
