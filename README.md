@@ -2,8 +2,8 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3b93497f-fa26-41a0-8de8-470d8f685e0c/deploy-status)](https://app.netlify.com/sites/blackspots-frontend/deploys)
 
-- PROD: [https://wba-kaart.amsterdam.nl](https://wba-kaart.amsterdam.nl)
-- ACC: [https://acc.wba-kaart.amsterdam.nl](https://acc.wba-kaart.amsterdam.nl)
+- PROD: [https://wbakaart.amsterdam.nl](https://wbakaart.amsterdam.nl)
+- ACC: [https://acc.wbakaart.amsterdam.nl](https://acc.wbakaart.amsterdam.nl)
 
 
 ## Keypoints
