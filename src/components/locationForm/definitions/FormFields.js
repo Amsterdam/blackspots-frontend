@@ -26,7 +26,7 @@ const FormFields = [
   },
   {
     column: 1,
-    name: 'nummer',
+    name: 'locatie_id',
     label: 'Nummer',
     Component: TextInput,
     width: '50%',
@@ -216,33 +216,28 @@ const FormFields = [
   },
 ].map((item, id) => ({ ...item, id }));
 
-export const initalValues = {
-  ...FormFields.reduce(
-    (acc, item) => ({
-      ...acc,
-      [item.name]: item.initialValue || '',
-    }),
-    {}
-  ),
-};
+export const initalValues = FormFields.reduce(
+  (acc, item) => ({
+    ...acc,
+    [item.name]: item.initialValue || '',
+  }),
+  {}
+);
 
-export const formValidation = {
-  ...FormFields.reduce(
-    (acc, item) => ({
-      ...acc,
-      [item.name]: item.validation || {},
-    }),
-    {}
-  ),
-};
-export const formVisibility = {
-  ...FormFields.reduce(
-    (acc, item) => ({
-      ...acc,
-      [item.name]: item.visible || true,
-    }),
-    {}
-  ),
-};
+export const formValidation = FormFields.reduce(
+  (acc, item) => ({
+    ...acc,
+    [item.name]: item.validation || {},
+  }),
+  {}
+);
+
+export const formVisibility = FormFields.reduce(
+  (acc, item) => ({
+    ...acc,
+    [item.name]: item.visible ?? true,
+  }),
+  {}
+);
 
 export default FormFields;

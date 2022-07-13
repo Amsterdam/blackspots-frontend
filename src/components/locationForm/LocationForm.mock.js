@@ -55,7 +55,7 @@ export const locationMock = {
   jaar_opgenomen_in_ivm_lijst: '2022',
   jaar_oplevering: 2016,
   naam: 'Johan van Hasseltweg - Meeuwenlaan 2',
-  nummer: 'B87_14',
+  locatie_id: 'B87_14',
   opmerking: '',
   rapport_document: undefined,
   spot_type: 'blackspot',

@@ -47,7 +47,7 @@ export const featureToLocation = (feature) => {
     ...initalValues,
     id,
     naam: description,
-    nummer: locatie_id,
+    locatie_id,
     coordinaten: `${coordinates[1]}, ${coordinates[0]}`,
     stadsdeel,
     spot_type,
@@ -124,7 +124,7 @@ export const locationToFormData = (location) => {
   const {
     id,
     naam,
-    nummer,
+    locatie_id,
     coordinaten,
     stadsdeel,
     spot_type,
@@ -146,7 +146,7 @@ export const locationToFormData = (location) => {
   const item = {
     id,
     description: naam,
-    locatie_id: nummer,
+    locatie_id,
     point: coordinaten
       ? {
           type: 'Point',

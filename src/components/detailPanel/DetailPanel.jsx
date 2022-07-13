@@ -81,7 +81,7 @@ function getLatLng(geometry) {
   }
 
   if (geometry.type === GeometryTypes.POINT) {
-    return geometry.coordinates[0];
+    return geometry.coordinates;
   }
 
   return [];

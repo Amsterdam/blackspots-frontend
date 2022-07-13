@@ -79,13 +79,9 @@ const filterReducer = (state = initialState, action) => {
     case UPDATE_LOCATION:
       return {
         ...state,
-        locations: [
-          ...state.locations.map((location) => {
-            return location.id === action.payload.id
-              ? action.payload
-              : location;
-          }),
-        ],
+        locations: state.locations.map((location) => {
+          return location.id === action.payload.id ? action.payload : location;
+        }),
       };
     case ADD_LOCATION:
       return {

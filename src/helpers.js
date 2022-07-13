@@ -1,3 +1,5 @@
+import { SpotTypes } from 'config';
+
 /**
  * Get the spot type of a marker
  */
@@ -32,3 +34,26 @@ export function getDeliveredYearFromMarker(marker) {
 export function getQuickscanYearFromMarker(marker) {
   return marker.properties.jaar_ongeval_quickscan;
 }
+
+export const isBlackspotType = (spotType) =>
+  spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
+
+export const isProtocolType = (spotType) =>
+  spotType === SpotTypes.PROTOCOL_DODELIJK ||
+  spotType === SpotTypes.PROTOCOL_ERNSTIG;
+
+export const isIvmType = (spotType) =>
+  spotType === SpotTypes.GEBIEDSLOCATIE_IVM || spotType === SpotTypes.RISICO;
+
+export const isPolygoonType = (spotType) =>
+  spotType === SpotTypes.WEGVAK ||
+  isIvmType(spotType) ||
+  spotType === SpotTypes.VSO ||
+  spotType === SpotTypes.SCHOOLSTRAAT;
+
+export const isCoordinaatType = (spotType) =>
+  spotType === SpotTypes.BLACKSPOT ||
+  isIvmType(spotType) ||
+  isProtocolType(spotType) ||
+  spotType === SpotTypes.VSO ||
+  spotType === SpotTypes.SCHOOLSTRAAT;

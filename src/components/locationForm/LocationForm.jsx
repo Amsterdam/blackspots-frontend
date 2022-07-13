@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import { actions } from 'shared/reducers/filter';
 import { sendData } from 'shared/api/api';
-import { appRoutes, SpotTypes, endpoints } from '../../config';
+import { appRoutes, endpoints } from '../../config';
 import { HeaderSecondary } from '../../styles/SharedStyles';
 import FormFields, {
   initalValues,
@@ -21,29 +21,13 @@ import {
   locationToFormData,
   locationToFeature,
 } from './services/normalize';
-
-const isBlackspotType = (spotType) =>
-  spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
-
-const isProtocolType = (spotType) =>
-  spotType === SpotTypes.PROTOCOL_DODELIJK ||
-  spotType === SpotTypes.PROTOCOL_ERNSTIG;
-
-const isIvmType = (spotType) =>
-  spotType === SpotTypes.GEBIEDSLOCATIE_IVM || spotType === SpotTypes.RISICO;
-
-const isPolygoonType = (spotType) =>
-  spotType === SpotTypes.WEGVAK ||
-  isIvmType(spotType) ||
-  spotType === SpotTypes.VSO ||
-  spotType === SpotTypes.SCHOOLSTRAAT;
-
-const isCoordinaatType = (spotType) =>
-  spotType === SpotTypes.BLACKSPOT ||
-  isIvmType(spotType) ||
-  isProtocolType(spotType) ||
-  spotType === SpotTypes.VSO ||
-  spotType === SpotTypes.SCHOOLSTRAAT;
+import {
+  isBlackspotType,
+  isCoordinaatType,
+  isIvmType,
+  isPolygoonType,
+  isProtocolType,
+} from 'helpers';
 
 const LocationForm = () => {
   const {
@@ -82,6 +66,7 @@ const LocationForm = () => {
     formState: { errors },
     watch,
     trigger,
+    setError,
   } = useForm({
     ...defaultValues,
   });
@@ -97,7 +82,7 @@ const LocationForm = () => {
 
   const newValues = {
     naam: values[0],
-    nummer: values[1],
+    locatie_id: values[1],
     coordinaten: values[2],
     polygoon: values[3],
     stadsdeel: values[4],
@@ -195,6 +180,19 @@ const LocationForm = () => {
       register('stadsdeel', { type: 'custom' }, { required: reason.point[0] });
       setValue('stadsdeel', '', true);
       await trigger('stadsdeel');
+      setError(
+        'stadsdeel',
+        { type: 'custom', message: reason.point[0] },
+        { shouldFocus: true }
+      );
+    } else {
+      Object.keys(reason).forEach((fieldId) => {
+        setError(
+          fieldId,
+          { type: 'custom', message: reason[fieldId] },
+          { shouldFocus: true }
+        );
+      });
     }
   };
 
