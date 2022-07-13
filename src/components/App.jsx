@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
-import LandingPage from 'views/landing/LandingPage';
-import useKeycloak from 'shared/hooks/useKeycloak';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
+import LandingPage from 'views/landing/LandingPage';
+import useKeycloak from 'shared/hooks/useKeycloak';
 import { UserContextProvider } from 'shared/user/UserContext';
 import FilterContextProvider from 'shared/reducers/FilterContext';
 import AppRoutes from './AppRoutes';
