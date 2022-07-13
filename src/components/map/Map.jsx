@@ -18,7 +18,7 @@ import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
 import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
-import { endpoints } from '../../config';
+import { endpoints, GeometryTypes } from '../../config';
 import BlackspotsLayer from './components/BlackspotsLayer';
 import StadsdelenLayer from './components/StadsdelenLayer';
 import Search from './components/Search';
@@ -87,19 +87,21 @@ const MapComponent = ({ setShowError }) => {
   return (
     <>
       <Map data-testid="map" fullScreen options={MAP_OPTIONS}>
-        <Marker
-          options={{ icon, zIndexOffset: 1000 }}
-          latLng={{
-            lat:
-              selectedLocation?.geometry?.type === 'Point'
-                ? selectedLocation?.geometry?.coordinates[1]
-                : 0,
-            lng:
-              selectedLocation?.geometry?.type === 'Point'
-                ? selectedLocation?.geometry?.coordinates[0]
-                : 0,
-          }}
-        />
+        {selectedLocation && (
+          <Marker
+            options={{ icon, zIndexOffset: 1000 }}
+            latLng={{
+              lat:
+                selectedLocation.geometry?.type === GeometryTypes.POINT
+                  ? selectedLocation.geometry?.coordinates[1]
+                  : selectedLocation.geometry?.coordinates[0][0][1],
+              lng:
+                selectedLocation.geometry?.type === GeometryTypes.POINT
+                  ? selectedLocation.geometry?.coordinates[0]
+                  : selectedLocation.geometry?.coordinates[0][0][0],
+            }}
+          />
+        )}
         <StadsdelenLayer />
         <BlackspotsLayer onMarkerClick={onMarkerClick} />
         <ViewerContainer

@@ -7,6 +7,7 @@ import { SpotTypes, SpotStatusTypes, SpotStatusColor } from 'config';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 import { getGeoJson } from '../helpers';
+import { GeometryTypes } from 'config';
 
 const createFeatureIcon = (feature) => {
   // Leaflet only accepts HTML elements for custom markers so we need to
@@ -40,10 +41,18 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
     onEachFeature: (feature, layer) => {
       layer.on('click', (e) => {
         e.originalEvent.stopPropagation();
-        const latlng = {
-          lat: feature.geometry.coordinates[1],
-          lng: feature.geometry.coordinates[0],
-        };
+        const { geometry } = feature;
+
+        const latlng =
+          geometry.type === GeometryTypes.POINT
+            ? {
+                lat: geometry.coordinates[1],
+                lng: geometry.coordinates[0],
+              }
+            : {
+                lat: geometry.coordinates[0][0][1],
+                lng: geometry.coordinates[0][0][0],
+              };
 
         const currentZoom = mapInstance.getZoom();
         onMarkerClick(feature);
