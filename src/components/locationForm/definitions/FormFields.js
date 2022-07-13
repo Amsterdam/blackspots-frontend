@@ -36,6 +36,22 @@ const FormFields = [
   },
   {
     column: 1,
+    name: 'spot_type',
+    label: 'Type',
+    initialValue: SpotTypes.BLACKSPOT,
+    Component: RadioGroupInput,
+    options: [
+      ...Object.keys(SpotTypeDisplayNames).map((name) => ({
+        label: SpotTypeDisplayNames[name],
+        value: name,
+      })),
+    ],
+    validation: {
+      required: REQUIRED_MESSAGE,
+    },
+  },
+  {
+    column: 1,
     name: 'coordinaten',
     label: 'Coördinaten',
     Component: TextInput,
@@ -77,22 +93,6 @@ const FormFields = [
       })),
     ],
     visible: false,
-  },
-  {
-    column: 1,
-    name: 'spot_type',
-    label: 'Type',
-    initialValue: SpotTypes.BLACKSPOT,
-    Component: RadioGroupInput,
-    options: [
-      ...Object.keys(SpotTypeDisplayNames).map((name) => ({
-        label: SpotTypeDisplayNames[name],
-        value: name,
-      })),
-    ],
-    validation: {
-      required: REQUIRED_MESSAGE,
-    },
   },
   {
     column: 1,

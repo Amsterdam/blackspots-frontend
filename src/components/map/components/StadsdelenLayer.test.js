@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 import { withTheme } from 'test/utils';
-import { spy } from '@amsterdam/react-maps';
+import { spy } from '@amsterdam/arm-core';
 
 import StadsdelenLayer from './StadsdelenLayer';
 
-jest.mock('@amsterdam/react-maps', () => {
+jest.mock('@amsterdam/arm-core', () => {
   const addLayerSpy = jest.fn();
 
   return {

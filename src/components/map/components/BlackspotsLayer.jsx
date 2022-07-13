@@ -1,8 +1,8 @@
 import { useEffect, useContext, useState } from 'react';
+import { renderToString } from 'react-dom/server';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import L from 'leaflet';
-import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
+import { useMapInstance, GeoJSON } from '@amsterdam/arm-core';
 import { SpotTypes, SpotStatusTypes, SpotStatusColor } from 'config';
 import { FilterContext } from 'shared/reducers/FilterContext';
 import SVGIcon from '../../SVGIcon/SVGIcon';
@@ -12,9 +12,6 @@ const createFeatureIcon = (feature) => {
   // Leaflet only accepts HTML elements for custom markers so we need to
   // create one from the SVGIcon
   const { status, spot_type: spotType } = feature.properties;
-  const iconDiv = document.createElement('div');
-
-  ReactDOM.render(<SVGIcon type={spotType} status={status} />, iconDiv);
 
   return {
     // Add the correct classname based on type
@@ -22,7 +19,7 @@ const createFeatureIcon = (feature) => {
     className: `marker-div-icon ${
       spotType === SpotTypes.RISICO ? 'large' : ''
     } ${status === SpotStatusTypes.GEEN_MAATREGEL ? 'extra-opacity' : ''}`,
-    html: iconDiv,
+    html: renderToString(<SVGIcon type={spotType} status={status} />),
   };
 };
 

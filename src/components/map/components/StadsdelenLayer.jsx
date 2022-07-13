@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import { useMapInstance } from '@amsterdam/react-maps';
+import { useMapInstance } from '@amsterdam/arm-core';
 
 const StadsdelenLayer = () => {
   const mapInstance = useMapInstance();

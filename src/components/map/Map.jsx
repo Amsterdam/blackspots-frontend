@@ -42,7 +42,8 @@ const MapComponent = ({ setShowError }) => {
   const [showDetailPanel, setShowDetailPanel] = useState(false);
 
   useEffect(() => {
-    if (locations.length === 0)
+    // Use smaller than or equal to 1 to prevent the edge case where someone loads the form and after submitting only sees the newly added point.
+    if (locations.length <= 1)
       (async () => {
         fetchData(`${endpoints.blackspots}?format=geojson`);
       })();

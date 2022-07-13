@@ -77,30 +77,7 @@ const LocationForm = () => {
     }
   }, [locationId, dispatch, selectedLocation]);
 
-  // TODO: can we improve this so we dont need the indexes?
-  const values = watch(Object.keys(defaultValues), defaultValues);
-
-  const newValues = {
-    naam: values[0],
-    locatie_id: values[1],
-    coordinaten: values[2],
-    polygoon: values[3],
-    stadsdeel: values[4],
-    spot_type: values[5],
-    jaar_blackspotlijst: values[6],
-    jaar_ongeval_quickscan: values[7],
-    jaar_opgenomen_in_ivm_lijst: values[8],
-    status: values[9],
-    actiehouder: values[10],
-    taken: values[11],
-    start_uitvoering: values[12],
-    eind_uitvoering: values[13],
-    jaar_oplevering: values[14],
-    opmerking: values[15],
-    rapport_document: values[16],
-    design_document: values[17],
-    id: locationId,
-  };
+  const values = watch(undefined, defaultValues);
 
   const spotType = watch('spot_type');
   useEffect(() => {
@@ -259,7 +236,7 @@ const LocationForm = () => {
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={newValues[name]}
+                    value={values[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
@@ -277,7 +254,7 @@ const LocationForm = () => {
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={newValues[name]}
+                    value={values[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
@@ -295,7 +272,7 @@ const LocationForm = () => {
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={newValues[name]}
+                    value={values[name]}
                     error={errors[name]}
                     {...otherProps}
                   />

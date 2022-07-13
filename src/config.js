@@ -20,8 +20,8 @@ export const SpotTypes = {
   WEGVAK: 'wegvak',
   PROTOCOL_DODELIJK: 'protocol dodelijk',
   PROTOCOL_ERNSTIG: 'protocol ernstig',
-  RISICO: 'risicolocatie IVM',
-  GEBIEDSLOCATIE_IVM: 'gebiedslocatie IVM',
+  RISICO: 'risicolocatie ivm',
+  GEBIEDSLOCATIE_IVM: 'gebiedslocatie ivm',
   SCHOOLSTRAAT: 'schoolstraat',
   VSO: 'vso',
 };

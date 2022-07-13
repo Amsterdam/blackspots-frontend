@@ -1,11 +1,11 @@
 import { render, fireEvent, act } from '@testing-library/react';
 import { withTheme } from 'test/utils';
-import { flyToSpy } from '@amsterdam/react-maps';
+import { flyToSpy } from '@amsterdam/arm-core';
 import { fetchDataSpy } from 'shared/hooks/useDataFetching';
 import Search from './Search';
 
-jest.mock('@amsterdam/react-maps');
-jest.mock('@amsterdam/react-maps', () => {
+jest.mock('@amsterdam/arm-core');
+jest.mock('@amsterdam/arm-core', () => {
   const flyToSpy = jest.fn();
 
   return {
