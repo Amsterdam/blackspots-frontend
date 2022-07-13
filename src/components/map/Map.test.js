@@ -69,7 +69,7 @@ describe('Map', () => {
     const { container, queryByTestId } = render(
       withTheme(
         <FilterContext.Provider value={{ state: mockedState }}>
-          <Map />
+          <Map setShowError={jest.fn()} />
         </FilterContext.Provider>
       )
     );
@@ -87,7 +87,7 @@ describe('Map', () => {
         <FilterContext.Provider
           value={{ state: mockedState, dispatch: dispatchSpy }}
         >
-          <Map />
+          <Map setShowError={jest.fn()} />
         </FilterContext.Provider>
       )
     );

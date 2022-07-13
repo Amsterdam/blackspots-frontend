@@ -3,7 +3,12 @@ import { withTheme } from 'test/utils';
 
 import DashboardPage from './DashboardPage';
 
-jest.mock('components/map/Map', () => 'div');
+jest.mock('components/map/Map', () => {
+  return {
+    default: () => <div></div>,
+    __esModule: true,
+  };
+});
 
 describe('DashboardPage', () => {
   afterEach(cleanup);
