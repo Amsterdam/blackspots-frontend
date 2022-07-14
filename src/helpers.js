@@ -47,13 +47,19 @@ export const isIvmType = (spotType) =>
 
 export const isPolygoonType = (spotType) =>
   spotType === SpotTypes.WEGVAK ||
-  isIvmType(spotType) ||
+  spotType === SpotTypes.SCHOOLSTRAAT ||
   spotType === SpotTypes.VSO ||
-  spotType === SpotTypes.SCHOOLSTRAAT;
+  isIvmType(spotType);
 
 export const isCoordinaatType = (spotType) =>
   spotType === SpotTypes.BLACKSPOT ||
-  isIvmType(spotType) ||
-  isProtocolType(spotType) ||
   spotType === SpotTypes.VSO ||
-  spotType === SpotTypes.SCHOOLSTRAAT;
+  spotType === SpotTypes.SCHOOLSTRAAT ||
+  isIvmType(spotType) ||
+  isProtocolType(spotType);
+
+export const isStrictPolygoonType = (type) =>
+  isPolygoonType(type) && !isCoordinaatType(type);
+
+export const isStrictCoordinaatType = (type) =>
+  isCoordinaatType(type) && !isPolygoonType(type);
