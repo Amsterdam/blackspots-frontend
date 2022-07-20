@@ -76,8 +76,7 @@ describe('Map', () => {
 
     expect(queryByTestId('map')).toBeInTheDocument();
 
-    // number of markers + 1
-    expect(container.querySelectorAll('.leaflet-marker-icon').length).toBe(3);
+    expect(container.querySelectorAll('.leaflet-marker-icon').length).toBe(2);
   });
 
   it('should click one of the markers and dispatch SELECT_LOCATION', () => {

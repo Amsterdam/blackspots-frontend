@@ -39,6 +39,7 @@ import {
   ExternalLinkStyle,
 } from './DetailPanelStyle';
 import DocumentLink from './components/DocumentLink';
+import { getLatLng } from 'components/map/helpers';
 
 const StyledLink = styled(Link)`
   color: ${themeColor('tint', 'level7')};
@@ -66,25 +67,13 @@ function getStatusClassName(status) {
 function getDisplayCoordinates(geometry) {
   if (geometry.type === GeometryTypes.POLYGON) {
     return geometry.coordinates[0]
-      .map((set) => set.reverse().join(', '))
+      .map((set) => [...set].reverse().join(', '))
       .join(', ');
   }
 
   if (geometry.type === GeometryTypes.POINT) {
-    return geometry.coordinates.reverse().join(', ');
+    return [...geometry.coordinates].reverse().join(', ');
   }
-}
-
-function getLatLng(geometry) {
-  if (geometry.type === GeometryTypes.POLYGON) {
-    return geometry.coordinates[0][0];
-  }
-
-  if (geometry.type === GeometryTypes.POINT) {
-    return geometry.coordinates;
-  }
-
-  return [];
 }
 
 const DetailPanel = ({ isOpen, togglePanel, feature }) => {
@@ -108,7 +97,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
     actiehouders,
     documents,
   } = feature.properties;
-  const [lng, lat] = getLatLng(feature.geometry);
+  const { lat, lng } = getLatLng(feature);
   const reportDocument = documents.find((d) => d.type === 'Rapportage');
   const designDocument = documents.find((d) => d.type === 'Ontwerp');
 

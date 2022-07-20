@@ -1,3 +1,4 @@
+import { GeometryTypes } from 'config';
 import {
   getSpotTypeFromMarker,
   getStatusTypeFromMarker,
@@ -108,6 +109,17 @@ export const getGeoJson = (locations, filter) => {
     }
   });
 
+  // For each Polygon also add a point to the Map.
+  const modifiedMarkers = markers
+    .map((feature) => {
+      if (feature.geometry.type === GeometryTypes.POLYGON) {
+        return [polygonToPoint(feature), feature];
+      }
+
+      return feature;
+    })
+    .flat();
+
   return {
     type: 'FeatureCollection',
     name: 'Black spots',
@@ -117,6 +129,37 @@ export const getGeoJson = (locations, filter) => {
         name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
       },
     },
-    features: [...markers],
+    features: modifiedMarkers,
   };
 };
+
+function polygonToPoint(feature) {
+  if (feature?.geometry?.type !== GeometryTypes.POLYGON) {
+    return null;
+  }
+
+  return {
+    ...feature,
+    geometry: {
+      type: 'Point',
+      coordinates: feature.geometry.coordinates[0][0],
+    },
+  };
+}
+
+export function getLatLng(feature) {
+  if (!feature || !feature?.geometry) {
+    return null;
+  }
+
+  return {
+    lat:
+      feature.geometry?.type === GeometryTypes.POINT
+        ? feature.geometry?.coordinates[1]
+        : feature.geometry?.coordinates[0][0][1],
+    lng:
+      feature.geometry?.type === GeometryTypes.POINT
+        ? feature.geometry?.coordinates[0]
+        : feature.geometry?.coordinates[0][0][0],
+  };
+}

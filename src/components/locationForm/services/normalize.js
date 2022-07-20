@@ -1,3 +1,4 @@
+import { GeometryTypes } from 'config';
 import { initalValues } from '../definitions/FormFields';
 
 export const cleanUndefined = (item) => {
@@ -25,7 +26,7 @@ export const featureToLocation = (feature) => {
 
   const {
     id,
-    geometry: { coordinates },
+    geometry,
     properties: {
       description,
       locatie_id,
@@ -43,12 +44,21 @@ export const featureToLocation = (feature) => {
       stadsdeel,
     },
   } = feature;
+
   return {
-    ...initalValues,
     id,
     naam: description,
     locatie_id,
-    coordinaten: `${coordinates[1]}, ${coordinates[0]}`,
+    coordinaten:
+      geometry.type === GeometryTypes.POINT
+        ? `${geometry.coordinates[1]}, ${geometry.coordinates[0]}`
+        : undefined,
+    polygon:
+      geometry.type === GeometryTypes.POLYGON
+        ? `(${[...geometry.coordinates[0]]
+            .map((s) => s.reverse())
+            .join('), (')})`
+        : undefined,
     stadsdeel,
     spot_type,
     jaar_blackspotlijst: jaar_blackspotlijst || '',
@@ -62,6 +72,7 @@ export const featureToLocation = (feature) => {
     opmerking: notes,
     rapport_document: documents.filter((d) => d.type === 'Rapportage')[0],
     design_document: documents.filter((d) => d.type === 'Ontwerp')[0],
+    coord_or_poly: geometry.type,
   };
 };
 
@@ -159,11 +170,7 @@ export const locationToFormData = (location) => {
     polygoon: polygoon
       ? {
           type: 'Polygon',
-          coordinates: [
-            JSON.parse(
-              `[${polygoon.replaceAll('(', '[').replaceAll(')', ']')}]`
-            )?.map((set) => set.reverse()),
-          ],
+          coordinates: parsePolygon(polygoon),
         }
       : null,
     stadsdeel,
@@ -186,3 +193,26 @@ export const locationToFormData = (location) => {
 
   return cleanUndefined(item);
 };
+
+function parsePolygon(polygoon) {
+  try {
+    const parsedPoly = [
+      JSON.parse(
+        `[${polygoon.replaceAll('(', '[').replaceAll(')', ']')}]`
+      )?.map((set) => set.reverse()),
+    ];
+
+    const firstCoords = parsedPoly[0][0];
+    const lastCoords = parsedPoly[0][parsedPoly[0].length - 1];
+
+    // If the first and last elements are different coordinates we add the first coordinate to complete the polygon.
+    // This is a requirement of the GeoJSON spec. We've implemented this for user convenience.
+    if (!firstCoords.every((el) => lastCoords.includes(el))) {
+      parsedPoly[0].push(firstCoords);
+    }
+
+    return parsedPoly;
+  } catch (e) {
+    throw new Error('Parsing of polygon failed. ' + e.message);
+  }
+}

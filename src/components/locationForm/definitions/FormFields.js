@@ -6,12 +6,46 @@ import {
   SpotStatusTypes,
   SpotTypes,
   Stadsdeel,
+  GeometryTypes,
 } from '../../../config';
 import TextInput from '../components/TextInput';
 import TextAreaInput from '../components/TextAreaInput';
 import FileInput from '../components/FileInput';
 
 const REQUIRED_MESSAGE = 'Er is geen waarde ingevuld';
+
+export const coordinatesField = {
+  column: 1,
+  name: 'coordinaten',
+  label: 'Coördinaten',
+  Component: TextInput,
+  width: '80%',
+  validation: {
+    required: REQUIRED_MESSAGE,
+    pattern: {
+      value: /^\d{1,2}\.\d{2,7}, \d{1,2}\.\d{2,7}$/,
+      message:
+        'De coördinaten zijn niet in het correcte format `xx.xxxxxxx, xx.xxxxxxx`',
+    },
+  },
+};
+
+export const polygonField = {
+  column: 1,
+  name: 'polygoon',
+  label: 'Polygoon',
+  Component: TextAreaInput,
+  width: '80%',
+  height: '125px',
+  validation: {
+    required: REQUIRED_MESSAGE,
+    pattern: {
+      value: /^(((\((\d+\.?)+,\s?\d+\.?\d+\))+),?\s?)+$/,
+      message:
+        'De polygoon is niet in het correcte format `(xx,xxxx, xx,xxxxx), (xx,xxxx), xxx.xxxx`',
+    },
+  },
+};
 
 const FormFields = [
   {
@@ -52,35 +86,27 @@ const FormFields = [
   },
   {
     column: 1,
-    name: 'coordinaten',
-    label: 'Coördinaten',
-    Component: TextInput,
-    width: '80%',
+    name: 'coord_or_poly',
+    label: 'Coördinaten of Polygoon',
+    initialValue: GeometryTypes.POINT,
+    Component: RadioGroupInput,
+    options: [
+      {
+        label: 'Coördinaten',
+        value: GeometryTypes.POINT,
+      },
+      {
+        label: 'Polygoon',
+        value: GeometryTypes.POLYGON,
+      },
+    ],
     validation: {
       required: REQUIRED_MESSAGE,
-      pattern: {
-        value: /^\d{1,2}\.\d{2,7}, \d{1,2}\.\d{2,7}$/,
-        message:
-          'De coördinaten zijn niet in het correcte format `xx.xxxxxxx, xx.xxxxxxx`',
-      },
     },
+    visible: false,
   },
-  {
-    column: 1,
-    name: 'polygoon',
-    label: 'Polygoon',
-    Component: TextAreaInput,
-    width: '80%',
-    height: '125px',
-    validation: {
-      required: REQUIRED_MESSAGE,
-      pattern: {
-        value: /^(((\((\d+\.?)+,\s?\d+\.?\d+\))+),?\s?)+$/,
-        message:
-          'De polygoon is niet in het correcte format `(xx,xxxx, xx,xxxxx), (xx,xxxx), xxx.xxxx`',
-      },
-    },
-  },
+  coordinatesField,
+  polygonField,
   {
     column: 1,
     name: 'stadsdeel',
@@ -216,7 +242,7 @@ const FormFields = [
   },
 ].map((item, id) => ({ ...item, id }));
 
-export const initalValues = FormFields.reduce(
+export const initalValues = FormFields.filter((f) => f.visible).reduce(
   (acc, item) => ({
     ...acc,
     [item.name]: item.initialValue || '',
@@ -224,7 +250,9 @@ export const initalValues = FormFields.reduce(
   {}
 );
 
-export const formValidation = FormFields.reduce(
+export const formValidation = FormFields.filter(
+  (f) => f.visible ?? true
+).reduce(
   (acc, item) => ({
     ...acc,
     [item.name]: item.validation || {},

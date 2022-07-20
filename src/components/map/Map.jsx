@@ -18,10 +18,11 @@ import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
 import './markerStyle.css';
 import useDataFetching from '../../shared/hooks/useDataFetching';
-import { endpoints, GeometryTypes } from '../../config';
+import { endpoints } from '../../config';
 import BlackspotsLayer from './components/BlackspotsLayer';
 import StadsdelenLayer from './components/StadsdelenLayer';
 import Search from './components/Search';
+import { getLatLng } from './helpers';
 
 const MAP_OPTIONS = {
   center: [52.36988741057662, 4.8966407775878915],
@@ -90,16 +91,7 @@ const MapComponent = ({ setShowError }) => {
         {selectedLocation && (
           <Marker
             options={{ icon, zIndexOffset: 1000 }}
-            latLng={{
-              lat:
-                selectedLocation.geometry?.type === GeometryTypes.POINT
-                  ? selectedLocation.geometry?.coordinates[1]
-                  : selectedLocation.geometry?.coordinates[0][0][1],
-              lng:
-                selectedLocation.geometry?.type === GeometryTypes.POINT
-                  ? selectedLocation.geometry?.coordinates[0]
-                  : selectedLocation.geometry?.coordinates[0][0][0],
-            }}
+            latLng={getLatLng(selectedLocation)}
           />
         )}
         <StadsdelenLayer />

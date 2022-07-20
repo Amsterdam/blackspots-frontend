@@ -21,13 +21,8 @@ import {
   locationToFormData,
   locationToFeature,
 } from './services/normalize';
-import {
-  isBlackspotType,
-  isCoordinaatType,
-  isIvmType,
-  isPolygoonType,
-  isProtocolType,
-} from 'helpers';
+import useManageCoordinatePolygonVisabillity from './hooks/useManageCoordinatePolygonVisabillity';
+import { useManageSpotType } from './hooks/useManageSpotType';
 
 const LocationForm = () => {
   const {
@@ -67,9 +62,13 @@ const LocationForm = () => {
     watch,
     trigger,
     setError,
+    formState,
+    clearErrors,
   } = useForm({
-    ...defaultValues,
+    defaultValues,
   });
+
+  console.log(formState);
 
   useEffect(() => {
     if (!locationId && selectedLocation) {
@@ -77,75 +76,22 @@ const LocationForm = () => {
     }
   }, [locationId, dispatch, selectedLocation]);
 
-  const values = watch(undefined, defaultValues);
+  const values = watch();
 
   const spotType = watch('spot_type');
-  useEffect(() => {
-    setVisible((v) => ({
-      ...v,
-      jaar_blackspotlijst: isBlackspotType(spotType),
-      jaar_ongeval_quickscan: isProtocolType(spotType),
-      jaar_opgenomen_in_ivm_lijst: isIvmType(spotType),
-      polygoon: isPolygoonType(spotType),
-      coordinaten: isCoordinaatType(spotType),
-    }));
-
-    const year = String(new Date().getFullYear());
-
-    if (isBlackspotType(spotType) && !defaultValues.jaar_blackspotlijst) {
-      setValue('jaar_blackspotlijst', year);
-      setValue('jaar_ongeval_quickscan', '');
-      setValue('jaar_opgenomen_in_ivm_lijst', '');
-    }
-
-    if (isProtocolType(spotType) && !defaultValues.jaar_ongeval_quickscan) {
-      setValue('jaar_ongeval_quickscan', year);
-      setValue('jaar_blackspotlijst', '');
-      setValue('jaar_opgenomen_in_ivm_lijst', '');
-    }
-
-    if (isIvmType(spotType) && !defaultValues.jaar_opgenomen_in_ivm_lijst) {
-      setValue('jaar_opgenomen_in_ivm_lijst', year);
-      setValue('jaar_blackspotlijst', '');
-      setValue('jaar_ongeval_quickscan', '');
-    }
-
-    if (
-      !isBlackspotType(spotType) &&
-      !isProtocolType(spotType) &&
-      !isIvmType(spotType)
-    ) {
-      setValue('jaar_blackspotlijst', '');
-      setValue('jaar_ongeval_quickscan', '');
-      setValue('jaar_opgenomen_in_ivm_lijst', '');
-    }
-  }, [
+  useManageSpotType({
     spotType,
-    defaultValues.jaar_blackspotlijst,
-    defaultValues.jaar_ongeval_quickscan,
-    defaultValues.jaar_opgenomen_in_ivm_lijst,
+    setVisible,
     setValue,
-  ]);
+    defaultValues,
+  });
 
-  const coordinaten = watch('coordinaten');
-  useEffect(() => {
-    if (coordinaten) {
-      setVisible((v) => ({
-        ...v,
-        stadsdeel: false,
-      }));
-      setValue('stadsdeel', '', true);
-      unregister('stadsdeel');
-      unregister('polygoon');
-    }
-  }, [coordinaten, setValue, unregister]);
-
-  const polygoon = watch('polygoon');
-  useEffect(() => {
-    if (polygoon) {
-      unregister('coordinaten');
-    }
-  }, [polygoon, unregister]);
+  useManageCoordinatePolygonVisabillity({
+    setVisible,
+    watch,
+    register,
+    unregister,
+  });
 
   const handleServerValidation = async (reason) => {
     if (reason.point && reason.point.length) {
@@ -207,6 +153,7 @@ const LocationForm = () => {
   const handleChange = (e) => {
     const value =
       e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    clearErrors(e.target.name);
     setValue(e.target.name, value);
   };
 
@@ -216,6 +163,7 @@ const LocationForm = () => {
 
   useEffect(() => {
     Object.entries(formValidation).forEach(([name, validation]) => {
+      console.log('register', name, validation);
       register(name, validation);
       setValue(name, locationId ? defaultValues[name] : initalValues[name]);
     });
