@@ -10,8 +10,6 @@ function useManageCoordinatePolygonVisabillity({
 }) {
   const coordOrPoly = watch('coord_or_poly');
 
-  console.log(coordOrPoly);
-
   useEffect(() => {
     if (coordOrPoly === GeometryTypes.POINT) {
       setVisible((v) => ({

@@ -62,13 +62,10 @@ const LocationForm = () => {
     watch,
     trigger,
     setError,
-    formState,
     clearErrors,
   } = useForm({
     defaultValues,
   });
-
-  console.log(formState);
 
   useEffect(() => {
     if (!locationId && selectedLocation) {
@@ -163,7 +160,6 @@ const LocationForm = () => {
 
   useEffect(() => {
     Object.entries(formValidation).forEach(([name, validation]) => {
-      console.log('register', name, validation);
       register(name, validation);
       setValue(name, locationId ? defaultValues[name] : initalValues[name]);
     });

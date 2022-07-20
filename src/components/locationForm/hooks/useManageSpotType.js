@@ -21,7 +21,9 @@ export function useManageSpotType({
       jaar_ongeval_quickscan: isProtocolType(spotType),
       jaar_opgenomen_in_ivm_lijst: isIvmType(spotType),
       coord_or_poly:
-        !isStrictCoordinaatType(spotType) && !isStrictPolygoonType(spotType),
+        !!spotType &&
+        !isStrictCoordinaatType(spotType) &&
+        !isStrictPolygoonType(spotType),
     }));
 
     if (isStrictPolygoonType(spotType) || isStrictCoordinaatType(spotType)) {

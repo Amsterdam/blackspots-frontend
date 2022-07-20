@@ -28,6 +28,7 @@ export const coordinatesField = {
         'De coördinaten zijn niet in het correcte format `xx.xxxxxxx, xx.xxxxxxx`',
     },
   },
+  visible: false,
 };
 
 export const polygonField = {
@@ -45,6 +46,7 @@ export const polygonField = {
         'De polygoon is niet in het correcte format `(xx,xxxx, xx,xxxxx), (xx,xxxx), xxx.xxxx`',
     },
   },
+  visible: false,
 };
 
 const FormFields = [

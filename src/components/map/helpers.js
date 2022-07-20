@@ -103,11 +103,14 @@ const evaluateSingleMarkerVisibility = (marker, filter) => {
 };
 
 export const getGeoJson = (locations, filter) => {
-  const markers = locations.filter((location) => {
-    if (evaluateSingleMarkerVisibility(location, filter)) {
-      return location;
-    }
-  });
+  const markers = locations
+    .filter((location) => {
+      if (evaluateSingleMarkerVisibility(location, filter)) {
+        return location;
+      }
+      return null;
+    })
+    .filter(Boolean);
 
   // For each Polygon also add a point to the Map.
   const modifiedMarkers = markers

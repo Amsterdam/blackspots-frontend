@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 export const REDUCER_KEY = 'filter';
 export const SELECT_LOCATION = `${REDUCER_KEY}/SELECT_LOCATION`;
 export const SET_LOCATIONS = `${REDUCER_KEY}/SET_LOCATIONS`;
