@@ -1,6 +1,5 @@
-import { useContext } from 'react';
-import PropTypes from 'prop-types';
-import { FilterContext } from 'shared/reducers/FilterContext';
+import { func } from 'prop-types';
+import { useFilterStateValue } from 'shared/reducers/FilterContext';
 import { SpotStatusTypes, StatusDisplayNames } from 'config';
 import classNames from 'classnames';
 import styles from '../FilterPanel.module.scss';
@@ -19,9 +18,7 @@ function getStatusClassName(status) {
 }
 
 const StatusFilter = ({ updateFilters, trackFilter }) => {
-  const {
-    state: { filter },
-  } = useContext(FilterContext);
+  const filter = useFilterStateValue();
 
   return (
     <>
@@ -40,15 +37,7 @@ const StatusFilter = ({ updateFilters, trackFilter }) => {
                   ...filter?.spotStatusTypeFilter,
                   [type]: !value,
                 };
-                updateFilters(
-                  filter?.spotTypeFilter,
-                  updatedFilter,
-                  filter?.blackspotYearFilter,
-                  filter?.deliveredYearFilter,
-                  filter?.quickscanYearFilter,
-                  filter?.stadsdeelFilter,
-                  filter?.ivmYearFilter
-                );
+                updateFilters(updatedFilter);
                 if (!value) {
                   trackFilter(type);
                 }
@@ -67,8 +56,8 @@ const StatusFilter = ({ updateFilters, trackFilter }) => {
 };
 
 StatusFilter.propTypes = {
-  updateFilters: PropTypes.func.isRequired,
-  trackFilter: PropTypes.func.isRequired,
+  updateFilters: func.isRequired,
+  trackFilter: func.isRequired,
 };
 
 export default StatusFilter;

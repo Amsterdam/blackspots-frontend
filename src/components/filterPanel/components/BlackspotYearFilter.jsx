@@ -1,57 +1,21 @@
-import { useContext } from 'react';
-import PropTypes from 'prop-types';
-import { FilterContext } from 'shared/reducers/FilterContext';
-import styles from '../FilterPanel.module.scss';
+import { func, object } from 'prop-types';
+import YearFilter from './YearFilter';
 
-const BlackspotYearFilter = ({ updateFilters, trackFilter }) => {
-  const {
-    state: { filter },
-  } = useContext(FilterContext);
-
+const BlackspotYearFilter = ({ updateFilters, trackFilter, filterValues }) => {
   return (
-    <div className={styles.YearFilter}>
-      {Object.keys(filter?.blackspotYearFilter)
-        .reverse()
-        .map((year) => {
-          const value = filter?.blackspotYearFilter[year];
-          return (
-            <label key={year} htmlFor={year} className={styles.CheckboxWrapper}>
-              <input
-                id={year}
-                type="checkbox"
-                checked={value}
-                data-testid={year}
-                onChange={() => {
-                  const updatedFilter = {
-                    ...filter?.blackspotYearFilter,
-                    [year]: !value,
-                  };
-                  updateFilters(
-                    filter?.spotTypeFilter,
-                    filter?.spotStatusTypeFilter,
-                    updatedFilter,
-                    filter?.deliveredYearFilter,
-                    filter?.quickscanYearFilter,
-                    filter?.stadsdeelFilter,
-                    filter?.ivmYearFilter
-                  );
-                  if (!value) {
-                    trackFilter(`On blackspot list: ${year}`);
-                  }
-                }}
-              />
-              <span />
-              {year}
-            </label>
-          );
-        })}
-    </div>
+    <YearFilter
+      updateFilters={updateFilters}
+      trackFilter={trackFilter}
+      filterValues={filterValues}
+      trackingMessage="On blackspot list:"
+    />
   );
 };
 
 BlackspotYearFilter.propTypes = {
-  updateFilters: PropTypes.func.isRequired,
-  trackFilter: PropTypes.func.isRequired,
+  updateFilters: func.isRequired,
+  trackFilter: func.isRequired,
+  filterValues: object.isRequired,
 };
 
 export default BlackspotYearFilter;

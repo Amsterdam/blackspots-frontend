@@ -1,57 +1,21 @@
-import { useContext } from 'react';
-import PropTypes from 'prop-types';
-import { FilterContext } from 'shared/reducers/FilterContext';
-import styles from '../FilterPanel.module.scss';
+import { func, object } from 'prop-types';
+import YearFilter from './YearFilter';
 
-const DeliveredYearFilter = ({ updateFilters, trackFilter }) => {
-  const {
-    state: { filter },
-  } = useContext(FilterContext);
-
+const DeliveredYearFilter = ({ updateFilters, trackFilter, filterValues }) => {
   return (
-    <div className={styles.YearFilter}>
-      {Object.keys(filter?.deliveredYearFilter)
-        .reverse()
-        .map((year) => {
-          const value = filter?.deliveredYearFilter[year];
-          return (
-            <label key={year} htmlFor={year} className={styles.CheckboxWrapper}>
-              <input
-                id={year}
-                type="checkbox"
-                data-testid={year}
-                checked={value}
-                onChange={() => {
-                  const updatedFilter = {
-                    ...filter?.deliveredYearFilter,
-                    [year]: !value,
-                  };
-                  updateFilters(
-                    filter?.spotTypeFilter,
-                    filter?.spotStatusTypeFilter,
-                    filter?.blackspotYearFilter,
-                    updatedFilter,
-                    filter?.quickscanYearFilter,
-                    filter?.stadsdeelFilter,
-                    filter?.ivmYearFilter
-                  );
-                  if (!value) {
-                    trackFilter(`Delivered on: ${year}`);
-                  }
-                }}
-              />
-              <span />
-              {year}
-            </label>
-          );
-        })}
-    </div>
+    <YearFilter
+      updateFilters={updateFilters}
+      trackFilter={trackFilter}
+      filterValues={filterValues}
+      trackingMessage="Delivered on:"
+    />
   );
 };
 
 DeliveredYearFilter.propTypes = {
-  updateFilters: PropTypes.func.isRequired,
-  trackFilter: PropTypes.func.isRequired,
+  updateFilters: func.isRequired,
+  trackFilter: func.isRequired,
+  filterValues: object.isRequired,
 };
 
 export default DeliveredYearFilter;

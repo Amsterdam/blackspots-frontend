@@ -1,12 +1,5 @@
 import { ContextMenuOptions } from 'components/filterPanel/FilterPanel.constants';
 import { GeometryTypes } from 'config';
-import {
-  getSpotTypeFromMarker,
-  getStatusTypeFromMarker,
-  getBlackspotYearFromMarker,
-  getDeliveredYearFromMarker,
-  getQuickscanYearFromMarker,
-} from 'helpers';
 
 /**
  * Check if all values of an object are falsy
@@ -23,7 +16,7 @@ export const allValuesAreFalse = (object) => {
  * Check if a marker should be visible based on the type filter
  * */
 function isVisibleSpotType(spotTypeFilter, stadsdeelFilter, marker) {
-  const spotType = getSpotTypeFromMarker(marker);
+  const spotType = marker?.properties?.spot_type;
   // const spotStatus = getStatusTypeFromMarker(marker);
   const { stadsdeel } = marker.properties;
 
@@ -50,7 +43,7 @@ function valueMatchesFilter(filter, value) {
  * Check if a marker should be visible based on the status filter
  */
 function isVisibleStatusType(spotStatusTypeFilter, marker) {
-  const statusType = getStatusTypeFromMarker(marker);
+  const statusType = marker?.properties?.status;
   return valueMatchesFilter(spotStatusTypeFilter, statusType);
 }
 
@@ -58,7 +51,7 @@ function isVisibleStatusType(spotStatusTypeFilter, marker) {
  * Check if a marker should be visible based on the blackspot year filter
  */
 function isVisibleBlackspotYear(blackspotYearFilter, marker) {
-  const year = getBlackspotYearFromMarker(marker);
+  const year = marker?.properties?.jaar_blackspotlijst;
   return valueMatchesFilter(blackspotYearFilter, year);
 }
 
@@ -66,7 +59,7 @@ function isVisibleBlackspotYear(blackspotYearFilter, marker) {
  * Check if a marker should be visible based on the delivery year filter
  */
 function isVisibleDeliveredYear(deliveredYearFilter, marker) {
-  const year = getDeliveredYearFromMarker(marker);
+  const year = marker?.properties?.jaar_oplevering;
   return valueMatchesFilter(deliveredYearFilter, year);
 }
 
@@ -74,7 +67,7 @@ function isVisibleDeliveredYear(deliveredYearFilter, marker) {
  * Check if a marker should be visible based on the quickscan year filter
  */
 function isVisibleQuickscanYear(quickscanYearFilter, marker) {
-  const year = getQuickscanYearFromMarker(marker);
+  const year = marker?.properties?.jaar_ongeval_quickscan;
   return valueMatchesFilter(quickscanYearFilter, year);
 }
 
