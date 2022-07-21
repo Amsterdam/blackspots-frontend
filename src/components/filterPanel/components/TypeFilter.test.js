@@ -46,13 +46,9 @@ describe('TypeFilter', () => {
     fireEvent.click(container.querySelector('label:nth-child(2)'));
 
     const { filter } = initialState;
-    expect(props.updateFilters).toHaveBeenLastCalledWith(
-      { ...filter.spotTypeFilter, blackspot: true },
-      filter.spotStatusTypeFilter,
-      filter.blackspotYearFilter,
-      filter.deliveredYearFilter,
-      filter.quickscanYearFilter,
-      filter.stadsdeelFilter
-    );
+    expect(props.updateFilters).toHaveBeenLastCalledWith({
+      ...filter.spotTypeFilter,
+      blackspot: true,
+    });
   });
 });
