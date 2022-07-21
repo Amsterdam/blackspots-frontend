@@ -64,7 +64,6 @@ const LocationForm = () => {
     trigger,
     setError,
     clearErrors,
-    formState,
   } = useForm({
     defaultValues,
   });
@@ -76,8 +75,6 @@ const LocationForm = () => {
   }, [locationId, dispatch, selectedLocation]);
 
   const values = watch();
-
-  console.log(formState, defaultValues);
 
   const spotType = values['spot_type'];
   useManageSpotType({
