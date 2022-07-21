@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { getByUrl } from '../api/api';
 import useDataFetching from './useDataFetching';
 

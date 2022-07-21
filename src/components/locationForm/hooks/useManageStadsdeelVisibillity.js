@@ -4,7 +4,7 @@ function useManageStadsdeelVisibillity({ setVisible, stadsdeel }) {
   useEffect(() => {
     setVisible((v) => ({
       ...v,
-      stadsdeel: true,
+      stadsdeel: !!stadsdeel,
     }));
   }, [setVisible, stadsdeel]);
 }
