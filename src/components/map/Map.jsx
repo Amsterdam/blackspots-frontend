@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useContext } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { func } from 'prop-types';
 import {
   Map,
@@ -12,7 +12,11 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Loader from 'shared/loader/Loader';
 import { actions } from 'shared/reducers/filter';
-import { FilterContext } from 'shared/reducers/FilterContext';
+import {
+  useDispatch,
+  useLocationsStateValue,
+  useSelectedLocationStateValue,
+} from 'shared/reducers/FilterContext';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
@@ -35,10 +39,9 @@ const MAP_OPTIONS = {
 };
 
 const MapComponent = ({ setShowError }) => {
-  const {
-    state: { selectedLocation, locations },
-    dispatch,
-  } = useContext(FilterContext);
+  const selectedLocation = useSelectedLocationStateValue();
+  const locations = useLocationsStateValue();
+  const dispatch = useDispatch();
   const { errorMessage, loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
 

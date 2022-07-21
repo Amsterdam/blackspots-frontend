@@ -1,10 +1,13 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { renderToString } from 'react-dom/server';
 import PropTypes from 'prop-types';
 import L from 'leaflet';
 import { useMapInstance, GeoJSON } from '@amsterdam/arm-core';
 import { SpotTypes, SpotStatusTypes, SpotStatusColor } from 'config';
-import { FilterContext } from 'shared/reducers/FilterContext';
+import {
+  useFilterStateValue,
+  useLocationsStateValue,
+} from 'shared/reducers/FilterContext';
 import SVGIcon from '../../SVGIcon/SVGIcon';
 import { getGeoJson, getLatLng } from '../helpers';
 
@@ -24,9 +27,9 @@ const createFeatureIcon = (feature) => {
 };
 
 const BlackspotsLayer = ({ onMarkerClick }) => {
-  const {
-    state: { locations, filter },
-  } = useContext(FilterContext);
+  const locations = useLocationsStateValue();
+  const filter = useFilterStateValue();
+
   const [json, setJson] = useState('');
   const mapInstance = useMapInstance();
   const [layerInstance, setLayerInstance] = useState('');

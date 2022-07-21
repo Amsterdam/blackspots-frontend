@@ -1,10 +1,13 @@
-import { useEffect, useState, useMemo, useContext } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
-
-import { Button, Row } from '@amsterdam/asc-ui';
 import { useForm } from 'react-hook-form';
-import { FilterContext } from 'shared/reducers/FilterContext';
+import { string } from 'prop-types';
+import { Button, Row } from '@amsterdam/asc-ui';
+
+import {
+  useDispatch,
+  useSelectedLocationStateValue,
+} from 'shared/reducers/FilterContext';
 import { actions } from 'shared/reducers/filter';
 import { sendData } from 'shared/api/api';
 import { appRoutes, endpoints } from '../../config';
@@ -25,11 +28,8 @@ import useManageCoordinatePolygonVisabillity from './hooks/useManageCoordinatePo
 import { useManageSpotType } from './hooks/useManageSpotType';
 
 const LocationForm = () => {
-  const {
-    state: { selectedLocation },
-    dispatch,
-  } = useContext(FilterContext);
-
+  const selectedLocation = useSelectedLocationStateValue();
+  const dispatch = useDispatch();
   const params = useParams();
   const locationId = params.id;
 
@@ -245,7 +245,7 @@ LocationForm.defaultProps = {
 };
 
 LocationForm.propTypes = {
-  id: PropTypes.string,
+  id: string,
 };
 
 export default LocationForm;

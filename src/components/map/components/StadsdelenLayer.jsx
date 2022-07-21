@@ -16,7 +16,7 @@ const StadsdelenLayer = () => {
 
   mapInstance.addLayer(stadsdelen);
 
-  return null;
+  return <></>;
 };
 
 export default StadsdelenLayer;

@@ -28,6 +28,22 @@ export function useFilterStateValue() {
   return filter;
 }
 
+export function useSelectedLocationStateValue() {
+  const {
+    state: { selectedLocation },
+  } = useContext(FilterContext);
+
+  return selectedLocation;
+}
+
+export function useLocationsStateValue() {
+  const {
+    state: { locations },
+  } = useContext(FilterContext);
+
+  return locations;
+}
+
 export function useDispatch() {
   const { dispatch } = useContext(FilterContext);
 
