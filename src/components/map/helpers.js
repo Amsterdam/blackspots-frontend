@@ -1,3 +1,4 @@
+import { ContextMenuOptions } from 'components/filterPanel/FilterPanel.constants';
 import { GeometryTypes } from 'config';
 import {
   getSpotTypeFromMarker,
@@ -38,14 +39,19 @@ function isVisibleSpotType(spotTypeFilter, stadsdeelFilter, marker) {
   return showBasedOnTypeFilter && showBasedOnStadsdeelFilter;
 }
 
+function valueMatchesFilter(filter, value) {
+  if (!value) return false;
+
+  // If no filter option selected (allValuesAreFalse) return true, else check if the current value is a selected filter option.
+  return allValuesAreFalse(filter) ? true : filter[value];
+}
+
 /**
  * Check if a marker should be visible based on the status filter
  */
 function isVisibleStatusType(spotStatusTypeFilter, marker) {
   const statusType = getStatusTypeFromMarker(marker);
-  return allValuesAreFalse(spotStatusTypeFilter)
-    ? true
-    : spotStatusTypeFilter[statusType];
+  return valueMatchesFilter(spotStatusTypeFilter, statusType);
 }
 
 /**
@@ -53,10 +59,7 @@ function isVisibleStatusType(spotStatusTypeFilter, marker) {
  */
 function isVisibleBlackspotYear(blackspotYearFilter, marker) {
   const year = getBlackspotYearFromMarker(marker);
-  if (!year) return false;
-  return allValuesAreFalse(blackspotYearFilter)
-    ? true
-    : blackspotYearFilter[year];
+  return valueMatchesFilter(blackspotYearFilter, year);
 }
 
 /**
@@ -64,10 +67,7 @@ function isVisibleBlackspotYear(blackspotYearFilter, marker) {
  */
 function isVisibleDeliveredYear(deliveredYearFilter, marker) {
   const year = getDeliveredYearFromMarker(marker);
-  if (!year) return false;
-  return allValuesAreFalse(deliveredYearFilter)
-    ? true
-    : deliveredYearFilter[year];
+  return valueMatchesFilter(deliveredYearFilter, year);
 }
 
 /**
@@ -75,10 +75,12 @@ function isVisibleDeliveredYear(deliveredYearFilter, marker) {
  */
 function isVisibleQuickscanYear(quickscanYearFilter, marker) {
   const year = getQuickscanYearFromMarker(marker);
-  if (!year) return false;
-  return allValuesAreFalse(quickscanYearFilter)
-    ? true
-    : quickscanYearFilter[year];
+  return valueMatchesFilter(quickscanYearFilter, year);
+}
+
+function isVisibleIvmYear(ivmYearFilter, marker) {
+  const year = marker?.properties?.jaar_opgenomen_in_ivm_lijst;
+  return valueMatchesFilter(ivmYearFilter, year);
 }
 
 const evaluateSingleMarkerVisibility = (marker, filter) => {
@@ -89,13 +91,15 @@ const evaluateSingleMarkerVisibility = (marker, filter) => {
       marker
     ) &&
     isVisibleStatusType(filter?.spotStatusTypeFilter || {}, marker) &&
-    (filter?.show === 'ALL' ||
-      (filter?.show === 'BLACKSPOTS' &&
+    (filter?.show === ContextMenuOptions.ALL ||
+      (filter?.show === ContextMenuOptions.BLACKSPOTS &&
         isVisibleBlackspotYear(filter?.blackspotYearFilter || {}, marker)) ||
-      (filter?.show === 'DELIVERED' &&
+      (filter?.show === ContextMenuOptions.DELIVERD &&
         isVisibleDeliveredYear(filter?.deliveredYearFilter || {}, marker)) ||
-      (filter?.show === 'QUICKSCANS' &&
-        isVisibleQuickscanYear(filter?.quickscanYearFilter || {}, marker)))
+      (filter?.show === ContextMenuOptions.QUICKSCANS &&
+        isVisibleQuickscanYear(filter?.quickscanYearFilter || {}, marker)) ||
+      (filter?.show === ContextMenuOptions.IVM &&
+        isVisibleIvmYear(filter?.ivmYearFilter || {}, marker)))
   ) {
     return true;
   }

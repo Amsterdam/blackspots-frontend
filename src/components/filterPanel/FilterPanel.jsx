@@ -18,6 +18,7 @@ import DeliveredYearFilter from './components/DeliveredYearFilter';
 import QuickscanYearFilter from './components/QuickscanYearFilter';
 import { ContextMenuOptions, MenuOptions } from './FilterPanel.constants';
 import styles from './FilterPanel.module.scss';
+import IvmYearFilter from './components/IvmYearFilter';
 
 const ExportButton = styled(Button)`
   margin: ${themeSpacing(2, 0)};
@@ -96,7 +97,8 @@ const FilterPanel = () => {
       updatedBlackspotYearFilter,
       updatedDeliveredYearFilter,
       updatedQuickscanYearFilter,
-      updatedStadsdeelFilter
+      updatedStadsdeelFilter,
+      updatedIvmYearFilter
     ) => {
       if (!updatedSpotTypeFilter) return;
 
@@ -111,6 +113,7 @@ const FilterPanel = () => {
         deliveredYearFilter: updatedDeliveredYearFilter,
         quickscanYearFilter: updatedQuickscanYearFilter,
         stadsdeelFilter: updatedStadsdeelFilter,
+        ivmYearFilter: updatedIvmYearFilter,
       };
 
       dispatch(actions.setFilter(newFilter));
@@ -186,6 +189,12 @@ const FilterPanel = () => {
           )}
           {filter.show === ContextMenuOptions.QUICKSCANS && (
             <QuickscanYearFilter
+              updateFilters={updateFilters}
+              trackFilter={trackFilter}
+            />
+          )}
+          {filter.show === ContextMenuOptions.IVM && (
+            <IvmYearFilter
               updateFilters={updateFilters}
               trackFilter={trackFilter}
             />

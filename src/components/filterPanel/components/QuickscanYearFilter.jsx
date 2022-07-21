@@ -32,7 +32,8 @@ const QuickscanYearFilter = ({ updateFilters, trackFilter }) => {
                     filter?.blackspotYearFilter,
                     filter?.deliveredYearFilter,
                     updatedFilter,
-                    filter?.stadsdeelFilter
+                    filter?.stadsdeelFilter,
+                    filter?.ivmYearFilter
                   );
                   if (!value) {
                     trackFilter(`On quickscan list: ${year}`);

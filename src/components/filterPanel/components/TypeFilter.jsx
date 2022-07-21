@@ -37,7 +37,8 @@ const TypeFilter = ({ updateFilters, trackFilter }) => {
                   filter?.blackspotYearFilter,
                   filter?.deliveredYearFilter,
                   filter?.quickscanYearFilter,
-                  filter?.stadsdeelFilter
+                  filter?.stadsdeelFilter,
+                  filter?.ivmYearFilter
                 );
               }}
             />

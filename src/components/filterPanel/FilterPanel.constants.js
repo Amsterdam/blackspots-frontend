@@ -3,6 +3,7 @@ export const ContextMenuOptions = {
   DELIVERED: 'DELIVERED',
   BLACKSPOTS: 'BLACKSPOTS',
   QUICKSCANS: 'QUICKSCANS',
+  IVM: 'IVM',
 };
 
 export const MenuOptions = [
@@ -25,5 +26,10 @@ export const MenuOptions = [
     id: 4,
     label: 'Opgenomen als protocol in',
     value: ContextMenuOptions.QUICKSCANS,
+  },
+  {
+    id: 5,
+    label: 'Opgenomen in IVM lijst in',
+    value: ContextMenuOptions.IVM,
   },
 ];

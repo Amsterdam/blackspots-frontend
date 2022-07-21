@@ -32,7 +32,8 @@ const DeliveredYearFilter = ({ updateFilters, trackFilter }) => {
                     filter?.blackspotYearFilter,
                     updatedFilter,
                     filter?.quickscanYearFilter,
-                    filter?.stadsdeelFilter
+                    filter?.stadsdeelFilter,
+                    filter?.ivmYearFilter
                   );
                   if (!value) {
                     trackFilter(`Delivered on: ${year}`);

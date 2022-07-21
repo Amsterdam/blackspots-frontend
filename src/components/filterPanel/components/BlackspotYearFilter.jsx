@@ -32,7 +32,8 @@ const BlackspotYearFilter = ({ updateFilters, trackFilter }) => {
                     updatedFilter,
                     filter?.deliveredYearFilter,
                     filter?.quickscanYearFilter,
-                    filter?.stadsdeelFilter
+                    filter?.stadsdeelFilter,
+                    filter?.ivmYearFilter
                   );
                   if (!value) {
                     trackFilter(`On blackspot list: ${year}`);

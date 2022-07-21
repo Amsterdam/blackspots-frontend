@@ -35,7 +35,8 @@ const StadsdeelFilter = ({ updateFilters, trackFilter }) => {
                   filter?.blackspotYearFilter,
                   filter?.deliveredYearFilter,
                   filter?.quickscanYearFilter,
-                  updatedFilter
+                  updatedFilter,
+                  filter?.ivmYearFilter
                 );
               }}
             />
