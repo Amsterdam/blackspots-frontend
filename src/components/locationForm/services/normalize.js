@@ -1,3 +1,4 @@
+import { Stadsdeel } from 'config';
 import { GeometryTypes } from 'config';
 import { initalValues } from '../definitions/FormFields';
 
@@ -59,7 +60,7 @@ export const featureToLocation = (feature) => {
             .map((s) => s.reverse())
             .join('), (')})`
         : undefined,
-    stadsdeel,
+    stadsdeel: parseStadsdeel(stadsdeel),
     spot_type,
     jaar_blackspotlijst: jaar_blackspotlijst || '',
     jaar_ongeval_quickscan: jaar_ongeval_quickscan || '',
@@ -173,7 +174,7 @@ export const locationToFormData = (location) => {
           coordinates: parsePolygon(polygoon),
         }
       : null,
-    stadsdeel,
+    stadsdeel: parseStadsdeel(stadsdeel),
     spot_type,
     jaar_blackspotlijst,
     jaar_ongeval_quickscan,
@@ -193,6 +194,28 @@ export const locationToFormData = (location) => {
 
   return cleanUndefined(item);
 };
+
+function parseStadsdeel(stadsdeel) {
+  if (!stadsdeel) {
+    return stadsdeel;
+  }
+
+  // Convert to object of format: { 'Oost': 'M' }
+  const stadsdelenFormatted = Object.values(Stadsdeel).reduce((prev, curr) => {
+    return {
+      ...prev,
+      [curr.name]: curr.value,
+    };
+  }, {});
+
+  // See if the current value is already a stadsdeelcode
+  if (Object.values(stadsdelenFormatted).includes(stadsdeel)) {
+    return stadsdeel;
+  }
+
+  // Else try to find the code and return it.
+  return stadsdelenFormatted[stadsdeel];
+}
 
 function parsePolygon(polygoon) {
   try {

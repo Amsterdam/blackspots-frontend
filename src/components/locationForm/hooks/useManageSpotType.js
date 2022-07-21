@@ -37,22 +37,31 @@ export function useManageSpotType({
 
     const year = String(new Date().getFullYear());
 
-    if (isBlackspotType(spotType) && !defaultValues.jaar_blackspotlijst) {
-      setValue('jaar_blackspotlijst', year);
-      setValue('jaar_ongeval_quickscan', '');
-      setValue('jaar_opgenomen_in_ivm_lijst', '');
+    if (isBlackspotType(spotType)) {
+      setValue(
+        'jaar_blackspotlijst',
+        defaultValues.jaar_blackspotlijst ?? year
+      );
+      setValue('jaar_ongeval_quickscan', null);
+      setValue('jaar_opgenomen_in_ivm_lijst', null);
     }
 
-    if (isProtocolType(spotType) && !defaultValues.jaar_ongeval_quickscan) {
-      setValue('jaar_ongeval_quickscan', year);
-      setValue('jaar_blackspotlijst', '');
-      setValue('jaar_opgenomen_in_ivm_lijst', '');
+    if (isProtocolType(spotType)) {
+      setValue(
+        'jaar_ongeval_quickscan',
+        defaultValues.jaar_ongeval_quickscan ?? year
+      );
+      setValue('jaar_blackspotlijst', null);
+      setValue('jaar_opgenomen_in_ivm_lijst', null);
     }
 
-    if (isIvmType(spotType) && !defaultValues.jaar_opgenomen_in_ivm_lijst) {
-      setValue('jaar_opgenomen_in_ivm_lijst', year);
-      setValue('jaar_blackspotlijst', '');
-      setValue('jaar_ongeval_quickscan', '');
+    if (isIvmType(spotType)) {
+      setValue(
+        'jaar_opgenomen_in_ivm_lijst',
+        defaultValues.jaar_opgenomen_in_ivm_lijst ?? year
+      );
+      setValue('jaar_blackspotlijst', null);
+      setValue('jaar_ongeval_quickscan', null);
     }
 
     if (
@@ -60,9 +69,9 @@ export function useManageSpotType({
       !isProtocolType(spotType) &&
       !isIvmType(spotType)
     ) {
-      setValue('jaar_blackspotlijst', '');
-      setValue('jaar_ongeval_quickscan', '');
-      setValue('jaar_opgenomen_in_ivm_lijst', '');
+      setValue('jaar_blackspotlijst', null);
+      setValue('jaar_ongeval_quickscan', null);
+      setValue('jaar_opgenomen_in_ivm_lijst', null);
     }
   }, [
     setVisible,

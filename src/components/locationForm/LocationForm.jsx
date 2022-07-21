@@ -24,8 +24,9 @@ import {
   locationToFormData,
   locationToFeature,
 } from './services/normalize';
-import useManageCoordinatePolygonVisabillity from './hooks/useManageCoordinatePolygonVisabillity';
+import useManageCoordinatePolygonVisibillity from './hooks/useManageCoordinatePolygonVisibillity';
 import { useManageSpotType } from './hooks/useManageSpotType';
+import useManageStadsdeelVisibillity from './hooks/useManageStadsdeelVisibillity';
 
 const LocationForm = () => {
   const selectedLocation = useSelectedLocationStateValue();
@@ -63,6 +64,7 @@ const LocationForm = () => {
     trigger,
     setError,
     clearErrors,
+    formState,
   } = useForm({
     defaultValues,
   });
@@ -75,7 +77,9 @@ const LocationForm = () => {
 
   const values = watch();
 
-  const spotType = watch('spot_type');
+  console.log(formState, defaultValues);
+
+  const spotType = values['spot_type'];
   useManageSpotType({
     spotType,
     setVisible,
@@ -83,11 +87,16 @@ const LocationForm = () => {
     defaultValues,
   });
 
-  useManageCoordinatePolygonVisabillity({
+  useManageCoordinatePolygonVisibillity({
     setVisible,
     watch,
     register,
     unregister,
+  });
+
+  useManageStadsdeelVisibillity({
+    setVisible,
+    stadsdeel: values.stadsdeel,
   });
 
   const handleServerValidation = async (reason) => {

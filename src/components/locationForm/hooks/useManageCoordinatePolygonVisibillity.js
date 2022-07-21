@@ -2,7 +2,7 @@ import { GeometryTypes } from 'config';
 import { useEffect } from 'react';
 import { coordinatesField, polygonField } from '../definitions/FormFields';
 
-function useManageCoordinatePolygonVisabillity({
+function useManageCoordinatePolygonVisibillity({
   setVisible,
   watch,
   register,
@@ -39,4 +39,4 @@ function useManageCoordinatePolygonVisabillity({
   }, [coordOrPoly, register, setVisible, unregister]);
 }
 
-export default useManageCoordinatePolygonVisabillity;
+export default useManageCoordinatePolygonVisibillity;
