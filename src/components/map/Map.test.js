@@ -69,15 +69,14 @@ describe('Map', () => {
     const { container, queryByTestId } = render(
       withTheme(
         <FilterContext.Provider value={{ state: mockedState }}>
-          <Map />
+          <Map setShowError={jest.fn()} />
         </FilterContext.Provider>
       )
     );
 
     expect(queryByTestId('map')).toBeInTheDocument();
 
-    // number of markers + 1
-    expect(container.querySelectorAll('.leaflet-marker-icon').length).toBe(3);
+    expect(container.querySelectorAll('.leaflet-marker-icon').length).toBe(2);
   });
 
   it('should click one of the markers and dispatch SELECT_LOCATION', () => {
@@ -87,7 +86,7 @@ describe('Map', () => {
         <FilterContext.Provider
           value={{ state: mockedState, dispatch: dispatchSpy }}
         >
-          <Map />
+          <Map setShowError={jest.fn()} />
         </FilterContext.Provider>
       )
     );

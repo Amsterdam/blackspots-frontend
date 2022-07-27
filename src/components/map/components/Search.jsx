@@ -9,7 +9,7 @@ import {
   themeSpacing,
 } from '@amsterdam/asc-ui';
 import useDataFetching from 'shared/hooks/useDataFetching';
-import { useMapInstance } from '@amsterdam/react-maps';
+import { useMapInstance } from '@amsterdam/arm-core';
 import { getByUri } from 'shared/api/api';
 
 const StyledSearchBar = styled(SearchBar)`

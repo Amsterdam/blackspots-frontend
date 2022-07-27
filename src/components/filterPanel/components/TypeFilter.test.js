@@ -28,7 +28,7 @@ describe('TypeFilter', () => {
     expect(queryByText('Red route')).toBeInTheDocument();
     expect(queryByText('Protocol dodelijk ongeval')).toBeInTheDocument();
     expect(queryByText('Protocol ernstig ongeval')).toBeInTheDocument();
-    expect(queryByText('Risico')).toBeInTheDocument();
+    expect(queryByText('Risicolocatie IVM')).toBeInTheDocument();
   });
 
   it('should click one of the checkboxes', () => {
@@ -46,13 +46,9 @@ describe('TypeFilter', () => {
     fireEvent.click(container.querySelector('label:nth-child(2)'));
 
     const { filter } = initialState;
-    expect(props.updateFilters).toHaveBeenLastCalledWith(
-      { ...filter.spotTypeFilter, blackspot: true },
-      filter.spotStatusTypeFilter,
-      filter.blackspotYearFilter,
-      filter.deliveredYearFilter,
-      filter.quickscanYearFilter,
-      filter.stadsdeelFilter
-    );
+    expect(props.updateFilters).toHaveBeenLastCalledWith({
+      ...filter.spotTypeFilter,
+      blackspot: true,
+    });
   });
 });

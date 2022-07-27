@@ -10,6 +10,7 @@ describe('DetailPanel', () => {
   const featureMock = {
     id: 83,
     geometry: {
+      type: 'Point',
       coordinates: [4.8808235, 52.3810869],
     },
     properties: {

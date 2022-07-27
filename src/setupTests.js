@@ -2,7 +2,7 @@
 
 /* istanbul ignore file */
 import '@testing-library/jest-dom/extend-expect';
-import L from 'leaflet-headless';
+// import L from 'leaflet-headless';
 
 global.Keycloak = () => ({
   init: () => {},
@@ -11,7 +11,7 @@ global.Keycloak = () => ({
   },
 });
 
-global.window.L = L;
+// global.window.L = L;
 
 /**
  * Element.closest() polyfill

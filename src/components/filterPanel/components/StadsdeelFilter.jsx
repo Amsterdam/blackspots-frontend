@@ -1,13 +1,10 @@
-import { useContext } from 'react';
-import PropTypes from 'prop-types';
-import { FilterContext } from 'shared/reducers/FilterContext';
+import { func } from 'prop-types';
+import { useFilterStateValue } from 'shared/reducers/FilterContext';
 import { Stadsdeel } from 'config';
 import styles from '../FilterPanel.module.scss';
 
 const StadsdeelFilter = ({ updateFilters, trackFilter }) => {
-  const {
-    state: { filter },
-  } = useContext(FilterContext);
+  const filter = useFilterStateValue();
 
   return (
     <>
@@ -29,14 +26,7 @@ const StadsdeelFilter = ({ updateFilters, trackFilter }) => {
                 if (!value) {
                   trackFilter(type);
                 }
-                updateFilters(
-                  filter?.spotTypeFilter,
-                  filter?.spotStatusTypeFilter,
-                  filter?.blackspotYearFilter,
-                  filter?.deliveredYearFilter,
-                  filter?.quickscanYearFilter,
-                  updatedFilter
-                );
+                updateFilters(updatedFilter);
               }}
             />
             <span />
@@ -49,8 +39,8 @@ const StadsdeelFilter = ({ updateFilters, trackFilter }) => {
 };
 
 StadsdeelFilter.propTypes = {
-  updateFilters: PropTypes.func.isRequired,
-  trackFilter: PropTypes.func.isRequired,
+  updateFilters: func.isRequired,
+  trackFilter: func.isRequired,
 };
 
 export default StadsdeelFilter;

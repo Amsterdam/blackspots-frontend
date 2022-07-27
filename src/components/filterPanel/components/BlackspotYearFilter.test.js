@@ -9,6 +9,7 @@ describe('BlackspotYearFilter', () => {
   const props = {
     updateFilters: jest.fn(),
     trackFilter: jest.fn(),
+    filterValues: initialState.filter.blackspotYearFilter,
   };
 
   afterEach(cleanup);
@@ -49,13 +50,9 @@ describe('BlackspotYearFilter', () => {
     fireEvent.click(screen.getByTestId('2020'));
 
     const { filter } = initialState;
-    expect(props.updateFilters).toHaveBeenLastCalledWith(
-      filter.spotTypeFilter,
-      filter.spotStatusTypeFilter,
-      { ...filter.blackspotYearFilter, 2020: true },
-      filter.deliveredYearFilter,
-      filter.quickscanYearFilter,
-      filter.stadsdeelFilter
-    );
+    expect(props.updateFilters).toHaveBeenLastCalledWith({
+      ...filter.blackspotYearFilter,
+      2020: true,
+    });
   });
 });

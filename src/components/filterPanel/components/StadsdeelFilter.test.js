@@ -50,13 +50,9 @@ describe('StadsdeelFilter', () => {
     fireEvent.click(container.querySelector('label:nth-child(2)'));
 
     const { filter } = initialState;
-    expect(props.updateFilters).toHaveBeenLastCalledWith(
-      filter.spotTypeFilter,
-      filter.spotStatusTypeFilter,
-      filter.blackspotYearFilter,
-      filter.deliveredYearFilter,
-      filter.quickscanYearFilter,
-      { ...filter.stadsdeelFilter, Centrum: true }
-    );
+    expect(props.updateFilters).toHaveBeenLastCalledWith({
+      ...filter.stadsdeelFilter,
+      Centrum: true,
+    });
   });
 });

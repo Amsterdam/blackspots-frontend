@@ -1,6 +1,16 @@
-/* eslint-disable camelcase */
 import { useContext } from 'react';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import {
+  bool,
+  func,
+  shape,
+  number,
+  string,
+  arrayOf,
+  oneOfType,
+} from 'prop-types';
+import classNames from 'classnames';
+import styled from 'styled-components';
 import {
   Heading,
   Button,
@@ -8,22 +18,19 @@ import {
   themeColor,
   themeSpacing,
 } from '@amsterdam/asc-ui';
-import { Link } from 'react-router-dom';
 import { ExternalLink, Close } from '@amsterdam/asc-assets';
-
-import { SpotTypes, StatusDisplayNames, SpotStatusTypes } from 'config';
-import classNames from 'classnames';
-
-import styled from 'styled-components';
+import {
+  SpotTypes,
+  StatusDisplayNames,
+  SpotStatusTypes,
+  GeometryTypes,
+  SpotTypeDisplayNames,
+} from 'config';
 import DataTable from '../../shared/dataTable/DataTable';
 import SVGIcon from '../SVGIcon/SVGIcon';
-
-import { SpotTypeDisplayNames } from '../../config';
-
 import UserContext from '../../shared/user/UserContext';
 import { HeaderSecondary } from '../../styles/SharedStyles';
 import styles from './DetailPanel.module.scss';
-
 import {
   HeaderStyle,
   ContentStyle,
@@ -32,6 +39,7 @@ import {
   ExternalLinkStyle,
 } from './DetailPanelStyle';
 import DocumentLink from './components/DocumentLink';
+import { getLatLng } from 'components/map/helpers';
 
 const StyledLink = styled(Link)`
   color: ${themeColor('tint', 'level7')};
@@ -56,6 +64,18 @@ function getStatusClassName(status) {
   return statusClassMapper[status];
 }
 
+function getDisplayCoordinates(geometry) {
+  if (geometry.type === GeometryTypes.POLYGON) {
+    return geometry.coordinates[0]
+      .map((set) => [...set].reverse().join(', '))
+      .join(', ');
+  }
+
+  if (geometry.type === GeometryTypes.POINT) {
+    return [...geometry.coordinates].reverse().join(', ');
+  }
+}
+
 const DetailPanel = ({ isOpen, togglePanel, feature }) => {
   const { canEdit } = useContext(UserContext);
   if (!feature) {
@@ -77,7 +97,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
     actiehouders,
     documents,
   } = feature.properties;
-  const [lng, lat] = feature.geometry.coordinates;
+  const { lat, lng } = getLatLng(feature);
   const reportDocument = documents.find((d) => d.type === 'Rapportage');
   const designDocument = documents.find((d) => d.type === 'Ontwerp');
 
@@ -143,9 +163,7 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
             </tr>
             <tr>
               <td>Coördinaten</td>
-              <td>
-                {lat}, {lng}
-              </td>
+              <td>{getDisplayCoordinates(feature.geometry)}</td>
             </tr>
             {jaar_blackspotlijst && (
               <tr>
@@ -235,33 +253,36 @@ const DetailPanel = ({ isOpen, togglePanel, feature }) => {
 };
 
 DetailPanel.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  togglePanel: PropTypes.func.isRequired,
-  feature: PropTypes.shape({
-    id: PropTypes.number,
-    geometry: PropTypes.shape({
-      type: PropTypes.string,
-      coordinates: PropTypes.arrayOf(PropTypes.number),
+  isOpen: bool.isRequired,
+  togglePanel: func.isRequired,
+  feature: shape({
+    id: number,
+    geometry: shape({
+      type: string,
+      coordinates: oneOfType([
+        arrayOf(number),
+        arrayOf(arrayOf(arrayOf(number))),
+      ]),
     }),
-    properties: PropTypes.shape({
-      locatie_id: PropTypes.string,
-      description: PropTypes.string,
-      spot_type: PropTypes.string,
-      status: PropTypes.string,
-      stadsdeel: PropTypes.string,
-      start_uitvoering: PropTypes.string,
-      eind_uitvoering: PropTypes.string,
-      tasks: PropTypes.string,
-      notes: PropTypes.string,
-      jaar_blackspotlijst: PropTypes.number,
-      jaar_ongeval_quickscan: PropTypes.number,
-      jaar_oplevering: PropTypes.number,
-      actiehouders: PropTypes.string,
-      documents: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.number,
-          type: PropTypes.string,
-          filename: PropTypes.string,
+    properties: shape({
+      locatie_id: string,
+      description: string,
+      spot_type: string,
+      status: string,
+      stadsdeel: string,
+      start_uitvoering: string,
+      eind_uitvoering: string,
+      tasks: string,
+      notes: string,
+      jaar_blackspotlijst: number,
+      jaar_ongeval_quickscan: number,
+      jaar_oplevering: number,
+      actiehouders: string,
+      documents: arrayOf(
+        shape({
+          id: number,
+          type: string,
+          filename: string,
         })
       ),
     }),

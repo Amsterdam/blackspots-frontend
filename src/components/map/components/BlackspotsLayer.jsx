@@ -1,20 +1,20 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { renderToString } from 'react-dom/server';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import L from 'leaflet';
-import { useMapInstance, GeoJSON } from '@amsterdam/react-maps';
-import { SpotTypes, SpotStatusTypes } from 'config';
-import { FilterContext } from 'shared/reducers/FilterContext';
+import { useMapInstance, GeoJSON } from '@amsterdam/arm-core';
+import { SpotTypes, SpotStatusTypes, SpotStatusColor } from 'config';
+import {
+  useFilterStateValue,
+  useLocationsStateValue,
+} from 'shared/reducers/FilterContext';
 import SVGIcon from '../../SVGIcon/SVGIcon';
-import { getGeoJson } from '../helpers';
+import { getGeoJson, getLatLng } from '../helpers';
 
 const createFeatureIcon = (feature) => {
   // Leaflet only accepts HTML elements for custom markers so we need to
   // create one from the SVGIcon
   const { status, spot_type: spotType } = feature.properties;
-  const iconDiv = document.createElement('div');
-
-  ReactDOM.render(<SVGIcon type={spotType} status={status} />, iconDiv);
 
   return {
     // Add the correct classname based on type
@@ -22,14 +22,14 @@ const createFeatureIcon = (feature) => {
     className: `marker-div-icon ${
       spotType === SpotTypes.RISICO ? 'large' : ''
     } ${status === SpotStatusTypes.GEEN_MAATREGEL ? 'extra-opacity' : ''}`,
-    html: iconDiv,
+    html: renderToString(<SVGIcon type={spotType} status={status} />),
   };
 };
 
 const BlackspotsLayer = ({ onMarkerClick }) => {
-  const {
-    state: { locations, filter },
-  } = useContext(FilterContext);
+  const locations = useLocationsStateValue();
+  const filter = useFilterStateValue();
+
   const [json, setJson] = useState('');
   const mapInstance = useMapInstance();
   const [layerInstance, setLayerInstance] = useState('');
@@ -43,21 +43,25 @@ const BlackspotsLayer = ({ onMarkerClick }) => {
     onEachFeature: (feature, layer) => {
       layer.on('click', (e) => {
         e.originalEvent.stopPropagation();
-        const latlng = {
-          lat: feature.geometry.coordinates[1],
-          lng: feature.geometry.coordinates[0],
-        };
 
         const currentZoom = mapInstance.getZoom();
         onMarkerClick(feature);
-        if (currentZoom < 11) mapInstance.flyTo(latlng, 11);
+        if (currentZoom < 13) mapInstance.flyTo(getLatLng(feature), 13);
       });
+    },
+    style: (feature) => {
+      return {
+        fill: true,
+        color: SpotStatusColor[feature.properties.status],
+        fillColor: SpotStatusColor[feature.properties.status],
+      };
     },
   };
 
   useEffect(() => {
     if (mapInstance && locations.length) {
-      setJson(getGeoJson(locations, filter));
+      const geoJson = getGeoJson(locations, filter);
+      setJson(geoJson);
     }
   }, [mapInstance, locations, filter]);
 

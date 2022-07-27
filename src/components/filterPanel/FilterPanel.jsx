@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useContext } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 import { Stadsdeel, endpoints } from 'config';
 import classNames from 'classnames';
@@ -6,7 +6,10 @@ import { ReactComponent as FilterIcon } from 'assets/icons/icon-filter.svg';
 import { ReactComponent as ChevronIcon } from 'assets/icons/chevron-top.svg';
 import { Button, themeSpacing } from '@amsterdam/asc-ui';
 import styled from 'styled-components';
-import { FilterContext } from 'shared/reducers/FilterContext';
+import {
+  useDispatch,
+  useFilterStateValue,
+} from 'shared/reducers/FilterContext';
 import { actions, initialState } from 'shared/reducers/filter';
 import useDownload from 'shared/hooks/useDownload';
 import SelectMenu from '../../shared/selectMenu/SelectMenu';
@@ -18,6 +21,7 @@ import DeliveredYearFilter from './components/DeliveredYearFilter';
 import QuickscanYearFilter from './components/QuickscanYearFilter';
 import { ContextMenuOptions, MenuOptions } from './FilterPanel.constants';
 import styles from './FilterPanel.module.scss';
+import IvmYearFilter from './components/IvmYearFilter';
 
 const ExportButton = styled(Button)`
   margin: ${themeSpacing(2, 0)};
@@ -43,10 +47,8 @@ export const getExportFilter = (stadsdeelFilter) => {
 };
 
 const FilterPanel = () => {
-  const {
-    state: { filter },
-    dispatch,
-  } = useContext(FilterContext);
+  const filter = useFilterStateValue();
+  const dispatch = useDispatch();
 
   const [optionValue, setOptionValue] = useState(ContextMenuOptions.ALL);
   const [showPanel, setShowPanel] = useState(true);
@@ -90,32 +92,12 @@ const FilterPanel = () => {
    * Update the filters of the actual map
    */
   const updateFilters = useCallback(
-    (
-      updatedSpotTypeFilter,
-      updatedSpotStatusTypeFilter,
-      updatedBlackspotYearFilter,
-      updatedDeliveredYearFilter,
-      updatedQuickscanYearFilter,
-      updatedStadsdeelFilter
-    ) => {
-      if (!updatedSpotTypeFilter) return;
-
-      // For every filter, if it has an actual filter object, pass it along to
-      // the setFilter function received from the map, else, pass a resetted
-      // filter.
-      const newFilter = {
-        show: filter.show,
-        spotTypeFilter: updatedSpotTypeFilter,
-        spotStatusTypeFilter: updatedSpotStatusTypeFilter,
-        blackspotYearFilter: updatedBlackspotYearFilter,
-        deliveredYearFilter: updatedDeliveredYearFilter,
-        quickscanYearFilter: updatedQuickscanYearFilter,
-        stadsdeelFilter: updatedStadsdeelFilter,
-      };
+    (newFilter) => {
+      if (!newFilter) return;
 
       dispatch(actions.setFilter(newFilter));
     },
-    [filter, dispatch]
+    [dispatch]
   );
 
   useEffect(() => {
@@ -174,37 +156,64 @@ const FilterPanel = () => {
           {filter.show !== ContextMenuOptions.ALL && <h5>Jaar</h5>}
           {filter.show === ContextMenuOptions.BLACKSPOTS && (
             <BlackspotYearFilter
-              updateFilters={updateFilters}
+              updateFilters={(blackspotYearFilter) => {
+                updateFilters({
+                  ...filter,
+                  blackspotYearFilter,
+                });
+              }}
               trackFilter={trackFilter}
+              filterValues={filter?.blackspotYearFilter}
             />
           )}
           {filter.show === ContextMenuOptions.DELIVERED && (
             <DeliveredYearFilter
-              updateFilters={updateFilters}
+              updateFilters={(deliveredYearFilter) => {
+                updateFilters({ ...filter, deliveredYearFilter });
+              }}
               trackFilter={trackFilter}
+              filterValues={filter?.deliveredYearFilter}
             />
           )}
           {filter.show === ContextMenuOptions.QUICKSCANS && (
             <QuickscanYearFilter
-              updateFilters={updateFilters}
+              updateFilters={(quickscanYearFilter) => {
+                updateFilters({ ...filter, quickscanYearFilter });
+              }}
               trackFilter={trackFilter}
+              filterValues={filter?.quickscanYearFilter}
+            />
+          )}
+          {filter.show === ContextMenuOptions.IVM && (
+            <IvmYearFilter
+              updateFilters={(ivmYearFilter) => {
+                updateFilters({ ...filter, ivmYearFilter });
+              }}
+              trackFilter={trackFilter}
+              filterValues={filter?.ivmYearFilter}
             />
           )}
           {(filter.show === ContextMenuOptions.ALL ||
             filter.show === ContextMenuOptions.DELIVERED) && (
             <TypeFilter
-              updateFilters={updateFilters}
+              updateFilters={(spotTypeFilter) => {
+                updateFilters({ ...filter, spotTypeFilter });
+              }}
               trackFilter={trackFilter}
             />
           )}
           {filter.show !== ContextMenuOptions.DELIVERED && (
             <StatusFilter
-              updateFilters={updateFilters}
+              updateFilters={(spotStatusTypeFilter) => {
+                updateFilters({ ...filter, spotStatusTypeFilter });
+              }}
               trackFilter={trackFilter}
             />
           )}
           <StadsdeelFilter
-            updateFilters={updateFilters}
+            updateFilters={(stadsdeelFilter) => {
+              updateFilters({ ...filter, stadsdeelFilter });
+            }}
             trackFilter={trackFilter}
           />
           <div>

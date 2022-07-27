@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
-import { Input } from '@amsterdam/asc-ui';
+import { string, func } from 'prop-types';
 import styled, { css } from 'styled-components';
+import { Input } from '@amsterdam/asc-ui';
 
 const StyledInput = styled(Input)`
   ${({ width }) =>
@@ -33,9 +33,9 @@ TextAreaInput.defaultProps = {
 };
 
 TextAreaInput.propTypes = {
-  name: PropTypes.string.isRequired,
-  value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  name: string.isRequired,
+  value: string,
+  onChange: func.isRequired,
 };
 
 export default TextAreaInput;

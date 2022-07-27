@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 export const REDUCER_KEY = 'filter';
 export const SELECT_LOCATION = `${REDUCER_KEY}/SELECT_LOCATION`;
 export const SET_LOCATIONS = `${REDUCER_KEY}/SET_LOCATIONS`;
@@ -6,19 +5,21 @@ export const SET_FILTER = `${REDUCER_KEY}/SET_FILTER`;
 export const UPDATE_LOCATION = `${REDUCER_KEY}/UPDATE_LOCATION`;
 export const ADD_LOCATION = `${REDUCER_KEY}/ADD_LOCATION`;
 
-const currentYear = new Date().getFullYear();
-const blackspotYears = {};
-for (let y = 2014; y <= currentYear; y += 1) {
-  blackspotYears[`${y}`] = false;
+function getYears(start) {
+  const currentYear = new Date().getFullYear();
+  const result = {};
+
+  for (let y = start; y <= currentYear; y++) {
+    result[`${y}`] = false;
+  }
+
+  return result;
 }
-const deliveredYears = {};
-for (let y = 2015; y <= currentYear; y += 1) {
-  deliveredYears[`${y}`] = false;
-}
-const quickscanYears = {};
-for (let y = 2013; y <= currentYear; y += 1) {
-  quickscanYears[`${y}`] = false;
-}
+
+const blackspotYears = getYears(2014);
+const deliveredYears = getYears(2015);
+const quickscanYears = getYears(2013);
+const ivmYears = getYears(2015);
 
 export const initialState = {
   selectedLocation: null,
@@ -43,6 +44,7 @@ export const initialState = {
     blackspotYearFilter: blackspotYears,
     deliveredYearFilter: deliveredYears,
     quickscanYearFilter: quickscanYears,
+    ivmYearFilter: ivmYears,
     stadsdeelFilter: {
       Centrum: false,
       'Nieuw West': false,
@@ -79,13 +81,9 @@ const filterReducer = (state = initialState, action) => {
     case UPDATE_LOCATION:
       return {
         ...state,
-        locations: [
-          ...state.locations.map((location) => {
-            return location.id === action.payload.id
-              ? action.payload
-              : location;
-          }),
-        ],
+        locations: state.locations.map((location) => {
+          return location.id === action.payload.id ? action.payload : location;
+        }),
       };
     case ADD_LOCATION:
       return {

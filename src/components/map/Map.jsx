@@ -1,6 +1,5 @@
-/* eslint-disable react/jsx-curly-brace-presence */
-import { useState, useEffect, useCallback, useContext } from 'react';
-import PropTypes from 'prop-types';
+import { useState, useEffect, useCallback } from 'react';
+import { func } from 'prop-types';
 import {
   Map,
   BaseLayer,
@@ -13,7 +12,11 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Loader from 'shared/loader/Loader';
 import { actions } from 'shared/reducers/filter';
-import { FilterContext } from 'shared/reducers/FilterContext';
+import {
+  useDispatch,
+  useLocationsStateValue,
+  useSelectedLocationStateValue,
+} from 'shared/reducers/FilterContext';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import DetailPanel from '../detailPanel/DetailPanel';
 import FilterPanel from '../filterPanel/FilterPanel';
@@ -23,6 +26,7 @@ import { endpoints } from '../../config';
 import BlackspotsLayer from './components/BlackspotsLayer';
 import StadsdelenLayer from './components/StadsdelenLayer';
 import Search from './components/Search';
+import { getLatLng } from './helpers';
 
 const MAP_OPTIONS = {
   center: [52.36988741057662, 4.8966407775878915],
@@ -35,15 +39,15 @@ const MAP_OPTIONS = {
 };
 
 const MapComponent = ({ setShowError }) => {
-  const {
-    state: { selectedLocation, locations },
-    dispatch,
-  } = useContext(FilterContext);
+  const selectedLocation = useSelectedLocationStateValue();
+  const locations = useLocationsStateValue();
+  const dispatch = useDispatch();
   const { errorMessage, loading, results, fetchData } = useDataFetching();
   const [showDetailPanel, setShowDetailPanel] = useState(false);
 
   useEffect(() => {
-    if (locations.length === 0)
+    // Use smaller than or equal to 1 to prevent the edge case where someone loads the form and after submitting only sees the newly added point.
+    if (locations.length <= 1)
       (async () => {
         fetchData(`${endpoints.blackspots}?format=geojson`);
       })();
@@ -52,7 +56,11 @@ const MapComponent = ({ setShowError }) => {
 
   useEffect(() => {
     if (results) {
-      dispatch(actions.setLocations(results ? [...results.features] : []));
+      dispatch(
+        actions.setLocations(
+          results && results.features ? [...results.features] : []
+        )
+      );
     }
     // Keep the actions and locations out from the dependency array to prevent infinite loop
   }, [results, dispatch]);
@@ -83,13 +91,12 @@ const MapComponent = ({ setShowError }) => {
   return (
     <>
       <Map data-testid="map" fullScreen options={MAP_OPTIONS}>
-        <Marker
-          options={{ icon, zIndexOffset: 1000 }}
-          latLng={{
-            lat: selectedLocation?.geometry?.coordinates[1] || 0,
-            lng: selectedLocation?.geometry?.coordinates[0] || 0,
-          }}
-        />
+        {selectedLocation && (
+          <Marker
+            options={{ icon, zIndexOffset: 1000 }}
+            latLng={getLatLng(selectedLocation)}
+          />
+        )}
         <StadsdelenLayer />
         <BlackspotsLayer onMarkerClick={onMarkerClick} />
         <ViewerContainer
@@ -112,7 +119,7 @@ const MapComponent = ({ setShowError }) => {
 };
 
 MapComponent.propTypes = {
-  setShowError: PropTypes.func.isRequired,
+  setShowError: func.isRequired,
 };
 
 export default MapComponent;

@@ -1,27 +1,25 @@
-import { render, cleanup } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { withTheme } from 'test/utils';
-import { useMapInstance } from '@amsterdam/react-maps';
-import { mocked } from 'ts-jest/utils';
+import { spy } from '@amsterdam/arm-core';
 
 import StadsdelenLayer from './StadsdelenLayer';
 
-jest.mock('@amsterdam/react-maps');
-
-const mockedUseMapInstance = mocked(useMapInstance);
-
-describe('StadsdelenLayer', () => {
+jest.mock('@amsterdam/arm-core', () => {
   const addLayerSpy = jest.fn();
 
-  beforeEach(() => {
-    mockedUseMapInstance.mockImplementation(() => ({
+  return {
+    __esModule: true,
+    useMapInstance: () => ({
       addLayer: addLayerSpy,
-    }));
-  });
+    }),
+    spy: addLayerSpy,
+    default: () => <></>,
+  };
+});
 
-  afterEach(cleanup);
-
+describe('StadsdelenLayer', () => {
   it('enter search term and click on autosuggest item', () => {
     render(withTheme(<StadsdelenLayer />));
-    expect(addLayerSpy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });

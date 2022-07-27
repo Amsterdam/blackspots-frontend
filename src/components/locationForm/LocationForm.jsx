@@ -1,13 +1,16 @@
-import { useEffect, useState, useMemo, useContext } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
-
-import { Button, Row } from '@amsterdam/asc-ui';
 import { useForm } from 'react-hook-form';
-import { FilterContext } from 'shared/reducers/FilterContext';
+import { string } from 'prop-types';
+import { Button, Row } from '@amsterdam/asc-ui';
+
+import {
+  useDispatch,
+  useSelectedLocationStateValue,
+} from 'shared/reducers/FilterContext';
 import { actions } from 'shared/reducers/filter';
 import { sendData } from 'shared/api/api';
-import { appRoutes, SpotTypes, endpoints } from '../../config';
+import { appRoutes, endpoints } from '../../config';
 import { HeaderSecondary } from '../../styles/SharedStyles';
 import FormFields, {
   initalValues,
@@ -21,19 +24,13 @@ import {
   locationToFormData,
   locationToFeature,
 } from './services/normalize';
-
-const isBlackspotType = (spotType) =>
-  spotType === SpotTypes.BLACKSPOT || spotType === SpotTypes.WEGVAK;
-const isProtocolType = (spotType) =>
-  spotType === SpotTypes.PROTOCOL_DODELIJK ||
-  spotType === SpotTypes.PROTOCOL_ERNSTIG;
+import useManageCoordinatePolygonVisibillity from './hooks/useManageCoordinatePolygonVisibillity';
+import { useManageSpotType } from './hooks/useManageSpotType';
+import useManageStadsdeelVisibillity from './hooks/useManageStadsdeelVisibillity';
 
 const LocationForm = () => {
-  const {
-    state: { selectedLocation },
-    dispatch,
-  } = useContext(FilterContext);
-
+  const selectedLocation = useSelectedLocationStateValue();
+  const dispatch = useDispatch();
   const params = useParams();
   const locationId = params.id;
 
@@ -62,11 +59,13 @@ const LocationForm = () => {
     unregister,
     handleSubmit,
     setValue,
-    formState: { errors } ,
+    formState: { errors },
     watch,
     trigger,
+    setError,
+    clearErrors,
   } = useForm({
-    ...defaultValues,
+    defaultValues,
   });
 
   useEffect(() => {
@@ -75,69 +74,27 @@ const LocationForm = () => {
     }
   }, [locationId, dispatch, selectedLocation]);
 
-  const values = watch(Object.keys(defaultValues), defaultValues);
-  const newValues = { 
-    naam: values[0], 
-    nummer: values[1], 
-    coordinaten: values[2], 
-    stadsdeel: values[3],
-    spot_type: values[4],
-    jaar_blackspotlijst: values[5], 
-    jaar_ongeval_quickscan: values[6],
-    status: values[7],
-    actiehouder: values[8],
-    taken: values[9],
-    start_uitvoerin: values[10],
-    eind_uitvoering: values[11],
-    jaar_oplevering: values[12],
-    opmerking: values[13],
-    rapport_document: values[14],
-    design_document: values[15],
-    id: locationId
-  };
-  
-  const spotType = watch('spot_type');
-  useEffect(() => {
-    setVisible((v) => ({
-      ...v,
-      jaar_blackspotlijst: isBlackspotType(spotType),
-      jaar_ongeval_quickscan: isProtocolType(spotType),
-    }));
+  const values = watch();
 
-    const year = String(new Date().getFullYear());
-
-    if (isBlackspotType(spotType) && !newValues.jaar_blackspotlijst) {
-      setValue('jaar_blackspotlijst', year);
-      setValue('jaar_ongeval_quickscan', '');
-    }
-
-    if (isProtocolType(spotType) && !newValues.jaar_ongeval_quickscan) {
-      setValue('jaar_blackspotlijst', '');
-      setValue('jaar_ongeval_quickscan', year);
-    }
-
-    if (!isBlackspotType(spotType) && !isProtocolType(spotType)) {
-      setValue('jaar_blackspotlijst', '');
-      setValue('jaar_ongeval_quickscan', '');
-    }
-  }, [
+  const spotType = values['spot_type'];
+  useManageSpotType({
     spotType,
-    newValues.jaar_blackspotlijst,
-    newValues.jaar_ongeval_quickscan,
+    setVisible,
     setValue,
-  ]);
+    defaultValues,
+  });
 
-  const coordinaten = watch('coordinaten');
-  useEffect(() => {
-    (async () => {
-      setVisible((v) => ({
-        ...v,
-        stadsdeel: false,
-      }));
-      setValue('stadsdeel', '', true);
-      unregister('stadsdeel');
-    })();
-  }, [coordinaten, setValue, unregister]);
+  useManageCoordinatePolygonVisibillity({
+    setVisible,
+    watch,
+    register,
+    unregister,
+  });
+
+  useManageStadsdeelVisibillity({
+    setVisible,
+    stadsdeel: values.stadsdeel,
+  });
 
   const handleServerValidation = async (reason) => {
     if (reason.point && reason.point.length) {
@@ -146,12 +103,22 @@ const LocationForm = () => {
         ...v,
         stadsdeel: true,
       }));
-      register('stadsdeel', 
-        { type: 'custom' },
-        { required: reason.point[0] }
-      );
+      register('stadsdeel', { type: 'custom' }, { required: reason.point[0] });
       setValue('stadsdeel', '', true);
       await trigger('stadsdeel');
+      setError(
+        'stadsdeel',
+        { type: 'custom', message: reason.point[0] },
+        { shouldFocus: true }
+      );
+    } else {
+      Object.keys(reason).forEach((fieldId) => {
+        setError(
+          fieldId,
+          { type: 'custom', message: reason[fieldId] },
+          { shouldFocus: true }
+        );
+      });
     }
   };
 
@@ -189,6 +156,7 @@ const LocationForm = () => {
   const handleChange = (e) => {
     const value =
       e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    clearErrors(e.target.name);
     setValue(e.target.name, value);
   };
 
@@ -218,7 +186,7 @@ const LocationForm = () => {
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={newValues[name]}
+                    value={values[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
@@ -236,7 +204,7 @@ const LocationForm = () => {
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={newValues[name]}
+                    value={values[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
@@ -254,7 +222,7 @@ const LocationForm = () => {
                     key={id}
                     name={name}
                     onChange={handleChange}
-                    value={newValues[name]}
+                    value={values[name]}
                     error={errors[name]}
                     {...otherProps}
                   />
@@ -283,7 +251,7 @@ LocationForm.defaultProps = {
 };
 
 LocationForm.propTypes = {
-  id: PropTypes.string,
+  id: string,
 };
 
 export default LocationForm;

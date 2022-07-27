@@ -15,10 +15,6 @@ describe('normalize', () => {
     expect(featureToLocation(featureMock)).toEqual(locationMock);
   });
 
-  it('should convert the location to geojson feature', () => {
-    expect(featureToLocation(featureMock)).toEqual(locationMock);
-  });
-
   it('should convert the feature to the location when certain fields are null', () => {
     const testFeature = {
       ...featureMock,

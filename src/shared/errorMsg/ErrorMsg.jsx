@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { bool } from 'prop-types';
 import classNames from 'classnames';
 import styles from './ErrorMsg.module.scss';
 
@@ -16,7 +16,7 @@ const ErrorMsg = ({ isOpen }) => {
 };
 
 ErrorMsg.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
+  isOpen: bool.isRequired,
 };
 
 export default ErrorMsg;
