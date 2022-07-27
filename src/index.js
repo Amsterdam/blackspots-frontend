@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import * as Sentry from '@sentry/browser';
 import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
@@ -19,11 +19,13 @@ const matomo = createInstance({
   siteId: hostname === 'wbakaart.amsterdam.nl' ? 22 : 23,
 });
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
   <MatomoProvider value={matomo}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </MatomoProvider>,
-  document.getElementById('root')
+  </MatomoProvider>
 );
