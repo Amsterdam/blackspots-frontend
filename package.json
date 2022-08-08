@@ -56,7 +56,7 @@
     "eslint-plugin-react-hooks": "^4.4.0",
     "jest-fetch-mock": "^3.0.3",
     "prettier": "^2.7.1",
-    "sass": "^1.54.0"
+    "sass": "^1.54.3"
   },
   "jest": {
     "resetMocks": false
