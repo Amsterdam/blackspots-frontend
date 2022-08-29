@@ -9,7 +9,7 @@
     "@babel/polyfill": "^7.12.1",
     "@datapunt/matomo-tracker-react": "0.5.1",
     "@sentry/browser": "^7.11.1",
-    "@types/jest": "^28.1.7",
+    "@types/jest": "^28.1.8",
     "@types/node": "^18.7.9",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
