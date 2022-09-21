@@ -2,16 +2,6 @@
 
 // Fonts are set by amsterdam-stijl package and we want different fonts
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-button {
-  font-family: 'AvenirNext';
-}
-
 html,
 body,
 #root {
@@ -19,10 +9,8 @@ body,
   height: 100%;
   padding: 0;
   margin: 0;
-  font-family: 'AvenirNext';
 }
 
 p {
   line-height: 26px;
-  font-family: 'AvenirNext';
 }
