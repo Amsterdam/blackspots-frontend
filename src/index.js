@@ -5,7 +5,6 @@ import * as Sentry from '@sentry/browser';
 import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
 import App from './components/App';
 import './styles/styles.scss';
-import './styles/fonts.scss';
 
 Sentry.init({
   environment: process.env.NODE_ENV,
