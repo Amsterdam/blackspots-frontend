@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@amsterdam/arm-core": "^1.0.0",
-    "@amsterdam/asc-assets": "^0.37.0",
+    "@amsterdam/asc-assets": "^0.38.0",
     "@amsterdam/asc-ui": "^0.37.0",
     "@babel/polyfill": "^7.12.1",
     "@datapunt/matomo-tracker-react": "0.5.1",
