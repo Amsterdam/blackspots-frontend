@@ -55,7 +55,7 @@
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.4.0",
     "jest-fetch-mock": "^3.0.3",
-    "prettier": "^2.8.1",
+    "prettier": "^2.8.2",
     "sass": "^1.56.2"
   },
   "jest": {
