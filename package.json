@@ -10,7 +10,7 @@
     "@datapunt/matomo-tracker-react": "0.5.1",
     "@sentry/browser": "^7.29.0",
     "@types/jest": "^29.2.5",
-    "@types/node": "^18.11.13",
+    "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "classnames": "^2.3.2",
