@@ -85,7 +85,7 @@ export const SpotStatusColor = {
 };
 
 export const endpoints = {
-  blackspots: `${process.env.REACT_APP_API_ROOT}blackspots/spots/`,
+  blackspots: `${process.env.REACT_APP_API_ROOT}spots/`,
 };
 
 export const GeometryTypes = {
