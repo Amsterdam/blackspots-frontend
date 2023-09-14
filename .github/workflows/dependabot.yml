@@ -9,7 +9,7 @@ on:
 jobs:
   dependabot:
     name: Templates
-    uses: amsterdam/opdrachten-team-github-workflows/.github/workflows/dependabot.yml@v1
+    uses: amsterdam/github-workflows/.github/workflows/dependabot.yml@v1
     secrets: inherit  # Inherit secrets from the repository. You need to define "SLACK_TOKEN" in settings -> secrets -> actions!
     with:
       check_diff: false  # Create a list of major upgrades. Needs the Makefile target "diff"
