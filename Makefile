@@ -13,6 +13,9 @@ help:                               ## Show this help.
 build:                              ## Build docker image
 	$(dc) build
 
+push: build                         ## Push prod image to Amsterdam registry
+	$(dc) push
+
 app:                                ## Run app
 	$(run) --service-ports web
 
@@ -20,7 +23,7 @@ test:                               ## Execute tests
 	$(run) unittest $(ARGS)
 
 requirements:                       ## Upgrade dependencies
-	$(run) npm upgrade $(ARGS)
+	npm upgrade
 
 clean:                              ## Clean docker stuff
 	$(dc) down -v --remove-orphans
