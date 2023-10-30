@@ -4,7 +4,7 @@ services:
     build:
       context: .
       args:
-        - BUILD_ARG=acc
+        - BUILD_ARG=dev
     image: docker-registry.data.amsterdam.nl/ois/blackspots-frontend:${VERSION:-latest}
     environment:
       - TZ=Europe/Amsterdam
@@ -22,3 +22,17 @@ services:
       - TZ=Europe/Amsterdam
       - BUILD_ARG=acc
     command: npm run test
+
+  upgrade:
+    build:
+      context: .
+      target: upgrade
+    environment:
+      - NODE_ENV=development
+      - CI=true
+      - TZ=Europe/Amsterdam
+      - BUILD_ARG=dev
+    volumes:
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+    command: ncu -u --doctor --target minor

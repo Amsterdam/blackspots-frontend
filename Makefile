@@ -23,7 +23,7 @@ test:                               ## Execute tests
 	$(run) unittest $(ARGS)
 
 requirements:                       ## Upgrade dependencies
-	npm upgrade
+	$(run) upgrade $(ARGS)
 
 clean:                              ## Clean docker stuff
 	$(dc) down -v --remove-orphans

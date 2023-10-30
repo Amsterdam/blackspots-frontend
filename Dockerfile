@@ -35,6 +35,14 @@ ENV NODE_PATH=src/
 ENV NODE_ENV=development
 RUN GENERATE_SOURCEMAP=false npm run build
 
+# install dependencies
+RUN npm ci
+
+# Upgrade dependencies
+FROM builder AS upgrade
+RUN npm install -g npm-check-updates
+CMD ["ncu", "-u", "--doctor", "--target minor"]
+
 # Deploy
 FROM nginx:stable-alpine
 ARG BUILD_ENV=prod
