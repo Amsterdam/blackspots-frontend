@@ -5,7 +5,6 @@ services:
       context: .
       args:
         - BUILD_ARG=dev
-    image: docker-registry.data.amsterdam.nl/ois/blackspots-frontend:${VERSION:-latest}
     environment:
       - TZ=Europe/Amsterdam
     ipc: host
