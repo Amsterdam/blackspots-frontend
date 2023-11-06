@@ -16,7 +16,7 @@ jobs:
       slack_channel: 'opdrachten-dependabot'  # Slack channel to post release steps to
       timetell_code: 22099  # Timetell project id
       acceptance_pipeline: "https://ci.data.amsterdam.nl/job/opdrachten-team/job/Blackspots/job/blackspots-frontend/job/main/"
-      production_pipeline: "https://ci.data.amsterdam.nl/job/opdrachten-team/job/Blackspots/job/blackspots-frontend/view/tags/"
+      production_pipeline: "https://ci.data.amsterdam.nl/job/opdrachten-team/job/Blackspots/job/blackspots-frontend/view/tags/jobs/<tag>/"
       acceptance_urls: "https://acc.wbakaart.amsterdam.nl/"
       production_urls: "https://wbakaart.amsterdam.nl/"
 
